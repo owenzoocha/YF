@@ -1,0 +1,293 @@
+.node-unpublished {
+  background: none;
+}
+
+.node-type-yoga,
+.page-studio {
+
+  // page header stuffs >..
+  #hb-header {
+    height: 310px;
+    margin-top: 15px;
+    background-color: $light-grey;
+    .header-title {
+      margin-left: 190px;
+      h1 {
+        padding: 105px 0 20px;
+      }
+    }
+    .header-author-pic {
+      .my-image {
+        width: 170px;
+        margin: 40px 0 0;
+      }
+    }
+    .yoga-intro {
+      color: $dark;
+      text-shadow: none;
+      font-weight: 300;
+      span {
+        padding: 3px 0;
+        display: inline-block;
+      }
+      a {
+        display: inline-block;
+        margin-right: 3px;
+      }
+      .btn {
+        font-size: 12px;
+        letter-spacing: 0;
+      }
+    }
+  }
+  #page-header-bg {
+    height: 320px;
+    width: 1000px;
+    left: 50%;
+    border-radius: 15px 15px 0 0;
+    transform: translate(-50%, 0);
+
+    .text-bg {
+      position: absolute;
+      width: 100%;
+      background: white;
+      height: 140px;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  .col-sm-3 {
+    .region-sidebar-second {
+      .material-icons {
+        font-size: 16px;
+        vertical-align: middle;
+      }
+      .block {
+        padding: 5px;
+        h2 {
+          padding: 0 5px;
+        }
+        .views-field-field-hb-geofield {
+          margin-bottom: 5px;
+        }
+        &#block-views-jobs-rhs-block {
+          ul {
+            border-bottom: 1px solid #E7EAEB;
+          }
+        }
+        p, ul {
+          font-size: 14px;
+          margin-bottom: 5px;
+          margin-bottom: 5px;
+          padding: 5px;
+          // &.open-link {
+          a {
+            color: $purple;
+          }
+          // }
+        }
+        p {
+          border-bottom: 1px solid #E7EAEB;
+          &.feedback-note {
+            border-bottom: none;
+            border-top: 1px solid #E7EAEB;
+            margin-bottom: 0;
+          }
+        }
+        li {
+          list-style: none;
+        }
+        .views-field-field-yoga-link {
+          p {
+            border-bottom: none;
+            a {
+              //color: $hb-dark;
+            }
+          }
+        }
+        .views-field-title {
+          font-size: 18px;
+        }
+      }
+    }
+    #block-views-jobs-rhs-block-1,
+    #block-tweaks-job-client-faces {
+      //padding: 15px;
+      box-shadow: none;
+      border: none;
+      background: none;
+      .views-field-field-yoga-style {
+        clear: left;
+      }
+      .views-field-name {
+        padding: 15px 0;
+        a {
+          font-weight: 300;
+        }
+      }
+      .views-field-picture {
+        width: 70px;
+        float: left;
+        margin: 0 10px 10px 0;
+        img {
+          border-radius: 50%;
+          border: 3px solid $white;
+        }
+      }
+
+    }
+    #block-block-10 {
+      ul {
+        li {
+          a {
+            padding: 5px 10px;
+            position: relative;
+            display: block;
+            margin-bottom: 1px;
+            text-decoration: none;
+            color: $dark;
+            background-color: rgba(111, 115, 210, 0.08);
+            transition: 0.2s ease all;
+            i {
+              //display: none;
+              vertical-align: middle;
+            }
+            &:hover {
+              padding-left: 13px;
+              &:after {
+                transition: 0.2s ease all;
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                height: 100%;
+                width: 2px;
+                background-color: $purple;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .node-job {
+    .job-content {
+      @include blocks();
+    }
+    .alert {
+      margin-bottom: 15px;
+    }
+  }
+
+  .job-lhs {
+    padding-bottom: 60px !important;
+  }
+
+  @media (min-width: $screen-lg-desktop) {
+    .container {
+      width: 970px;
+    }
+  }
+
+  .job-info {
+    font-size: 14px;
+    margin-top: 15px;
+    @include blocks();
+  }
+
+  .hb-rhs-job-button {
+    padding-top: 5px;
+    // margin-top: px;
+    border-top: 1px solid #e7eaeb;
+    a {
+      // @include big-btn();
+      // display: block;
+      // margin: 15px 0;
+      position: relative;
+      &:after {
+        @include fa-background("\f105");
+        right: 10%;
+        top: 7px;
+        transition: all 0.3s ease;
+      }
+      &:hover {
+        &:after {
+          right: 8%;
+        }
+      }
+    }
+  }
+
+  .st-wrapper {
+    // overflow: hidden;
+    // height: 50px;
+    #block-sharethis-sharethis-block {
+      padding: 15px;
+      background-color: $hb-light-grey;
+      float: left;
+    }
+  }
+
+  .field-name-field-hb-geofield {
+    .field-items {
+      font-weight: 300;
+      .field-item {
+        float: none;
+        padding: 0;
+        background: none;
+        color: $hb-dark;
+        margin-right: 0;
+      }
+    }
+  }
+
+  .view-job-requests-block {
+    .panel {
+      border: none;
+      box-shadow: none;
+      .panel-heading {
+        display: none;
+      }
+      .panel-body {
+        padding: 0;
+      }
+    }
+    td, th {
+      vertical-align: middle;
+      text-align: center;
+    }
+    .views-field-views-bulk-operations {
+      width: 40px;
+    }
+    .views-field-picture {
+      .user-image {
+        width: 50px;
+        margin: 0 auto;
+        img {
+          border-radius: 50%;
+        }
+      }
+    }
+    .user-name {
+      a {
+        padding-left: 5px;
+      }
+    }
+  }
+}
+
+
+#block-facebook-comments-block-fb-comments {
+  .fb-comments, .fb-comments iframe[style], .fb-comments span {
+    width: 100% !important;
+  }
+  .fb-page, .fb-page iframe[style], .fb-page span {
+    width: 100% !important;
+  }
+}
+
+.st_fblike {
+  display: none;
+}

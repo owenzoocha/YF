@@ -1,0 +1,141 @@
+#yoga-classes-tables {
+  color: #727272;
+  .days-hdr {
+    background: $white;
+    border-radius: 4px 4px 0 0;
+    .day {
+      //padding: 15px 0;
+      width: 14.28%;
+      font-weight: 300;
+      border-right: 1px solid $light-grey-border;
+      font-size: 14px;
+      float: left;
+      text-align: center;
+      &:last-of-type {
+        border: none;
+      }
+      a {
+        display: block;
+        text-decoration: none;
+        position: relative;
+        padding: 15px 0;
+        color: #727272;
+        &.active {
+          color: $purple;
+          &:after {
+            @include nav-underline($purple);
+          }
+        }
+      }
+      &.no-classes {
+        a {
+          background-color: #f8f8f8;
+          cursor: default;
+        }
+      }
+      &.yes-classes {
+        a {
+          &:hover {
+            color: $purple;
+          }
+        }
+      }
+    }
+  }
+  .options-hdr {
+    background: #f8f8f8;
+    border-top: 1px solid $light-grey-border;
+    border-bottom: 1px solid $light-grey-border;
+  }
+  .classes-list {
+    .day-wrapper {
+      display: none;
+      &.active {
+        display: block;
+      }
+      .yoga-class {
+        background: $white;
+        border-bottom: 1px solid $light-grey-border;
+        font-weight: 300;
+        font-size: 14px;
+        float: left;
+        text-align: left;
+        width: 100%;
+        padding: 5px 0;
+        &:last-of-type {
+          border-radius: 0 0 4px 4px;
+        }
+        .yoga-class-extra {
+          display: none;
+          padding: 5px 15px;
+          .yoga-class-img {
+            width: 70px;
+            float: left;
+            margin: 0 15px 0 0;
+          }
+          .yoga-class-desc {
+            margin-left: 85px;
+            p {
+              margin: 0 0 5px;
+            }
+            h4 {
+              margin: 5px 0;
+              font-size: 16px;
+            }
+          }
+
+          h4 {
+            margin: 5px 0;
+          }
+        }
+
+        &.active {
+          margin: 10px 0;
+          border: 1px solid $light-grey-border;
+          border-radius: 4px;
+          &:hover {
+            background-color: $white;
+          }
+          .options {
+            display: none;
+          }
+          .yoga-class-extra {
+            display: block;
+          }
+          & + .active {
+            margin-top: 0;
+          }
+        }
+
+        &:hover {
+          background-color: $light-blue;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .options {
+    //width: 14.2%;
+    font-weight: 300;
+    //border-right: 1px solid $light-grey-border;
+    font-size: 14px;
+    float: left;
+    //text-align: center;
+    padding: 5px 0 5px 20px;
+    text-align: left;
+  }
+  .op-time {
+    width: 20%;
+  }
+  .op-style {
+    width: 30%;
+  }
+  .op-duration {
+    width: 20%;
+  }
+  .teacher {
+    width: 30%;
+  }
+
+}

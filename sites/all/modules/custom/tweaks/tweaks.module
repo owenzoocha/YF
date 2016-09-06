@@ -1,0 +1,1078 @@
+<?php
+
+/**
+ * @file tweaks.module
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function tweaks_menu() {
+  $items = array();
+  $items['watchlist-updater'] = array(
+    'page callback' => 'tweaks_watchlist_updater',
+    'access callback' => 'user_is_logged_in',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'file' => 'tweaks.watchlist.inc',
+  );
+
+  $items['studio/%/teachers'] = array(
+    'page callback' => 'tweaks_yoga_teachers',
+    'access callback' => TRUE,
+    'page arguments' => array(1),
+//    'type' => MENU_CALLBACK,
+//    'file' => 'tweaks.watchlist.inc',
+  );
+
+  $items['studio/%/teachers/%'] = array(
+    'page callback' => 'tweaks_yoga_teachers_profile',
+    'access callback' => TRUE,
+    'page arguments' => array(1, 3),
+//    'type' => MENU_CALLBACK,
+//    'file' => 'tweaks.watchlist.inc',
+  );
+
+  $items['revalidate-email/%'] = array(
+    'page callback' => 'tweaks_revalidate_email',
+    'access callback' => 'user_is_anonymous',
+    'page arguments' => array(1),
+    'type' => MENU_CALLBACK,
+    // 'file' => 'tweaks.watchlist.inc',
+  );
+  return $items;
+}
+
+/*
+ * Yoga pages - get node wrapper if an alias or not.
+ */
+function tweaks_get_alias_wrapper() {
+  if (is_numeric(arg(1))) {
+    $nw = entity_metadata_wrapper('node', arg(1));
+  }
+  else {
+    $nid = explode('/', drupal_get_normal_path(arg(0) . '/' . arg(1)));
+    $nid = $nid[1];
+    $nw = entity_metadata_wrapper('node', $nid);
+  }
+  return $nw;
+}
+
+/*
+ * Yoga pages...
+ */
+function tweaks_yoga_teachers($arg) {
+  if (!is_numeric($arg)) {
+    $nid = explode('/', drupal_get_normal_path('studio/' . $arg));
+    $nid = $nid[1];
+  }
+  else {
+   $nid = $arg;
+  }
+  $nw = entity_metadata_wrapper('node', $nid);
+  drupal_set_title($nw->label());
+  $result = views_embed_view('yoga_pages', 'page', $nid);
+  return $result;
+}
+
+function tweaks_yoga_teachers_profile($arg1, $arg2) {
+  if (!is_numeric($arg1)) {
+    $nid = explode('/', drupal_get_normal_path('studio/' . $arg1));
+    $nid = $nid[1];
+  }
+  else {
+   $nid = $arg1;
+  }
+  if (!is_numeric($arg2)) {
+    $eid = explode('/', drupal_get_normal_path('class/teacher/' . $arg2));
+    $eid = $eid[2];
+  }
+  else {
+    $eid = $arg2;
+  }
+  $nw = entity_metadata_wrapper('node', $nid);
+
+  drupal_set_title($nw->label());
+  $result = views_embed_view('individual_teacher', 'default', $eid);
+  $result .= views_embed_view('yoga_pages', 'page', $nid);
+  return $result;
+}
+
+// Revalidate an unauthenticated user.
+function tweaks_revalidate_email($var) {
+  if (is_numeric(arg(1))) {
+    $account = user_load(arg(1));
+    if (in_array('unauthenticated user', $account->roles)) {
+      _user_mail_notify('register_no_approval_required', $account);
+    }
+  }
+  drupal_set_message(t('Verification email has been re sent. Please check your email'), 'status', FALSE);
+  drupal_goto('<front>');
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function tweaks_block_info() {
+  $blocks['contact_us_button'] = array(
+    'info' => t('HBM - Contact Us Button'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['user_deets'] = array(
+    'info' => t('HBM - User Details'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['job_client_faces'] = array(
+    'info' => t('HBM - Job Client Faces'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function tweaks_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'contact_us_button':
+      $block['subject'] = t('Contact Us Button');
+      $block['content'] = theme('contact_us_button');
+      break;
+    case 'user_deets':
+      $block['subject'] = t('User Details');
+      $block['content'] = theme('user_details');
+      break;
+    case 'job_client_faces':
+      $block['subject'] = t('Clients');
+      $block['content'] = theme('job_client_faces');
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Implements of hook_theme().
+ */
+function tweaks_theme() {
+  return array(
+    'contact_us_button' => array(
+      'template' => 'templates/contact-us-button',
+    ),
+    'user_details' => array(
+      'template' => 'templates/user-details',
+    ),
+    'job_client_faces' => array(
+      'template' => 'templates/job-client-faces',
+    ),
+  );
+}
+
+/**
+ * Template preprocess for Contact Us Button.
+ */
+function template_preprocess_job_client_faces(&$vars) {
+//  $nw = entity_metadata_wrapper('node', arg(1));
+//  $clients = FALSE;
+//  if ($nw->field_hb_users_eck->value()) {
+//    $clients = '<ul>';
+//    foreach ($nw->field_hb_users_eck->getIterator() as $key => $client) {
+//      $clients .= '<li data-toggle="tooltip" data-placement="auto" title="' . $client->field_feedb_user->label() .'">' . l(tweaks_get_profile_picture($client->field_feedb_user->value()), 'job/' . arg(1) . '/clients', array('html' => TRUE, 'attributes' => array('class' => array($client->field_client_selected->value() ? 'active' : FALSE)))) . '</li>';
+//    }
+//    $clients .= '</ul>';
+//  }
+//  $vars['clients'] = $clients;
+}
+
+/**
+ * Template preprocess for Contact Us Button.
+ */
+function template_preprocess_contact_us_button(&$vars) {
+  $contactus_form = drupal_get_form('models_forms_contactus_form');
+  $modal_options = array(
+    'attributes' => array(
+      'id' => 'contactus-popup',
+      'class' => array('jcontactus-popup-modal')
+    ),
+    'heading' => t('Contact Us:'),
+    'body' => drupal_render($contactus_form),
+  );
+  $vars['contactus_form'] = theme('bootstrap_modal', $modal_options);
+  $vars['contactus_btn'] = l('<i class="fa fa-comment"></i>', '#', array(
+    'html' => TRUE,
+    'attributes' => array(
+      'data-toggle' => array('modal'),
+      'data-target' => array('#contactus-popup'),
+      'class' => array('contact-btn')
+    )
+  ));
+}
+
+/**
+ * Template preprocess for Contact Us Button.
+ */
+function template_preprocess_user_details(&$vars) {
+  // drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/jQuery.dotdotdot/1.7.4/jquery.dotdotdot.min.js', array('type' => 'external'));
+  drupal_add_js(libraries_get_path('slick') . '/' . 'slick/slick.min.js');
+  drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick.css');
+  drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick-theme.css');
+  drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/models_nav.js');
+
+  $uw = entity_metadata_wrapper('user', arg(1));
+  $vars['name'] = $uw->field_my_name->value() ? '<h2>' . $uw->field_my_name->value() . '</h2>' : FALSE;
+  $vars['name'] = '<h2>' . t('About') . '</h2>';
+  // $vars['username'] = '<p><strong>' . $uw->label() . '</strong></p>';
+  // $vars['company'] = $uw->field_my_company->value() ? '<p><strong>' . t('Company: ') . '</strong><span>' . $uw->field_my_company->value() . '</span></p>' : FALSE;
+  // $vars['college'] = $uw->field_my_college->value() ? '<p><strong>' . t('Studying at: ') . '</strong><span>' . $uw->field_my_college->value() . '</span></p>' : FALSE;
+
+  // if ($uw->field_my_address->value()) {
+  //   $add = '<p><strong><i class="fa fa-map-marker"></i></strong> <span>';
+  //   $add .= $uw->field_my_address->value()['premise'] ? $uw->field_my_address->value()['premise'] . ', ' : FALSE;
+  //   $add .= $uw->field_my_address->value()['locality'] ? $uw->field_my_address->value()['locality'] . ', ' : FALSE;
+  //   $add .= $uw->field_my_address->value()['administrative_area'] ? $uw->field_my_address->value()['administrative_area'] : FALSE;
+  //   $add .= '</strong></p>';
+  // }
+  // else {
+  //   $add = FALSE;
+  // }
+
+  // $vars['add'] = $add;
+
+  if ($uw->field_my_bio->value()) {
+    if (strlen($uw->field_my_bio->value()['value']) > 400) {
+      $vars['info'] = '<div class="about-cut">' . truncate_utf8($uw->field_my_bio->value()['value'], 400, $wordsafe = FALSE, $add_ellipsis = TRUE, $min_wordsafe_length = 1) . '<p><a class="readmore" href="#">Read more &raquo;</a></p></div>';
+      $vars['info_long'] = '<div class="about-normal hidden">' . $uw->field_my_bio->value()['value'] . '</div>';
+    }
+    else {
+      $vars['info'] = FALSE;
+      $vars['info_long'] = '<div>' . $uw->field_my_bio->value()['value'] . '</div>';
+    }
+  }
+  else {
+    $vars['info'] = FALSE;
+    $vars['info_long'] = FALSE;
+  }
+
+
+  // $vars['web'] = $uw->field_my_web->value() ? '<p>' . l($uw->field_my_web->value()['url'], $uw->field_my_web->value()['url'], array( 'external' => TRUE, 'attributes' => array('rel' => array('nofollow')))) . '</p>' : FALSE;
+
+  $vars['jobs_title'] = '<h2>' . t('Current Jobs') . '</h2>';
+
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function tweaks_ctools_plugin_directory($module, $type) {
+  if ($module == 'hybridauth' && $type == 'icon_pack') {
+    return 'plugins/tweaks_auth_icons';
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function tweaks_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'privatemsg_form_reply') {
+    $form['body']['#format'] = 'plain_text';
+  }
+
+  if ($form_id == 'yoga_node_form') {
+    if (strpos(current_path(), 'listing/add') !== FALSE) {
+      $form['actions']['submit']['#submit'][] = 'models_forms_listing_add_submit';
+      $form['field_yoga_location']['und'][0]['address']['#available_countries'] = array(236 => 'GB');
+    }
+    if (strpos(current_path(), 'event/add') !== FALSE) {
+//      $form['field_yoga_type']['und']['#options'] = array('event' => 'Event');
+//      $form['field_yoga_type']['#disabled'] = TRUE;
+//      $form['actions']['submit']['#submit'][] = 'models_forms_event_add_submit';
+    }
+  }
+  if ($form_id == 'eck__entity__form_add_class_yoga') {
+    if (strpos(current_path(), 'classes/add') !== FALSE) {
+      global $user;
+      $uw = entity_metadata_wrapper('user', $user->uid);
+      $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
+      if ($nw->field_yoga_teachers->value()) {
+        $teachers = array();
+        $teachers['_none'] = '- None -';
+        foreach ($nw->field_yoga_teachers->getIterator() as $index => $teacher) {
+          $teachers[$teacher->getIdentifier()] = $teacher->label();
+        }
+      }
+      $form['field_yc_teacher']['und']['#options'] = $teachers;
+      $form['field_yc_start_time']['und'][0]['value']['#description'] = t('Enter a Start time e.g. 09:00AM');
+      $form['field_yc_start_time']['und'][0]['value2']['#description'] = t('Enter an End time e.g. 10:30AM');
+//      $form['actions']['submit']['#submit'][] = 'models_forms_class_add_submit';
+    };
+  }
+  if ($form_id == 'user_pass_reset') {
+    $uw = entity_metadata_wrapper('user', arg(2));
+    $just_registered = variable_get('just_registered_' . arg(2));
+    if (!empty($just_registered)) {
+      $intro = '<h2>' . t('Welcome to HBM') . '</h2>';
+      $intro .= '<h4>' . t('Hey !name.', array('!name' => $uw->label())) . '</h4>';
+      $intro .= '<p>' . t('Welcome to Hair & Beauty Models, to verify your account click <strong>Confirm</strong> below!') . '</p>';
+      $form['intro'] = array(
+        '#markup' => $intro,
+        '#weight' => -1,
+      );
+      $msg = explode('.', $form['message']['#markup']);
+      $form['message']['#markup'] = $msg[0] . '</p>';
+      // $form['help']['#markup'] = '<p>' . t('Click confirm to continue to your HBM profile.') . '</p>';
+      $form['help']['#markup'] = '';
+      $form['actions']['submit']['#value'] = t('Confirm');
+    }
+    else {
+      // $intro = '<h2>' . t('Hi there!') . '</h2>';
+      $intro = '<h2>' . t('Hey !name', array('!name' => $uw->field_first_name->value())) . '</h2>';
+      $intro .= '<p>' . t('Please follow the instructions below to reset your password.') . '</p>';
+      $form['intro'] = array(
+        '#markup' => $intro,
+        '#weight' => -1,
+      );
+    }
+  }
+  if ($form_id == 'webform_client_form_132') {
+    $form['submitted']['e_mail']['#attributes']['placeholder'] = t('Subscribe to HBM Newsletter');
+  }
+  if ($form_id == 'webform_client_form_166') {
+    $form['submitted']['email_address']['#attributes']['placeholder'] = t('Keep up to date with HBM');
+    $form['actions']['submit']['#attributes']['class'][1] = 'btn-danger';
+  }
+  if ($form_id == 'user_profile_form') {
+    if (strrpos(current_path(), 'personal-information/settings') !== FALSE) {
+      $form['#submit'][] = 'models_forms_update_address';
+    }
+  }
+  if ($form_id == 'privatemsg_list') {
+    // dpm($form, $form_id);
+  }
+  if ($form_id == 'privatemsg_new') {
+    $p = drupal_get_query_parameters();
+    if (isset($p['to'])) {
+      $form['recipient']['#value'] = $p['to'];
+    }
+  }
+  if ($form_id == 'views_exposed_form') {
+    if (!empty($form['field_hb_geofield_latlon_op'])) {
+      global $user;
+      unset($form['#info']['filter-field_hb_geofield_latlon']['label']);
+      // $form['field_hb_geofield_latlon_op']['#chosen'] = TRUE;
+      $uw = entity_metadata_wrapper('user', $user->uid);
+
+      // -37.859354,144.971573
+      // $address = '11/349, Beaconsfield Parade, St Kilda West, 3182';
+      // $point = geocoder('google', $address);
+      // $point = geocoder_google($address, array('https' => TRUE));
+      // dpm($point, 'pointtt');
+
+      $form['field_hb_geofield_latlon']['#attributes'][] = array('placeholder' => 'enter your location');
+      $form['sort'] = array(
+        '#type' => 'hidden',
+        '#title' => 'field_hb_geofield?',
+        '#default_value' => 'field_hb_geofield:latlon',
+      );
+      $form['order'] = array(
+        '#type' => 'hidden',
+        '#title' => 'order?',
+        '#default_value' => 'asc',
+      );
+      // &sort=field_hb_geofield%3Alatlon&order=asc
+      // $form['#submit'][] = 'tweaks_add_closest_param_form_submit';
+    }
+  }
+  if ($form_id == 'search_api_sorts_widget_form') {
+    if (!empty($form['sort_by'])) {
+      // $form['sort_by']['#chosen'] = TRUE;
+    }
+  }
+  if ($form_id == 'user_login') {
+    unset($form['name']['#description']);
+    unset($form['pass']['#description']);
+    $signup_msg = '<ul class="user-info">';
+    $signup_msg .= '<li>' . t('Not yet signed up?') . ' ' . l('Sign up now', 'user/register') . '</li>';
+    $signup_msg .= '<li>' . t('I\'ve forgotten my password!') . ' ' . l('Reset it here', 'user/password') . '</li>';
+    $signup_msg .= '</ul>';
+    $form['actions']['submit']['#attributes'] = array('class' => array('btn-success'));
+    $form['actions']['submit']['#suffix'] = $signup_msg;
+  }
+  if ($form_id == 'user_pass') {
+    // $form['actions']['submit']['#attributes'] = array('class' => array('btn-success'));
+    $form['actions']['submit']['#value'] = t('e-mail me a password');
+    $signup_msg = '<ul class="user-info">';
+    $signup_msg .= '<li>' . t('Already a member?') . ' ' . l('Sign in now', 'user/login') . '</li>';
+    $signup_msg .= '<li>' . t('Not yet signed up?') . ' ' . l('Sign up now', 'user/register') . '</li>';
+    $signup_msg .= '</ul>';
+    $form['actions']['submit']['#suffix'] = $signup_msg;
+  }
+  if ($form_id == 'user_register_form') {
+
+    $form['#attached']['js'] = array(
+      drupal_get_path('module', 'models_forms') . '/js/models_forms_register.js',
+    );
+
+    $form['account']['name']['#description'] = t('Pick a username.');
+    $form['account']['mail']['#description'] = t('A valid e-mail address, so we can keep you up to date.');
+    $form['actions']['submit']['#attributes'] = array('class' => array('btn-success'));
+    $form['field_my_tcs']['und']['#description'] = t('You must agree to the') . ' ' . l('terms & conditions', 'terms', array('attributes' => array('target' => '_blank'))) . '.';
+    unset($form['account']['pass']['#description']);
+    $signup_msg = '<ul class="user-info">';
+    $signup_msg .= '<li>' . t('Already a member?') . ' ' . l('Sign in now', 'user/login') . '</li>';
+    // $signup_msg .= '<li>' . t('I\'ve forgotten my password!') . ' ' . l('Reset it here', 'user/password') . '</li>';
+    $signup_msg .= '</ul>';
+    $form['actions']['submit']['#suffix'] = $signup_msg;
+    $form['#submit'][] = 'tweaks_registered_user';
+  }
+}
+
+// Flag this user as just registered.
+function tweaks_registered_user(&$form, &$form_state) {
+  variable_set('just_registered_' . $form_state['values']['uid'], 1);
+}
+
+// When logging out an unauthorised user - show them the verify message.
+function tweaks_user_logout($account) {
+  user_cookie_save(array('not_verified.logoff' => $account->uid));
+  // drupal_set_message(t('Oops - it looks like you haven\'t verified your account yet! Please check your email for the verification link - or request a new password'), 'status', FALSE);
+  // drupal_goto('search');
+  // user_logout();
+}
+
+// function tweaks_add_closest_param_form_submit(&$form, &$form_state) {
+//   $form_state['values']['honk'] = 'yes';
+//   dpm($form_state, 'honk');
+// }
+
+/**
+ * Return formatted costs with classes etc.
+ */
+//function tweaks_get_hb_cost($nw) {
+//    $cost_class = FALSE;
+//    if ($nw->field_hb_type->value() != 'personal') {
+//      if ($nw->field_hb_price->value()) {
+//        $cost = '<i class="fa fa-dollar"></i> ' . $nw->field_hb_price->value();
+//      } else {
+//        $cost = '<i class="fa fa-dollar"></i> 19.55';
+//      }
+//    }
+//    else {
+//      $cost = 'Last Minute Model';
+//    }
+//    if ($nw->field_hb_price_type->value()) {
+//      switch ($nw->field_hb_price_type->value()) {
+//        case 'free':
+//          $pt = '<i class="fa fa-dollar"></i> Free';
+//          $cost_class = 'cost-free';
+//          $cost = FALSE;
+//          break;
+//         case 'approx':
+//          $pt = ' <small>Approx.</small>';
+//          break;
+//        case 'fixed':
+//          $pt = FALSE;
+//          break;
+//        default:
+//          $pt = FALSE;
+//          break;
+//      }
+//    } else {
+//      $pt = FALSE;
+//    }
+//    return '<span class="hb-cost ' . $cost_class . '">' . $cost . $pt . '</span>';
+//}
+
+/**
+ * Implementation of hook_action_info().
+ */
+function tweaks_action_info() {
+  return array(
+    'tweaks_assign_job' => array(
+      'label' => t('Pass list of user ids as arguments to an action'),
+      'type' => 'entity',
+      'aggregate' => TRUE,
+      'configurable' => FALSE,
+      'hooks' => array(),
+      'triggers' => array('any'),
+    ),
+  );
+}
+
+/**
+ * Retrieve id's and assign to job.
+ */
+function tweaks_assign_job($entities, $context = array()) {
+  // $arguments = implode(',', array_keys($entities));
+  global $user;
+  $uw = entity_metadata_wrapper('user', $user->uid);
+  $nw = entity_metadata_wrapper('node', arg(1));
+
+  foreach ($entities as $eid => $value) {
+    $ew = entity_metadata_wrapper('feedback', $eid);
+    $ew->field_client_selected->set(1);
+    $ew->save();
+  }
+
+  $nw->field_hb_assigned->set(1);
+  $nw->save();
+
+  drupal_set_message(t('Hey !name, good news! Your job has been confirmed and your selected client(s) have been notified!</br><strong>What happens now?</strong> When your job is complete, log back in to leave feedback', array('!name' => $uw->field_first_name->value())), 'info', FALSE);
+}
+
+/**
+ * Generate profile picture from uri;
+ * @param  Object $mypic Picture from user object.
+ * @param  String $uri Picture uri.
+ */
+function tweaks_get_profile_picture($mypic) {
+  if ($mypic->picture) {
+    $pic = '<div class="my-image img-circle">' . theme('image_style', array(
+        'style_name' => 'profile',
+        'path' => $mypic->picture->uri,
+        'attributes' => array('class' => array(''))
+      )) . '</div>';
+  }
+  else {
+    $pic = '<div class="my-image img-circle">' . theme('image_style', array(
+        'style_name' => 'profile',
+        'path' => 'public://pictures/picture-default.png',
+        'attributes' => array('class' => array(''))
+      )) . '</div>';
+  }
+  return $pic;
+}
+
+/**
+ * Generate user profile url.
+ */
+function tweaks_get_profile_url($pic, $uid) {
+  return l($pic, 'user/' . $uid, array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('author-pic'))
+  ));
+}
+
+/**
+ * Generate user profile introduction.
+ */
+function tweaks_get_profile_intro($user_entity) {
+  $job_details = '<div class="hb-time">';
+//  $job_details .= '<span>(' . l($user_entity->label(), 'user/' . $user_entity->getIdentifier()) . ')</span>';
+  $job_details .= '</div>';
+  $job_details .= '<div>';
+  // $job_details .= '<span>' . t('member since ') . format_date($user_entity->created->value(), 'timeago', 'Y-m-d H:i:s', 'UTC') . '</span>';
+  $job_details .= '<span>' . t('joined ') . format_date($user_entity->created->value(), 'custom', 'M, Y', 'UTC') . '</span>';
+  $job_details .= '</div>';
+  return $job_details;
+}
+
+/**
+ * Get feedback amount and link.
+ */
+function tweaks_get_feedback_amount($user_entity) {
+  $total = $user_entity->field_my_total_feedback->value() ? $user_entity->field_my_total_feedback->value() : 0;
+  return '<div class="hb-feedback-score">' . l($total . ' feedback', 'user/' . $user_entity->getIdentifier() . '/feedback') . '</div>';
+}
+
+/**
+ * Get feedback amount and link.
+ */
+function tweaks_get_watchlist($uw, $clear = FALSE) {
+  $wl = models_cache_get_wl_cache($uw->getIdentifier());
+  // $wl = false;
+  if ($wl) {
+    return drupal_json_decode($wl);
+  }
+  else {
+    $watchlist = array();
+    if ($uw->field_my_watchlist->value()) {
+      foreach ($uw->field_my_watchlist->getIterator() as $key => $job) {
+        $watchlist[$job->getIdentifier()] = $job->getIdentifier();
+      }
+    }
+    models_cache_build_wl_cache(drupal_json_encode($watchlist), $uw->getIdentifier());
+    return $watchlist;
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info();
+ */
+function tweaks_field_formatter_info() {
+  return array(
+    'inline_address_field' => array(
+      'label' => t('Inline Address Field'),
+      'field types' => array('addressfield'),
+    )
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view();
+ */
+function tweaks_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $build = array();
+  $count = 1;
+  foreach ($items as $item) {
+    $inline_address = '';
+    $address_parts = array();
+    if (!empty($item['thoroughfare'])) {
+      $address_parts[] = $item['thoroughfare'];
+    }
+    if (!empty($item['premise'])) {
+      $address_parts[] = $item['premise'];
+    }
+    if (!empty($item['locality'])) {
+      $address_parts[] = $item['locality'];
+    }
+    if (!empty($item['administrative_area'])) {
+      $address_parts[] = $item['administrative_area'];
+    }
+    $inline_address .= '<p><i class="material-icons">&#xE55F;</i> ' . implode(', ', $address_parts) . '</p>';
+    $inline_address .= '<p class="open-link">' . l(t('View Directions'), 'http://maps.google.com/', array(
+        'attributes' => array(
+          'target' => '_blank',
+          'rel' => 'nofollow'
+        ),
+        'query' => array('q' => implode(', ', $address_parts))
+      )) . '</p>';
+    $build[] = array('#markup' => $inline_address);
+    $count++;
+  }
+
+  return $build;
+}
+
+function models_block_view_alter(&$data, $block) {
+  // Client Requests block - secondary sidebar - job/*/requests
+  if ($block->bid == 369) {
+    $nw = entity_metadata_wrapper('node', arg(1));
+    $block->title = $nw->field_hb_type->value() != 'personal' ? t('Client Requests') : t('Job Offers');
+  }
+}
+
+// Changing up the no-results messages.
+function tweaks_views_pre_render(&$view) {
+  if ($view->vid == 22) {
+    if ($view->build_info['title'] == 'Jobs tags rhs') {
+      $nw = entity_metadata_wrapper('node', arg(1));
+      if ($nw->getBundle() == 'job') {
+        if ($nw->field_hb_type->value()) {
+          if (!empty($view->result[0]->field_field_hb_gender)) {
+            foreach ($view->result[0]->field_field_hb_gender as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Male':
+                  $view->result[0]->field_field_hb_gender[$key]['rendered']['#markup'] = l('Male', 'search/type/' . $nw->field_hb_type->value() . '/gender/Male');
+                  break;
+                case 'Female':
+                  $view->result[0]->field_field_hb_gender[$key]['rendered']['#markup'] = l('Female', 'search/type/' . $nw->field_hb_type->value() . '/gender/Female');
+                  break;
+              };
+            }
+          }
+          if (!empty($view->result[0]->field_field_hb_bt)) {
+            foreach ($view->result[0]->field_field_hb_bt as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Make Up':
+                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Make Up', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Make Up');
+                  break;
+                case 'Eyelashes':
+                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Eyelashes', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Eyelashes');
+                  break;
+                case 'Eyebrows':
+                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Eyebrows', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Eyebrows');
+                  break;
+                case 'Nails':
+                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Nails', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Nails');
+                  break;
+                case 'Hair Removal':
+                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Hair Removal', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Hair Removal');
+                  break;
+                case 'Facial':
+                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Facial', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Facial');
+                  break;
+                case 'Massage':
+                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Massage', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Massage');
+                  break;
+                case 'Tanning':
+                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Tanning', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Tanning');
+                  break;
+              };
+            }
+          }
+          if (!empty($view->result[0]->field_field_hb_ht)) {
+            foreach ($view->result[0]->field_field_hb_ht as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Cut':
+                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Cut', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Cut');
+                  break;
+                case 'Colour':
+                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Colour', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Colour');
+                  break;
+                case 'Blow dry':
+                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Blow Dry', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Blow dry');
+                  break;
+                case 'Set':
+                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Set', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Set');
+                  break;
+                case 'Hair Up Style':
+                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Hair Up Style', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Hair Up Style');
+                  break;
+                case 'Perm':
+                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Perm', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Perm');
+                  break;
+                case 'Permanent Straightening':
+                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Permanent Straightening', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Permanent Straightening');
+                  break;
+                case 'Extensions':
+                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Extensions', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Extensions');
+                  break;
+              };
+            }
+          }
+          if (!empty($view->result[0]->field_field_hb_ht_colour)) {
+            foreach ($view->result[0]->field_field_hb_ht_colour as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Baylayage':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Baylayage', 'search/type/hair/colour/' . 'Baylayage');
+                  break;
+                case 'Colour correction (dark to light)':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Colour correction (dark to light)', 'search/type/hair/colour/' . 'Colour correction (dark to light)');
+                  break;
+                case 'Colour correction (light to dark)':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Colour correction (light to dark)', 'search/type/hair/colour/' . 'Colour correction (light to dark)');
+                  break;
+                case 'Foils - full head':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Foils - full head', 'search/type/hair/colour/' . 'Foils - full head');
+                  break;
+                case 'Foils - 3/4 head':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Foils - 3/4 head', 'search/type/hair/colour/' . 'Foils - 3/4 head');
+                  break;
+                case 'Foils - 1/2 head':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Foils - 1/2 head', 'search/type/hair/colour/' . 'Foils - 1/2 head');
+                  break;
+                case 'Foils - partial':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Foils - partial', 'search/type/hair/colour/' . 'Foils - partial');
+                  break;
+                case 'Highlift tint regrowth':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Highlift tint regrowth', 'search/type/hair/colour/' . 'Highlift tint regrowth');
+                  break;
+                case 'Highlift tint full head':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Highlift tint full head', 'search/type/hair/colour/' . 'Highlift tint full head');
+                  break;
+                case 'Scalp bleach regrowth':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Scalp bleach regrowth', 'search/type/hair/colour/' . 'Scalp bleach regrowth');
+                  break;
+                case 'Scalp bleach full head':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Scalp bleach full head', 'search/type/hair/colour/' . 'Scalp bleach full head');
+                  break;
+                case 'Tint regrowth':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Tint regrowth', 'search/type/hair/colour/' . 'Tint regrowth');
+                  break;
+                case 'Tint full head':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Tint full head', 'search/type/hair/colour/' . 'Tint full head');
+                  break;
+                case 'Tint with foils':
+                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Tint with foils', 'search/type/hair/colour/' . 'Tint with foils');
+                  break;
+              }
+            }
+          }
+          if (!empty($view->result[0]->field_field_hb_ht_cut)) {
+            foreach ($view->result[0]->field_field_hb_ht_cut as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Child':
+                  $view->result[0]->field_field_hb_ht_cut[$key]['rendered']['#markup'] = l('Child', 'search/type/hair/cut/' . 'Child');
+                  break;
+                case 'Long':
+                  $view->result[0]->field_field_hb_ht_cut[$key]['rendered']['#markup'] = l('Long', 'search/type/hair/cut/' . 'Long');
+                  break;
+                case 'Medium':
+                  $view->result[0]->field_field_hb_ht_cut[$key]['rendered']['#markup'] = l('Medium', 'search/type/hair/cut/' . 'Medium');
+                  break;
+                case 'Mens':
+                  $view->result[0]->field_field_hb_ht_cut[$key]['rendered']['#markup'] = l('Mens', 'search/type/hair/cut/' . 'Mens');
+                  break;
+                case 'Short':
+                  $view->result[0]->field_field_hb_ht_cut[$key]['rendered']['#markup'] = l('Short', 'search/type/hair/cut/' . 'Short');
+                  break;
+
+              }
+            }
+          }
+          if (!empty($view->result[0]->field_field_hb_bt_eyebrows)) {
+            foreach ($view->result[0]->field_field_hb_bt_eyebrows as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Eyebrow extensions':
+                  $view->result[0]->field_field_hb_bt_eyebrows[$key]['rendered']['#markup'] = l('Eyebrow extensions', 'search/type/beauty/eyebrows/' . 'Eyebrow extensions');
+                  break;
+                case 'Eyebrow shaping':
+                  $view->result[0]->field_field_hb_bt_eyebrows[$key]['rendered']['#markup'] = l('Eyebrow shaping', 'search/type/beauty/eyebrows/' . 'Eyebrow shaping');
+                  break;
+                case 'Eyebrow tinting':
+                  $view->result[0]->field_field_hb_bt_eyebrows[$key]['rendered']['#markup'] = l('Eyebrow tinting', 'search/type/beauty/eyebrows/' . 'Eyebrow tinting');
+                  break;
+              }
+            }
+          }
+
+          if (!empty($view->result[0]->field_field_hb_bt_eyelashes)) {
+            foreach ($view->result[0]->field_field_hb_bt_eyelashes as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Eyelash extensions':
+                  $view->result[0]->field_field_hb_bt_eyelashes[$key]['rendered']['#markup'] = l('Eyelash extensions', 'search/type/beauty/eyelashes/' . 'Eyelash extensions');
+                  break;
+                case 'Eyelash perm':
+                  $view->result[0]->field_field_hb_bt_eyelashes[$key]['rendered']['#markup'] = l('Eyelash perm', 'search/type/beauty/eyelashes/' . 'Eyelash perm');
+                  break;
+                case 'Eyelash tinting':
+                  $view->result[0]->field_field_hb_bt_eyelashes[$key]['rendered']['#markup'] = l('Eyelash tinting', 'search/type/beauty/eyelashes/' . 'Eyelash tinting');
+                  break;
+              }
+            }
+          }
+
+          if (!empty($view->result[0]->field_field_hb_bt_facials)) {
+            foreach ($view->result[0]->field_field_hb_bt_facials as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Advanced':
+                  $view->result[0]->field_field_hb_bt_facials[$key]['rendered']['#markup'] = l('Advanced', 'search/type/beauty/facials/' . 'Advanced');
+                  break;
+                case 'Basic':
+                  $view->result[0]->field_field_hb_bt_facials[$key]['rendered']['#markup'] = l('Basic', 'search/type/beauty/facials/' . 'Basic');
+                  break;
+              }
+            }
+          }
+
+          if (!empty($view->result[0]->field_field_hb_bt_massage)) {
+            foreach ($view->result[0]->field_field_hb_bt_massage as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Relaxation':
+                  $view->result[0]->field_field_hb_bt_massage[$key]['rendered']['#markup'] = l('Relaxation', 'search/type/beauty/massage/' . 'Relaxation');
+                  break;
+                case 'Remedial':
+                  $view->result[0]->field_field_hb_bt_massage[$key]['rendered']['#markup'] = l('Remedial', 'search/type/beauty/massage/' . 'Remedial');
+                  break;
+              }
+            }
+          }
+
+          if (!empty($view->result[0]->field_field_hb_bt_makeup)) {
+            foreach ($view->result[0]->field_field_hb_bt_makeup as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Cosmetic tattooing':
+                  $view->result[0]->field_field_hb_bt_makeup[$key]['rendered']['#markup'] = l('Cosmetic tattooing', 'search/type/beauty/makeup/' . 'Cosmetic tattooing');
+                  break;
+                case 'Make up application':
+                  $view->result[0]->field_field_hb_bt_makeup[$key]['rendered']['#markup'] = l('Make up application', 'search/type/beauty/makeup/' . 'Make up application');
+                  break;
+              }
+            }
+          }
+
+          if (!empty($view->result[0]->field_field_hb_bt_nails)) {
+            foreach ($view->result[0]->field_field_hb_bt_nails as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Acrylic':
+                  $view->result[0]->field_field_hb_bt_nails[$key]['rendered']['#markup'] = l('Acrylic', 'search/type/beauty/nails/' . 'Acrylic');
+                  break;
+                case 'Gel':
+                  $view->result[0]->field_field_hb_bt_nails[$key]['rendered']['#markup'] = l('Gel', 'search/type/beauty/nails/' . 'Gel');
+                  break;
+                case 'Manicure':
+                  $view->result[0]->field_field_hb_bt_nails[$key]['rendered']['#markup'] = l('Manicure', 'search/type/beauty/nails/' . 'Manicure');
+                  break;
+                case 'Pedicure':
+                  $view->result[0]->field_field_hb_bt_nails[$key]['rendered']['#markup'] = l('Pedicure', 'search/type/beauty/nails/' . 'Pedicure');
+                  break;
+                case 'Shallac':
+                  $view->result[0]->field_field_hb_bt_nails[$key]['rendered']['#markup'] = l('Shallac', 'search/type/beauty/nails/' . 'Shallac');
+                  break;
+              }
+            }
+          }
+
+          if (!empty($view->result[0]->field_field_hb_bt_waxing)) {
+            foreach ($view->result[0]->field_field_hb_bt_waxing as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Laser':
+                  $view->result[0]->field_field_hb_bt_waxing[$key]['rendered']['#markup'] = l('Laser', 'search/type/beauty/waxing/' . 'Laser');
+                  break;
+                case 'Threading':
+                  $view->result[0]->field_field_hb_bt_waxing[$key]['rendered']['#markup'] = l('Threading', 'search/type/beauty/waxing/' . 'Threading');
+                  break;
+                case 'Waxing':
+                  $view->result[0]->field_field_hb_bt_waxing[$key]['rendered']['#markup'] = l('Waxing', 'search/type/beauty/waxing/' . 'Waxing');
+                  break;
+              }
+            }
+          }
+
+          if (!empty($view->result[0]->field_field_hb_bt_tanning)) {
+            foreach ($view->result[0]->field_field_hb_bt_tanning as $key => $value) {
+              switch ($value['raw']['value']) {
+                case 'Spray Tanning':
+                  $view->result[0]->field_field_hb_bt_tanning[$key]['rendered']['#markup'] = l('Spray Tanning', 'search/type/beauty/tanning/' . 'Spray Tanning');
+                  break;
+              }
+            }
+          }
+        }
+
+        // dpm($view);
+      }
+    }
+  }
+
+  // Interests on user profiles
+  if ($view->vid == 21) {
+    if ($view->build_info['title'] == 'Interests') {
+      if (!empty($view->result[0]->field_field_hb_bt)) {
+        foreach ($view->result[0]->field_field_hb_bt as $key => $value) {
+          switch ($value['raw']['value']) {
+            case 'Make Up':
+              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Make Up', 'search/type/beauty/beauty-treatment/' . 'Make Up');
+              break;
+            case 'Eyelashes':
+              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Eyelashes', 'search/type/beauty/beauty-treatment/' . 'Eyelashes');
+              break;
+            case 'Eyebrows':
+              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Eyebrows', 'search/type/beauty/beauty-treatment/' . 'Eyebrows');
+              break;
+            case 'Nails':
+              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Nails', 'search/type/beauty/beauty-treatment/' . 'Nails');
+              break;
+            case 'Hair Removal':
+              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Hair Removal', 'search/type/beauty/beauty-treatment/' . 'Hair Removal');
+              break;
+            case 'Facial':
+              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Facial', 'search/type/beauty/beauty-treatment/' . 'Facial');
+              break;
+            case 'Massage':
+              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Massage', 'search/type/beauty/beauty-treatment/' . 'Massage');
+              break;
+            case 'Tanning':
+              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Tanning', 'search/type/beauty/beauty-treatment/' . 'Tanning');
+              break;
+          };
+        }
+      }
+      if (!empty($view->result[0]->field_field_hb_ht)) {
+        foreach ($view->result[0]->field_field_hb_ht as $key => $value) {
+          switch ($value['raw']['value']) {
+            case 'Cut':
+              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Cut', 'search/type/hair/hair-treatment/' . 'Cut');
+              break;
+            case 'Colour':
+              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Colour', 'search/type/hair/hair-treatment/' . 'Colour');
+              break;
+            case 'Blow dry':
+              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Blow Dry', 'search/type/hair/hair-treatment/' . 'Blow dry');
+              break;
+            case 'Set':
+              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Set', 'search/type/hair/hair-treatment/' . 'Set');
+              break;
+            case 'Hair Up Style':
+              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Hair Up Style', 'search/type/hair/hair-treatment/' . 'Hair Up Style');
+              break;
+            case 'Perm':
+              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Perm', 'search/type/hair/hair-treatment/' . 'Perm');
+              break;
+            case 'Permanent Straightening':
+              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Permanent Straightening', 'search/type/hair/hair-treatment/' . 'Permanent Straightening');
+              break;
+            case 'Extensions':
+              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Extensions', 'search/type/hair/hair-treatment/' . 'Extensions');
+              break;
+          };
+        }
+      }
+    }
+  }
+
+  if ($view->name == 'job_requests_block') {
+    $nw = entity_metadata_wrapper('node', arg(1));
+    $no_views_text = '<h3>' . t('Nothing yet!') . '</h3>';
+    $no_views_text .= $nw->field_hb_type->value() != 'personal' ? '<p>' .
+      t('There are no requests yet, keep an eye on your !jobs page and check back soon!', array('!jobs' => l('jobs', 'my-jobs', array('attributes' => array('class' => array('a-link')))))) . '</p>' : '<p>' . t('There have been no job offers yet, keep an eye on your !jobs page and check back soon!', array('!jobs' => l('jobs', 'my-jobs', array('attributes' => array('class' => array('a-link')))))) . '</p>';
+    $view->empty['area']->options['content'] = $no_views_text;
+  }
+}
+
+function tweaks_views_pre_view(&$view, &$display_id, &$args) {
+  if ($view->name == 'related_jobs_by_terms') {
+    $nw = entity_metadata_wrapper('node', arg(1));
+    $args[0] = FALSE;
+    if ($nw->field_hb_location->value() && $nw->field_location_taxonomize_terms->value()) {
+      if (!empty($nw->field_hb_location->value()['locality'])) {
+        $t = taxonomy_get_term_by_name($nw->field_hb_location->value()['locality']);
+        $tid = array_shift($t)->tid;
+        $args[0] = $tid;
+      }
+    }
+  }
+}
+
+function tweaks_views_query_alter(&$view, &$query) {
+  if ($view->name == 'related_jobs_by_terms') {
+    $nw = entity_metadata_wrapper('node', arg(1));
+    if ($nw->field_hb_location->value() && $nw->field_location_taxonomize_terms->value()) {
+      if (!empty($nw->field_hb_location->value()['locality'])) {
+        $t = taxonomy_get_term_by_name($nw->field_hb_location->value()['locality']);
+        $locality = array_shift($t)->name;
+        $view->build_info['title'] = t('Other !type Jobs around', array('!type' => $nw->field_hb_type->label())) . ' ' . $locality;
+        $view->query->where[1]['conditions'][1]['value'] = $nw->field_hb_type->value();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_mail_alter();
+ * Provide custom branded html emails.
+ */
+function tweaks_mail_alter(&$message) {
+  // $headers = array(
+  //   'MIME-Version' => '1.0',
+  //   'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
+  //   'Content-Transfer-Encoding' => '8Bit',
+  //   'X-Mailer' => 'Drupal',
+  // );
+  // foreach ($headers as $key => $value) {
+  //   $message['headers'][$key] = $value;
+  // }
+  // $message['headers']['Bcc'] = 'owenwilliams1@gmail.com';
+  // dpm($message, 'after3');
+}
+
+function tweaks_preprocess_htmlmail(&$variables) {
+  // dpm($variables);
+
+  switch ($variables['key']) {
+    case 'rules_action_mail_rules_send_mail_test_2':
+      if (strpos($variables['body'], '<hbm>') !== FALSE) {
+        $body = explode('<hbm>', $variables['body']);
+        // dpm($body);
+        $variables['body'] = $body[0];
+      }
+      break;
+      break;
+  }
+}
+
+
+/**
+ * Quick function to dpm only one call from a loop etc.
+ */
+function dpm_once($input, $name = NULL, $type = 'status') {
+  $backtrace = debug_backtrace();
+  $caller = array_shift($backtrace);
+  $executed = &drupal_static(__FUNCTION__ . $caller['file'] . $caller['line'], FALSE);
+  if (!$executed) {
+    $executed = TRUE;
+    if (function_exists('dpm')) {
+      dpm($input, $name, $type);
+    }
+  }
+}

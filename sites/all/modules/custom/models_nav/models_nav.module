@@ -1,0 +1,516 @@
+<?php
+/**
+ * @file models_nav.module.
+ */
+
+/**
+ * Implements hook_block_info().
+ */
+function models_nav_block_info() {
+  $blocks['event_nav'] = array(
+    'info' => t('NAV: left hand side in event menu'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['settings_nav'] = array(
+    'info' => t('NAV: left hand side on user settings page'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['social_nav_footer'] = array(
+    'info' => t('Social icons for footer'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['yoga_classes_block'] = array(
+    'info' => t('Yoga Classes Block'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function models_nav_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'event_nav':
+      $block['subject'] = t('Event Nav');
+      $block['content'] = theme('block_event_nav');
+      break;
+    case 'settings_nav':
+      $block['subject'] = t('Settings Nav');
+      $block['content'] = theme('block_settings_nav');
+      break;
+    case 'social_nav_footer':
+      $block['subject'] = t('Social Nav Footer');
+      $block['content'] = social_nav_footer_block();
+      break;
+    case 'yoga_classes_block':
+      $block['subject'] = t('Yoga Classes');
+      $block['content'] = theme('yoga_classes_block');
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Social icons for footer.
+ */
+function social_nav_footer_block() {
+  global $user;
+  $login = array();
+  $login[] = l('<span class="fa fa-2x fa-envelope"></span> <span class="sr-only">' . t('Contact') . '</span>', 'mailto:', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l('<span class="fa fa-2x fa-facebook"></span> <span class="sr-only">' . t('Facebook') . '</span>', 'https://www.facebook.com/hairandbeautymodelsaustralia/', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l('<span class="fa fa-2x fa-twitter"></span> <span class="sr-only">' . t('Twitter') . '</span>', 'https://twitter.com/hbm_australia', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l('<span class="fa fa-2x fa-instagram"></span> <span class="sr-only">' . t('Instagram') . '</span>', 'http://instagram.com/hairandbeautymodels', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l('<span class="fa fa-2x fa-pinterest"></span> <span class="sr-only">' . t('Pinterest') . '</span>', '/', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l('<span class="fa fa-2x fa-google"></span> <span class="sr-only">' . t('Google') . '</span>', '/', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l(t('#HBM'), 'user/login');
+  $login[] = $user->uid == 0 ? l(t('Sign Up / Sign In'), 'user/login') : FALSE;
+  $content = '<ul class="footer-social">';
+  foreach ($login as $key => $link) {
+    $content .= '<li>' . $link . '</li>';
+  }
+  $content .= '</ul>';
+  return $content;
+}
+
+/**
+ * Implements of hook_theme().
+ */
+function models_nav_theme() {
+  return array(
+    'block_event_nav' => array(
+      'template' => 'templates/block-event-nav',
+    ),
+    'block_settings_nav' => array(
+      'template' => 'templates/block-settings-nav',
+    ),
+    'my_nav' => array(
+      'template' => 'templates/my-nav',
+    ),
+    'social_nav' => array(
+      'template' => 'templates/social-nav',
+    ),
+    'custom_nav' => array(
+      'template' => 'templates/custom-nav',
+    ),
+    'home_nav' => array(
+      'template' => 'templates/home-nav',
+    ),
+    'yoga_classes_block' => array(
+      'template' => 'templates/yoga-classes-block',
+    ),
+  );
+}
+
+/**
+ * Template preprocess for Event Nav.
+ */
+function template_preprocess_block_event_nav(&$vars) {
+  drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/models_nav.js');
+  $nid = 90;
+  $agenda = l(t('Agenda Builder'), 'agenda/' . $nid . '/create');
+  $vars['links'] = '<li>' . $agenda . '<span class="triangle"></span></a></li>
+    <li><a href="#">link item one<span class="triangle"></span></a></li>
+    <li><a href="#">link item one<span class="triangle"></span></a></li>
+    <li><a href="#">link item one<span class="triangle"></span></a></li>
+    <li><a href="#">link item one<span class="triangle"></span></a></li>';
+
+  $vars['links'] = '<li>' . $agenda . '</a></li>
+    <li><a href="#">link item one</a></li>
+    <li><a href="#">link item one</a></li>
+    <li><a href="#">link item one</a></li>
+    <li><a href="#">link item one</a></li>';
+}
+
+
+/**
+ * Template preprocess for Settings Nav.
+ */
+function template_preprocess_yoga_classes_block(&$vars) {
+  global $user;
+  drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/yoga_classes.js');
+  $nw = entity_metadata_wrapper('node', arg(1));
+
+  $class_array = array();
+  if ($nw->field_yoga_classes->value()) {
+
+    $res = views_get_view_result('yoga_classes', 'master', $nw->getIdentifier());
+//    dpm($res);
+//    foreach ($nw->field_yoga_classes->getIterator() AS $key => $ew) {
+    foreach ($res AS $key => $class) {
+      $ew = entity_metadata_wrapper('class', $class->id);
+      if ($ew->field_yc_dow->value()) {
+        $styles = '';
+        foreach ($ew->field_yoga_style->getIterator() AS $k => $style) {
+          $styles .= $style->label() . ', ';
+        }
+        $class_array[$ew->field_yc_dow->value()][] = array(
+          'dow' => $ew->field_yc_dow->value(),
+          'times' => $ew->field_yc_start_time->value()['value_formatted'] . ' - ' . $ew->field_yc_start_time->value()['value2_formatted'],
+          'desc' => $ew->field_yc_desc->value(),
+          'style' => rtrim($styles, ', '),
+          'teacher' => $ew->field_yc_teacher->value() ? $ew->field_yc_teacher->label() : '-',
+          'duration' => timefield_time_to_duration($ew->field_yc_start_time->value()['value'], $ew->field_yc_start_time->value()['value2'], 'time'),
+        );
+
+      }
+    }
+  }
+  else {
+  }
+
+  if (sizeof($class_array)) {
+
+    // Create the classes header.
+    $hdr = !empty($class_array['Monday']) ? 'yes' : 'no';
+    $active_class = date('l', strtotime('now')) == 'Monday' ? 'active' : '';
+    $class_header = '<div class="day ' . $hdr . '-classes"><a data-day="Monday" class="' . $active_class . '" href="#"><span class="">Monday</span></a></div>';
+
+    $hdr = !empty($class_array['Tuesday']) ? 'yes' : 'no';
+    $active_class = date('l', strtotime('now')) == 'Tuesday' ? 'active' : '';
+    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Tuesday" class="' . $active_class . '" href="#"><span class="">Tuesday</span></a></div>';
+
+    $hdr = !empty($class_array['Wednesday']) ? 'yes' : 'no';
+    $active_class = date('l', strtotime('now')) == 'Wednesday' ? 'active' : '';
+    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Wednesday" class="' . $active_class . '" href="#"><span class="">Wednesday</span></a></div>';
+
+    $hdr = !empty($class_array['Thursday']) ? 'yes' : 'no';
+    $active_class = date('l', strtotime('now')) == 'Thursday' ? 'active' : '';
+    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Thursday" class="' . $active_class . '" href="#"><span class="">Thursday</span></a></div>';
+
+    $hdr = !empty($class_array['Friday']) ? 'yes' : 'no';
+    $active_class = date('l', strtotime('now')) == 'Friday' ? 'active' : '';
+    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Friday" class="' . $active_class . '" href="#"><span class="">Friday</span></a></div>';
+
+    $hdr = !empty($class_array['Saturday']) ? 'yes' : 'no';
+    $active_class = date('l', strtotime('now')) == 'Saturday' ? 'active' : '';
+    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Saturday" class="' . $active_class . '" href="#"><span class="">Saturday</span></a></div>';
+
+    $hdr = !empty($class_array['Sunday']) ? 'yes' : 'no';
+    $active_class = date('l', strtotime('now')) == 'Sunday' ? 'active' : '';
+    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Sunday" class="' . $active_class . '" href="#"><span class="">Sunday</span></a></div>';
+
+    $vars['class_header'] = $class_header;
+
+    $class_data = '';
+    foreach ($class_array as $key => $day) {
+      $active_class = date('l', strtotime('now')) == $key ? 'active' : '';
+      $class_data .= '<div class="day-wrapper ' . $active_class . '" data-day="' . $key . '">';
+      $i = 1;
+      foreach ($day as $k => $v) {
+        $class_data .= '<div class="class-' . $i . ' yoga-class">';
+        $class_data .= '<div class="options op-time">' . $v['times'] . '</div>';
+        $class_data .= '<div class="options op-style">' . $v['style'] . '</div>';
+        $class_data .= '<div class="options op-duration">' . $v['duration'] . 'h</div>';
+        $class_data .= '<div class="options op-teacher">' . $v['teacher'] . '</div>';
+        $class_data .= '<div class="yoga-class-extra">';
+        $class_data .= '<div class="yoga-class-img"><img class="img-responsive" src="http://yogafind.dev/sites/default/files/styles/profile/public/heart.png?itok=BCKVtqjL"/></div>';
+        $class_data .= '<div class="yoga-class-desc">';
+        $class_data .= '<h4>' . $v['style'] . '</h4>';
+        $class_data .= '<p><strong>' . $v['times'] . '</strong> with <strong>' . $v['teacher'] . '</strong></p>';
+        $class_data .= '<p>' . $v['desc'] . '</p>';
+        $class_data .= '</div>';
+        $class_data .= '</div>';
+        $class_data .= '</div>';
+        $i++;
+      }
+      $class_data .= '</div>';
+    }
+    $vars['class_data'] = $class_data;
+//    dpm($vars['class_data']);
+  }
+  else {
+    $vars['class_header'] = FALSE;
+  }
+}
+
+/**
+ * Template preprocess for Settings Nav.
+ */
+function template_preprocess_block_settings_nav(&$vars) {
+  global $user;
+  $nav = '<ul>';
+  $nav .= '<li>' . l(t('Personal Information'), 'user/personal-information/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
+  $nav .= '<li>' . l(t('Account Settings'), 'user/account/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
+  // $nav .= '<li > ' . l(t('Profile'), 'user / profile / settings', array('attributes' => array('class' => array('')))) . ' </li > ';
+  $nav .= '<li>' . l(t('Interests'), 'user/interests/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
+  $nav .= '<li>' . l(t('Email Settings'), 'user/email/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
+  $nav .= '</ul>';
+  $vars['settings_nav'] = $nav;
+}
+
+/**
+ * Template preprocess for Custom Job Nav.
+ */
+function template_preprocess_my_nav(&$vars) {
+
+  global $user;
+  if (!isset($vars['user_nav'])) {
+    $nw = tweaks_get_alias_wrapper();
+    $alias = drupal_get_path_alias('node/' . $nw->getIdentifier());
+
+    $nav = '<ul>';
+    $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
+    $nav .= '<li>' . l(t('Edit'), 'listing/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+    $nav .= '<li>' . l(t('Blog'), $alias . ' /blog', array('attributes' => array('class' => array('')))) . ' </li> ';
+    $nav .= '<li>' . l(t('Gallery'), $alias . '/blog', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+    $amt = $nw->field_yoga_classes->value() ? sizeof($nw->field_yoga_classes->value()) : '';
+    $nav .= '<li>' . l(t('Timetable') . ' ' . '(' . $amt . ')', $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
+    $nav .= '<li>' . l(t('Events'), $alias . '/photos', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+    if ($nw->field_yoga_type->value() == 'studio') {
+      $amt = $nw->field_yoga_teachers->value() ? sizeof($nw->field_yoga_teachers->value()) : '';
+      $nav .= '<li>' . l(t('Teachers') . ' ' . '(' . $amt . ')', $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
+    }
+
+//    if (!$nw->field_hb_completed->value()) {
+//      if ($nw->field_hb_type->value() != 'personal') {
+//        $request_text = $nw->field_hb_assigned->value() ? t('Manage Clients') : t('Client Requests') . ' ' . $reqs;
+//      }
+//      else {
+//        $request_text = $nw->field_hb_assigned->value() ? t('Manage Offers') : t('Job Offers') . ' ' . $reqs;
+//      }
+//
+//      $nav .= ' < li>' . l($request_text, 'job / ' . arg(1) . ' / clients', array(
+//          'html' => TRUE,
+//          'attributes' => array('class' => array(''))
+//        )) . ' </li > ';
+//    }
+
+//    if ($nw->field_hb_assigned->value()) {
+//      $fbk_size = $nw->field_hb_client_size->value() ? '<span class="badge" > ' . $nw->field_hb_client_size->value() . '</span > ' : FALSE;
+//
+//      if ($nw->field_hb_feedback_complete->value()) {
+//        $reqs = t('(complete)');
+//      }
+//      $nav .= ' < li>' . l(t('Feedback') . ' ' . $fbk_size, 'job / ' . arg(1) . ' / feedback', array(
+//          'html' => TRUE,
+//          'attributes' => array('class' => array(''))
+//        )) . ' </li > ';
+//    }
+
+    $nav .= '</ul>';
+    $vars['my_nav'] = $nav;
+    $vars['nav_2'] = FALSE;
+  }
+  else {
+    drupal_add_js(libraries_get_path('slick') . '/' . 'slick/slick.min.js');
+    drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick.css');
+    drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick-theme.css');
+    drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/models_nav.js');
+
+    if (!isset($vars['someone_else'])) {
+      $my_jobs_count_ = views_get_view_result('user_profile_jobs', 'block_3');
+      $my_jobs_count = sizeof($my_jobs_count_) > 0 ? '<span class="badge">' . sizeof($my_jobs_count_) . '</span>' : FALSE;
+
+      $uw = entity_metadata_wrapper('user', $vars['user_nav']);
+      if ($uw->field_flags_running_posts->value() != sizeof($my_jobs_count_)) {
+        $uw->field_flags_running_posts->set(sizeof($my_jobs_count_));
+        $uw->save();
+      }
+
+      $my_requests_count = sizeof(views_get_view_result('user_profile_jobs', 'page_1')) ? '<span class="badge">' . sizeof(views_get_view_result('user_profile_jobs', 'page_1')) . '</span>' : FALSE;
+
+      $nav = '<ul>';
+      $nav .= '<li>' . l(t('View'), 'user/' . $uw->getIdentifier(), array('attributes' => array('class' => array('')))) . '</li>';
+      $nav .= '<li>' . l(t('Edit Profile'), 'user/personal-information/settings', array('attributes' => array('class' => array('')))) . '</li>';
+//      $nav .= '<li>' . l(t('Photos'), 'user/photos', array('attributes' => array('class' => array('')))) . '</li>';
+//      $nav .= '<li>' . l(t('My Feedback'), 'user/' . $uw->getIdentifier() . '/feedback', array('attributes' => array('class' => array('')))) . '</li>';
+//      $nav .= '<li>' . l(t('My Jobs') . $my_jobs_count, 'my-jobs', array(
+//          'html' => TRUE,
+//          'attributes' => array('class' => array(''))
+//        )) . '</li>';
+//      $nav .= '<li>' . l(t('My Requests') . $my_requests_count, 'job-requests', array(
+//          'html' => TRUE,
+//          'attributes' => array('class' => array(''))
+//        )) . '</li>';
+      $nav .= '<li>' . l(t('Favourites'), 'watchlist', array('attributes' => array('class' => array('')))) . '</li>';
+//      $nav .= '<li>' . l(t('Previous Jobs'), 'previous-jobs', array('attributes' => array('class' => array('')))) . '</li>';
+      $nav .= '<li class="last">' . l(t('Logout'), 'user/logout', array('attributes' => array('class' => array('')))) . '</li>';
+      $nav .= '</ul>';
+      $vars['my_nav'] = $nav;
+
+      $nav_2 = '<ul class="pull-right nav-2">';
+      $nav_2 .= '<li>' . l(t('Logout'), 'user/logout', array('attributes' => array('class' => array('')))) . '</li>';
+      $nav_2 .= '</ul>';
+      $vars['nav_2'] = $nav_2;
+    }
+    else {
+      $uw = entity_metadata_wrapper('user', arg(1));
+      $nav = '<ul>';
+      $nav .= '<li>' . l($uw->label() . '\'s ' . t('profile'), 'user/' . arg(1), array('attributes' => array('class' => array('')))) . '</li>';
+      $nav .= '<li>' . l(t('Feedback'), 'user/' . arg(1) . '/feedback', array('attributes' => array('class' => array('')))) . '</li>';
+      // $nav .= '<li>' . l(t('Jobs') . $my_jobs_count, 'my-jobs', array('attributes' => array('class' => array('')))) . '</li>';
+      // $nav .= '<li>' . l(t('Previous Jobs'), 'previous-jobs', array('attributes' => array('class' => array('')))) . '</li>';
+      $nav .= '</ul>';
+      $vars['my_nav'] = $nav;
+      $vars['nav_2'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Template preprocess for Socal Nav.
+ */
+function template_preprocess_social_nav(&$vars) {
+  global $user;
+  $info = array();
+  $info[] = l(t('TCs'), 'terms');
+  $info[] = l(t('Contact'), 'contact');
+  $info[] = l(t('About'), 'about');
+  // $info[] = l(t('Sign Up / Sign In'), 'user/login');
+
+  $login = array();
+  $login[] = l('<span class="fa fa-envelope"></span> <span class="sr-only">' . t('Contact') . '</span>', '/', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l('<span class="fa fa-facebook"></span> <span class="sr-only">' . t('Facebook') . '</span>', 'https://www.facebook.com/hairandbeautymodelsaustralia/', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l('<span class="fa fa-twitter"></span> <span class="sr-only">' . t('Twitter') . '</span>', 'https://twitter.com/hbm_australia', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l('<span class="fa fa-instagram"></span> <span class="sr-only">' . t('Instagram') . '</span>', 'http://instagram.com/hairandbeautymodels', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l('<span class="fa fa-pinterest"></span> <span class="sr-only">' . t('Pinterest') . '</span>', '/', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  $login[] = l('<span class="fa fa-google"></span> <span class="sr-only">' . t('Google') . '</span>', '/', array(
+    'html' => TRUE,
+    'attributes' => array('class' => array('social-icon'))
+  ));
+  // $login[] = $user->uid == 0 ? l(t('Sign Up / Sign In'), 'user/login') : FALSE;
+
+  $links = '<ul class="social-icons-nav pull-right">';
+  foreach ($login as $key => $value) {
+    $links .= '<li>' . $value . '</li>';
+  }
+  $links .= '</ul>';
+
+  $links_left = '<ul class="info-nav pull-left">';
+  foreach ($info as $key => $value) {
+    $links_left .= '<li>' . $value . '</li>';
+  }
+  $links_left .= '</ul>';
+
+  $vars['links_right'] = '<nav role="navigation">' . $links . '</nav>';
+  $vars['links_left'] = '<nav role="navigation">' . $links_left . '</nav>';
+}
+
+/**
+ * Template preprocess for Custom Nav.
+ */
+function template_preprocess_home_nav(&$vars) {
+  global $user;
+  $uw = entity_metadata_wrapper('user', $user);
+  $links = '<li class="first leaf">' . l('Search', 'search/type/beauty') . '</li>';
+  $links .= '<li class="leaf">' . l('Studios', 'search/type/hair') . '</li>';
+  $links .= '<li class="leaf">' . l('Classes', 'search/type/personal') . '</li>';
+  $links .= '<li class="leaf">' . l('Events', 'search/type/personal') . '</li>';
+  $links .= '<li class="leaf">' . l('Blog', 'search/type/personal') . '</li>';
+  $links .= '<li class="leaf">' . l('<span class="nav-btn">Sign Up / Sign In<span>', 'user/login', array('html' => TRUE)) . '</li>';
+  $vars['links'] = $links;
+}
+
+/**
+ * Template preprocess for Custom Nav.
+ */
+function template_preprocess_custom_nav(&$vars) {
+  global $user;
+  $uw = entity_metadata_wrapper('user', $user);
+
+  $links = '<li class="first leaf">' . l('<i class="material-icons">&#xE8B6;</i> Search', 'search/type/beauty', array('html' => TRUE)) . '</li>';
+  $links .= '<li class="leaf">' . l('Studios', 'search/type/hair') . '</li>';
+  $links .= '<li class="leaf">' . l('Classes', 'search/type/personal') . '</li>';
+  $links .= '<li class="leaf">' . l('Events', 'search/type/personal') . '</li>';
+  $links .= '<li class="leaf">' . l('Blog', 'search/type/personal') . '</li>';
+
+  $active_user_menu = '<div class="my-menu-dd">';
+  $active_user_menu .=
+    '<ul>
+    <li>
+      ' . l(t('My Jobs'), 'my-jobs') . '
+    </li>
+    <li>
+      ' . l(t('My Feedback'), 'user/' . $user->uid . '/feedback', array('html' => TRUE)) . '
+    </li>
+    <li>
+      ' . l(t('My Requests'), 'job-requests') . '
+    </li>
+    <li>
+      ' . l(t('Watchlist'), 'watchlist') . '
+    </li>
+    <li>
+      ' . l(t('Previous Jobs'), 'previous-jobs') . '
+    </li>
+    <li>
+      ' . l(t('Photos'), 'user/photos') . '
+    </li>
+    <li>
+      ' . l(t('Edit Settings'), 'user/personal-information/settings') . '
+    </li>
+    <li>
+      ' . l(t('Logout'), 'user/logout', array('html' => TRUE)) . '
+    </li>
+  </ul>';
+  $active_user_menu .= '</div>';
+  $mypic = $uw->value()->picture;
+  if ($mypic) {
+    $pic = '<div class="my-image img-circle">' . theme('image_style', array(
+        'style_name' => 'profile',
+        'path' => $uw->value()->picture->uri,
+        'attributes' => array('class' => array('img-circle'))
+      )) . '</div>';
+  }
+  else {
+    $pic = '<div class="my-image img-circle">' . theme('image_style', array(
+        'style_name' => 'profile',
+        'path' => 'public://pictures/picture-default.png',
+        'attributes' => array('class' => array('img-circle'))
+      )) . '</div>';
+  }
+  $pic .= '<i class="material-icons">&#xE5C5;</i>';
+
+  $active_msgs = current_path() == 'user' ? 'active' : FALSE;
+  $fname = $uw->field_first_name->value() ? $uw->field_first_name->value() : t('Me');
+  $links .= '<li class="last leaf a-dd ' . $active_msgs . '">' .
+    l('<span>' . $fname . '</span>' . $pic, 'user', array('html' => TRUE)) . $active_user_menu . '</li>';
+
+  $links .= '<li class="visible-xs leaf">' . l('Logout', 'user/logout') . '</li>';
+
+  $vars['links'] = $links;
+
+  // $variables['my_menu'] =
+  //   '<ul class="menu nav navbar-nav my-menu">
+  //     <li class="first leaf '.$active_link.'">
+  //       '.$link.$active_menu.'
+  //     </li>
+  //   </ul>';
+}
+

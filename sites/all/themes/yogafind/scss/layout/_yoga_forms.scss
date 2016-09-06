@@ -1,0 +1,200 @@
+.page-classes-add,
+.page-classes-edit {
+  .form-item-title {
+    display: none;
+  }
+  #edit-field-yc-start-time-und-0 {
+    .panel-heading {
+      display: none;
+    }
+  }
+}
+
+.page-teacher-edit,
+.page-teacher-add {
+  #edit-field-teach-bio-und-0-format {
+    display: none;
+  }
+}
+
+.page-listing-add,
+.page-event-add,
+.page-event-edit,
+.page-listing-edit {
+  form {
+
+    #field-yoga-event-dates-add-more-wrapper {
+
+      .date-form-element-content-multiline {
+        @include clearfix();
+        background-color: $white;
+        padding: 15px;
+      }
+
+      .form-item-field-yoga-event-dates-und-0-value2 {
+        label {
+          float: left;
+          padding: 5px;
+        }
+      }
+
+      .date-no-float {
+        float: left;
+        width: auto!important;
+        clear: none;
+      }
+
+      .panel-heading {
+        display: none;
+      }
+      .container-inline-date {
+        label {
+          display: inline !important;
+        }
+
+        .date-no-float {
+          float: left;
+          width: 40%;
+        }
+        .form-item .form-item {
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .field-type-addressfield {
+      label {
+        display: inline !important;
+      }
+      .panel-heading {
+        display: none;
+      }
+      .panel-default {
+        border: none;
+        box-shadow: none;
+      }
+    }
+    //#edit-body {
+    .filter-wrapper {
+      display: none;
+    }
+    //}
+    .form-item {
+      label {
+        display: none;
+      }
+    }
+    #edit-field-yoga-latlng-und-0-geom,
+    .field-name-field-location-taxonomy {
+      display: none;
+    }
+
+  }
+}
+
+// Autocomplete field.
+div.autocomplete-deluxe-multiple {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+
+  input {
+    outline: none !important;
+    &.form-control {
+      height: auto !important;
+    }
+  }
+}
+
+.ui-autocomplete {
+  border-radius: 0;
+  border: 1px solid #ccc;
+  font-family: $open-sans !important;
+  font-size: 14px;
+  .ui-widget-content {
+    a {
+      color: $dark;
+
+      &.ui-state-focus {
+        border: none;
+        background: none;
+        border-radius: 0;
+        background-color: $light-blue;
+        font-weight: 300;
+        color: $dark;
+      }
+    }
+  }
+
+  .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    border: none;
+    background: none;
+    border-radius: 0;
+    background-color: $light-blue;
+    font-weight: 300;
+    color: $dark;
+    margin: 0 !important;
+  }
+
+  .autocomplete-deluxe-highlight-char {
+    font-weight: 300;
+    color: $blue;
+  }
+}
+
+.autocomplete-deluxe-item {
+  float: left;
+  background-clip: padding-box;
+  background-color: $blue;
+  border: none;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: none;
+  color: #fff;
+  cursor: default;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 13px;
+  margin: 3px 0 3px 5px;
+  padding: 5px 20px 6px 7px;
+  position: relative;
+}
+
+.autocomplete-deluxe-item-delete {
+  background: none;
+  display: block;
+  font-size: 1px;
+  height: 13px;
+  position: absolute;
+  right: 3px;
+  top: 6px;
+  width: 12px;
+  &:after {
+    @include fa-background("\f00d");
+    font-size: 12px;
+    text-decoration: none;
+  }
+}
+
+div.autocomplete-deluxe-throbber {
+  display: none;
+}
+
+@media (min-width: $screen-lg-desktop) {
+  // .hbm-choose-type {
+  //   width: 700px;
+  //   margin: 0 auto 30px auto;
+  // }
+  .page-listing-add,
+  .page-event-add,
+  .page-event-edit,
+  .page-listing-edit,
+  .page-classes-edit,
+  .page-classes-add,
+  .page-teacher-edit,
+  .page-teacher-add,
+  .page-job-create {
+    .main-container {
+      width: 600px;
+    }
+  }
+}

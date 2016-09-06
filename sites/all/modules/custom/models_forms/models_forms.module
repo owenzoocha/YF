@@ -1,0 +1,275 @@
+<?php
+/**
+ * @file models_forms.module.
+ */
+require_once 'models_forms.search.inc';
+require_once 'models_forms.request.inc';
+require_once 'models_forms.publish.inc';
+require_once 'models_forms.contactus.inc';
+require_once 'models_forms.canceljob.inc';
+require_once 'models_forms.completejob.inc';
+require_once 'models_forms.pausejob.inc';
+require_once 'models_forms.confirm_clients.inc';
+
+
+/**
+ * Implements hook_wysiwyg_editor_settings_alter().
+ */
+// function models_forms_wysiwyg_editor_settings_alter(&$settings, $context) {
+//   if ($context['profile']->editor == 'tinymce') {
+//     $settings['skin'] = 'o2k7';
+//     $settings['skin_variant'] = 'silver';
+//   }
+// }
+
+function models_forms_init() {
+  module_load_include('inc', 'user', 'user.pages');
+  module_load_include('inc', 'node', 'node.pages');
+}
+
+/**
+ * Implements hook_menu().
+ */
+function models_forms_menu() {
+  $items['listing/add'] = array(
+    'title' => 'Your Yoga Listing',
+    'page callback' => 'models_forms_listing_add',
+//    'page arguments' =>  array('models_forms_create_form'),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.create.inc',
+  );
+  $items['listing/%/edit'] = array(
+    'title' => 'Your Yoga Listing',
+    'page callback' => 'models_forms_listing_add',
+    'page arguments' => array(2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.create.inc',
+  );
+
+  $items['event/add'] = array(
+    'title' => 'Your Yoga Listing',
+    'page callback' => 'models_forms_listing_add',
+//    'page arguments' =>  array('models_forms_create_form'),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.create.inc',
+  );
+  $items['event/%/edit'] = array(
+    'title' => 'Your Yoga Listing',
+    'page callback' => 'models_forms_listing_add',
+    'page arguments' => array(2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.create.inc',
+  );
+
+
+  $items['classes/add'] = array(
+    'title' => 'Add a Class to Your Listing',
+    'page callback' => 'models_forms_class_add',
+    'page arguments' => array(2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.yoga_classes.inc',
+  );
+  $items['classes/%/edit'] = array(
+    'title' => 'Edit your Yoga Class',
+    'page callback' => 'models_forms_class_add',
+    'page arguments' => array(2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.yoga_classes.inc',
+  );
+
+  $items['teacher/add'] = array(
+    'title' => 'Add a Teacher to Your Listing',
+    'page callback' => 'models_forms_teacher_add',
+    'page arguments' => array(2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.yoga_teachers.inc',
+  );
+  $items['teacher/%/edit'] = array(
+    'title' => 'Edit your Teacher',
+    'page callback' => 'models_forms_teacher_add',
+    'page arguments' => array(2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.yoga_teachers.inc',
+  );
+
+  $items['job/%/edit'] = array(
+    'title' => 'Edit your Job',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('models_forms_create_form', 2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.create.inc',
+  );
+  $items['job/%/feedback'] = array(
+    'title' => 'Feedback',
+    'page callback' => 'models_forms_personal_info',
+    'page arguments' => array('models_forms_feedback_form', 2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.feedback.inc',
+  );
+
+  $items['user/personal-information/settings'] = array(
+    'title' => 'Personal Information',
+    'page callback' => 'models_forms_personal_info',
+    // 'page arguments' =>  array('models_forms_personal_information_form', 2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.personal_information.inc',
+  );
+  $items['user/account/settings'] = array(
+    'title' => 'Profile Settings',
+    'page callback' => 'models_forms_account_settings',
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.personal_information.inc',
+  );
+  $items['user/email/settings'] = array(
+    'title' => 'Email Settings',
+    'page callback' => 'models_forms_email_settings',
+    // 'page arguments' =>  array('models_forms_personal_information_form', 2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.personal_information.inc',
+  );
+  $items['user/interests/settings'] = array(
+    'title' => 'Your Interests',
+    'page callback' => 'models_forms_interests',
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.personal_information.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function models_forms_entity_insert($entity, $type) {
+  // Save the class id to the yoga listing.
+  if ($type == 'class') {
+    if ($entity->type == 'teacher') {
+      $ew = entity_metadata_wrapper('class', $entity);
+      $nw = entity_metadata_wrapper('node', $ew->uid->field_my_listings->value()[0]->nid);
+      if (!$nw->field_yoga_teachers->value()) {
+        $nw->field_yoga_teachers->offsetSet(0, $ew->getIdentifier());
+      }
+      else {
+        $nw->field_yoga_teachers->offsetSet(sizeof($nw->field_yoga_teachers->value()), $ew->getIdentifier());
+      }
+      $nw->save();
+    }
+    if ($entity->type == 'yoga') {
+      $ew = entity_metadata_wrapper('class', $entity);
+      $nw = entity_metadata_wrapper('node', $ew->uid->field_my_listings->value()[0]->nid);
+      if (!$nw->field_yoga_classes->value()) {
+        $nw->field_yoga_classes->offsetSet(0, $ew->getIdentifier());
+      }
+      else {
+        $nw->field_yoga_classes->offsetSet(sizeof($nw->field_yoga_classes->value()), $ew->getIdentifier());
+      }
+      $nw->save();
+    }
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function models_forms_theme($existing, $type, $theme, $path) {
+  return array(
+    // 'task_buttons' => array(
+    //   'template' => 'templates/task-buttons',
+    // ),
+    // 'task_users' => array(
+    //   'template' => 'templates/task-users',
+    // ),
+    'search_menu' => array(
+      'template' => 'templates/search-form',
+    ),
+    'overwrite_user_login' => array(
+      'render element' => 'form',
+      'template' => 'templates/login-form'
+    ),
+    'overwrite_create_job' => array(
+      'render element' => 'form',
+      'template' => 'templates/create-job'
+    ),
+    'overwrite_listing_form' => array(
+      'render element' => 'form',
+      'template' => 'templates/add-listing'
+    ),
+    'overwrite_event_form' => array(
+      'render element' => 'form',
+      'template' => 'templates/add-event'
+    ),
+    'overwrite_classes_form' => array(
+      'render element' => 'form',
+      'template' => 'templates/add-classes'
+    ),
+  );
+}
+
+function models_forms_hook_theme($existing, $type, $theme, $path) {
+  return array(
+    'overwrite_user_login' => array(
+      'render element' => 'form',
+      'template' => 'form--user_login',
+      'path' => $path . '/templates',
+    ),
+    'overwrite_create_job' => array(
+      'render element' => 'form',
+      'template' => 'form--create_job',
+      'path' => $path . '/templates',
+    ),
+    'overwrite_listing_form' => array(
+      'render element' => 'form',
+      'template' => 'form--add_listing',
+      'path' => $path . '/templates',
+    ),
+    'overwrite_event_form' => array(
+      'render element' => 'form',
+      'template' => 'form--event_listing',
+      'path' => $path . '/templates',
+    ),
+    'overwrite_classes_form' => array(
+      'render element' => 'form',
+      'template' => 'form--add_classes',
+      'path' => $path . '/templates',
+    ),
+  );
+}
+
+function template_preprocess_search_menu(&$vars) {
+  $srch = drupal_get_form('models_forms_search_form');
+  $vars['search_box'] = drupal_render($srch);
+  // $active_menu = '<div class="my-menu-dd col-md-12 show-filters">';
+  // $skills_block = block_load('search_api_sorts', 'search-sorts');
+  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
+  // $filters = drupal_render($block);
+  // $skills_block = block_load('views', '-exp-current_tasks_solr_-page');
+  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
+  // $filters .= drupal_render($block);
+  // $active_menu .= $filters;
+  // $active_menu .= '</div>';
+  // $vars['active_menu'] = $active_menu;
+  // $vars['show_filters'] = !empty(arg(0)) && arg(0) == 'task-search' ? true : false;
+  $vars['show_filters'] = FALSE;
+}
+
+/*
+** Implements hook_mail().
+*/
+function models_forms_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'models_forms_contactus_mail':
+      $message['subject'] = 'CONTACT FORM - ' . $params['option'];
+      $message['body'][] = $params['name'] . ' - ' . $params['email'] . ' - ' . $params['option'] . ' - ' . $params['msg'];
+      break;
+
+    // case 'pwc_form_send_addbook_msg':
+    //   $headers = array(
+    //     'MIME-Version' => '1.0',
+    //     'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
+    //     'Content-Transfer-Encoding' => '8Bit',
+    //     'X-Mailer' => 'Drupal',
+    //   );
+    //   $message['subject'] = t('You have received a message');
+    //   $message['body'][] = $params['body'];
+    // break;
+  }
+}

@@ -38,12 +38,14 @@ $dark: #272D2D;
 $dark-grey: #777777;
 $light-blue: #f3f9fe;
 //$blue: #0087e2;
-$blue: #61b6ea;
+$blue: #06BEE1;
 $pink: #F7567C;
 $purple: #6F73D2;
-$green: #b9e88b;
-$red: #e96161;
+$light-purple: rgba(111, 115, 210, 0.08);
+$green: #48A9A6;
+$red: #DB504A;
 
+$imagePath: "../images";
 
 $gray-base:              #000 !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
@@ -88,6 +90,7 @@ $josefin-slab: 'Josefin Slab';
 $josefin-sans: 'Josefin Sans';
 $roboto: 'Roboto';
 $open-sans: 'Open Sans', sans-serif;
+$raleway: 'Raleway', sans-serif;
 
 $font-family-sans-serif:  $open-sans, "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif:       $open-sans, "Times New Roman", Times, serif !default;
@@ -112,7 +115,7 @@ $line-height-base:        1.428571429 !default; // 20/14
 $line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
 
 //** By default, this inherits from the `<body>`.
-$headings-font-family:    $open-sans !default;
+$headings-font-family:    $raleway !default;
 $headings-font-weight:    300 !default;
 $headings-line-height:    1.1 !default;
 $headings-color:          inherit !default;

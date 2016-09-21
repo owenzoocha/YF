@@ -268,47 +268,38 @@ function template_preprocess_my_nav(&$vars) {
     $nw = tweaks_get_alias_wrapper();
     $alias = drupal_get_path_alias('node/' . $nw->getIdentifier());
 
-    $nav = '<ul>';
-    $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
-    $nav .= '<li>' . l(t('Edit'), 'listing/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
-    $nav .= '<li>' . l(t('Blog'), $alias . ' /blog', array('attributes' => array('class' => array('')))) . ' </li> ';
-    $nav .= '<li>' . l(t('Gallery'), $alias . '/blog', array('attributes' => array('class' => array('')))) . ' </li> ';
+    try {
+      $nav = '<ul>';
+      if ($nw->field_yoga_type->value() != 'event') {
+        $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
+        $nav .= '<li>' . l(t('Edit'), 'listing/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+        $nav .= '<li>' . l(t('Blog'), $alias . ' /blog', array('attributes' => array('class' => array('')))) . ' </li> ';
+        $nav .= '<li>' . l(t('Gallery'), $alias . '/blog', array('attributes' => array('class' => array('')))) . ' </li> ';
 
-    $amt = $nw->field_yoga_classes->value() ? sizeof($nw->field_yoga_classes->value()) : '';
-    $nav .= '<li>' . l(t('Timetable') . ' ' . '(' . $amt . ')', $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
-    $nav .= '<li>' . l(t('Events'), $alias . '/photos', array('attributes' => array('class' => array('')))) . ' </li> ';
+        $amt = $nw->field_yoga_classes->value() ? ' (' . sizeof($nw->field_yoga_classes->value()) . ')' : '';
+        $nav .= '<li>' . l(t('Timetable') . $amt, $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
 
-    if ($nw->field_yoga_type->value() == 'studio') {
-      $amt = $nw->field_yoga_teachers->value() ? sizeof($nw->field_yoga_teachers->value()) : '';
-      $nav .= '<li>' . l(t('Teachers') . ' ' . '(' . $amt . ')', $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
+        $amt = $nw->field_yoga_event_list->value() ? ' (' . sizeof($nw->field_yoga_event_list->value()) . ')' : '';
+        $nav .= '<li>' . l(t('Events') . $amt, $alias . '/events', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+        if ($nw->field_yoga_type->value() == 'studio') {
+          $amt = $nw->field_yoga_teachers->value() ? ' (' . sizeof($nw->field_yoga_teachers->value()) . ')' : '';
+          $nav .= '<li>' . l(t('Teachers') . $amt, $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
+        }
+      }
+      else {
+        $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
+        $nav .= '<li>' . l(t('Edit'), 'event/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+      }
     }
-
-//    if (!$nw->field_hb_completed->value()) {
-//      if ($nw->field_hb_type->value() != 'personal') {
-//        $request_text = $nw->field_hb_assigned->value() ? t('Manage Clients') : t('Client Requests') . ' ' . $reqs;
-//      }
-//      else {
-//        $request_text = $nw->field_hb_assigned->value() ? t('Manage Offers') : t('Job Offers') . ' ' . $reqs;
-//      }
-//
-//      $nav .= ' < li>' . l($request_text, 'job / ' . arg(1) . ' / clients', array(
-//          'html' => TRUE,
-//          'attributes' => array('class' => array(''))
-//        )) . ' </li > ';
-//    }
-
-//    if ($nw->field_hb_assigned->value()) {
-//      $fbk_size = $nw->field_hb_client_size->value() ? '<span class="badge" > ' . $nw->field_hb_client_size->value() . '</span > ' : FALSE;
-//
-//      if ($nw->field_hb_feedback_complete->value()) {
-//        $reqs = t('(complete)');
-//      }
-//      $nav .= ' < li>' . l(t('Feedback') . ' ' . $fbk_size, 'job / ' . arg(1) . ' / feedback', array(
-//          'html' => TRUE,
-//          'attributes' => array('class' => array(''))
-//        )) . ' </li > ';
-//    }
-
+    catch (EntityMetadataWrapperException $exc) {
+      watchdog(
+        'models_nav',
+        'EntityMetadataWrapper exception in %function() @trace',
+        array('%function' => __FUNCTION__, '@trace' => $exc->getTraceAsString()),
+        WATCHDOG_ERROR
+      );
+    }
     $nav .= '</ul>';
     $vars['my_nav'] = $nav;
     $vars['nav_2'] = FALSE;

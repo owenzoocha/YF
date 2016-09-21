@@ -2,8 +2,78 @@
   background: none;
 }
 
+.event-type {
+  text-transform: uppercase;
+  background: $green;
+  color: $white;
+  font-size: 13px;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
 .node-type-yoga,
 .page-studio {
+
+  // THE EVENT PAGE.
+  #block-views-jobs-rhs-block-4 {
+    @include blocks();
+    font-size: 14px;
+
+    .views-label {
+      &.small-label {
+        font-size: 20px;
+        display: block;
+        font-weight: 300;
+        float: left;
+        width: 100px;
+      }
+    }
+
+    .views-field-field-yoga-event-dates {
+      margin-top: 15px;
+      span {
+        font-weight: 300;
+      }
+    }
+
+    .views-field-field-yoga-location,
+    .views-field-field-yoga-number,
+    .views-field-field-yoga-link,
+    .views-field-field-yoga-event-price-1,
+    .views-field-field-yoga-event-dates {
+      display: flex;
+      align-items: center;
+      @include clearfix();
+      padding: 10px;
+      margin-bottom: 2px;
+      font-weight: 300;
+      -webkit-font-smoothing: initial;
+      background: rgba(111, 115, 210, 0.08);
+      .field-content {
+        font-size: 14px;
+      }
+      a {
+        color: $purple;
+        font-weight: 300;
+      }
+    }
+
+    .views-field-field-yoga-location {
+      p {
+        margin: 0;
+        -webkit-font-smoothing: initial;
+      }
+      i {
+        display: none;
+      }
+    }
+
+    .views-field-body,
+    .views-field-field-yoga-event-price-include {
+      padding: 10px 0;
+      border-bottom: 1px dashed #ccc;
+    }
+  }
 
   // page header stuffs >..
   #hb-header {
@@ -38,6 +108,9 @@
         font-size: 12px;
         letter-spacing: 0;
       }
+    }
+    &.normal-header {
+      background-color: #f8f8f8;
     }
   }
   #page-header-bg {
@@ -111,6 +184,12 @@
         }
       }
     }
+    #block-views-jobs-rhs-block-3 {
+      .open-link {
+        border: none;
+      }
+    }
+
     #block-views-jobs-rhs-block-1,
     #block-tweaks-job-client-faces {
       //padding: 15px;
@@ -277,7 +356,6 @@
     }
   }
 }
-
 
 #block-facebook-comments-block-fb-comments {
   .fb-comments, .fb-comments iframe[style], .fb-comments span {

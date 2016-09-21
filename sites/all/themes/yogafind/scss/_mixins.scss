@@ -53,6 +53,16 @@
   padding: 15px;
 }
 
+@mixin blocks-blue(){
+  box-shadow: none;
+  background-color: rgb(244, 244, 252);
+  border: 1px solid rgba(111,115,210,0.2);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 5px;
+  position: relative;
+}
+
 @mixin tags(){
   ul {
     margin-bottom: 10px;

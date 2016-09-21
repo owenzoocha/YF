@@ -22,384 +22,67 @@ function yogafind_preprocess_node(&$variables) {
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->nid . '__teaser';
   }
 
-  if ($variables['type'] == 'job') {
-    $nw = entity_metadata_wrapper('node', $variables['nid']);
-    $uw = entity_metadata_wrapper('user', $user->uid);
+  if ($variables['view_mode'] == 'token') {
+    $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__token';
+    $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->nid . '__token';
+  }
 
-    if ($variables['view_mode'] == 'teaser') {
-      $mypic = $nw->author->value()->picture;
-      if ($mypic) {
-        $pic = '<div class="my-image img-circle">' . theme('image_style', array(
-            'style_name' => 'profile',
-            'path' => $nw->author->value()->picture->uri,
-            'attributes' => array('class' => array('img-circle'))
-          )) . '</div>';
-      }
-      else {
-        $pic = '<div class="my-image img-circle">' . theme('image_style', array(
-            'style_name' => 'profile',
-            'path' => 'public://pictures/picture-default.png',
-            'attributes' => array('class' => array('img-circle'))
-          )) . '</div>';
-      }
-      $variables['the_pic'] = l($pic, 'user/' . $nw->author->getIdentifier(), array(
-        'html' => TRUE,
-        'attributes' => array('class' => array('author-pic'))
-      ));
-
-      $image = FALSE;
-      $location = FALSE;
-      if ($nw->field_hb_location->value()) {
-        if ($nw->field_hb_location->value()['locality']) {
-          $location = '<span class="hb-location"><i class="fa fa-map-marker"></i> ' . $nw->field_hb_location->value()['locality'] . '</span>';
-        }
-        else {
-          $location = '<span class="hb-location"><i class="fa fa-map-marker"></i> ' . $nw->field_hb_location->value()['premise'] . '</span>';
-        }
-      }
-
-      if ($nw->field_hb_time->value()) {
-        $sz = sizeof($nw->field_hb_time->value());
-        $ts = date('d/m/y H:ia', $nw->field_hb_time->value()[0]);
-        $time = $sz . ' ' . format_plural($sz, 'appointment', 'appointments') . ' from </br>' . $ts;
-        $starting = '<span class="hb-starting"><i class="fa fa-clock-o"></i> ' . $time . '</span>';
-      }
-      else {
-        $starting = FALSE;
-      }
-
-      if ($nw->field_hb_type->value() != 'personal') {
-        if ($nw->field_hb_pics->value()) {
-          $promoted_img_uri = models_cache_get_promoimg_cache($nw->getIdentifier());
-          $image = l(theme('image_style', array(
-            'style_name' => 'profile',
-            'path' => $promoted_img_uri
-          )), 'node/' . $nw->getIdentifier(), array('html' => TRUE));
-        }
-        else {
-          if ($nw->field_hb_type->value() == 'hair') {
-            $image = l('<img class="img-responsive" src="/sites/all/themes/models/images/hair-button.png">', 'node/' . $nw->getIdentifier(), array('html' => TRUE));
-          }
-          if ($nw->field_hb_type->value() == 'beauty') {
-            $image = l('<img class="img-responsive" src="/sites/all/themes/models/images/beauty-button.png">', 'node/' . $nw->getIdentifier(), array('html' => TRUE));
-          }
-        }
-      }
-      else {
-        if (!$nw->field_hb_pics->value()) {
-          $image = l(theme('image_style', array(
-            'style_name' => 'profile',
-            'path' => $nw->author->value()->picture->uri
-          )), 'node/' . $nw->getIdentifier(), array('html' => TRUE));
-        }
-        else {
-          $promoted_img_uri = models_cache_get_promoimg_cache($nw->getIdentifier());
-          $image = l(theme('image_style', array(
-            'style_name' => 'profile',
-            'path' => $promoted_img_uri
-          )), 'node/' . $nw->getIdentifier(), array('html' => TRUE));
-        }
-      }
-//
-//
-//      $cost_class = FALSE;
-//      if ($nw->field_hb_type->value() != 'personal') {
-//        if ($nw->field_hb_price->value()) {
-//          $cost = '<i class="fa fa-dollar"></i> ' . $nw->field_hb_price->value();
-//        }
-//        else {
-//          $cost = '<i class="fa fa-dollar"></i> 19.55';
-//        }
-//      }
-//
-//
-//      if ($nw->field_hb_price_type->value()) {
-//        switch ($nw->field_hb_price_type->value()) {
-//          case 'free':
-//            $pt = '<i class="fa fa-dollar"></i> Free';
-//            $cost_class = 'cost-free';
-//            $cost = FALSE;
-//            break;
-//          case 'approx':
-//            $pt = ' <small>Approx.</small>';
-//            break;
-//          case 'fixed':
-//            $pt = FALSE;
-//            break;
-//          default:
-//            $pt = FALSE;
-//            break;
-//        }
-//      }
-//      else {
-//        $pt = FALSE;
-//      }
-//
-//      $image_and_type = '<div class="hb-imagery">';
-//      $image_and_type .= '<span>' . $image . '</span>';
-//
-//      $liked = FALSE;
-//      if (in_array($nw->getIdentifier(), tweaks_get_watchlist($uw))) {
-//        $liked = 'hb-like-active';
-//      }
-//
-
-      if ($nw->field_hb_type->value()) {
-        $tooltip_h = $tooltip_b = '';
-        if ($nw->field_hb_type->value() == 'hair' || $nw->field_hb_type->value() == 'personal') {
-          if (sizeof($nw->field_hb_ht->value())) {
-            $tooltip_h .= t('Hair &raquo ');
-            foreach ($nw->field_hb_ht->getIterator() as $key => $ht) {
-              $tooltip_h .= $ht->label() . ', ';
-            }
-            $tooltip_h = rtrim($tooltip_h, ', ');
-          }
-        }
-        if ($nw->field_hb_type->value() == 'beauty' || $nw->field_hb_type->value() == 'personal') {
-          if (sizeof($nw->field_hb_bt->value())) {
-            $tooltip_b .= t('Beauty &raquo ');
-            foreach ($nw->field_hb_bt->getIterator() as $key => $bt) {
-              $tooltip_b .= $bt->label() . ', ';
-            }
-            $tooltip_b = rtrim($tooltip_b, ', ');
-          }
-        }
-        $tooltip = $tooltip_h . ' ' . $tooltip_b;
-        $more_info = '<span class="hb-info" data-toggle="tooltip" data-placement="top" title="' . $tooltip . '"><i class="fa fa-info-circle"></i></span>';
-      }
-      else {
-        $more_info = FALSE;
-      }
-
-      $image_and_type .= '<span data-jid="' . $nw->getIdentifier() . '" class="hb-like ' . $liked . ' fa fa-star"></span>';
-      $image_and_type .= '<span class="hb-type hb-type-' . strtolower($nw->field_hb_type->label()) . '">' . $nw->field_hb_type->label() . '</span>';
-      if ($nw->field_hb_type->value() != 'personal') {
-        $image_and_type .= '<span class="hb-cost ' . $cost_class . '">' . $cost . $pt . '</span>';
-      }
-      $image_and_type .= $more_info;
-      $image_and_type .= '</div>';
-
-      $variables['image_and_type'] = $image_and_type;
-      $variables['location'] = $location;
-      $variables['starting'] = $starting;
-
-      $variables['posted_by'] = '<div class="hb-author"> ' . $nw->author->label() . '<span class="hb-timeago"> - ' . format_date($nw->created->value(), 'timeago', 'Y-m-d H:i:s', 'UTC') . '</span></div>';
-
-      $stars = $nw->author->field_my_overall_rating->value() ? $nw->author->field_my_overall_rating->value() : 0;
-      $variables['stars'] = '<div class="hb-rating raty raty-readonly" data-rating="' . $stars . '"></div>';
-
-      // $variables['created'] = '<span>' . format_date($nw->created->value(), 'timeago', 'Y-m-d H:i:s', 'UTC') . '</span>';
-      $variables['created'] = FALSE;
-
-      // if (strpos(current_path(), 'users') !== FALSE && !drupal_is_front_page()) {
-      if (strpos(current_path(), 'my-jobs') !== FALSE) {
-        if ($nw->author->getIdentifier() == $uw->getIdentifier()) {
-
-          if ($nw->field_hb_cancelled->value()) {
-            $variables['job_status'] = t('Cancelled');
-          }
-          else {
-            if ($nw->field_hb_paused->value()) {
-              $variables['job_status'] = t('Paused');
-            }
-            else {
-              if ($nw->field_hb_assigned->value()) {
-                $variables['job_status'] = $nw->field_hb_feedb_size->value() != $nw->field_hb_client_size->value() ? t('Leave Feedback') : t('Feedback Complete');
-              }
-              else {
-                if ($nw->field_hb_feedback_complete->value()) {
-                  $variables['job_status'] = t('Complete');
-                }
-                else {
-                  if ($nw->field_hb_completed->value()) {
-                    $variables['job_status'] = t('Complete');
-                  }
-                  else {
-                    if (!$nw->status->value()) {
-                      $variables['job_status'] = t('Unpublished');
-                    }
-                    else {
-                      if ($nw->status->value()) {
-                        $variables['job_status'] = t('Running');
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          // If there are requests OR offers.
-          if ($nw->field_hb_users_eck->value()) {
-
-            // feedb size = Feedback size so far.
-            // Client Size = CONFIRMED clients to the job.
-            if ($nw->field_hb_feedb_size->value() != $nw->field_hb_client_size->value()) {
-              // Feedback obvs not complete..
-              if (!$nw->field_hb_assigned->value()) {
-                // If not assigned, then people are interested..
-                $interested_txt = $nw->field_hb_type->value() != 'personal' ? t('interested') : format_plural(sizeof($nw->field_hb_users_eck->value()), t('offer'), t('offers'));
-                $variables['requestees'] = '<span class="interested"><i class="material-icons">accessibility</i>' . ' ' . l(sizeof($nw->field_hb_users_eck->value()) . $interested_txt, 'job/' . $nw->getIdentifier() . '/clients') . '</span>';
-              }
-              else {
-                // If assigned, then you need to leave feedback.
-                $variables['requestees'] = '<span class="interested"><i class="material-icons">face</i>' . ' ' . l(sizeof($nw->field_hb_client_size->value()) . ' ' . t('feedback required'), 'job/' . $nw->getIdentifier() . '/feedback') . '</span>';
-              }
-            }
-            else {
-              if ($nw->field_hb_feedb_size->value()) {
-                // if there is feedback size and it = client size - then feedback is complete!
-                $variables['requestees'] = '<span class="interested"><i class="material-icons">done</i>' . ' ' . l(' ' . t('feedback complete'), 'job/' . $nw->getIdentifier() . '/feedback') . '</span>';
-              }
-              else {
-                // No feedback given yet.
-                // No feedback, hasn't been assigned.. //
-                $interested_txt = $nw->field_hb_type->value() != 'personal' ? t('interested') : format_plural(sizeof($nw->field_hb_users_eck->value()), t('offer'), t('offers'));
-                $variables['requestees'] = '<span class="interested"><i class="material-icons">accessibility</i>' . ' ' . l(sizeof($nw->field_hb_users_eck->value()) . $interested_txt, 'job/' . $nw->getIdentifier() . '/clients') . '</span>';
-              }
-            }
-          }
-
-        }
-      }
+  if ($variables['type'] == 'yoga') {
+    if (!empty($variables['field_yoga_type'][0]['value'])) {
+      $variables['yoga_type'] = $variables['field_yoga_type'][0]['value'];
     }
-    else {
 
+    if ($variables['view_mode'] == 'token') {
+      $nw = entity_metadata_wrapper('node', $variables['nid']);
+      // Parent.
+      $query = db_query('SELECT entity_id FROM field_data_field_yoga_event_list WHERE field_yoga_event_list_nid=:nid', array('nid' => $nw->getIdentifier()));
+      $res = $query->fetchAll();
+      $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
 
-      // Check if there's a last day - if so, schedule the complete flag.
-      // if ($nw->field_hb_time->value()) {
-      //   $date_n = sizeof($nw->field_hb_time->value()) - 1;
-      //   $last_day = $nw->field_hb_time->value()[$date_n];
-      //   rules_invoke_component('rules_set_schedule_schedule_the_complete_job', $last_day, $nw->value());
-      // }
+      $variables['parent_title'] = l($pw->label(), 'node/' . $pw->getIdentifier());
+      $variables['title'] = l($variables['title'], 'node/' . $nw->getIdentifier());
+      $variables['event_type'] = $nw->field_yoga_event_type->value() ? $nw->field_yoga_event_type->label() : FALSE;
 
-      $variables['users_available'] = FALSE;
-      $variables['show_slick'] = $nw->field_hb_pics->value() ? TRUE : FALSE;
-
-      if (!empty($variables['content']['field_hb_time'])) {
-        $variables['content']['field_hb_time_intro'] = $variables['content']['field_hb_time'];
-        $variables['content']['field_hb_time_intro']['#title'] = t('Date and Time');
-      }
-
-      if (!$nw->field_hb_assigned->value()) {
-        if (!$nw->status->value()) {
-
-          if ($nw->field_hb_type->value() != 'personal') {
-
-            // HACKY.
-            if ($nw->field_hb_cancelled->value()) {
-              $unpub_msg = '<div class="alert alert-block alert-danger messages info"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Informative message</h4>';
-              $unpub_msg .= t('This Job has been cancelled - and will be removed soon!');
-              $unpub_msg .= '</div>';
-            }
-            else {
-              if (!$nw->field_hb_paused->value()) {
-                $unpub_msg = '<div class="alert alert-block alert-info messages info"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Informative message</h4>';
-                $unpub_msg .= t('Hey !name, ' . $nw->label() . ' is currently unpublished.  Check out your job below - this is what it will look like to other users.  To publish your job, click <strong>Publish Job</strong> below.', array('!name' => $uw->field_first_name->value()));
-                $unpub_msg .= '</div>';
-              }
-              else {
-                $unpub_msg = '<div class="alert alert-block alert-success messages info"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Informative message</h4>';
-                $unpub_msg .= t('Hey !name, ' . $nw->label() . ' is currently <strong>paused</strong>. To resume, click <strong>Resume Job</strong> below.', array('!name' => $uw->field_first_name->value()));
-                $unpub_msg .= '</div>';
-              }
-            }
-          }
-          else {
-            if ($nw->field_hb_cancelled->value()) {
-              $unpub_msg = '<div class="alert alert-block alert-danger messages info"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Informative message</h4>';
-              $unpub_msg .= t('This Job has been cancelled - and will be removed soon.');
-              $unpub_msg .= '</div>';
-            }
-            else {
-              if (!$nw->field_hb_paused->value()) {
-                $unpub_msg = '<div class="alert alert-block alert-info messages info"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Informative message</h4>';
-                $unpub_msg .= t('Hey !name, your job <em>' . $nw->label() . '</em> is currently inactive. To appear on <strong>HBM</strong> and start receiving <strong>Last Minute Model</strong> job offers - click <strong>Publish</strong> below.', array('!name' => $uw->field_first_name->value()));
-                $unpub_msg .= '</div>';
-              }
-              else {
-                $unpub_msg = '<div class="alert alert-block alert-success messages info"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Informative message</h4>';
-                $unpub_msg .= t('Hey !name, ' . $nw->label() . ' is currently <strong>paused</strong>. To resume, click <strong>Resume Job</strong> below.', array('!name' => $uw->field_first_name->value()));
-                $unpub_msg .= '</div>';
-              }
-            }
-          }
-
-          $variables['unpub_msg'] = $unpub_msg;
-
-          // Publish a job button.
-          $publish_form = drupal_get_form('models_forms_publish_form');
-          $modal_options = array(
-            'attributes' => array(
-              'id' => 'job-publish-form-popup',
-              'class' => array('job-publish-form-popup-modal')
-            ),
-            'heading' => t('Publish Job:') . ' ' . $nw->label(),
-            'body' => drupal_render($publish_form),
-          );
-          $variables['job_publish_form'] = theme('bootstrap_modal', $modal_options);
-
-          $job_publish_text = !$nw->field_hb_paused->value() ? t('Publish Job') : t('Resume Job');
-
-          $job_publish = l($job_publish_text, '#', array(
-            'attributes' => array(
-              'data-toggle' => array('modal'),
-              'data-target' => array('#job-publish-form-popup'),
-              'class' => array('btn btn-success')
-            )
-          ));
-          $variables['job_publish_button'] = ($nw->author->getIdentifier() != 000) ? '<div class="hb-job-button">' . $job_publish . '</div>' : FALSE;
+      if ($nw->field_yoga_event_dates->value()) {
+        if ($nw->field_yoga_event_dates->value()['value'] == $nw->field_yoga_event_dates->value()['value2']) {
+          $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value']));
         }
         else {
-          $btn_text = $nw->field_hb_type->value() != 'personal' ? t('Request Job') : t('Offer Service');
-          $btn_class = 'btn-info';
-          if ($nw->field_hb_users_eck->value()) {
-            // if ($uw->getIdentifier() == $nw->author->getIdentifier()) {
-            //   $variables['users_available'] = sizeof($nw->field_hb_users->value());
-            // }
-            foreach ($nw->field_hb_users_eck->getIterator() as $k => $u) {
-              if ($u->field_feedb_user->getIdentifier() == $uw->getIdentifier()) {
-                $btn_text = $nw->field_hb_type->value() != 'personal' ? t('Remove Request') : t('Remove Offer');
-                $btn_class = 'btn-danger';
-                break;
-              }
-            }
-          }
-
-          // Request a job button.
-          $request_form = drupal_get_form('models_forms_request_form');
-          $modal_options = array(
-            'attributes' => array(
-              'id' => 'job-request-form-popup',
-              'class' => array('job-request-form-popup-modal')
-            ),
-            'heading' => $nw->field_hb_type->value() != 'personal' ? t('Request job:') . ' ' . $nw->label() : t('Get in touch with') . ' ' . $nw->author->field_first_name->value(),
-            'body' => drupal_render($request_form),
-          );
-          $variables['job_request_form'] = theme('bootstrap_modal', $modal_options);
-
-          if ($user->uid != 0) {
-            $job_details = l($btn_text, '#', array(
-              'attributes' => array(
-                'data-toggle' => array('modal'),
-                'data-target' => array('#job-request-form-popup'),
-                'class' => array('btn ' . $btn_class)
-              )
-            ));
-          }
-          else {
-            $job_details = l($btn_text, 'user/login', array('attributes' => array('class' => array('btn ' . $btn_class))));
-          }
-          $variables['job_button'] = ($nw->author->getIdentifier() != 000) ? '<div class="hb-job-button">' . $job_details . '</div>' : FALSE;
-          $variables['unpub_msg'] = FALSE;
+          $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value'])) . '<i class="material-icons">&#xE8E4;</i><span class="date-to">' . date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value2'])) . '</span>';
         }
+
+      }
+      $alter = array(
+        'max_length' => 150,
+        'ellipsis' => TRUE,
+        'word_boundary' => TRUE,
+        'html' => TRUE,
+      );
+      $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
+
+      $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : $pw->field_yoga_logo->value()['uri'];
+      $variables['logo'] = $pic = '<div class="event-logo">' . l(theme('image_style', array(
+          'style_name' => 'profile',
+          'path' => $uri,
+          'attributes' => array('class' => array('img-responsive'))
+        )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+
+      if ($nw->field_yoga_location->value()) {
+        $location = $nw->field_yoga_location->value()['premise'] ? $nw->field_yoga_location->value()['premise'] . ', ' : '';
+        $location .= $nw->field_yoga_location->value()['country'] ? $nw->field_yoga_location->value()['country'] . ', ' : '';
+        $variables['location'] = rtrim($location, ', ');
       }
       else {
-        $variables['feedback_button'] = '<div class="hb-job-button">' . l(t('Leave Feedback'), 'job/' . $nw->getIdentifier() . '/feedback', array('attributes' => array('class' => array('btn btn-danger')))) . '</div>';
-        $variables['job_button'] = '<p><strong>' . t('Sorry, this job has already been assigned!') . '</strong></p>';
+        $variables['location'] = '-';
       }
+
+      if ($nw->field_yoga_event_price->value()) {
+        $price_class = strlen($nw->field_yoga_event_price->value()) > 10 ? 'block-this' : 'inline-this';
+      }
+      $variables['price'] = $nw->field_yoga_event_price->value() ? '<p class="event-price ' . $price_class . '">' . $nw->field_yoga_event_price->value() . '</p>' : FALSE;
     }
   }
+
 }
 
 /**
@@ -556,14 +239,14 @@ function yogafind_preprocess_page(&$variables) {
 
   // Alllll stuffs for the author pic and top nav stuff.
   if ((strpos(current_path(), 'node') !== FALSE) ||
-    (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/teachers') !== FALSE)
+    (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/teachers') !== FALSE) ||
+    (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/events') !== FALSE)
   ) {
 
     $nw = tweaks_get_alias_wrapper();
 
     if ($nw->getBundle() == 'yoga') {
 
-      dpm($nw->value());
       // Yoga View breadcrumbs
       $my_breadcrumbs_array[] = l('Home', '/');
       $my_breadcrumbs_array[] = l('Everywhere', 'in');
@@ -688,8 +371,15 @@ function yogafind_preprocess_page(&$variables) {
       if ($nw->field_yoga_type->value() == 'event') {
         $variables['show_bg'] = FALSE;
         $variables['the_pic'] = FALSE;
-        $variables['job_details'] = FALSE;
-        $variables['my_nav'] = FALSE;
+
+        $job_details = '<p class="event-intro">';
+        $job_details .= '<span class="event-type">' . $nw->field_yoga_event_type->value() . '</span> <span class="text-muted">in </span>';
+        $job_details .= '<span class="event-where">' . 'Ubud, Bali' . '</span> <span class="text-muted">organised by </span>';
+        $job_details .= l($nw->author->field_my_listings[0]->label(), 'node/' . $nw->author->field_my_listings[0]->getIdentifier());
+        $job_details .= '</p>';
+
+        $variables['job_details'] = $job_details;
+        $variables['my_nav'] = $nw->author->getIdentifier() == $uw->getIdentifier() ? theme('my_nav') : FALSE;
       }
       else {
         $variables['show_bg'] = TRUE;
@@ -1002,6 +692,7 @@ function yogafind_preprocess_views_view(&$vars) {
   //   $vars['view']->human_name = 'waaa';
   // }
 
+
   if ($vars['name'] == 'jobs_rhs') {
     if ($vars['display_id'] == 'block') {
       global $user;
@@ -1017,6 +708,21 @@ function yogafind_preprocess_views_view(&$vars) {
       ));
 
       $vars['job_publish_button'] = '<div class="hb-rhs-job-button">' . $job_publish . '</div>';
+    }
+    if ($vars['display_id'] == 'block_4') {
+//      dpm($vars);
+//      global $user;
+//      $uw = entity_metadata_wrapper('user', $user->uid);
+//      $nw = tweaks_get_alias_wrapper();
+//      $job_publish = l('<i class="fa fa-envelope"></i>' . ' ' . t('Contact Teacher'), '#', array(
+//        'html' => TRUE,
+//        'attributes' => array(
+//          'data-toggle' => array('modal'),
+//          'data-target' => array('#job-publish-form-popup'),
+//          'class' => array('btn btn-success btn-block')
+//        )
+//      ));
+//      $vars['job_publish_button'] = '<div class="hb-rhs-job-button">' . $job_publish . '</div>';
     }
   }
 }

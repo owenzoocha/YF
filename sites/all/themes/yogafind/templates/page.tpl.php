@@ -61,9 +61,10 @@
 <?php endif; ?>
 
 <div id="hb-header"
-     class="container-fluid <?php if (empty($my_nav)): print 'no-my-nav '; endif; if (empty($show_bg)): print 'normal-header '; endif; ?><?php print $title_search_class; ?>">
+     class="container-fluid <?php if (empty($my_nav)): print 'no-my-nav '; endif;
+     if (empty($show_bg)): print 'normal-header '; endif; ?><?php print $title_search_class; ?>">
 
-  <?php if ($show_bg): ?>
+  <?php if (!empty($show_bg)): ?>
     <div
       id="page-header-bg" <?php if (!empty($cover_pic)): print $cover_pic; endif; ?>>
       <div class="text-bg"></div>

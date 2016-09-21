@@ -33,6 +33,23 @@ function tweaks_menu() {
 //    'file' => 'tweaks.watchlist.inc',
   );
 
+  $items['studio/%/events'] = array(
+    'page callback' => 'tweaks_yoga_event_list',
+    'access callback' => TRUE,
+    'page arguments' => array(1),
+  );
+  $items['instructor/%/events'] = array(
+    'page callback' => 'tweaks_yoga_event_list',
+    'access callback' => TRUE,
+    'page arguments' => array(1),
+  );
+  $items['trainer/%/events'] = array(
+    'page callback' => 'tweaks_yoga_event_list',
+    'access callback' => TRUE,
+    'page arguments' => array(1),
+  );
+
+
   $items['revalidate-email/%'] = array(
     'page callback' => 'tweaks_revalidate_email',
     'access callback' => 'user_is_anonymous',
@@ -67,7 +84,7 @@ function tweaks_yoga_teachers($arg) {
     $nid = $nid[1];
   }
   else {
-   $nid = $arg;
+    $nid = $arg;
   }
   $nw = entity_metadata_wrapper('node', $nid);
   drupal_set_title($nw->label());
@@ -81,7 +98,7 @@ function tweaks_yoga_teachers_profile($arg1, $arg2) {
     $nid = $nid[1];
   }
   else {
-   $nid = $arg1;
+    $nid = $arg1;
   }
   if (!is_numeric($arg2)) {
     $eid = explode('/', drupal_get_normal_path('class/teacher/' . $arg2));
@@ -95,6 +112,20 @@ function tweaks_yoga_teachers_profile($arg1, $arg2) {
   drupal_set_title($nw->label());
   $result = views_embed_view('individual_teacher', 'default', $eid);
   $result .= views_embed_view('yoga_pages', 'page', $nid);
+  return $result;
+}
+
+function tweaks_yoga_event_list($arg1) {
+  if (!is_numeric($arg1)) {
+    $nid = explode('/', drupal_get_normal_path('studio/' . $arg1));
+    $nid = $nid[1];
+  }
+  else {
+    $nid = $arg1;
+  }
+  $nw = entity_metadata_wrapper('node', $nid);
+  drupal_set_title($nw->label());
+  $result = views_embed_view('yoga_event_lists', 'default', $nid);
   return $result;
 }
 
@@ -122,6 +153,14 @@ function tweaks_block_info() {
     'info' => t('HBM - User Details'),
     'cache' => DRUPAL_CACHE_GLOBAL,
   );
+  $blocks['event_organiser_block'] = array(
+    'info' => t('YF - Event Orgnaniser Block'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  $blocks['event_date_block'] = array(
+    'info' => t('YF - Event Date Block'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
   $blocks['job_client_faces'] = array(
     'info' => t('HBM - Job Client Faces'),
     'cache' => DRUPAL_CACHE_GLOBAL,
@@ -147,6 +186,14 @@ function tweaks_block_view($delta = '') {
       $block['subject'] = t('Clients');
       $block['content'] = theme('job_client_faces');
       break;
+    case 'event_date_block':
+      $block['subject'] = t('Dates');
+      $block['content'] = theme('event_date_block');
+      break;
+    case 'event_organiser_block':
+      $block['subject'] = t('Organiser');
+      $block['content'] = theme('event_organiser_block');
+      break;
   }
   return $block;
 }
@@ -165,23 +212,103 @@ function tweaks_theme() {
     'job_client_faces' => array(
       'template' => 'templates/job-client-faces',
     ),
+    'event_date_block' => array(
+      'template' => 'templates/event-date-blockk',
+    ),
+    'event_organiser_block' => array(
+      'template' => 'templates/event-organiser-block',
+    ),
   );
+}
+
+/**
+ * Template preprocess for Event Organiser block.
+ */
+function template_preprocess_event_organiser_block(&$vars) {
+  $nw = entity_metadata_wrapper('node', arg(1));
+  // Parent.
+  $query = db_query('SELECT entity_id FROM field_data_field_yoga_event_list WHERE field_yoga_event_list_nid=:nid', array('nid' => $nw->getIdentifier()));
+  $res = $query->fetchAll();
+  $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
+
+  $vars['parent_title'] = l($pw->label(), 'node/' . $pw->getIdentifier());
+  $vars['logo'] = $pic = '<div class="event-logo">' . l(theme('image_style', array(
+      'style_name' => 'profile',
+      'path' => $pw->field_yoga_logo->value()['uri'],
+      'attributes' => array('class' => array('img-responsive img-circle'))
+    )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+
+  if ($nw->field_yoga_location->value()) {
+    $location = $nw->field_yoga_location->value()['premise'] ? $nw->field_yoga_location->value()['premise'] . ', ' : '';
+    $location .= $nw->field_yoga_location->value()['country'] ? $nw->field_yoga_location->value()['country'] . ', ' : '';
+    $vars['location'] = rtrim($location, ', ');
+  }
+  else {
+    $vars['location'] = '-';
+  }
+
+  $url = drupal_get_path_alias('node/' . $pw->getIdentifier());
+  $details = '<ul>';
+  $details .= $pw->field_yoga_classes->value() ? '<li>' . l('<i class="material-icons">schedule</i> ' . sizeof($pw->field_yoga_classes->value()) . ' ' . t('classes'), $url . '/classes', array('html' => TRUE)) . '</li>' : FALSE;
+  $details .= $pw->field_yoga_teachers->value() ? '<li>' . l('<i class="material-icons">school</i> ' . sizeof($pw->field_yoga_teachers->value()) . ' ' . t('teachers'), $url . '/teachers', array('html' => TRUE)) . '</li>' : FALSE;
+  $details .= $pw->field_yoga_event_list->value() ? '<li>' . l('<i class="material-icons">event_available</i> ' . sizeof($pw->field_yoga_event_list->value()) . ' ' . t('events'), $url . '/events', array('html' => TRUE)) . '</li>' : FALSE;
+  $details .= $pw->field_yoga_classes->value() ? '<li>' . l('<i class="material-icons">rss_feed</i> ' . sizeof($pw->field_yoga_classes->value()) . ' ' . t('posts'), $url . '/posts', array('html' => TRUE)) . '</li>' : FALSE;
+  $details .= '</ul>';
+
+  $vars['details'] = $details;
+  $vars['organiser'] = l(t('View Organiser Page'), $url, array('attributes' => array('class' => array('btn btn-purple btn-block'))));
+
+
+}
+
+/**
+ * Template preprocess for Event Date block.
+ */
+function template_preprocess_event_date_block(&$vars) {
+
+  $nw = entity_metadata_wrapper('node', arg(1));
+  // Parent.
+  $query = db_query('SELECT entity_id FROM field_data_field_yoga_event_list WHERE field_yoga_event_list_nid=:nid', array('nid' => $nw->getIdentifier()));
+  $res = $query->fetchAll();
+  $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
+
+  if ($nw->field_yoga_event_dates->value()) {
+    $vars['year'] = date('Y', strtotime($nw->field_yoga_event_dates->value()['value']));
+    $vars['day'] = date('d', strtotime($nw->field_yoga_event_dates->value()['value']));
+    $vars['month'] = date('M', strtotime($nw->field_yoga_event_dates->value()['value']));
+
+    if ($nw->field_yoga_event_dates->value()['value'] != $nw->field_yoga_event_dates->value()['value2']) {
+      $vars['year2'] = date('Y', strtotime($nw->field_yoga_event_dates->value()['value2']));
+      $vars['day2'] = date('d', strtotime($nw->field_yoga_event_dates->value()['value2']));
+      $vars['month2'] = date('M', strtotime($nw->field_yoga_event_dates->value()['value2']));
+    }
+  }
+
+  $vars['tel'] = $nw->field_yoga_number->value() ? l($nw->field_yoga_number->value(), 'tel:' . $nw->field_yoga_number->value(), array(
+    'html' => TRUE,
+  )) : FALSE;
+
+  $vars['org'] = $nw->field_yoga_mail->value() ? l(t('Contact Organiser'), '#' . $nw->field_yoga_number->value(), array(
+    'html' => TRUE,
+    'attributes' => array(
+      'class' => array('btn btn-purple btn-block')
+    )
+  )) : FALSE;
+
+  $vars['book'] = $nw->field_yoga_link->value() ? l(t('Make a Booking'), $nw->field_yoga_link->value()['url'], array(
+    'html' => TRUE,
+    'attributes' => array(
+      'class' => array('btn btn-block btn-info')
+    )
+  )) : FALSE;
+
+
 }
 
 /**
  * Template preprocess for Contact Us Button.
  */
 function template_preprocess_job_client_faces(&$vars) {
-//  $nw = entity_metadata_wrapper('node', arg(1));
-//  $clients = FALSE;
-//  if ($nw->field_hb_users_eck->value()) {
-//    $clients = '<ul>';
-//    foreach ($nw->field_hb_users_eck->getIterator() as $key => $client) {
-//      $clients .= '<li data-toggle="tooltip" data-placement="auto" title="' . $client->field_feedb_user->label() .'">' . l(tweaks_get_profile_picture($client->field_feedb_user->value()), 'job/' . arg(1) . '/clients', array('html' => TRUE, 'attributes' => array('class' => array($client->field_client_selected->value() ? 'active' : FALSE)))) . '</li>';
-//    }
-//    $clients .= '</ul>';
-//  }
-//  $vars['clients'] = $clients;
 }
 
 /**
@@ -1061,6 +1188,32 @@ function tweaks_preprocess_htmlmail(&$variables) {
   }
 }
 
+/**
+ * Custom Geocode jobby for yoga nodes.
+ */
+function tweaks_grab_geocode($add, $node) {
+  if ($add) {
+    $point = geocoder('google', $add, array('https' => TRUE));
+    $geo_array = array(
+      'geom' => 'POINT (' . $point->coords[0] . ' ' . $point->coords[1] . ')',
+      'geo_type' => 'point',
+      'lat' => $point->coords[1],
+      'lon' => $point->coords[0],
+      'left' => $point->coords[0],
+      'top' => $point->coords[1],
+      'right' => $point->coords[0],
+      'bottom' => $point->coords[1],
+      // 'geohash' => ,
+    );
+    models_cache_build_job_latlon_cache(md5($add), $node->nid);
+    $node->field_yoga_latlng[LANGUAGE_NONE][0] = $geo_array;
+    watchdog('models_forms_create', 'LAT LNG GENERATED FOR YOGA NODE ' . $node->title);
+    return $geo_array;
+  }
+  else {
+    return FALSE;
+  }
+}
 
 /**
  * Quick function to dpm only one call from a loop etc.

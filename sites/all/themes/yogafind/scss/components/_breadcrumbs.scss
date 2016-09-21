@@ -2,7 +2,7 @@
   background-color: $white;
   .breadcrumb {
     font-size: 13px;
-    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
     border-radius: 0;
     padding: 8px 0;
     margin: 0;

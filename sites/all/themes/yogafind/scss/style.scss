@@ -1,9 +1,11 @@
 // Google Fonts
-@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700);
-@import url(https://fonts.googleapis.com/css?family=Josefin+Slab:400,600,300,400italic);
-@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,300);
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+//@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700);
+//@import url(https://fonts.googleapis.com/css?family=Josefin+Slab:400,600,300,400italic);
+//@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,300);
+//@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300,300italic,400italic);
+@import url(https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600);
+
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
@@ -21,6 +23,7 @@
 @import 'layout/slick_blocks';
 @import 'layout/node_job';
 @import 'layout/node_job_teaser';
+@import 'layout/node_yoga_teaser_event';
 @import 'layout/views_job_requests';
 @import 'layout/footer';
 @import 'layout/contact_us';
@@ -61,3 +64,4 @@
 @import 'components/google_autocomplete';
 @import 'components/entity_teachers';
 @import 'components/breadcrumbs';
+@import 'components/event_dates_block';

@@ -55,7 +55,7 @@ function geocoder_google($address, $options = array()) {
   case GEOCODER_GOOGLE_AUTH_KEY:
     $geocoder_settings = variable_get("geocoder_settings", array());
     if (!empty($geocoder_settings['geocoder_apikey_google'])) {
-      $query['key'] = $geocoder_settings['geocoder_apikey_google'];
+      $query['api_key'] = $geocoder_settings['geocoder_apikey_google'];
     }
     break;
 

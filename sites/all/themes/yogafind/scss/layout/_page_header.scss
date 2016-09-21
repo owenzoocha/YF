@@ -42,7 +42,7 @@
     h1 {
       padding-bottom: 5px;
       font-size: 35px;
-      font-weight: 400;
+      //font-weight: 400;
       //padding: 30px 15px;
     }
   }
@@ -106,8 +106,9 @@ body,
   #page-header-bg {
     width: 100%;
     background-size: cover;
+    background: url("#{$imagePath}/yf-bg2.svg") 0px 0px no-repeat;
     //background: url("../images/HBM_Background_2.png") 0 0 no-repeat;
-    background-color: $dark;
+    //background-color: $dark;
     height: 170px;
     position: absolute;
     top: 0;

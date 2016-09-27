@@ -1,4 +1,5 @@
-.view-yoga-event-lists {
+.view-yoga-event-lists,
+.view-user-blog-posts {
   @include blocks();
   font-size: 14px;
   .views-row {
@@ -72,6 +73,19 @@
     &.views-row-last {
       .event-teaser {
         border: none;
+      }
+    }
+  }
+}
+
+.view-user-blog-posts {
+  .listing-link {
+    margin: 10px 0;
+  }
+  .views-row {
+    .event-teaser {
+      .event-info {
+        margin-right: 15px;
       }
     }
   }

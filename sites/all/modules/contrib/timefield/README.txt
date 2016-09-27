@@ -22,8 +22,16 @@ not already installed, download, enable, and configure the latest versions of
 the Libraries module. See:
 http://drupal.org/project/libraries
 
-3) Acquire the timepicker plugin.  There are a few ways to do this.
-a) Direct Download:
+3) Acquire the timepicker plugin.  Please be sure to get a version compatible
+with your version of jQuery.  There are a few ways to download the library.
+
+
+a) If you have drush installed, you can use the command
+"drush timefield-plugin" to automatically download and install this library.
+This will install the version of the timepicker plugin compatible with Drupal 7's
+core version of jQuery.
+
+b) Direct Download:
 You can either download a zip or tarball file from github:
 https://github.com/fgelinas/timepicker/downloads
 Or you can download the plugin from the author's site:
@@ -33,12 +41,9 @@ subfolder called "jquery.timepicker".
 The main javascript file should have a path like this:
 /sites/all/libraries/jquery.timepicker/jquery.ui.timepicker.js
 
-b) You can also clone the repository directly:
+c) You can also clone the repository directly:
 From your libraries subfolder, execute this command:
 git clone https://github.com/fgelinas/timepicker.git jquery.timepicker
-
-c) If you have drush installed, you can use the command 
-"drush timefield-plugin" to automatically download and install this library.
 
 USAGE
 -------

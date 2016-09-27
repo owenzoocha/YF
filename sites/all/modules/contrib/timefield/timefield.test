@@ -196,7 +196,8 @@ class TimeFieldUnitTest extends DrupalUnitTestCase {
   }
 
   function setUp() {
-    parent::setUp('timefield');
+    drupal_load('module', 'timefield');
+    parent::setUp();
   }
 
   /**

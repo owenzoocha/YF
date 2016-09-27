@@ -8,16 +8,51 @@
 function models_forms_teacher_add() {
   global $user;
   $user = user_load($user->uid);
-
   $uw = entity_metadata_wrapper('user', $user->uid);
+  $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
 
-  $entity = entity_create('class', array('type' => 'teacher'));
+  if (is_numeric(arg(1))) {
+
+    // Check to see if the author and only the author is editing.
+    if ($user->uid != $nw->value()->uid) {
+      drupal_goto('node/' . $nw->getIdentifier());
+    }
+    else {
+      $params = drupal_get_query_parameters();
+      if (!empty($params['delete'])) {
+        entity_delete('class', arg(1));
+        drupal_goto('node/' . $nw->getIdentifier());
+      }
+    }
+
+    $entity_tmp = entity_load('class', array(arg(1)));
+    $entity = reset($entity_tmp);
+    $get_started = array(
+      '#markup' => '<p class="greenify">' . t('Update information below') . '</p>',
+    );
+
+  }
+  else {
+    $entity = entity_create('class', array('type' => 'teacher'));
+    $get_started = array(
+      '#markup' => '<p class="greenify">' . t('Post a new Yoga Teacher for your listing below') . '</p>',
+    );
+  }
+
   $yoga_form = drupal_get_form('eck__entity__form_add_class_teacher', $entity);
   $yoga_form['title']['#title'] = t('Full Name');
-  $yoga_form['get_started'] = array(
-    '#markup' => '<p class="greenify">' . t('Post a new Yoga Teacher for your listing below') . '</p>',
-  );
+  $yoga_form['get_started'] = $get_started;
   $yoga_form['#theme'] = array('overwrite_classes_form');
+
+  if (is_numeric(arg(1))) {
+    $yoga_form['actions']['delete'] = array(
+      '#markup' => l(t('Delete'), 'classes/' . arg(1) . '/edit', array(
+        'query' => array('delete' => 1),
+        'attributes' => array('class' => array('btn btn-danger'))
+      )),
+      '#weight' => 10001,
+    );
+  }
 
   $wysiwyg_js['wysiwyg']['configs']['tinymce']['formatfiltered_html'] = array(
     'menubar' => FALSE,

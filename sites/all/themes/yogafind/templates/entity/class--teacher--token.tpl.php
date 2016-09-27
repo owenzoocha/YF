@@ -5,3 +5,4 @@
     <?php print $view_more; ?>
   </div>
 </div>
+<?php if (!empty($edit_link)): print $edit_link; endif; ?>

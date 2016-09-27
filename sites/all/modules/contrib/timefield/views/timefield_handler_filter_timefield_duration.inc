@@ -1,5 +1,6 @@
 <?php
 /**
+ * @file
  * Contains the duration filter handler.
  */
 
@@ -80,7 +81,7 @@ class timefield_handler_filter_timefield_duration extends views_handler_filter_n
 
    function filterSelectionToSeconds($value) {
 
-     switch($this->duration_unit) {
+     switch ($this->duration_unit) {
        case 'seconds':
          return $value;
          break;

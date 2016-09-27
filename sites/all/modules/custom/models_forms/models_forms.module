@@ -77,6 +77,21 @@ function models_forms_menu() {
     'file' => 'models_forms.yoga_classes.inc',
   );
 
+  $items['blog/add'] = array(
+    'title' => 'Create a Post',
+    'page callback' => 'models_forms_blog_add',
+    'page arguments' => array(2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.yoga_blog.inc',
+  );
+  $items['blog/%/edit'] = array(
+    'title' => 'Edit your Post',
+    'page callback' => 'models_forms_blog_add',
+    'page arguments' => array(2),
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.yoga_blog.inc',
+  );
+
   $items['teacher/add'] = array(
     'title' => 'Add a Teacher to Your Listing',
     'page callback' => 'models_forms_teacher_add',
@@ -271,5 +286,87 @@ function models_forms_mail($key, &$message, $params) {
     //   $message['subject'] = t('You have received a message');
     //   $message['body'][] = $params['body'];
     // break;
+  }
+}
+
+function models_forms_node_presave($node) {
+  global $user;
+
+  if ($node->type == 'article') {
+    if ($type = variable_get('blog_add_' . $user->uid)) {
+      $node->uid = $user->uid;
+      variable_del('blog_add_' . $user->uid);
+    }
+  }
+
+  if ($node->type == 'yoga') {
+    if ($type = variable_get('listing_add_' . $user->uid)) {
+      $node->field_yoga_type[LANGUAGE_NONE][0]['value'] = 'event';
+      $node->uid = $user->uid;
+      dpm($node, 'event?');
+      variable_del('listing_add_' . $user->uid);
+    }
+    else {
+//      dpm('nope', 'type');
+    }
+
+    // Set up the LAT LNG.
+    $countries = country_get_list();
+    $add = '';
+    $add .= !empty($node->field_yoga_location[LANGUAGE_NONE][0]['thoroughfare']) ? $node->field_yoga_location[LANGUAGE_NONE][0]['thoroughfare'] . ' ' : FALSE;
+    $add .= !empty($node->field_yoga_location[LANGUAGE_NONE][0]['premise']) ? $node->field_yoga_location[LANGUAGE_NONE][0]['premise'] . ', ' : FALSE;
+    $add .= !empty($node->field_yoga_location[LANGUAGE_NONE][0]['locality']) ? $node->field_yoga_location[LANGUAGE_NONE][0]['locality'] . ', ' : FALSE;
+    $add .= !empty($node->field_yoga_location[LANGUAGE_NONE][0]['dependent_locality']) ? $node->field_yoga_location[LANGUAGE_NONE][0]['dependent_locality'] . ', ' : FALSE;
+    $add .= !empty($node->field_yoga_location[LANGUAGE_NONE][0]['administrative_locality']) ? $node->field_yoga_location[LANGUAGE_NONE][0]['administrative_locality'] . ', ' : FALSE;
+    $add .= !empty($node->field_yoga_location[LANGUAGE_NONE][0]['postal_code']) ? $node->field_yoga_location[LANGUAGE_NONE][0]['postal_code'] . ', ' : FALSE;
+    $add .= !empty($node->field_yoga_location[LANGUAGE_NONE][0]['country']) ? $countries[$node->field_yoga_location[LANGUAGE_NONE][0]['country']] : FALSE;
+    $add = str_replace(' , ', ', ', $add);
+    $add = str_replace(',,', ',', $add);
+
+    // If we're about to save a new yoga node > run the geocode.
+    if (!$node->nid) {
+      if ($add) {
+        $geo_array = tweaks_grab_geocode($add, $node);
+        $node->field_yoga_latlng[LANGUAGE_NONE][0] = $geo_array;
+      }
+    }
+    // Else check to see if the cached add is different to the new one - if yes, geocode that geezer.
+    else {
+      $original_add = models_cache_get_job_latlon_cache($node->nid);
+      if ($original_add != md5($add)) {
+        if ($add) {
+          $geo_array = tweaks_grab_geocode($add, $node);
+          $node->field_yoga_latlng[LANGUAGE_NONE][0] = $geo_array;
+        }
+      }
+    }
+  }
+}
+
+function models_forms_node_insert($node) {
+  global $user;
+  if ($node->type == 'yoga') {
+    if ($node->field_yoga_type[LANGUAGE_NONE][0]['value'] == 'event') {
+      $uw = entity_metadata_wrapper('user', $user->uid);
+      $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
+      if (!$nw->field_yoga_event_list->value()) {
+        $nw->field_yoga_event_list->offsetSet(0, $node->nid);
+      }
+      else {
+        $nw->field_yoga_event_list->offsetSet(sizeof($nw->field_yoga_event_list->value()), $node->nid);
+      }
+      $nw->save();
+    }
+  }
+  if ($node->type == 'article') {
+    $uw = entity_metadata_wrapper('user', $user->uid);
+    $nw = entity_metadata_wrapper('node', $uw->field_my_posts->value()[0]->nid);
+    if (!$uw->field_my_posts->value()) {
+      $uw->field_my_posts->offsetSet(0, $node->nid);
+    }
+    else {
+      $uw->field_my_posts->offsetSet(sizeof($uw->field_my_posts->value()), $node->nid);
+    }
+    $uw->save();
   }
 }

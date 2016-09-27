@@ -3,7 +3,7 @@
     <?php print $logo; ?>
   </div>
   <div class="organiser-info">
-    <h3>Organiser</h3>
+    <h3><?php print $post_type; ?></h3>
     <p><?php print $parent_title; ?></p>
     <p><?php print $location; ?></p>
   </div>

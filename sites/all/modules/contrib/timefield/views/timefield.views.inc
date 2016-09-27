@@ -48,7 +48,7 @@ function timefield_field_views_data_views_data_alter(&$data, $field) {
   $additional_fields = $data[$data_key][$field_name . '_value']['argument']['additional fields'];
 
   // Add special handler to base field
-  $data[$data_key][$field_name]['field']['handler'] = 'TimefieldHanlderFieldTimefield';
+  $data[$data_key][$field_name]['field']['handler'] = 'TimefieldHandlerFieldTimefield';
 
   // If the timefield has a value2 column, add duration option.
   if (isset($data[$data_key][$field_name . '_value2'])) {
@@ -78,7 +78,7 @@ function timefield_field_views_data_views_data_alter(&$data, $field) {
   // If the timefield has a day property make filter and argument handlers for
   // booleans.
   if (isset($data[$data_key][$field_name . '_mon'])) {
-    foreach(_timefield_weekly_summary_days() as $day => $day_name) {
+    foreach (_timefield_weekly_summary_days() as $day => $day_name) {
       $title = t('Occurs on !day', array('!day' => $day_name));
       $data[$data_key][$field_name . '_' . $day]['title'] = $title;
       $data[$data_key][$field_name . '_' . $day]['filter'] = array(

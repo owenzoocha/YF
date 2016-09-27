@@ -1,5 +1,6 @@
 <?php
 /**
+ * @file
  * Contains the duration field handler.
  */
 

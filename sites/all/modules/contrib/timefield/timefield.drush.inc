@@ -8,7 +8,7 @@
 /**
  * The timefield plugin URI.
  */
-define('TIMEFIELD_DOWNLOAD_URI', 'http://fgelinas.com/code/timepicker/releases/jquery-ui-timepicker-0.2.9.zip');
+define('TIMEFIELD_DOWNLOAD_URI', 'http://fgelinas.com/code/timepicker/releases/jquery-ui-timepicker-0.3.2.zip');
 
 /**
  * Implements hook_drush_command().

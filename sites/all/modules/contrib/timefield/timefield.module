@@ -86,7 +86,7 @@ function timefield_library() {
 function timefield_theme() {
 
   return array(
-    'timefield_formatter' => array(
+    'timefield' => array(
       'variables' => array('time' => NULL, 'settings' => NULL, 'format' => NULL),
       'template' => 'timefield',
       'path' => drupal_get_path('module', 'timefield') . '/theme',
@@ -137,11 +137,19 @@ function timefield_field_settings_form($field, $instance, $has_data) {
 function timefield_field_instance_settings_form($field, $instance) {
   $settings = $instance['settings'];
 
+  $library = timefield_library();
+  $has_library = !empty($library);
+
+  if (!$has_library) {
+    drupal_set_message("You will not have enhanced time input widget without downloading the plugin. " . l("Read installation instructions here.", 'http://drupalcode.org/project/timefield.git/blob_plain/HEAD:/README.txt', array('absolute' => TRUE,)), 'warning');
+  }
+
   $form['disable_plugin'] = array(
     '#title' => t('Disable jQuery Timepicker plugin.'),
     '#type' => 'checkbox',
-    '#default_value' => isset($settings['disable_plugin']) ? $settings['disable_plugin'] : FALSE,
+    '#default_value' => isset($settings['disable_plugin']) ? $settings['disable_plugin'] : empty($library) ? TRUE : FALSE,
     '#description' => t('Do not use jQuery Timepicker plugin for input.'),
+    '#disabled' => (empty($library)),
   );
 
   $form['input_format'] = array(
@@ -559,7 +567,7 @@ function timefield_time_validate($element, &$form_state, $form) {
     // If empty, set to null.
     if (strlen($values['value']) == 0) {
       if ($field && isset($field['#required']) && $field['#required']) {
-        form_error($element['value'], t('!name field is required.', array('!name' => $element['#title'])));
+        form_error($element['value'], t('!name field is required.', array('!name' => check_plain($element['#title']))));
       }
       form_set_value($element, array('value' => NULL), $form_state);
       return;
@@ -686,7 +694,7 @@ function timefield_field_formatter_view($entity_type, $entity, $field, $instance
       foreach ($items as $delta => $item) {
 
         $element[$delta] = array(
-          '#theme' => array('timefield_formatter'),
+          '#theme' => array('timefield'),
           '#time' => $item,
           '#settings' => $settings,
           '#format' => 'default',
@@ -697,7 +705,7 @@ function timefield_field_formatter_view($entity_type, $entity, $field, $instance
       foreach ($items as $delta => $item) {
 
         $element[$delta] = array(
-          '#theme' => array('timefield_formatter'),
+          '#theme' => array('timefield'),
           '#time' => $item,
           '#settings' => $settings,
           '#format' => 'duration',
@@ -765,6 +773,13 @@ function timefield_field_widget_form(&$form, &$form_state, $field, $instance, $l
 
       if (!$instance_settings['disable_plugin']) {
         $js_settings = _timefield_js_settings($instance_class, $instance_settings['input_format']);
+        $context = array(
+          'type' => 'field',
+          'field' => $field,
+          'instance' => $instance,
+        );
+
+        drupal_alter('timefield_js_settings', $js_settings[$instance_class], $context);
 
         $element['#attached'] = array(
           'library' => array(array('timefield', 'timepicker')),
@@ -797,6 +812,7 @@ function timefield_field_widget_form(&$form, &$form_state, $field, $instance, $l
         '#size' => 15,
         '#maxlength' => 15,
         '#attributes' => array('class' => array('edit-timefield-timepicker', $instance_class)),
+        '#required' => $instance['required'] && !$delta,
       );
 
       // Add second element if totime is required or optional.
@@ -809,7 +825,17 @@ function timefield_field_widget_form(&$form, &$form_state, $field, $instance, $l
           '#size' => 15,
           '#maxlength' => 15,
           '#attributes' => array('class' => array('edit-timefield-timepicker', $instance_class)),
+          '#required' => ($settings['totime'] == 'required') && $instance['required'] && !$delta,
         );
+        // Add the appearance of required-ness for required totime
+        if ($settings['totime'] == 'required' && !$instance['required']) {
+          $element['value2']['#states'] = array(
+            // Only require this field if the value field has a value.
+            'required' => array(
+              ':input[name="' . $field['field_name'] . '[' . $langcode . '][' . $delta . '][value]"]' => array('filled' => TRUE),
+            ),
+          );
+        }
       }
 
       if ($settings['weekly_summary'] || $settings['weekly_summary_with_label']) {
@@ -863,9 +889,9 @@ function timefield_field_load($entity_type, $entities, $field, $instances, $lang
 }
 
 /**
- * Preprocess function for the timefield formatter.
+ * Preprocess function for the timefield.
  */
-function template_preprocess_timefield_formatter(&$variables) {
+function template_preprocess_timefield(&$variables) {
 
   if ($variables['format'] == 'default') {
     // Encode the time elements.

@@ -13,8 +13,8 @@
         hbm.scrollAnimationsMenu();
       }
       hbm.searchHighlight();
-      hbm.skrollr();
-      hbm.hbRaty();
+      // hbm.skrollr();
+      // hbm.hbRaty();
       hbm.loginFormHacks();
       hbm.hbmMenu();
       hbm.watchlist();
@@ -203,13 +203,13 @@
 
         var owen = document.getElementById('owen');
 
-        // init controller
-        var controller = new ScrollMagic.Controller();
-
-        // Create Animation for 0.5s
-        var myTimeline = new TimelineMax({
-          // repeat: 0
-        });
+        // // init controller
+        // var controller = new ScrollMagic.Controller();
+        //
+        // // Create Animation for 0.5s
+        // var myTimeline = new TimelineMax({
+        //   // repeat: 0
+        // });
 
         // myTimeline
         //   .to('#page-header-bg', 1, {y: -100, ease: Linear.easeNone});

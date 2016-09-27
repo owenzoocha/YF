@@ -30,14 +30,14 @@ function _timefield_devel_generate($object, $field, $instance, $bundle) {
 
   $object_field['value'] = $time;
   $object_field['value2'] = $time2;
-  $object_field['label'] = devel_create_greeking(rand(2,3), TRUE);
-  $object_field['mon'] = rand(0,1);
-  $object_field['tue'] = rand(0,1);
-  $object_field['wed'] = rand(0,1);
-  $object_field['thu'] = rand(0,1);
-  $object_field['fri'] = rand(0,1);
-  $object_field['sat'] = rand(0,1);
-  $object_field['sun'] = rand(0,1);
+  $object_field['label'] = devel_create_greeking(rand(2, 3), TRUE);
+  $object_field['mon'] = rand(0, 1);
+  $object_field['tue'] = rand(0, 1);
+  $object_field['wed'] = rand(0, 1);
+  $object_field['thu'] = rand(0, 1);
+  $object_field['fri'] = rand(0, 1);
+  $object_field['sat'] = rand(0, 1);
+  $object_field['sun'] = rand(0, 1);
 
   return $object_field;
 }

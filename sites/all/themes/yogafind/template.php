@@ -27,6 +27,70 @@ function yogafind_preprocess_node(&$variables) {
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->nid . '__token';
   }
 
+  if ($variables['type'] == 'article') {
+    if ($variables['view_mode'] != 'teaser') {
+      $nw = entity_metadata_wrapper('node', $variables['nid']);
+      if ($nw->status->value() == 0) {
+        $variables['publish_msg'] = '<p class="greenify">' . t('This post is currently in preview mode - click !here when you are ready to publish.', array(
+            '!here' => l('<strong>' . t('here') . '</strong>', 'node/' . arg(1), array(
+              'html' => TRUE,
+              'query' => array('publish' => 1)
+            ))
+          )) . '</p>';
+      }
+      else {
+        if (!$nw->promote->value()) {
+          $variables['publish_msg'] = '<p class="greenify">' . t('This post is being reviewed, please check back soon!') . '</p>';
+        }
+      }
+    }
+    else {
+      $nw = entity_metadata_wrapper('node', $variables['nid']);
+
+      try {
+        $variables['title'] = l($variables['title'], 'node/' . $nw->getIdentifier());
+        $variables['post_date'] = date('d M Y H:i', $nw->created->value());
+        $variables['author_name'] = $nw->author->label();
+
+        $alter = array(
+          'max_length' => 150,
+          'ellipsis' => TRUE,
+          'word_boundary' => TRUE,
+          'html' => TRUE,
+        );
+        $variables['description'] = $nw->body->value() ? views_trim_text($alter, drupal_html_to_text($nw->body->value()['value'], array(
+          'p',
+          'a'
+        ))) : FALSE;
+
+        $uri = $nw->field_post_image->value() ? $nw->field_post_image->value()['uri'] : $nw->author->value()->picture->uri;
+
+        $pic = '<div class="event-logo">' . l(theme('image_style', array(
+            'style_name' => 'profile',
+            'path' => $uri,
+            'attributes' => array('class' => array('img-responsive'))
+          )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+        $variables['logo'] = $pic;
+
+        $variables['listing_link'] = $nw->author->field_my_listings->value() ? '<p class="listing-link"><small>' . t('Listing:') . '</small> ' . l($nw->author->field_my_listings->value()[0]->title, 'node/' . $nw->author->field_my_listings->value()[0]->nid, array('attributes' => array('class' => array('a-link')))) . '</p>' : FALSE;
+
+      } catch (EntityMetadataWrapperException $exc) {
+        watchdog(
+          'template - posts teaser',
+          'EntityMetadataWrapper exception in %function() @trace',
+          array(
+            '%function' => __FUNCTION__,
+            '@trace' => $exc->getTraceAsString()
+          ),
+          WATCHDOG_ERROR
+        );
+      }
+
+
+    }
+  }
+
+
   if ($variables['type'] == 'yoga') {
     if (!empty($variables['field_yoga_type'][0]['value'])) {
       $variables['yoga_type'] = $variables['field_yoga_type'][0]['value'];
@@ -61,11 +125,14 @@ function yogafind_preprocess_node(&$variables) {
       $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
 
       $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : $pw->field_yoga_logo->value()['uri'];
-      $variables['logo'] = $pic = '<div class="event-logo">' . l(theme('image_style', array(
+
+      $pic = '<div class="event-logo">' . l(theme('image_style', array(
           'style_name' => 'profile',
           'path' => $uri,
           'attributes' => array('class' => array('img-responsive'))
         )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+
+      $variables['logo'] = $pic;
 
       if ($nw->field_yoga_location->value()) {
         $location = $nw->field_yoga_location->value()['premise'] ? $nw->field_yoga_location->value()['premise'] . ', ' : '';
@@ -195,15 +262,15 @@ function yogafind_preprocess_page(&$variables) {
   }
 
   // Tweenmax
-  drupal_add_js('http://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js', array('type' => 'external'));
+//  drupal_add_js('http://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js', array('type' => 'external'));
 
   // drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/skrollr/0.6.30/skrollr.min.js', array('type' => 'external'));
   // drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.8/packaged/jquery.noty.packaged.min.js', array('type' => 'external'));
 
-  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js', 'external');
+//  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js', 'external');
   drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js', 'external');
-  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js', 'external');
-  drupal_add_js(libraries_get_path('raty-fa-0.1.1') . '/' . 'lib/jquery.raty-fa.js');
+//  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js', 'external');
+//  drupal_add_js(libraries_get_path('raty-fa-0.1.1') . '/' . 'lib/jquery.raty-fa.js');
 
   // dpm(current_path());
   // dpm_once($_SERVER['REQUEST_URI']);
@@ -218,8 +285,8 @@ function yogafind_preprocess_page(&$variables) {
     strpos(current_path(), 'watchlist') !== FALSE ||
     strpos(current_path(), 'job-requests') !== FALSE
   ) {
-    drupal_add_js('https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js', 'external');
-    drupal_add_js('https://npmcdn.com/masonry-layout@4.0.0/dist/masonry.pkgd.min.js', 'external');
+//    drupal_add_js('https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js', 'external');
+//    drupal_add_js('https://npmcdn.com/masonry-layout@4.0.0/dist/masonry.pkgd.min.js', 'external');
     drupal_add_js(drupal_get_path('theme', 'models') . '/' . 'js/hbm_user_jobs.js');
   }
 
@@ -240,11 +307,16 @@ function yogafind_preprocess_page(&$variables) {
   // Alllll stuffs for the author pic and top nav stuff.
   if ((strpos(current_path(), 'node') !== FALSE) ||
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/teachers') !== FALSE) ||
+    (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/posts') !== FALSE) ||
+    (strpos(current_path(), '/timetable') !== FALSE) ||
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/events') !== FALSE)
   ) {
 
     $nw = tweaks_get_alias_wrapper();
 
+    if ($nw->getBundle() == 'yoga' || $nw->getBundle() == 'article') {
+      $variables['content_column_class'] = ' class="col-sm-pull-3 col-sm-9"';
+    }
     if ($nw->getBundle() == 'yoga') {
 
       // Yoga View breadcrumbs
@@ -266,38 +338,10 @@ function yogafind_preprocess_page(&$variables) {
 
       $variables['cover_pic'] = $nw->field_yoga_cover_picture->value() ? 'style="background:url(' . image_style_url('coverpic', $nw->field_yoga_cover_picture->value()['uri']) . ')"' : FALSE;
 
-
-      // if ( strpos(current_path(), 'job/') !== FALSE && is_numeric(arg(1)) ) {
-      $variables['content_column_class'] = ' class="col-sm-pull-3 col-sm-9"';
-      // }
-
       drupal_add_js(libraries_get_path('slick') . '/' . 'slick/slick.min.js');
       drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick.css');
       drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick-theme.css');
       drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/models_nav.js');
-
-      // if (strpos(current_path(), 'job/') !== FALSE && strpos(current_path(), '/clients') !== FALSE) {
-      //   if ($nw->field_hb_assigned->value()) {
-      //     drupal_goto('node/' . $nw->getIdentifier());
-      //   }
-      // }
-
-      // Page titles clean up
-//      if ((strpos(current_path(), 'job/') !== FALSE && is_numeric(arg(1)) && strpos(current_path(), '/clients') !== FALSE)) {
-//        if ($nw->field_hb_users_eck->value()) {
-//          $reqs = sizeof($nw->field_hb_users_eck->value());
-//        }
-//        else {
-//          $reqs = FALSE;
-//        }
-//        drupal_set_title($reqs > 0 ? $nw->label() . ' - Client Requests (' . $reqs . ')' : $nw->label() . ' - Client Requests');
-//      }
-
-      // Page titles clean up
-//      if ((strpos(current_path(), 'job/') !== FALSE && is_numeric(arg(1)) && strpos(current_path(), '/photos') !== FALSE)) {
-//        drupal_add_js(array('photo_nid' => $nw->getIdentifier()), 'setting');
-//        drupal_set_title($nw->label() . ' - Photos');
-//      }
 
 
       $variables['hb_header_class'] = 'header-title';
@@ -358,16 +402,6 @@ function yogafind_preprocess_page(&$variables) {
       );
       $variables['client_request_confirm_form'] = theme('bootstrap_modal', $modal_options);
 
-
-      // Initiate custom job navigation if logged in user = author.
-//      if ($nw->author->getIdentifier() == $uw->getIdentifier()) {
-//        $variables['my_nav'] = theme('my_nav');
-//      }
-//      else {
-//        $variables['my_nav'] = FALSE;
-//        $variables['show_bg'] = TRUE;
-//      }
-
       if ($nw->field_yoga_type->value() == 'event') {
         $variables['show_bg'] = FALSE;
         $variables['the_pic'] = FALSE;
@@ -386,9 +420,21 @@ function yogafind_preprocess_page(&$variables) {
         $variables['my_nav'] = theme('my_nav');
       }
     }
+
+    if ($nw->getBundle() == 'article') {
+      $variables['my_nav'] = $nw->author->getIdentifier() == $uw->getIdentifier() ? theme('my_nav') : FALSE;
+      $params = drupal_get_query_parameters();
+      if (!empty($params['publish'])) {
+        if ($params['publish'] == 1) {
+          $nw->status->set($params['publish']);
+          $nw->save();
+          drupal_goto('node/' . arg(1));
+        }
+      }
+    }
   }
 
-  // Ignore below if user/reset is in the path.
+// Ignore below if user/reset is in the path.
   if (strpos(current_path(), 'user/reset') === FALSE) {
 
     // Build up the users home page top bar..
@@ -441,11 +487,6 @@ function yogafind_preprocess_page(&$variables) {
         }
       }
       else {
-
-        // HACKATHON
-        // $greeting = t('Welcome back'); // If cookie set?
-        // $greeting = t('Hi') . ', ';
-        // drupal_set_title($greeting . $uw->field_first_name->value());
         $pic = tweaks_get_profile_picture($uw->value());
         $the_pic = tweaks_get_profile_url($pic, $uw->getIdentifier());
         $stars = $uw->field_my_overall_rating->value() ? $uw->field_my_overall_rating->value() : 0;
@@ -666,6 +707,7 @@ function yogafind_facetapi_deactivate_widget($variables) {
  */
 function yogafind_preprocess_entity(&$variables) {
   if ($variables['elements']['#bundle'] == 'teacher') {
+    global $user;
     $url_name = explode('/', $variables['url']);
     $nw = tweaks_get_alias_wrapper();
     $path = drupal_get_path_alias('node/' . $nw->getIdentifier());
@@ -674,6 +716,7 @@ function yogafind_preprocess_entity(&$variables) {
     }
     if ($variables['view_mode'] == 'token') {
       $variables['view_more'] = l(t('view'), $path . '/teachers/' . $url_name[3], array('attributes' => array('class' => array('btn btn-purple btn-block btn-xs'))));
+      $variables['edit_link'] = $user->uid == $nw->author->getIdentifier() ? l(t('edit'), 'teacher/' . $variables['elements']['#entity']->id . '/edit', array('attributes' => array('class' => array('a-link')))) : FALSE;
     }
   }
 }

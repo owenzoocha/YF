@@ -3,6 +3,8 @@
  * @file models_nav.module.
  */
 
+require_once 'models_nav.build_classes.inc';
+
 /**
  * Implements hook_block_info().
  */
@@ -23,6 +25,10 @@ function models_nav_block_info() {
     'info' => t('Yoga Classes Block'),
     'cache' => DRUPAL_NO_CACHE
   );
+  $blocks['yoga_timetable_block'] = array(
+    'info' => t('Yoga Timetable Block'),
+    'cache' => DRUPAL_NO_CACHE
+  );
   return $blocks;
 }
 
@@ -32,10 +38,6 @@ function models_nav_block_info() {
 function models_nav_block_view($delta = '') {
   $block = array();
   switch ($delta) {
-    case 'event_nav':
-      $block['subject'] = t('Event Nav');
-      $block['content'] = theme('block_event_nav');
-      break;
     case 'settings_nav':
       $block['subject'] = t('Settings Nav');
       $block['content'] = theme('block_settings_nav');
@@ -47,6 +49,10 @@ function models_nav_block_view($delta = '') {
     case 'yoga_classes_block':
       $block['subject'] = t('Yoga Classes');
       $block['content'] = theme('yoga_classes_block');
+      break;
+    case 'yoga_timetable_block':
+      $block['subject'] = t('Yoga Timetable');
+      $block['content'] = theme('yoga_timetable_block');
       break;
   }
   return $block;
@@ -97,9 +103,6 @@ function social_nav_footer_block() {
  */
 function models_nav_theme() {
   return array(
-    'block_event_nav' => array(
-      'template' => 'templates/block-event-nav',
-    ),
     'block_settings_nav' => array(
       'template' => 'templates/block-settings-nav',
     ),
@@ -118,128 +121,106 @@ function models_nav_theme() {
     'yoga_classes_block' => array(
       'template' => 'templates/yoga-classes-block',
     ),
+    'yoga_timetable_block' => array(
+      'template' => 'templates/yoga-timetable-block',
+    ),
   );
 }
 
-/**
- * Template preprocess for Event Nav.
- */
-function template_preprocess_block_event_nav(&$vars) {
-  drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/models_nav.js');
-  $nid = 90;
-  $agenda = l(t('Agenda Builder'), 'agenda/' . $nid . '/create');
-  $vars['links'] = '<li>' . $agenda . '<span class="triangle"></span></a></li>
-    <li><a href="#">link item one<span class="triangle"></span></a></li>
-    <li><a href="#">link item one<span class="triangle"></span></a></li>
-    <li><a href="#">link item one<span class="triangle"></span></a></li>
-    <li><a href="#">link item one<span class="triangle"></span></a></li>';
-
-  $vars['links'] = '<li>' . $agenda . '</a></li>
-    <li><a href="#">link item one</a></li>
-    <li><a href="#">link item one</a></li>
-    <li><a href="#">link item one</a></li>
-    <li><a href="#">link item one</a></li>';
-}
-
 
 /**
- * Template preprocess for Settings Nav.
+ * Template preprocess for Yoga Classes widget block.
  */
 function template_preprocess_yoga_classes_block(&$vars) {
   global $user;
   drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/yoga_classes.js');
-  $nw = entity_metadata_wrapper('node', arg(1));
+  try {
 
-  $class_array = array();
-  if ($nw->field_yoga_classes->value()) {
-
-    $res = views_get_view_result('yoga_classes', 'master', $nw->getIdentifier());
-//    dpm($res);
-//    foreach ($nw->field_yoga_classes->getIterator() AS $key => $ew) {
-    foreach ($res AS $key => $class) {
-      $ew = entity_metadata_wrapper('class', $class->id);
-      if ($ew->field_yc_dow->value()) {
-        $styles = '';
-        foreach ($ew->field_yoga_style->getIterator() AS $k => $style) {
-          $styles .= $style->label() . ', ';
-        }
-        $class_array[$ew->field_yc_dow->value()][] = array(
-          'dow' => $ew->field_yc_dow->value(),
-          'times' => $ew->field_yc_start_time->value()['value_formatted'] . ' - ' . $ew->field_yc_start_time->value()['value2_formatted'],
-          'desc' => $ew->field_yc_desc->value(),
-          'style' => rtrim($styles, ', '),
-          'teacher' => $ew->field_yc_teacher->value() ? $ew->field_yc_teacher->label() : '-',
-          'duration' => timefield_time_to_duration($ew->field_yc_start_time->value()['value'], $ew->field_yc_start_time->value()['value2'], 'time'),
-        );
-
-      }
+    if (!is_numeric(arg(1))) {
+      $nid = explode('/', drupal_get_normal_path('studio/' . arg(1)));
+      $nid = $nid[1];
     }
-  }
-  else {
-  }
-
-  if (sizeof($class_array)) {
-
-    // Create the classes header.
-    $hdr = !empty($class_array['Monday']) ? 'yes' : 'no';
-    $active_class = date('l', strtotime('now')) == 'Monday' ? 'active' : '';
-    $class_header = '<div class="day ' . $hdr . '-classes"><a data-day="Monday" class="' . $active_class . '" href="#"><span class="">Monday</span></a></div>';
-
-    $hdr = !empty($class_array['Tuesday']) ? 'yes' : 'no';
-    $active_class = date('l', strtotime('now')) == 'Tuesday' ? 'active' : '';
-    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Tuesday" class="' . $active_class . '" href="#"><span class="">Tuesday</span></a></div>';
-
-    $hdr = !empty($class_array['Wednesday']) ? 'yes' : 'no';
-    $active_class = date('l', strtotime('now')) == 'Wednesday' ? 'active' : '';
-    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Wednesday" class="' . $active_class . '" href="#"><span class="">Wednesday</span></a></div>';
-
-    $hdr = !empty($class_array['Thursday']) ? 'yes' : 'no';
-    $active_class = date('l', strtotime('now')) == 'Thursday' ? 'active' : '';
-    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Thursday" class="' . $active_class . '" href="#"><span class="">Thursday</span></a></div>';
-
-    $hdr = !empty($class_array['Friday']) ? 'yes' : 'no';
-    $active_class = date('l', strtotime('now')) == 'Friday' ? 'active' : '';
-    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Friday" class="' . $active_class . '" href="#"><span class="">Friday</span></a></div>';
-
-    $hdr = !empty($class_array['Saturday']) ? 'yes' : 'no';
-    $active_class = date('l', strtotime('now')) == 'Saturday' ? 'active' : '';
-    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Saturday" class="' . $active_class . '" href="#"><span class="">Saturday</span></a></div>';
-
-    $hdr = !empty($class_array['Sunday']) ? 'yes' : 'no';
-    $active_class = date('l', strtotime('now')) == 'Sunday' ? 'active' : '';
-    $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Sunday" class="' . $active_class . '" href="#"><span class="">Sunday</span></a></div>';
-
-    $vars['class_header'] = $class_header;
-
-    $class_data = '';
-    foreach ($class_array as $key => $day) {
-      $active_class = date('l', strtotime('now')) == $key ? 'active' : '';
-      $class_data .= '<div class="day-wrapper ' . $active_class . '" data-day="' . $key . '">';
-      $i = 1;
-      foreach ($day as $k => $v) {
-        $class_data .= '<div class="class-' . $i . ' yoga-class">';
-        $class_data .= '<div class="options op-time">' . $v['times'] . '</div>';
-        $class_data .= '<div class="options op-style">' . $v['style'] . '</div>';
-        $class_data .= '<div class="options op-duration">' . $v['duration'] . 'h</div>';
-        $class_data .= '<div class="options op-teacher">' . $v['teacher'] . '</div>';
-        $class_data .= '<div class="yoga-class-extra">';
-        $class_data .= '<div class="yoga-class-img"><img class="img-responsive" src="http://yogafind.dev/sites/default/files/styles/profile/public/heart.png?itok=BCKVtqjL"/></div>';
-        $class_data .= '<div class="yoga-class-desc">';
-        $class_data .= '<h4>' . $v['style'] . '</h4>';
-        $class_data .= '<p><strong>' . $v['times'] . '</strong> with <strong>' . $v['teacher'] . '</strong></p>';
-        $class_data .= '<p>' . $v['desc'] . '</p>';
-        $class_data .= '</div>';
-        $class_data .= '</div>';
-        $class_data .= '</div>';
-        $i++;
-      }
-      $class_data .= '</div>';
+    else {
+      $nid = arg(1);
     }
-    $vars['class_data'] = $class_data;
-//    dpm($vars['class_data']);
+    $nw = entity_metadata_wrapper('node', $nid);
+
+    $class_array = array();
+    $make_edits = $user->uid == $nw->author->getIdentifier() ? TRUE : FALSE;
+
+    if ($nw->field_yoga_classes->value()) {
+
+      $res = views_get_view_result('yoga_classes', 'block_2', $nw->getIdentifier(), 'Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday');
+      $class_array = build_yoga_class_array($res);
+    }
+    else {
+      //
+    }
+
+    if (sizeof($class_array)) {
+      $vars['class_data'] = build_yoga_class_data($class_array, $make_edits);
+      $vars['class_header'] = build_yoga_class_widget_header($class_array);
+    }
+    else {
+      $vars['class_header'] = FALSE;
+    }
+  } catch (EntityMetadataWrapperException $exc) {
+    watchdog(
+      'Models_nav classes block',
+      'EntityMetadataWrapper exception in %function() @trace',
+      array('%function' => __FUNCTION__, '@trace' => $exc->getTraceAsString()),
+      WATCHDOG_ERROR
+    );
   }
-  else {
-    $vars['class_header'] = FALSE;
+}
+
+/**
+ * Template preprocess for Yoga Classes Timetable block.
+ */
+function template_preprocess_yoga_timetable_block(&$vars) {
+  global $user;
+  drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/yoga_classes.js');
+  try {
+
+    if (!is_numeric(arg(1))) {
+      $nid = explode('/', drupal_get_normal_path('studio/' . arg(1)));
+      $nid = $nid[1];
+    }
+    else {
+      $nid = arg(1);
+    }
+    $nw = entity_metadata_wrapper('node', $nid);
+
+    $make_edits = $user->uid == $nw->author->getIdentifier() ? TRUE : FALSE;
+
+    $class_array = array();
+    if ($nw->field_yoga_classes->value()) {
+      $res = views_get_view_result('yoga_classes', 'block_2', $nw->getIdentifier(), 'Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday');
+      $class_array = build_yoga_class_array($res);
+    }
+
+    if (sizeof($class_array)) {
+      $class_data['Monday'] = !empty($class_array['Monday']) ? build_yoga_timetable_data($class_array['Monday'], $make_edits) : FALSE;
+      $class_data['Tuesday'] = !empty($class_array['Tuesday']) ? build_yoga_timetable_data($class_array['Tuesday'], $make_edits) : FALSE;
+      $class_data['Wednesday'] = !empty($class_array['Wednesday']) ? build_yoga_timetable_data($class_array['Wednesday'], $make_edits) : FALSE;
+      $class_data['Thursday'] = !empty($class_array['Thursday']) ? build_yoga_timetable_data($class_array['Thursday'], $make_edits) : FALSE;
+      $class_data['Friday'] = !empty($class_array['Friday']) ? build_yoga_timetable_data($class_array['Friday'], $make_edits) : FALSE;
+      $class_data['Saturday'] = !empty($class_array['Saturday']) ? build_yoga_timetable_data($class_array['Saturday'], $make_edits) : FALSE;
+      $class_data['Sunday'] = !empty($class_array['Sunday']) ? build_yoga_timetable_data($class_array['Sunday'], $make_edits) : FALSE;
+      $vars['class_data'] = $class_data;
+      $vars['class_array'] = $class_array;
+      $vars['class_header'] = FALSE;
+    }
+    else {
+      $vars['class_header'] = FALSE;
+    }
+  } catch (EntityMetadataWrapperException $exc) {
+    watchdog(
+      'Models_nav classes block',
+      'EntityMetadataWrapper exception in %function() @trace',
+      array('%function' => __FUNCTION__, '@trace' => $exc->getTraceAsString()),
+      WATCHDOG_ERROR
+    );
   }
 }
 
@@ -270,33 +251,43 @@ function template_preprocess_my_nav(&$vars) {
 
     try {
       $nav = '<ul>';
-      if ($nw->field_yoga_type->value() != 'event') {
-        $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
-        $nav .= '<li>' . l(t('Edit'), 'listing/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
-        $nav .= '<li>' . l(t('Blog'), $alias . ' /blog', array('attributes' => array('class' => array('')))) . ' </li> ';
-        $nav .= '<li>' . l(t('Gallery'), $alias . '/blog', array('attributes' => array('class' => array('')))) . ' </li> ';
+      if ($nw->getBundle() == 'yoga') {
+        if ($nw->field_yoga_type->value() != 'event') {
+          $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
+          $nav .= '<li>' . l(t('Edit'), 'listing/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
 
-        $amt = $nw->field_yoga_classes->value() ? ' (' . sizeof($nw->field_yoga_classes->value()) . ')' : '';
-        $nav .= '<li>' . l(t('Timetable') . $amt, $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
+          $amt = $nw->author->field_my_posts->value() ? ' (' . sizeof($nw->author->field_my_posts->value()) . ')' : '';
+          $nav .= '<li>' . l(t('Posts') . $amt, $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
+          $nav .= '<li>' . l(t('Gallery'), $alias . '/blog', array('attributes' => array('class' => array('')))) . ' </li> ';
 
-        $amt = $nw->field_yoga_event_list->value() ? ' (' . sizeof($nw->field_yoga_event_list->value()) . ')' : '';
-        $nav .= '<li>' . l(t('Events') . $amt, $alias . '/events', array('attributes' => array('class' => array('')))) . ' </li> ';
+          $amt = $nw->field_yoga_classes->value() ? ' (' . sizeof($nw->field_yoga_classes->value()) . ')' : '';
+          $nav .= '<li>' . l(t('Timetable') . $amt, $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
 
-        if ($nw->field_yoga_type->value() == 'studio') {
-          $amt = $nw->field_yoga_teachers->value() ? ' (' . sizeof($nw->field_yoga_teachers->value()) . ')' : '';
-          $nav .= '<li>' . l(t('Teachers') . $amt, $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
+          $amt = $nw->field_yoga_event_list->value() ? ' (' . sizeof($nw->field_yoga_event_list->value()) . ')' : '';
+          $nav .= '<li>' . l(t('Events') . $amt, $alias . '/events', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+          if ($nw->field_yoga_type->value() == 'studio') {
+            $amt = $nw->field_yoga_teachers->value() ? ' (' . sizeof($nw->field_yoga_teachers->value()) . ')' : '';
+            $nav .= '<li>' . l(t('Teachers') . $amt, $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
+          }
+        }
+        else {
+          $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
+          $nav .= '<li>' . l(t('Edit'), 'event/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
         }
       }
       else {
         $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
-        $nav .= '<li>' . l(t('Edit'), 'event/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+        $nav .= '<li>' . l(t('Edit'), 'blog/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
       }
-    }
-    catch (EntityMetadataWrapperException $exc) {
+    } catch (EntityMetadataWrapperException $exc) {
       watchdog(
         'models_nav',
         'EntityMetadataWrapper exception in %function() @trace',
-        array('%function' => __FUNCTION__, '@trace' => $exc->getTraceAsString()),
+        array(
+          '%function' => __FUNCTION__,
+          '@trace' => $exc->getTraceAsString()
+        ),
         WATCHDOG_ERROR
       );
     }

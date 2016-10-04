@@ -7,40 +7,71 @@
 
     init: function (context) {
 
-      var $input = $('#search-lookup');
-      var data = JSON.parse(Drupal.settings.geos);
-      $input.typeahead(
-        {
-          source: data,
-          fitToElement: true,
-          autoSelect: false
-        });
+      var placeLookup = {
+        autocomplete: new google.maps.places.AutocompleteService(),
+        places: new google.maps.places.PlacesService(document.createElement("div"))
+      };
 
-      $input.change(function () {
-        var current = $input.typeahead("getActive");
-        if (current) {
-          // Some item from your model is active!
-          if (current.name.toLowerCase() == $input.val().toLowerCase()) {
-            models_searcher.searcher(current);
-            // This means the exact match is found. Use toLowerCase() if you want case insensitive match.
+      console.log(placeLookup);
+      $('.dropdown-menu-yogafind .no-results').hide();
+
+      $('#search-lookup').on('keyup', function (event) {
+        $this = $(this);
+        $('li.res').remove();
+
+        var query = $this.val();
+        setTimeout(function () {
+          if (query.length > 0) {
+
+            // https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJ2TsKiYFebkgRTqYZD28_iE4&key=AIzaSyAJotW5W9qrHFoKPAJPim6w4jWr6MWNEHA
+
+            placeLookup.autocomplete.getPlacePredictions({
+              input: query,
+              componentRestrictions: {country: 'uk'},
+              types: ['(regions)']
+            }, function (results) {
+              $('li.res').remove();
+              // console.log(results);
+              if (results) {
+                $('<li class="res goog">Powered by <img title="Google" alt="Google" src="sites/all/themes/yogafind/images/Google_2015_logo.svg"/></li>').insertAfter($('.dropdown-menu-yogafind .dropdown-header.dropdown-header-area'));
+                var resultString = '';
+                $.each(results, function (i, areas) {
+                  // console.log(areas);
+                  resultString += '<li class="res"><a href="#" data-placeid="' + areas['place_id'] + '">' + areas['description'] + '</a></li>';
+                });
+
+                $(resultString).insertAfter($('.dropdown-menu-yogafind .dropdown-header.dropdown-header-area'));
+              }
+              else {
+                $('li.res-place').remove();
+                $('<li class="res no-res">Nothing here :(!</li>').insertAfter($('.dropdown-menu-yogafind .dropdown-header.dropdown-header-area'));
+              }
+              // if (thisRequest != lastRequest) {
+              //   return;
+              // }
+            });
+
+            // // Now from the Drupal side o' things..
+            $.get('/api/yf_dynamic_search/' + query + '.json', function(data, status) {
+              if (!data) {
+                return;
+              }
+              else {
+                if (data['listing']) {
+                  var listingString = '';
+                  $.each(data['listing'], function(listingTitle, listing) {
+                    console.log(listing);
+                    listingString += '<li class="res"><a href="#">' + listingTitle + '</a></li>';
+                  });
+                  $(listingString).insertAfter($('.dropdown-menu-yogafind .dropdown-header.dropdown-header-listings'));
+                }
+              }
+
+            });
           }
-          else {
-            // This means it is only a partial match, you can either add a new item
-            // or take the active if you don't want new items
-          }
-        }
-        else {
-          // Nothing is active so it is a new value (or maybe empty value)
-        }
+        }, 200);
       });
 
-      $('#models-searcher-form').submit(function () {
-        var geo = $input.typeahead("getActive");
-        if (geo) {
-          models_searcher.searcher(geo);
-        }
-        return false;
-      });
 
     },
 

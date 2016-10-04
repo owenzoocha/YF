@@ -14,6 +14,22 @@
  //  }
 
 /**
+ * Getter and setter for dynamic search cache.
+ */
+function models_cache_build_dynamic_search_cache($data, $nid){
+  cache_set("dynsrch:$nid", $data, 'cache_models');
+}
+
+function models_cache_get_dynamic_search_cache($nid) {
+  if ($data = cache_get("dynsrch:$nid", 'cache_models')) {
+    return $data->data;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+/**
  * Getter and setter for latlon cache.
  */
 function models_cache_build_job_latlon_cache($data, $nid){

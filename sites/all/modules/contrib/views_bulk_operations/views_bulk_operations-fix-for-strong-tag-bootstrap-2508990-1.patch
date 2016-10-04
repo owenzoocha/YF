@@ -1,0 +1,13 @@
+diff --git a/views_bulk_operations.module b/views_bulk_operations.module
+index e74eeb1..ae5d1ed 100644
+--- a/views_bulk_operations.module
++++ b/views_bulk_operations.module
+@@ -642,7 +642,7 @@ function theme_views_bulk_operations_confirmation($variables) {
+   }
+ 
+   $count = format_plural(count($entities), 'item', '@count items');
+-  $output = theme('item_list', array('items' => $items, 'title' => t('You selected the following <strong>!count</strong>:', array('!count' => $count))));
++  $output = theme('item_list', array('items' => $items, 'title' => t('You selected the following !count:', array('!count' => $count))));
+   return $output;
+ }
+ 

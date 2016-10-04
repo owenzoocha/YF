@@ -698,9 +698,10 @@ function models_forms_create_form($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('($) Costing'),
     '#default_value' => isset($hb_cost) ? $hb_cost : 0,
-    '#description' => t('How much will the job cost? If free, leave as $0.00 - If personal, how much are you willing to pay?'),
+    '#description' => t('How much will the job cost? Is it free or at discount? If personal, how much are you willing to pay?'),
     '#attributes' => array(
       'id' => array('hb-costing'),
+//      'placeholder' => 'Tell u '
     ),
   );
 
@@ -972,14 +973,16 @@ function models_forms_create_form_submit(&$form, &$form_state) {
     $node->field_hb_company[LANGUAGE_NONE][]['value'] = $fs['company'];
   }
 
-  if (!empty($fs['cost']) && ltrim($fs['cost'], '$') != 0.00) {
-    $node->field_hb_price[LANGUAGE_NONE][0]['value'] = ltrim($fs['cost'], '$');
-    $node->field_hb_price_type[LANGUAGE_NONE][0]['value'] = 'fixed';
-  }
-  else {
-    $node->field_hb_price[LANGUAGE_NONE][0]['value'] = 0.00;
-    $node->field_hb_price_type[LANGUAGE_NONE][0]['value'] = 'free';
-  }
+  $node->field_hb_price_text[LANGUAGE_NONE][0]['value'] = ltrim($fs['cost'], '$');
+
+//  if (!empty($fs['cost']) && ltrim($fs['cost'], '$') != 0.00) {
+//    $node->field_hb_price[LANGUAGE_NONE][0]['value'] = ltrim($fs['cost'], '$');
+//    $node->field_hb_price_type[LANGUAGE_NONE][0]['value'] = 'fixed';
+//  }
+//  else {
+//    $node->field_hb_price[LANGUAGE_NONE][0]['value'] = 0.00;
+//    $node->field_hb_price_type[LANGUAGE_NONE][0]['value'] = 'free';
+//  }
 
   // Date.
   unset($node->field_hb_time);

@@ -1,0 +1,39 @@
+<?php
+/**
+ * @file yf_api.module
+ * Services hook for the definition of custom services.
+ */
+function yf_api_services_resources() {
+
+  $resource = array(
+    // API endpoints for the core team
+    'yf_dynamic_search' => array(
+      'retrieve' => array(
+        'help' => 'Retrieve dynamic search data.',
+        'file' => array('type' => 'inc', 'module' => 'yf_api', 'name' => 'resources/yf'),
+        'callback' => '_yf_dynamic_search',
+        'access callback' => '_yf_dynamic_search_permission',
+        // 'access arguments' => array('view'),
+        'access arguments append' => TRUE,
+        'args' => array(
+          array(
+            'name' => 'srch',
+            'type' => 'string',
+            'description' => 'The Search Term',
+            'source' => array('path' => '0'),
+            'optional' => FALSE,
+          ),
+        ),
+      ),
+    )
+  );
+
+  return $resource;
+}
+
+/**
+ * @return bool
+ */
+function _yf_dynamic_search_permission() {
+  return TRUE;
+}

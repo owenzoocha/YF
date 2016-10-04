@@ -1,0 +1,40 @@
+From d0f587a25009ad46bd4fecceb3c2643277eab503 Mon Sep 17 00:00:00 2001
+From: victor <victor@dom.de>
+Date: Wed, 26 Nov 2014 13:37:52 +0100
+Subject: [PATCH] search_api_solr-partial_word_matching-1414838-8
+
+---
+ solr-conf/4.x/schema.xml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/solr-conf/4.x/schema.xml b/solr-conf/4.x/schema.xml
+index f09c097..bb9cd8a 100644
+--- a/solr-conf/4.x/schema.xml
++++ b/solr-conf/4.x/schema.xml
+@@ -189,6 +189,7 @@
+         <filter class="solr.LowerCaseFilterFactory"/>
+         <filter class="solr.SnowballPorterFilterFactory" language="English" protected="protwords.txt"/>
+         <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
++        <filter class="solr.EdgeNGramFilterFactory" minGramSize="3" maxGramSize="30"/>
+       </analyzer>
+       <analyzer type="query">
+         <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
+@@ -212,6 +213,7 @@
+         <filter class="solr.LowerCaseFilterFactory"/>
+         <filter class="solr.SnowballPorterFilterFactory" language="English" protected="protwords.txt"/>
+         <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
++        <filter class="solr.EdgeNGramFilterFactory" minGramSize="3" maxGramSize="30"/>
+       </analyzer>
+     </fieldType>
+ 
+@@ -276,6 +278,7 @@
+         <filter class="solr.LengthFilterFactory" min="4" max="20" />
+         <filter class="solr.LowerCaseFilterFactory" />
+         <filter class="solr.RemoveDuplicatesTokenFilterFactory" />
++        <filter class="solr.EdgeNGramFilterFactory" minGramSize="3" maxGramSize="30"/>
+       </analyzer>
+     </fieldType>
+ 
+-- 
+1.9.3 (Apple Git-50)
+

@@ -76,6 +76,19 @@ function tweaks_menu() {
     'page arguments' => array(1),
   );
 
+  $items['events/in/%'] = array(
+    'page callback' => 'tweaks_yoga_search_results',
+    'access callback' => TRUE,
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'file' => 'tweaks.search_pages.inc',
+  );
+
+  $items['trainer/%/timetable'] = array(
+    'page callback' => 'tweaks_yoga_timetable_list',
+    'access callback' => TRUE,
+    'page arguments' => array(1),
+  );
 
   // Non yoga stuffs >> ...
   $items['revalidate-email/%'] = array(

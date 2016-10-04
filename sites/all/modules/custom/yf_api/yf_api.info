@@ -1,0 +1,4 @@
+name = YF Endpoints
+description = Endpoints for YogaFind
+package = YF
+core = 7.x

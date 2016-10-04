@@ -97,56 +97,68 @@ function yogafind_preprocess_node(&$variables) {
     }
 
     if ($variables['view_mode'] == 'token') {
-      $nw = entity_metadata_wrapper('node', $variables['nid']);
-      // Parent.
-      $query = db_query('SELECT entity_id FROM field_data_field_yoga_event_list WHERE field_yoga_event_list_nid=:nid', array('nid' => $nw->getIdentifier()));
-      $res = $query->fetchAll();
-      $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
+      try {
+        $nw = entity_metadata_wrapper('node', $variables['nid']);
+        // Parent.
+        $query = db_query('SELECT entity_id FROM field_data_field_yoga_event_list WHERE field_yoga_event_list_nid=:nid', array('nid' => $nw->getIdentifier()));
+        $res = $query->fetchAll();
+        $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
 
-      $variables['parent_title'] = l($pw->label(), 'node/' . $pw->getIdentifier());
-      $variables['title'] = l($variables['title'], 'node/' . $nw->getIdentifier());
-      $variables['event_type'] = $nw->field_yoga_event_type->value() ? $nw->field_yoga_event_type->label() : FALSE;
+        $variables['parent_title'] = l($pw->label(), 'node/' . $pw->getIdentifier());
+        $variables['title'] = l($variables['title'], 'node/' . $nw->getIdentifier());
+        $variables['event_type'] = $nw->field_yoga_event_type->value() ? $nw->field_yoga_event_type->label() : FALSE;
 
-      if ($nw->field_yoga_event_dates->value()) {
-        if ($nw->field_yoga_event_dates->value()['value'] == $nw->field_yoga_event_dates->value()['value2']) {
-          $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value']));
+        if ($nw->field_yoga_event_dates->value()) {
+          if ($nw->field_yoga_event_dates->value()['value'] == $nw->field_yoga_event_dates->value()['value2']) {
+            $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value']));
+          }
+          else {
+            $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value'])) . '<i class="material-icons">&#xE8E4;</i><span class="date-to">' . date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value2'])) . '</span>';
+          }
+
+        }
+        $alter = array(
+          'max_length' => 150,
+          'ellipsis' => TRUE,
+          'word_boundary' => TRUE,
+          'html' => TRUE,
+        );
+        $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
+
+        $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : $pw->field_yoga_logo->value()['uri'];
+
+        $pic = '<div class="event-logo">' . l(theme('image_style', array(
+            'style_name' => 'profile',
+            'path' => $uri,
+            'attributes' => array('class' => array('img-responsive'))
+          )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+
+        $variables['logo'] = $pic;
+
+        if ($nw->field_yoga_location->value()) {
+          $location = $nw->field_yoga_location->value()['premise'] ? $nw->field_yoga_location->value()['premise'] . ', ' : '';
+          $location .= $nw->field_yoga_location->value()['country'] ? $nw->field_yoga_location->value()['country'] . ', ' : '';
+          $variables['location'] = rtrim($location, ', ');
         }
         else {
-          $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value'])) . '<i class="material-icons">&#xE8E4;</i><span class="date-to">' . date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value2'])) . '</span>';
+          $variables['location'] = '-';
         }
 
+        if ($nw->field_yoga_event_price->value()) {
+          $price_class = strlen($nw->field_yoga_event_price->value()) > 10 ? 'block-this' : 'inline-this';
+        }
+        $variables['price'] = $nw->field_yoga_event_price->value() ? '<p class="event-price ' . $price_class . '">' . $nw->field_yoga_event_price->value() . '</p>' : FALSE;
+      } catch (EntityMetadataWrapperException $exc) {
+        watchdog(
+          'MODULE_NAME',
+          'EntityMetadataWrapper exception in %function() @trace',
+          array(
+            '%function' => __FUNCTION__,
+            '@trace' => $exc->getTraceAsString()
+          ),
+          WATCHDOG_ERROR
+        );
       }
-      $alter = array(
-        'max_length' => 150,
-        'ellipsis' => TRUE,
-        'word_boundary' => TRUE,
-        'html' => TRUE,
-      );
-      $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
-
-      $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : $pw->field_yoga_logo->value()['uri'];
-
-      $pic = '<div class="event-logo">' . l(theme('image_style', array(
-          'style_name' => 'profile',
-          'path' => $uri,
-          'attributes' => array('class' => array('img-responsive'))
-        )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
-
-      $variables['logo'] = $pic;
-
-      if ($nw->field_yoga_location->value()) {
-        $location = $nw->field_yoga_location->value()['premise'] ? $nw->field_yoga_location->value()['premise'] . ', ' : '';
-        $location .= $nw->field_yoga_location->value()['country'] ? $nw->field_yoga_location->value()['country'] . ', ' : '';
-        $variables['location'] = rtrim($location, ', ');
-      }
-      else {
-        $variables['location'] = '-';
-      }
-
-      if ($nw->field_yoga_event_price->value()) {
-        $price_class = strlen($nw->field_yoga_event_price->value()) > 10 ? 'block-this' : 'inline-this';
-      }
-      $variables['price'] = $nw->field_yoga_event_price->value() ? '<p class="event-price ' . $price_class . '">' . $nw->field_yoga_event_price->value() . '</p>' : FALSE;
     }
   }
 
@@ -159,6 +171,60 @@ function yogafind_preprocess_page(&$variables) {
   global $user;
 
   $uw = entity_metadata_wrapper('user', $user);
+
+  // Breadcrumbs for search pages.
+  if (strpos(current_path(), 'events/in') !== FALSE || strpos(current_path(), 'classes/in') !== FALSE) {
+
+
+    // Yoga View breadcrumbs
+    $my_breadcrumbs_array[] = l('Home', '/');
+
+    if (strpos(current_path(), 'events/in') !== FALSE) {
+      $path = 'events/in/';
+      $my_breadcrumbs_array[] = l('Events', 'events/in');
+    }
+    elseif (strpos(current_path(), 'classes/in') !== FALSE) {
+      $path = 'classes/in/';
+      $my_breadcrumbs_array[] = l('Classes', 'classes/in');
+    }
+    elseif (strpos(current_path(), 'listings/in') !== FALSE) {
+      $path = 'listings/in/';
+      $my_breadcrumbs_array[] = l('Listings', 'listings/in');
+    }
+
+    $term = ucwords(str_replace('-', ' ', arg(2)));
+    $search_place = taxonomy_get_term_by_name($term);
+    $search_parents = taxonomy_get_parents_all(reset($search_place)->tid);
+
+    if (sizeof($search_parents) == 3) {
+      $town = $search_parents[0]->name;
+      $county = $search_parents[1]->name;
+      $country = $search_parents[2]->name;
+    }
+    elseif (sizeof($search_parents) == 2) {
+      $town = FALSE;
+      $county = $search_parents[0]->name;
+      $country = $search_parents[1]->name;
+    }
+    else {
+      $town = FALSE;
+      $county = FALSE;
+      $country = $search_parents[0]->name;
+    }
+
+    if ($country) {
+      $my_breadcrumbs_array[] = l($country, $path . strtolower(str_replace(' ', '-', $country)));
+    }
+
+    if ($county) {
+      $my_breadcrumbs_array[] = l($county, $path . strtolower(str_replace(' ', '-', $county)));
+    }
+
+    if ($town) {
+      $my_breadcrumbs_array[] = l($town, $path . strtolower(str_replace(' ', '-', $town)));
+    }
+    drupal_set_breadcrumb($my_breadcrumbs_array);
+  }
 
   if (strpos(current_path(), 'class/') !== FALSE) {
     if (is_numeric(arg(2))) {
@@ -214,7 +280,7 @@ function yogafind_preprocess_page(&$variables) {
 
   // Bounce non admin onto personal info instead of user/edit.
   if (!in_array('hbm_admin', $user->roles) || $user->uid != 1) {
-    unset($variables['tabs']);
+//    unset($variables['tabs']);
 
     if (strrpos(current_path(), 'user/' . $user->uid . '/edit') !== FALSE) {
       drupal_goto('user/personal-information/settings');

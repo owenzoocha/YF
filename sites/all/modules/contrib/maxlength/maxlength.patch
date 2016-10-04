@@ -1,0 +1,45 @@
+-- maxlength.js l.289
+
+  ml.tinymce = function() {
+    // We only run it once
+    var onlyOnce = false;
+    if (!onlyOnce) {
+      onlyOnce = true;
+-   tinyMCE.onAddEditor.add(function(mgr,ed) {
++   tinymce.on('AddEditor', function(ed) {
+      // the editor is on a maxlength field
+-     var editor = $('#' + ed.editorId + '.maxlength');
++     var editor = $('#' + ed.editor.id + '.maxlength');
+      if (editor.length == 1) {
+      if (editor.hasClass('maxlength_js_enforce')) {
+-       ml.options[ed.editorId].enforce = true;
++       ml.options[ed.editor.id].enforce = true;
+      } else {
+-       ml.options[ed.editorId].enforce = false;
++       ml.options[ed.editor.id].enforce = false;
+      }
+      // Check if we should strip the tags when counting.
+      if (editor.hasClass('maxlength_js_truncate_html')) {
+-       ml.options[ed.editorId].truncateHtml = true;
++       ml.options[ed.editor.id].truncateHtml = true;
+      } else {
+-       ml.options[ed.editorId].truncateHtml = false;
++       ml.options[ed.editor.id].truncateHtml = false;
+      }
+-     ed.onChange.add(function(ed, l) {
++     ed.editor.on('change', function(e) {
+        ml.tinymceChange(ed);
+      });
+-     ed.onKeyUp.add(function(ed, e) {
++     ed.editor.on('keyup', function(e) {
+        ml.tinymceChange(ed);
+      });
+-     ed.onPaste.add(function(ed, e) {
++     ed.editor.on('paste', function(e) {
+        setTimeout(function(){ml.tinymceChange(ed)}, 500);
+      });
++     ed.editor.on('cut', function(e) {
++       setTimeout(function(){ml.tinymceChange(ed)}, 500);
++     });
+    }
+  }

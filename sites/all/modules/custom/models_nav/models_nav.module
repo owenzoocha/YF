@@ -4,6 +4,7 @@
  */
 
 require_once 'models_nav.build_classes.inc';
+require_once 'models_nav.yoga_area_landing_page.inc';
 
 /**
  * Implements hook_block_info().
@@ -27,6 +28,10 @@ function models_nav_block_info() {
   );
   $blocks['yoga_timetable_block'] = array(
     'info' => t('Yoga Timetable Block'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  $blocks['yoga_area_lp'] = array(
+    'info' => t('Yoga Area Landing Page'),
     'cache' => DRUPAL_NO_CACHE
   );
   return $blocks;
@@ -53,6 +58,10 @@ function models_nav_block_view($delta = '') {
     case 'yoga_timetable_block':
       $block['subject'] = t('Yoga Timetable');
       $block['content'] = theme('yoga_timetable_block');
+      break;
+    case 'yoga_area_lp':
+      $block['subject'] = t('Yoga Timetable');
+      $block['content'] = theme('yoga_area_lp');
       break;
   }
   return $block;
@@ -124,9 +133,11 @@ function models_nav_theme() {
     'yoga_timetable_block' => array(
       'template' => 'templates/yoga-timetable-block',
     ),
+    'yoga_area_lp' => array(
+      'template' => 'templates/yoga-area-lp-block',
+    ),
   );
 }
-
 
 /**
  * Template preprocess for Yoga Classes widget block.
@@ -428,10 +439,10 @@ function template_preprocess_custom_nav(&$vars) {
   $uw = entity_metadata_wrapper('user', $user);
 
   $links = '<li class="first leaf">' . l('<i class="material-icons">&#xE8B6;</i> Search', 'search/type/beauty', array('html' => TRUE)) . '</li>';
-  $links .= '<li class="leaf">' . l('Studios', 'search/type/hair') . '</li>';
-  $links .= '<li class="leaf">' . l('Classes', 'search/type/personal') . '</li>';
-  $links .= '<li class="leaf">' . l('Events', 'search/type/personal') . '</li>';
-  $links .= '<li class="leaf">' . l('Blog', 'search/type/personal') . '</li>';
+  $links .= '<li class="leaf">' . l('Studios', 'in') . '</li>';
+  $links .= '<li class="leaf">' . l('Classes', 'classes') . '</li>';
+  $links .= '<li class="leaf">' . l('Events', 'events') . '</li>';
+  $links .= '<li class="leaf">' . l('Posts', 'posts') . '</li>';
 
   $active_user_menu = '<div class="my-menu-dd">';
   $active_user_menu .=

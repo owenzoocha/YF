@@ -37,27 +37,54 @@ function models_searcher_block_view($delta = '') {
  * Implements hook_form().
  */
 function models_searcher_form($form, &$form_state) {
-  $geos = models_searcher_go();
+//  $geos = models_searcher_go();
+  $form['#attributes'] = array(
+    'data-toggle' => 'dropdown',
+    'aria-haspopup' => 'true',
+    'aria-expanded' => 'false',
+  );
+
   $form['#attached']['js'] = array(
-    'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js' => array(
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY&sensor=false&libraries=places' => array(
       'type' => 'external',
     ),
     drupal_get_path('module', 'models_searcher') . '/js/searcher.js',
-    array(
-      'data' => array('geos' => $geos),
-      'type' => 'setting',
-    ),
+//    array(
+//      'data' => array('geos' => $geos),
+//      'type' => 'setting',
+//    ),
   );
 
+  $dropdown = '<ul role="menu" aria-labelledby="Search and find yoga listings" class="dropdown-menu dropdown-menu-yogafind">
+                <li role="presentation" class="no-results">Nothing here!</li>
+                <li role="presentation" class="dropdown-header dropdown-header-area">Places</li>
+                <li role="presentation" class="divider"></li>
+
+                <li role="presentation" class="dropdown-header dropdown-header-listings">Listings</li>
+                <li role="presentation" class="divider"></li>                
+                
+                <li role="presentation" class="dropdown-header dropdown-header-recent">Recent</li>
+                <li role="presentation" class="divider"></li>
+
+                <li role="presentation" class="dropdown-header dropdown-header-popular">Popular</li>
+                <li role="presentation" class="divider"></li>
+
+                <li role="presentation" class="dropdown-header">Places</li>
+                <li role="presentation" class="divider"></li>
+              </ul>';
 
   $form['searcher'] = array(
     '#type' => 'textfield',
     '#attributes' => array(
       'id' => 'search-lookup',
-//      'class' => array('typeahead'),
-      'placeholder' => t('Enter a location or postcode'),
+      'placeholder' => t('Search by name, location or postcode'),
     ),
+//    '#suffix' => $dropdown,
   );
+  $form['#suffix'] = $dropdown;
+//    '#markup' => $dropdown,
+//  );
+  dpm($form);
   return $form;
 }
 

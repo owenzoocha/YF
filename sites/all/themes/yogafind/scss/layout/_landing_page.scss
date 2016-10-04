@@ -93,7 +93,35 @@
 
         #block-webform-client-block-166,
         #block-models-searcher-main-searcher {
+          width: 500px;
+          margin: 0 auto;
           text-align: left;
+          .form-group {
+            margin-bottom: 0;
+          }
+          .dropdown-menu {
+            min-width: 300px;
+            .res {
+              //padding: 1px 20px;
+              font-size: 12px;
+              a {
+                //color: $purple;
+              }
+              &.goog,
+              &.no-res {
+                padding: 1px 10px;
+                text-align: right;
+                color: $dark;
+                img {
+                  width: 44px;
+                  height: auto;
+                }
+              }
+              &.no-res {
+                text-align: center;
+              }
+            }
+          }
           .email,
           #search-lookup {
             border: none;

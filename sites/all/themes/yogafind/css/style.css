@@ -7502,6 +7502,7 @@ body #hb-header.normal-header,
     width: 100%; } }
 
 .view-yoga-event-lists,
+.view-yoga-searcher,
 .view-user-blog-posts {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
   background-color: white;
@@ -7512,20 +7513,25 @@ body #hb-header.normal-header,
   padding: 15px;
   font-size: 14px; }
   .view-yoga-event-lists .views-row .event-teaser,
+  .view-yoga-searcher .views-row .event-teaser,
   .view-user-blog-posts .views-row .event-teaser {
     margin-bottom: 10px;
     border-bottom: 1px dashed #dfe1e3; }
     .view-yoga-event-lists .views-row .event-teaser .event-logo,
+    .view-yoga-searcher .views-row .event-teaser .event-logo,
     .view-user-blog-posts .views-row .event-teaser .event-logo {
       float: left;
       width: 100px; }
       .view-yoga-event-lists .views-row .event-teaser .event-logo img,
+      .view-yoga-searcher .views-row .event-teaser .event-logo img,
       .view-user-blog-posts .views-row .event-teaser .event-logo img {
         border-radius: 4px; }
     .view-yoga-event-lists .views-row .event-teaser .event-type,
+    .view-yoga-searcher .views-row .event-teaser .event-type,
     .view-user-blog-posts .views-row .event-teaser .event-type {
       font-size: 13px; }
     .view-yoga-event-lists .views-row .event-teaser .event-price,
+    .view-yoga-searcher .views-row .event-teaser .event-price,
     .view-user-blog-posts .views-row .event-teaser .event-price {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -7534,40 +7540,49 @@ body #hb-header.normal-header,
       padding: 2px;
       font-weight: 600; }
       .view-yoga-event-lists .views-row .event-teaser .event-price.inline-this,
+      .view-yoga-searcher .views-row .event-teaser .event-price.inline-this,
       .view-user-blog-posts .views-row .event-teaser .event-price.inline-this {
         display: inline; }
     .view-yoga-event-lists .views-row .event-teaser .event-dates,
+    .view-yoga-searcher .views-row .event-teaser .event-dates,
     .view-user-blog-posts .views-row .event-teaser .event-dates {
       float: right;
       width: 100px; }
       .view-yoga-event-lists .views-row .event-teaser .event-dates i,
+      .view-yoga-searcher .views-row .event-teaser .event-dates i,
       .view-user-blog-posts .views-row .event-teaser .event-dates i {
         font-size: 14px;
         padding-right: 5px;
         vertical-align: middle; }
       .view-yoga-event-lists .views-row .event-teaser .event-dates p span.date-to,
+      .view-yoga-searcher .views-row .event-teaser .event-dates p span.date-to,
       .view-user-blog-posts .views-row .event-teaser .event-dates p span.date-to {
         font-size: 12px;
         color: #6F73D2;
         font-weight: 600; }
     .view-yoga-event-lists .views-row .event-teaser .event-info,
+    .view-yoga-searcher .views-row .event-teaser .event-info,
     .view-user-blog-posts .views-row .event-teaser .event-info {
       margin-left: 120px;
       margin-right: 120px; }
       .view-yoga-event-lists .views-row .event-teaser .event-info h3,
+      .view-yoga-searcher .views-row .event-teaser .event-info h3,
       .view-user-blog-posts .views-row .event-teaser .event-info h3 {
         margin: 0;
         font-weight: 400;
         font-size: 16px; }
         .view-yoga-event-lists .views-row .event-teaser .event-info h3 a,
+        .view-yoga-searcher .views-row .event-teaser .event-info h3 a,
         .view-user-blog-posts .views-row .event-teaser .event-info h3 a {
           color: #6F73D2;
           text-decoration: none; }
       .view-yoga-event-lists .views-row .event-teaser .event-info p.event-intro,
+      .view-yoga-searcher .views-row .event-teaser .event-info p.event-intro,
       .view-user-blog-posts .views-row .event-teaser .event-info p.event-intro {
         font-size: 12px;
         color: #777; }
   .view-yoga-event-lists .views-row.views-row-last .event-teaser,
+  .view-yoga-searcher .views-row.views-row-last .event-teaser,
   .view-user-blog-posts .views-row.views-row-last .event-teaser {
     border: none; }
 
@@ -7737,25 +7752,21 @@ body #hb-header.normal-header,
         color: #E01563; }
 
 #block-webform-client-block-132,
-#block-models-searcher-main-searcher,
 #block-webform-client-block-166 {
   width: 470px;
   margin: 0 auto;
   padding: 15px 0;
   clear: both; }
   #block-webform-client-block-132 button,
-  #block-models-searcher-main-searcher button,
   #block-webform-client-block-166 button {
     border: 1px solid #fff;
     border-left: none;
     border-radius: 0; }
   #block-webform-client-block-132 .webform-component-email,
-  #block-models-searcher-main-searcher .webform-component-email,
   #block-webform-client-block-166 .webform-component-email {
     width: 80%;
     float: left; }
     #block-webform-client-block-132 .webform-component-email input.email,
-    #block-models-searcher-main-searcher .webform-component-email input.email,
     #block-webform-client-block-166 .webform-component-email input.email {
       background: none;
       border: 1px solid #F5F7F8;
@@ -8085,7 +8096,32 @@ body #hb-header.normal-header,
         letter-spacing: 0.5px; }
       #main #hero .hero-content .hero #block-webform-client-block-166,
       #main #hero .hero-content .hero #block-models-searcher-main-searcher {
+        width: 500px;
+        margin: 0 auto;
         text-align: left; }
+        #main #hero .hero-content .hero #block-webform-client-block-166 .form-group,
+        #main #hero .hero-content .hero #block-models-searcher-main-searcher .form-group {
+          margin-bottom: 0; }
+        #main #hero .hero-content .hero #block-webform-client-block-166 .dropdown-menu,
+        #main #hero .hero-content .hero #block-models-searcher-main-searcher .dropdown-menu {
+          min-width: 300px; }
+          #main #hero .hero-content .hero #block-webform-client-block-166 .dropdown-menu .res,
+          #main #hero .hero-content .hero #block-models-searcher-main-searcher .dropdown-menu .res {
+            font-size: 12px; }
+            #main #hero .hero-content .hero #block-webform-client-block-166 .dropdown-menu .res.goog, #main #hero .hero-content .hero #block-webform-client-block-166 .dropdown-menu .res.no-res,
+            #main #hero .hero-content .hero #block-models-searcher-main-searcher .dropdown-menu .res.goog,
+            #main #hero .hero-content .hero #block-models-searcher-main-searcher .dropdown-menu .res.no-res {
+              padding: 1px 10px;
+              text-align: right;
+              color: #272D2D; }
+              #main #hero .hero-content .hero #block-webform-client-block-166 .dropdown-menu .res.goog img, #main #hero .hero-content .hero #block-webform-client-block-166 .dropdown-menu .res.no-res img,
+              #main #hero .hero-content .hero #block-models-searcher-main-searcher .dropdown-menu .res.goog img,
+              #main #hero .hero-content .hero #block-models-searcher-main-searcher .dropdown-menu .res.no-res img {
+                width: 44px;
+                height: auto; }
+            #main #hero .hero-content .hero #block-webform-client-block-166 .dropdown-menu .res.no-res,
+            #main #hero .hero-content .hero #block-models-searcher-main-searcher .dropdown-menu .res.no-res {
+              text-align: center; }
         #main #hero .hero-content .hero #block-webform-client-block-166 .email,
         #main #hero .hero-content .hero #block-webform-client-block-166 #search-lookup,
         #main #hero .hero-content .hero #block-models-searcher-main-searcher .email,
@@ -8300,6 +8336,51 @@ body #hb-header.normal-header,
 .page-user-register .field-name-field-my-college,
 .page-user-register .field-name-field-my-company {
   display: none; }
+
+#block-models-nav-yoga-area-lp h3 {
+  font-size: 18px; }
+
+#block-models-nav-yoga-area-lp h2 {
+  font-size: 18px;
+  padding: 15px;
+  margin: 0;
+  cursor: pointer;
+  margin: 0;
+  transition: 0.3s ease all; }
+  #block-models-nav-yoga-area-lp h2 i {
+    font-size: 14px; }
+  #block-models-nav-yoga-area-lp h2 a {
+    display: block; }
+
+#block-models-nav-yoga-area-lp .area-showhide {
+  visibility: hidden;
+  max-height: 0px;
+  overflow: hidden; }
+
+#block-models-nav-yoga-area-lp .area-dd {
+  background-color: #fff; }
+  #block-models-nav-yoga-area-lp .area-dd.active h2 {
+    padding-left: 15px;
+    border-left: none; }
+  #block-models-nav-yoga-area-lp .area-dd.active .area-showhide {
+    visibility: visible;
+    max-height: 9999px;
+    padding: 0 15px; }
+
+#block-models-nav-yoga-area-lp ul ul li {
+  display: inline-block;
+  margin: 0 3px; }
+  #block-models-nav-yoga-area-lp ul ul li a {
+    font-size: 12px;
+    display: block;
+    border-radius: 4px;
+    background-color: #5c60cc;
+    color: #fff;
+    padding: 0 4px;
+    font-weight: 300;
+    text-decoration: none; }
+    #block-models-nav-yoga-area-lp ul ul li a:hover {
+      background-color: #6F73D2; }
 
 .page-classes-add .form-item-title,
 .page-classes-edit .form-item-title {

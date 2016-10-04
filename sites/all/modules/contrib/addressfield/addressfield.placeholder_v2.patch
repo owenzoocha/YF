@@ -1,0 +1,20 @@
+diff --git a/addressfield.module b/addressfield.module
+index c010514..87f7497 100644
+--- a/addressfield.module
++++ b/addressfield.module
+@@ -214,6 +214,10 @@ function _addressfield_process_format_form(&$format, $address, $required) {
+       }
+     }
+
++		if (array_key_exists('#title', $child) && (module_exists('placeholder') || module_exists('elements'))) {
++    	  $child['#placeholder'] = $child['#title'];
++    	  if (array_key_exists('#required', $child)){
++    		if ($child['#required']) {
++    		$child['#placeholder'] .= ' *';
++    		}
++    	  }
++    	}
++
+     // Recurse through the element's children if it has any.
+     _addressfield_process_format_form($child, $address, $required);
+   }

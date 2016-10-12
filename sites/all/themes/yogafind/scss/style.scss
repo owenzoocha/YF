@@ -22,7 +22,7 @@
 @import 'layout/my_nav';
 @import 'layout/slick_blocks';
 @import 'layout/node_job';
-@import 'layout/node_job_teaser';
+//@import 'layout/node_job_teaser';
 @import 'layout/node_yoga_teaser_event';
 @import 'layout/views_job_requests';
 @import 'layout/footer';
@@ -38,6 +38,7 @@
 
 @import 'layout/yoga_forms';
 @import 'layout/yoga_classes';
+@import 'layout/yoga_classes_teaser';
 @import 'layout/node_article';
 
 @import 'components/blocks';
@@ -67,3 +68,4 @@
 @import 'components/entity_teachers';
 @import 'components/breadcrumbs';
 @import 'components/event_dates_block';
+@import 'components/search_results';

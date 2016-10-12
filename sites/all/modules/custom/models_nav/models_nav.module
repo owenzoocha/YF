@@ -254,79 +254,162 @@ function template_preprocess_block_settings_nav(&$vars) {
  * Template preprocess for Custom Job Nav.
  */
 function template_preprocess_my_nav(&$vars) {
-
   global $user;
-  if (!isset($vars['user_nav'])) {
-    $nw = tweaks_get_alias_wrapper();
-    $alias = drupal_get_path_alias('node/' . $nw->getIdentifier());
 
-    try {
-      $nav = '<ul>';
-      if ($nw->getBundle() == 'yoga') {
-        if ($nw->field_yoga_type->value() != 'event') {
-          $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
-          $nav .= '<li>' . l(t('Edit'), 'listing/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+  if (isset($vars['classes_searcher'])) {
 
-          $amt = $nw->author->field_my_posts->value() ? ' (' . sizeof($nw->author->field_my_posts->value()) . ')' : '';
-          $nav .= '<li>' . l(t('Posts') . $amt, $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
-          $nav .= '<li>' . l(t('Gallery'), $alias . '/blog', array('attributes' => array('class' => array('')))) . ' </li> ';
-
-          $amt = $nw->field_yoga_classes->value() ? ' (' . sizeof($nw->field_yoga_classes->value()) . ')' : '';
-          $nav .= '<li>' . l(t('Timetable') . $amt, $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
-
-          $amt = $nw->field_yoga_event_list->value() ? ' (' . sizeof($nw->field_yoga_event_list->value()) . ')' : '';
-          $nav .= '<li>' . l(t('Events') . $amt, $alias . '/events', array('attributes' => array('class' => array('')))) . ' </li> ';
-
-          if ($nw->field_yoga_type->value() == 'studio') {
-            $amt = $nw->field_yoga_teachers->value() ? ' (' . sizeof($nw->field_yoga_teachers->value()) . ')' : '';
-            $nav .= '<li>' . l(t('Teachers') . $amt, $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
-          }
-        }
-        else {
-          $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
-          $nav .= '<li>' . l(t('Edit'), 'event/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
-        }
-      }
-      else {
-        $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
-        $nav .= '<li>' . l(t('Edit'), 'blog/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
-      }
-    } catch (EntityMetadataWrapperException $exc) {
-      watchdog(
-        'models_nav',
-        'EntityMetadataWrapper exception in %function() @trace',
-        array(
-          '%function' => __FUNCTION__,
-          '@trace' => $exc->getTraceAsString()
-        ),
-        WATCHDOG_ERROR
-      );
+    if (strpos(current_path(), '/on/') !== FALSE) {
+      $url = explode('/on/', current_path());
+      $url = $url[0] . '/';
+      $url_add = !empty(arg(5)) ? arg(5) : FALSE;
     }
-    $nav .= '</ul>';
+    else {
+      $url = current_path() . '/';
+      $url_add = FALSE;
+    }
+
+    $params = drupal_get_query_parameters();
+    if (!empty($params['after'])) {
+      $query = $params;
+    }
+    else {
+      $query = FALSE;
+    }
+
+    $nav = '<ul>';
+
+    if (strpos(current_path(), '/on/') === FALSE) {
+      $active_class = strtolower(date('l', strtotime('now'))) == 'monday' ? 'active' : '';
+    }
+    else {
+      $active_class = '';
+    }
+    $nav .= '<li>' . l(t('Monday'), $url . 'on/monday' . '/' . $url_add, array('query' => $query, 'attributes' => array('class' => array('class-monday ' . $active_class)))) . '</li>';
+
+    if (strpos(current_path(), '/on/') === FALSE) {
+      $active_class = strtolower(date('l', strtotime('now'))) == 'tuesday' ? 'active' : '';
+    }
+    else {
+      $active_class = '';
+    }
+    $nav .= '<li>' . l(t('Tuesday'), $url . 'on/tuesday' . '/' . $url_add, array('query' => $query, 'attributes' => array('class' => array('class-tuesday ' . $active_class)))) . '</li>';
+
+    if (strpos(current_path(), '/on/') === FALSE) {
+      $active_class = strtolower(date('l', strtotime('now'))) == 'wednesday' ? 'active' : '';
+    }
+    else {
+      $active_class = '';
+    }
+    $nav .= '<li>' . l(t('Wednesday'), $url . 'on/wednesday' . '/' . $url_add, array('query' => $query, 'attributes' => array('class' => array('class-wednesday ' . $active_class)))) . '</li>';
+
+    if (strpos(current_path(), '/on/') === FALSE) {
+      $active_class = strtolower(date('l', strtotime('now'))) == 'thursday' ? 'active' : '';
+    }
+    else {
+      $active_class = '';
+    }
+    $nav .= '<li>' . l(t('Thursday'), $url . 'on/thursday' . '/' . $url_add, array('query' => $query, 'attributes' => array('class' => array('class-thursday ' . $active_class)))) . '</li>';
+
+    if (strpos(current_path(), '/on/') === FALSE) {
+      $active_class = strtolower(date('l', strtotime('now'))) == 'friday' ? 'active' : '';
+    }
+    else {
+      $active_class = '';
+    }
+    $nav .= '<li>' . l(t('Friday'), $url . 'on/friday' . '/' . $url_add, array('query' => $query, 'attributes' => array('class' => array('class-friday ' . $active_class)))) . '</li>';
+
+    if (strpos(current_path(), '/on/') === FALSE) {
+      $active_class = strtolower(date('l', strtotime('now'))) == 'saturday' ? 'active' : '';
+    }
+    else {
+      $active_class = '';
+    }
+    $nav .= '<li>' . l(t('Saturday'), $url . 'on/saturday', array('query' => $query, 'attributes' => array('class' => array('class-saturday ' . $active_class)))) . '</li>';
+
+    if (strpos(current_path(), '/on/') === FALSE) {
+      $active_class = strtolower(date('l', strtotime('now'))) == 'sunday' ? 'active' : '';
+    }
+    else {
+      $active_class = '';
+    }
+    $nav .= '<li>' . l(t('Sunday'), $url . 'on/sunday', array('query' => $query, 'attributes' => array('class' => array('class-sunday ' . $active_class)))) . '</li>';
+    $nav .= '<ul>';
+
     $vars['my_nav'] = $nav;
     $vars['nav_2'] = FALSE;
   }
   else {
-    drupal_add_js(libraries_get_path('slick') . '/' . 'slick/slick.min.js');
-    drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick.css');
-    drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick-theme.css');
-    drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/models_nav.js');
+    if (!isset($vars['user_nav'])) {
+      $nw = tweaks_get_alias_wrapper();
+      $alias = drupal_get_path_alias('node/' . $nw->getIdentifier());
 
-    if (!isset($vars['someone_else'])) {
-      $my_jobs_count_ = views_get_view_result('user_profile_jobs', 'block_3');
-      $my_jobs_count = sizeof($my_jobs_count_) > 0 ? '<span class="badge">' . sizeof($my_jobs_count_) . '</span>' : FALSE;
+      try {
+        $nav = '<ul>';
+        if ($nw->getBundle() == 'yoga') {
+          if ($nw->field_yoga_type->value() != 'event') {
+            $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
+            $nav .= '<li>' . l(t('Edit'), 'listing/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
 
-      $uw = entity_metadata_wrapper('user', $vars['user_nav']);
-      if ($uw->field_flags_running_posts->value() != sizeof($my_jobs_count_)) {
-        $uw->field_flags_running_posts->set(sizeof($my_jobs_count_));
-        $uw->save();
+            $amt = $nw->author->field_my_posts->value() ? ' (' . sizeof($nw->author->field_my_posts->value()) . ')' : '';
+            $nav .= '<li>' . l(t('Posts') . $amt, $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
+            $nav .= '<li>' . l(t('Gallery'), $alias . '/blog', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+            $amt = $nw->field_yoga_classes->value() ? ' (' . sizeof($nw->field_yoga_classes->value()) . ')' : '';
+            $nav .= '<li>' . l(t('Timetable') . $amt, $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+            $amt = $nw->field_yoga_event_list->value() ? ' (' . sizeof($nw->field_yoga_event_list->value()) . ')' : '';
+            $nav .= '<li>' . l(t('Events') . $amt, $alias . '/events', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+            if ($nw->field_yoga_type->value() == 'studio') {
+              $amt = $nw->field_yoga_teachers->value() ? ' (' . sizeof($nw->field_yoga_teachers->value()) . ')' : '';
+              $nav .= '<li>' . l(t('Teachers') . $amt, $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
+            }
+          }
+          else {
+            $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
+            $nav .= '<li>' . l(t('Edit'), 'event/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+          }
+        }
+        else {
+          $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
+          $nav .= '<li>' . l(t('Edit'), 'blog/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+        }
+      } catch (EntityMetadataWrapperException $exc) {
+        watchdog(
+          'models_nav',
+          'EntityMetadataWrapper exception in %function() @trace',
+          array(
+            '%function' => __FUNCTION__,
+            '@trace' => $exc->getTraceAsString()
+          ),
+          WATCHDOG_ERROR
+        );
       }
+      $nav .= '</ul>';
+      $vars['my_nav'] = $nav;
+      $vars['nav_2'] = FALSE;
+    }
+    else {
+      drupal_add_js(libraries_get_path('slick') . '/' . 'slick/slick.min.js');
+      drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick.css');
+      drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick-theme.css');
+      drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/models_nav.js');
 
-      $my_requests_count = sizeof(views_get_view_result('user_profile_jobs', 'page_1')) ? '<span class="badge">' . sizeof(views_get_view_result('user_profile_jobs', 'page_1')) . '</span>' : FALSE;
+      if (!isset($vars['someone_else'])) {
+        $my_jobs_count_ = views_get_view_result('user_profile_jobs', 'block_3');
+        $my_jobs_count = sizeof($my_jobs_count_) > 0 ? '<span class="badge">' . sizeof($my_jobs_count_) . '</span>' : FALSE;
 
-      $nav = '<ul>';
-      $nav .= '<li>' . l(t('View'), 'user/' . $uw->getIdentifier(), array('attributes' => array('class' => array('')))) . '</li>';
-      $nav .= '<li>' . l(t('Edit Profile'), 'user/personal-information/settings', array('attributes' => array('class' => array('')))) . '</li>';
+        $uw = entity_metadata_wrapper('user', $vars['user_nav']);
+        if ($uw->field_flags_running_posts->value() != sizeof($my_jobs_count_)) {
+          $uw->field_flags_running_posts->set(sizeof($my_jobs_count_));
+          $uw->save();
+        }
+
+        $my_requests_count = sizeof(views_get_view_result('user_profile_jobs', 'page_1')) ? '<span class="badge">' . sizeof(views_get_view_result('user_profile_jobs', 'page_1')) . '</span>' : FALSE;
+
+        $nav = '<ul>';
+        $nav .= '<li>' . l(t('View'), 'user/' . $uw->getIdentifier(), array('attributes' => array('class' => array('')))) . '</li>';
+        $nav .= '<li>' . l(t('Edit Profile'), 'user/personal-information/settings', array('attributes' => array('class' => array('')))) . '</li>';
 //      $nav .= '<li>' . l(t('Photos'), 'user/photos', array('attributes' => array('class' => array('')))) . '</li>';
 //      $nav .= '<li>' . l(t('My Feedback'), 'user/' . $uw->getIdentifier() . '/feedback', array('attributes' => array('class' => array('')))) . '</li>';
 //      $nav .= '<li>' . l(t('My Jobs') . $my_jobs_count, 'my-jobs', array(
@@ -337,27 +420,26 @@ function template_preprocess_my_nav(&$vars) {
 //          'html' => TRUE,
 //          'attributes' => array('class' => array(''))
 //        )) . '</li>';
-      $nav .= '<li>' . l(t('Favourites'), 'watchlist', array('attributes' => array('class' => array('')))) . '</li>';
+        $nav .= '<li>' . l(t('Favourites'), 'watchlist', array('attributes' => array('class' => array('')))) . '</li>';
 //      $nav .= '<li>' . l(t('Previous Jobs'), 'previous-jobs', array('attributes' => array('class' => array('')))) . '</li>';
-      $nav .= '<li class="last">' . l(t('Logout'), 'user/logout', array('attributes' => array('class' => array('')))) . '</li>';
-      $nav .= '</ul>';
-      $vars['my_nav'] = $nav;
+        $nav .= '<li class="last">' . l(t('Logout'), 'user/logout', array('attributes' => array('class' => array('')))) . '</li>';
+        $nav .= '</ul>';
+        $vars['my_nav'] = $nav;
 
-      $nav_2 = '<ul class="pull-right nav-2">';
-      $nav_2 .= '<li>' . l(t('Logout'), 'user/logout', array('attributes' => array('class' => array('')))) . '</li>';
-      $nav_2 .= '</ul>';
-      $vars['nav_2'] = $nav_2;
-    }
-    else {
-      $uw = entity_metadata_wrapper('user', arg(1));
-      $nav = '<ul>';
-      $nav .= '<li>' . l($uw->label() . '\'s ' . t('profile'), 'user/' . arg(1), array('attributes' => array('class' => array('')))) . '</li>';
-      $nav .= '<li>' . l(t('Feedback'), 'user/' . arg(1) . '/feedback', array('attributes' => array('class' => array('')))) . '</li>';
-      // $nav .= '<li>' . l(t('Jobs') . $my_jobs_count, 'my-jobs', array('attributes' => array('class' => array('')))) . '</li>';
-      // $nav .= '<li>' . l(t('Previous Jobs'), 'previous-jobs', array('attributes' => array('class' => array('')))) . '</li>';
-      $nav .= '</ul>';
-      $vars['my_nav'] = $nav;
-      $vars['nav_2'] = FALSE;
+        $nav_2 = '<ul class="pull-right nav-2">';
+        $nav_2 .= '<li>' . l(t('Logout'), 'user/logout', array('attributes' => array('class' => array('')))) . '</li>';
+        $nav_2 .= '</ul>';
+        $vars['nav_2'] = $nav_2;
+      }
+      else {
+        $uw = entity_metadata_wrapper('user', arg(1));
+        $nav = '<ul>';
+        $nav .= '<li>' . l($uw->label() . '\'s ' . t('profile'), 'user/' . arg(1), array('attributes' => array('class' => array('')))) . '</li>';
+        $nav .= '<li>' . l(t('Feedback'), 'user/' . arg(1) . '/feedback', array('attributes' => array('class' => array('')))) . '</li>';
+        $nav .= '</ul>';
+        $vars['my_nav'] = $nav;
+        $vars['nav_2'] = FALSE;
+      }
     }
   }
 }

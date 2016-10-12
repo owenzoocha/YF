@@ -12,6 +12,7 @@ function build_yoga_class_array($res) {
       foreach ($ew->field_yoga_style->getIterator() AS $k => $style) {
         $styles .= $style->label() . ', ';
       }
+      //32400 = 9oclock
       $class_array[$ew->field_yc_dow->value()][] = array(
         'eid' => $ew->getIdentifier(),
         'dow' => $ew->field_yc_dow->value(),

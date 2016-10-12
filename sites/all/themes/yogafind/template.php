@@ -591,6 +591,16 @@ function yogafind_preprocess_page(&$variables) {
     drupal_add_css(libraries_get_path('dropzone') . '/' . 'dist/min/dropzone.min.css');
     drupal_add_js(libraries_get_path('dropzone') . '/' . 'dist/min/dropzone.min.js');
   }
+
+
+  // ALL SEARCHER RESULTS PAGE STUFFS >>> create the tertiary menu for classes/in days.
+  if (strpos(current_path(), 'classes/in/') !== FALSE) {
+    $variables['my_nav'] = theme('my_nav', array('classes_searcher' => TRUE));
+  }
+  if (strpos(current_path(), 'classes/in/') !== FALSE || strpos(current_path(), 'events/in/') !== FALSE || strpos(current_path(), 'listings/in/') !== FALSE) {
+    $variables['content_column_class'] = ' class="col-sm-pull-3 col-sm-9"';
+  }
+
 }
 
 /**
@@ -752,17 +762,11 @@ function yogafind_facetapi_link_active($variables) {
 }
 
 /**
- * Returns HTML for the deactivation widget.
- *
+ * yogafind_facetapi_deactivate_widget().
  * @param $variables
- *   An associative array containing the keys 'text', 'path', and 'options'. See
- *   the l() function for information about these variables.
- *
- * @see l()
- * @see theme_facetapi_link_active()
- *
- * @ingroup themable
+ * @return mixed
  */
+
 function yogafind_facetapi_deactivate_widget($variables) {
   // Display trailing text as link.
   return $variables['text'];
@@ -772,6 +776,61 @@ function yogafind_facetapi_deactivate_widget($variables) {
  * Implements hook_preprocess_entity.
  */
 function yogafind_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'class') {
+    $ew = entity_metadata_wrapper('class', $variables['elements']['#entity']->id);
+    $nw = entity_metadata_wrapper('node', $ew->uid->field_my_listings->value()[0]->nid);
+
+    // DO SOME CACHE STUFF? here..
+    
+    $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : $nw->author->value()->picture->uri;
+    $pic = '<div class="event-logo">' . l(theme('image_style', array(
+        'style_name' => 'profile',
+        'path' => $uri,
+        'attributes' => array('class' => array('img-responsive'))
+      )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+
+    $styles = '';
+    if ($ew->field_yoga_style->value()) {
+      foreach ($ew->field_yoga_style->getIterator() AS $k => $style) {
+        $styles .= $style->label() . ', ';
+      }
+    }
+    $class_array = array(
+      'eid' => $ew->getIdentifier(),
+      'dow' => $ew->field_yc_dow->value(),
+      'times' => $ew->field_yc_start_time->value()['value_formatted'] . ' - ' . $ew->field_yc_start_time->value()['value2_formatted'],
+      'desc' => $ew->field_yc_desc->value(),
+      'pic' => $pic,
+      'style' => rtrim($styles, ', '),
+      'teacher' => $ew->field_yc_teacher->value() ? $ew->field_yc_teacher->label() : '-',
+      'duration' => timefield_time_to_duration($ew->field_yc_start_time->value()['value'], $ew->field_yc_start_time->value()['value2'], 'time'),
+      'listing' => l($nw->label(), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('a-link')))),
+    );
+
+    $class_data = '<div class="day-wrapper">';
+//    $editable = $make_edits === TRUE ? '<span class="edit-link">' . l(t('edit'), 'classes/' . $v['eid'] . '/edit') . '</span>' : FALSE;
+    $editable = FALSE;
+    $class_data .= '<div class="class-' . $ew->getIdentifier() . ' yoga-class">';
+    $class_data .= '<div class="options op-time">' . $editable . ' ' . $class_array['times'] . '</div>';
+    $class_data .= '<div class="options op-style">' . $class_array['style'] . '</div>';
+    $class_data .= '<div class="options op-duration">' . $class_array['duration'] . 'h</div>';
+    $class_data .= '<div class="options op-teacher">' . $class_array['teacher'] . '</div>';
+    $class_data .= '<div class="options op-listing">' . $class_array['listing'] . '</div>';
+    $class_data .= '<div class="yoga-class-extra">';
+    $class_data .= '<div class="yoga-class-img">' . $class_array['pic'] . '</div>';
+    $class_data .= '<div class="yoga-class-desc">';
+    $class_data .= '<div class="close-btn"><i class="material-icons">close</i></div>';
+    $class_data .= '<h4>' . $class_array['style'] . '</h4>';
+    $class_data .= '<p><strong>' . $class_array['times'] . '</strong> with <strong>' . $class_array['teacher'] . '</strong></p>';
+    $class_data .= '<p>' . $class_array['desc'] . '</p>';
+    $class_data .= '</div>';
+    $class_data .= '</div>';
+    $class_data .= '</div>';
+    $class_data .= '</div>';
+    $variables['class_data'] = $class_data;
+
+  }
+
   if ($variables['elements']['#bundle'] == 'teacher') {
     global $user;
     $url_name = explode('/', $variables['url']);

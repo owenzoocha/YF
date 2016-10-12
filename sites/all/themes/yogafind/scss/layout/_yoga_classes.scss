@@ -1,4 +1,5 @@
-#yoga-classes-tables {
+#yoga-classes-tables,
+.view-yoga-searcher-classes {
   color: #727272;
   .days-hdr {
     background: $white;
@@ -47,97 +48,6 @@
     //border-top: 1px solid $light-grey-border;
     border: 1px solid $light-grey-border;
   }
-  .classes-list {
-    .day-wrapper {
-      display: none;
-      &.active {
-        display: block;
-      }
-      .yoga-class {
-        position: relative;
-        background: $white;
-        border: 1px solid $light-grey-border;
-        border-top: none;
-        font-weight: 300;
-        font-size: 14px;
-        float: left;
-        text-align: left;
-        width: 100%;
-        .edit-link {
-          font-size: 11px;
-          font-weight: 600;
-          position: absolute;
-          right: 10px;
-          top: 10px;
-          a {
-            color: $purple;
-          }
-        }
-        .close-btn {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          i {
-            font-size: 20px;
-          }
-        }
-        padding: 5px 0;
-        &:last-of-type {
-          border-radius: 0 0 4px 4px;
-        }
-        .yoga-class-extra {
-          display: none;
-          padding: 5px 15px;
-          .yoga-class-img {
-            width: 70px;
-            float: left;
-            margin: 0 15px 0 0;
-          }
-          .yoga-class-desc {
-            margin-left: 85px;
-            p {
-              margin: 0 0 5px;
-            }
-            h4 {
-              margin: 5px 0;
-              font-size: 16px;
-            }
-          }
-
-          h4 {
-            margin: 5px 0;
-          }
-        }
-
-        &.active {
-          margin: 10px 0;
-          border: 1px solid $light-grey-border;
-          border-radius: 4px;
-          &:hover {
-            background-color: $white;
-          }
-          .options {
-            display: none;
-          }
-          .yoga-class-extra {
-            display: block;
-          }
-          & + .active {
-            margin-top: 0;
-          }
-        }
-
-        &:hover {
-          background-color: $light-blue;
-          cursor: pointer;
-        }
-      }
-    }
-    .timetable-wrapper {
-      display: block;
-    }
-  }
-
   .options {
     //width: 14.2%;
     font-weight: 300;

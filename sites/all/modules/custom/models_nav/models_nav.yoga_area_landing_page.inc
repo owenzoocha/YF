@@ -5,73 +5,6 @@
 function template_preprocess_yoga_area_lp(&$vars) {
   global $user;
 
-//  https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Vict&types=geocode&language=fr&key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY
-
-//  $bla = drupal_http_request('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Vict&types=geocode&language=fr&key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY');
-//
-//  dpm($bla);
-//
-//  $search_string = 'o';
-//  $sql = db_query('select nid, title, type from {node} where (type = :article OR type = :yoga) AND title like :search ', array(
-//    ':search' => '%' . $search_string . '%',
-//    ':article' => 'article',
-//    ':yoga' => 'yoga'
-//  ));
-//  $result = $sql->fetchAll();
-//  $dynamic_results = array();
-//  foreach ($result as $index => $item) {
-//    $current_type = 'listing';
-//    // Caching here.
-//    $deets = models_cache_get_dynamic_search_cache($item->nid);
-////    $deets = FALSE;
-//    if ($deets) {
-//      $deets = drupal_json_decode($deets);
-//    }
-//    else {
-//      $nw = entity_metadata_wrapper('node', $item->nid);
-//
-//      if ($nw->getBundle() == 'yoga') {
-//        if ($nw->field_yoga_type->value()) {
-//          if ($nw->field_yoga_type->value() == 'event') {
-//            $current_type = 'event';
-//            $desc = 'event!';
-//          }
-//          elseif ($nw->field_yoga_type->value() == 'instructor') {
-//            $desc = 'instructor!';
-//          }
-//          else {
-//            $desc = 'studio!';
-//          }
-//          $deets = array(
-//            'nid' => $item->nid,
-//            'desc' => $desc,
-//            'type' => $current_type,
-//          );
-//          models_cache_build_dynamic_search_cache(drupal_json_encode($deets), $item->nid);
-//        }
-//        else {
-//          $deets = FALSE;
-//        }
-//      }
-//      else {
-//        $current_type = 'post';
-//        $deets = array(
-//          'nid' => $item->nid,
-//          'desc' => 'blog',
-//          'type' => $current_type,
-//        );
-//        models_cache_build_dynamic_search_cache(drupal_json_encode($deets), $item->nid);
-//      }
-//    }
-//    if ($deets) {
-//      $dynamic_results[$deets['type']][$item->title] = $deets;
-//    }
-//  }
-//
-//  dpm($dynamic_results, 'return this');
-//  dpm($result);
-
-
 //  $countries = taxonomy_get_tree(4, $parent = 0, $max_depth = 1, $load_entities = FALSE);
   drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/yoga_area_lp.js');
   $countries['Wales'] = array(
@@ -126,7 +59,6 @@ function template_preprocess_yoga_area_lp(&$vars) {
     $england .= '<div class="area-showhide">';
     $england .= '<ul class="list-unstyled">';
 
-    dpm($places['England']);
     foreach ($places['England'] as $county => $county_of_eng) {
       $england .= '<li>';
       $england .= '<h3>' . l($county, $srch . 'in/' . str_replace(' ', '-', strtolower($county))) . '</h3>';

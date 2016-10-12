@@ -5824,6 +5824,17 @@ span.badge {
 
 .a-link {
   color: #48A9A6; }
+  .a-link:hover {
+    text-decoration: none; }
+
+a.link-go i {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 18px;
+  transition: 0.2s ease all; }
+
+a.link-go:hover i {
+  padding-left: 5px; }
 
 h1, h2, h3, p {
   -webkit-font-smoothing: antialiased; }
@@ -6807,699 +6818,6 @@ body #hb-header.normal-header,
 
 .st_fblike {
   display: none; }
-
-.page-search .container {
-  width: 100%; }
-
-.page-search .main-container {
-  min-height: 100%; }
-
-.hb-type {
-  text-transform: uppercase;
-  width: 120px;
-  background: #6ECADC;
-  position: absolute;
-  top: 7px;
-  left: -9px;
-  font-size: 14px;
-  color: #fff !important;
-  letter-spacing: 1px;
-  font-weight: 300; }
-  .hb-type:after {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 9px 9px 0;
-    border-color: transparent #2ca1b8 transparent transparent;
-    bottom: -9px;
-    content: "";
-    position: absolute;
-    left: 0; }
-  .hb-type.hb-type-hair {
-    background: #E01563; }
-    .hb-type.hb-type-hair:after {
-      border-color: transparent #830c3a transparent transparent; }
-  .hb-type.hb-type-personal {
-    background: #172A3A; }
-    .hb-type.hb-type-personal:after {
-      border-color: transparent black transparent transparent; }
-
-.page-search .text-center,
-.page-job-requests .text-center,
-.page-watchlist .text-center,
-.page-previous-jobs .text-center,
-#block-views-user-profile-jobs-block .text-center,
-#block-views-user-profile-jobs-block-1 .text-center,
-#block-views-user-profile-jobs-block-2 .text-center,
-.slick-me-up .text-center,
-.page-my-jobs .text-center {
-  clear: both; }
-
-.page-search .view-content,
-.page-job-requests .view-content,
-.page-watchlist .view-content,
-.page-previous-jobs .view-content,
-#block-views-user-profile-jobs-block .view-content,
-#block-views-user-profile-jobs-block-1 .view-content,
-#block-views-user-profile-jobs-block-2 .view-content,
-.slick-me-up .view-content,
-.page-my-jobs .view-content {
-  margin-top: 20px; }
-  .page-search .view-content .views-field-rendered-entity,
-  .page-job-requests .view-content .views-field-rendered-entity,
-  .page-watchlist .view-content .views-field-rendered-entity,
-  .page-previous-jobs .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity,
-  .slick-me-up .view-content .views-field-rendered-entity,
-  .page-my-jobs .view-content .views-field-rendered-entity {
-    width: 20%;
-    background-color: #fff;
-    padding: 0; }
-    .page-search .view-content .views-field-rendered-entity .views-row-surrounder,
-    .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder,
-    .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder,
-    .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder,
-    #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder,
-    #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder,
-    #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder,
-    .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder,
-    .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder {
-      padding: 15px;
-      background-color: #EDEFF0; }
-      .page-search .view-content .views-field-rendered-entity .views-row-surrounder .material-icons,
-      .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .material-icons,
-      .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .material-icons,
-      .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .material-icons,
-      #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .material-icons,
-      #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .material-icons,
-      #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .material-icons,
-      .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .material-icons,
-      .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .material-icons {
-        font-size: 13px; }
-      .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery,
-      .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery,
-      .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery,
-      .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery,
-      #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery,
-      #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery,
-      #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery,
-      .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery,
-      .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery {
-        text-align: center;
-        padding: 5px 5px 0;
-        position: relative;
-        border: 1px solid #DCE0E0;
-        background: #fff;
-        border-bottom: 0;
-        border-radius: 5px 5px 0 0; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span {
-          display: inline-block;
-          color: #232C33; }
-          .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span img,
-          .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span img,
-          .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span img,
-          .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span img,
-          #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span img,
-          #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span img,
-          #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span img,
-          .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span img,
-          .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span img {
-            border-radius: 3px 3px 0 0; }
-          .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span .icon-circle,
-          .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span .icon-circle,
-          .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span .icon-circle,
-          .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span .icon-circle,
-          #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span .icon-circle,
-          #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span .icon-circle,
-          #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span .icon-circle,
-          .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span .icon-circle,
-          .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery span .icon-circle {
-            background: #EDEFF0;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            text-align: center;
-            vertical-align: middle;
-            padding: 18px; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info {
-          position: absolute;
-          background: #fff;
-          padding: 0 5px;
-          bottom: 0;
-          left: 0;
-          color: #172A3A;
-          font-size: 16px;
-          cursor: pointer;
-          border-radius: 0 50% 0 0;
-          opacity: 0.6;
-          transition: 0.2s all ease; }
-          .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info:hover,
-          .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info:hover,
-          .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info:hover,
-          .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info:hover,
-          #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info:hover,
-          #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info:hover,
-          #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info:hover,
-          .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info:hover,
-          .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-info:hover {
-            opacity: 1; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-cost,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-cost,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-cost,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-cost,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-cost,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-cost,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-cost,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-cost,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-cost {
-          position: absolute;
-          bottom: 0;
-          right: 0; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like {
-          position: absolute;
-          top: 9px;
-          right: 9px;
-          font-size: 18px;
-          opacity: 0.6;
-          color: #EEEEEE;
-          cursor: pointer;
-          transition: 0.2s all ease; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like-active,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like-active,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like-active,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like-active,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like-active,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like-active,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like-active,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like-active,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery .hb-like-active {
-          opacity: 1;
-          color: #E01563;
-          -webkit-transform: scale(1.1);
-              -ms-transform: scale(1.1);
-                  transform: scale(1.1); }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like {
-          opacity: 1;
-          color: #bbbbbb; }
-          .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like:hover,
-          .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like:hover,
-          .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like:hover,
-          .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like:hover,
-          #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like:hover,
-          #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like:hover,
-          #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like:hover,
-          .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like:hover,
-          .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like:hover {
-            opacity: 1;
-            -webkit-transform: scale(1.1);
-                -ms-transform: scale(1.1);
-                    transform: scale(1.1); }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like-active,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like-active,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like-active,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like-active,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like-active,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like-active,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like-active,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like-active,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .hb-imagery:hover .hb-like-active {
-          opacity: 1;
-          color: #830c3a;
-          -webkit-transform: scale(1.1);
-              -ms-transform: scale(1.1);
-                  transform: scale(1.1); }
-      .page-search .view-content .views-field-rendered-entity .views-row-surrounder .interested,
-      .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .interested,
-      .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .interested,
-      .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .interested,
-      #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .interested,
-      #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .interested,
-      #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .interested,
-      .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .interested,
-      .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .interested {
-        font-size: 13px;
-        font-weight: 300;
-        letter-spacing: 1px;
-        color: #172A3A;
-        display: block;
-        margin-top: 5px; }
-      .page-search .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image,
-      .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image,
-      .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image,
-      .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image,
-      #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image,
-      #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image,
-      #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image,
-      .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image,
-      .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image {
-        border-radius: 5px 5px 0 0;
-        border: 1px solid #DCE0E0;
-        padding: 2px 2px 0 2px;
-        border-bottom: none;
-        text-align: center; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image img,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image img,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image img,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image img,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image img,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image img,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image img,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image img,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .thumb-image img {
-          width: 120px;
-          height: auto;
-          border-radius: 5px 5px 0 0; }
-      .page-search .view-content .views-field-rendered-entity .views-row-surrounder .status,
-      .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .status,
-      .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .status,
-      .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status,
-      #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .status,
-      #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .status,
-      #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .status,
-      .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .status,
-      .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status {
-        text-align: center;
-        padding: 5px 15px;
-        font-size: 10px;
-        border: 1px solid #dfe1e3;
-        border-top: none;
-        color: #fff;
-        letter-spacing: 1px;
-        text-transform: uppercase; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .status.status-unpublished,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .status.status-unpublished,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .status.status-unpublished,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-unpublished,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .status.status-unpublished,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-unpublished,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-unpublished,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .status.status-unpublished,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-unpublished {
-          background: #6ECADC; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .status.status-leave-feedback,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .status.status-leave-feedback,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .status.status-leave-feedback,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-leave-feedback,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .status.status-leave-feedback,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-leave-feedback,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-leave-feedback,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .status.status-leave-feedback,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-leave-feedback {
-          background: #3EB991;
-          color: #fff; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .status.status-feedback-complete,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .status.status-feedback-complete,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .status.status-feedback-complete,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-feedback-complete,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .status.status-feedback-complete,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-feedback-complete,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-feedback-complete,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .status.status-feedback-complete,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-feedback-complete {
-          background: #3EB991;
-          color: #fff; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .status.status-paused,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .status.status-paused,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .status.status-paused,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-paused,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .status.status-paused,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-paused,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-paused,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .status.status-paused,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-paused {
-          background: #172A3A; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .status.status-cancelled,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .status.status-cancelled,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .status.status-cancelled,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-cancelled,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .status.status-cancelled,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-cancelled,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-cancelled,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .status.status-cancelled,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-cancelled {
-          background: #E01563; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .status.status-running,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .status.status-running,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .status.status-running,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-running,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .status.status-running,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-running,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-running,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .status.status-running,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-running {
-          background: #fff;
-          color: #3EB991; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .status.status-closed,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .status.status-closed,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .status.status-closed,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-closed,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .status.status-closed,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-closed,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-closed,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .status.status-closed,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-closed {
-          background: #E01563; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .status.status-complete,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .status.status-complete,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .status.status-complete,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-complete,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .status.status-complete,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-complete,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .status.status-complete,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .status.status-complete,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .status.status-complete {
-          background: #F1E27A; }
-      .page-search .view-content .views-field-rendered-entity .views-row-surrounder .summary,
-      .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .summary,
-      .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .summary,
-      .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .summary,
-      #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .summary,
-      #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .summary,
-      #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .summary,
-      .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .summary,
-      .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .summary {
-        border: 1px solid #dfe1e3;
-        border-top: none;
-        padding: 5px 10px;
-        font-size: 13px;
-        background: #fff;
-        font-weight: 300;
-        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
-        background-color: white;
-        /* border: 1px solid #e7eaeb; */
-        border-bottom-color: #ccd1d4;
-        border-radius: 0 0 4px 4px; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .summary a,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .summary a,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .summary a,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .summary a,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .summary a,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .summary a,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .summary a,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .summary a,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .summary a {
-          color: #6ECADC; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .summary span,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .summary span,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .summary span,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .summary span,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .summary span,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .summary span,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .summary span,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .summary span,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .summary span {
-          display: block;
-          font-size: 12px; }
-          .page-search .view-content .views-field-rendered-entity .views-row-surrounder .summary span.hb-dist,
-          .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .summary span.hb-dist,
-          .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .summary span.hb-dist,
-          .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .summary span.hb-dist,
-          #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .summary span.hb-dist,
-          #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .summary span.hb-dist,
-          #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .summary span.hb-dist,
-          .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .summary span.hb-dist,
-          .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .summary span.hb-dist {
-            font-weight: 500;
-            display: inline; }
-      .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job,
-      .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job,
-      .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job,
-      .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job,
-      #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job,
-      #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job,
-      #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job,
-      .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job,
-      .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job {
-        background-color: #f8f8f8;
-        padding: 10px;
-        position: relative;
-        border: 1px solid #dfe1e3;
-        transition: all 0.5s;
-        cursor: pointer; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job p,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job p,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job p,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job p,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job p,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job p,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job p,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job p,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job p {
-          font-size: 12px; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2 {
-          font-weight: 300;
-          font-size: 16px;
-          padding: 0;
-          border-bottom: none;
-          margin: 0;
-          margin-bottom: 5px; }
-          .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2 a:hover,
-          .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2 a:hover,
-          .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2 a:hover,
-          .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2 a:hover,
-          #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2 a:hover,
-          #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2 a:hover,
-          #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2 a:hover,
-          .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2 a:hover,
-          .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job h2 a:hover {
-            text-decoration: none; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-more,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-more,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-more,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-more,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-more,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-more,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-more,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-more,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-more {
-          position: absolute;
-          padding: 10px;
-          bottom: -100%;
-          width: 100%;
-          left: 0;
-          font-size: 11px;
-          font-weight: 300;
-          border-top: 1px solid #EDEFF0;
-          background-color: #fff;
-          transition: all 0.4s; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating {
-          width: 100%;
-          margin-top: 5px;
-          text-align: left; }
-          .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating .fa-fw,
-          .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating .fa-fw,
-          .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating .fa-fw,
-          .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating .fa-fw,
-          #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating .fa-fw,
-          #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating .fa-fw,
-          #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating .fa-fw,
-          .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating .fa-fw,
-          .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .hb-rating .fa-fw {
-            width: 13px !important;
-            text-align: center;
-            color: #F1B625; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-points,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-points,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-points,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-points,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-points,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-points,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-points,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-points,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-points {
-          font-weight: 500;
-          font-size: 13px;
-          padding: 5px 0; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic {
-          position: absolute;
-          bottom: -18px;
-          right: 5px;
-          display: block;
-          width: 40px;
-          height: auto; }
-          .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image,
-          .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image,
-          .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image,
-          .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image,
-          #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image,
-          #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image,
-          #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image,
-          .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image,
-          .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image {
-            border: 2px solid #fff;
-            background-color: #fff; }
-            .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image img,
-            .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image img,
-            .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image img,
-            .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image img,
-            #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image img,
-            #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image img,
-            #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image img,
-            .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image img,
-            .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .author-pic .my-image img {
-              width: 100%;
-              height: auto; }
-        .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type,
-        .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type,
-        .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type,
-        .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type,
-        #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type,
-        #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type,
-        #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type,
-        .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type,
-        .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type {
-          margin: 0;
-          padding: 0; }
-          .page-search .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type li,
-          .page-job-requests .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type li,
-          .page-watchlist .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type li,
-          .page-previous-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type li,
-          #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type li,
-          #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type li,
-          #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type li,
-          .slick-me-up .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type li,
-          .page-my-jobs .view-content .views-field-rendered-entity .views-row-surrounder .node-job .task-type li {
-            list-style: none;
-            float: left;
-            margin: 1px;
-            background-color: #232C33;
-            color: #fff;
-            font-size: 12px;
-            padding: 2px 4px;
-            border-radius: 4px; }
-
-.hb-timeago {
-  font-size: 12px; }
-
-.page-node .rating {
-  font-size: 28px; }
-
-.no-gutter > [class*='col-'] {
-  padding-right: 0;
-  padding-left: 0; }
-
-.region-content .loader {
-  background-color: #F5F7F8;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%; }
-
-#block-views-user-profile-jobs-block .view-content,
-#block-views-user-profile-jobs-block-1 .view-content,
-#block-views-user-profile-jobs-block-2 .view-content,
-.slick-me-up .view-content {
-  margin-top: 0; }
-  #block-views-user-profile-jobs-block .view-content .views-field-field-geofield-distance,
-  #block-views-user-profile-jobs-block-1 .view-content .views-field-field-geofield-distance,
-  #block-views-user-profile-jobs-block-2 .view-content .views-field-field-geofield-distance,
-  .slick-me-up .view-content .views-field-field-geofield-distance {
-    display: none; }
-  #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity,
-  .slick-me-up .view-content .views-field-rendered-entity {
-    visibility: visible;
-    width: 25%;
-    float: left; }
-
-#block-views-user-profile-jobs-block .slick-slide .views-field-rendered-entity,
-#block-views-user-profile-jobs-block-1 .slick-slide .views-field-rendered-entity,
-#block-views-user-profile-jobs-block-2 .slick-slide .views-field-rendered-entity,
-.slick-me-up .slick-slide .views-field-rendered-entity {
-  width: auto !important; }
-
-@media (max-width: 992px) {
-  .page-search .view-content .views-field-rendered-entity,
-  .page-job-requests .view-content .views-field-rendered-entity,
-  .page-previous-jobs .view-content .views-field-rendered-entity,
-  .page-watchlist .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity,
-  .page-my-jobs .view-content .views-field-rendered-entity {
-    width: 33.3%; } }
-
-@media (max-width: 545px) {
-  .page-search .view-content .views-field-rendered-entity,
-  .page-job-requests .view-content .views-field-rendered-entity,
-  .page-previous-jobs .view-content .views-field-rendered-entity,
-  .page-watchlist .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity,
-  .page-my-jobs .view-content .views-field-rendered-entity {
-    width: 50%; } }
-
-@media (max-width: 340px) {
-  .page-search .view-content .views-field-rendered-entity,
-  .page-job-requests .view-content .views-field-rendered-entity,
-  .page-previous-jobs .view-content .views-field-rendered-entity,
-  .page-watchlist .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block-1 .view-content .views-field-rendered-entity,
-  #block-views-user-profile-jobs-block-2 .view-content .views-field-rendered-entity,
-  .page-my-jobs .view-content .views-field-rendered-entity {
-    width: 100%; } }
 
 .view-yoga-event-lists,
 .view-yoga-searcher,
@@ -8583,29 +7901,36 @@ div.autocomplete-deluxe-throbber {
   .page-job-create .main-container {
     width: 600px; } }
 
-#yoga-classes-tables {
+#yoga-classes-tables,
+.view-yoga-searcher-classes {
   color: #727272; }
-  #yoga-classes-tables .days-hdr {
+  #yoga-classes-tables .days-hdr,
+  .view-yoga-searcher-classes .days-hdr {
     background: #fff;
     border-radius: 4px 4px 0 0; }
-    #yoga-classes-tables .days-hdr .day {
+    #yoga-classes-tables .days-hdr .day,
+    .view-yoga-searcher-classes .days-hdr .day {
       width: 14.28%;
       font-weight: 300;
       border-right: 1px solid #dfe1e3;
       font-size: 14px;
       float: left;
       text-align: center; }
-      #yoga-classes-tables .days-hdr .day:last-of-type {
+      #yoga-classes-tables .days-hdr .day:last-of-type,
+      .view-yoga-searcher-classes .days-hdr .day:last-of-type {
         border: none; }
-      #yoga-classes-tables .days-hdr .day a {
+      #yoga-classes-tables .days-hdr .day a,
+      .view-yoga-searcher-classes .days-hdr .day a {
         display: block;
         text-decoration: none;
         position: relative;
         padding: 15px 0;
         color: #727272; }
-        #yoga-classes-tables .days-hdr .day a.active {
+        #yoga-classes-tables .days-hdr .day a.active,
+        .view-yoga-searcher-classes .days-hdr .day a.active {
           color: #6F73D2; }
-          #yoga-classes-tables .days-hdr .day a.active:after {
+          #yoga-classes-tables .days-hdr .day a.active:after,
+          .view-yoga-searcher-classes .days-hdr .day a.active:after {
             content: '';
             height: 3px;
             position: absolute;
@@ -8613,92 +7938,146 @@ div.autocomplete-deluxe-throbber {
             background-color: #6F73D2;
             bottom: 0;
             left: 0; }
-      #yoga-classes-tables .days-hdr .day.no-classes a {
+      #yoga-classes-tables .days-hdr .day.no-classes a,
+      .view-yoga-searcher-classes .days-hdr .day.no-classes a {
         background-color: #f8f8f8;
         cursor: default; }
-      #yoga-classes-tables .days-hdr .day.yes-classes a:hover {
+      #yoga-classes-tables .days-hdr .day.yes-classes a:hover,
+      .view-yoga-searcher-classes .days-hdr .day.yes-classes a:hover {
         color: #6F73D2; }
-  #yoga-classes-tables .options-hdr {
+  #yoga-classes-tables .options-hdr,
+  .view-yoga-searcher-classes .options-hdr {
     background: #f8f8f8;
     border: 1px solid #dfe1e3; }
-  #yoga-classes-tables .classes-list .day-wrapper {
-    display: none; }
-    #yoga-classes-tables .classes-list .day-wrapper.active {
-      display: block; }
-    #yoga-classes-tables .classes-list .day-wrapper .yoga-class {
-      position: relative;
-      background: #fff;
-      border: 1px solid #dfe1e3;
-      border-top: none;
-      font-weight: 300;
-      font-size: 14px;
-      float: left;
-      text-align: left;
-      width: 100%;
-      padding: 5px 0; }
-      #yoga-classes-tables .classes-list .day-wrapper .yoga-class .edit-link {
-        font-size: 11px;
-        font-weight: 600;
-        position: absolute;
-        right: 10px;
-        top: 10px; }
-        #yoga-classes-tables .classes-list .day-wrapper .yoga-class .edit-link a {
-          color: #6F73D2; }
-      #yoga-classes-tables .classes-list .day-wrapper .yoga-class .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px; }
-        #yoga-classes-tables .classes-list .day-wrapper .yoga-class .close-btn i {
-          font-size: 20px; }
-      #yoga-classes-tables .classes-list .day-wrapper .yoga-class:last-of-type {
-        border-radius: 0 0 4px 4px; }
-      #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra {
-        display: none;
-        padding: 5px 15px; }
-        #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-img {
-          width: 70px;
-          float: left;
-          margin: 0 15px 0 0; }
-        #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-desc {
-          margin-left: 85px; }
-          #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-desc p {
-            margin: 0 0 5px; }
-          #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-desc h4 {
-            margin: 5px 0;
-            font-size: 16px; }
-        #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra h4 {
-          margin: 5px 0; }
-      #yoga-classes-tables .classes-list .day-wrapper .yoga-class.active {
-        margin: 10px 0;
-        border: 1px solid #dfe1e3;
-        border-radius: 4px; }
-        #yoga-classes-tables .classes-list .day-wrapper .yoga-class.active:hover {
-          background-color: #fff; }
-        #yoga-classes-tables .classes-list .day-wrapper .yoga-class.active .options {
-          display: none; }
-        #yoga-classes-tables .classes-list .day-wrapper .yoga-class.active .yoga-class-extra {
-          display: block; }
-        #yoga-classes-tables .classes-list .day-wrapper .yoga-class.active + .active {
-          margin-top: 0; }
-      #yoga-classes-tables .classes-list .day-wrapper .yoga-class:hover {
-        background-color: #f3f9fe;
-        cursor: pointer; }
-  #yoga-classes-tables .classes-list .timetable-wrapper {
-    display: block; }
-  #yoga-classes-tables .options {
+  #yoga-classes-tables .options,
+  .view-yoga-searcher-classes .options {
     font-weight: 300;
     font-size: 14px;
     float: left;
     padding: 5px 0 5px 20px;
     text-align: left; }
-  #yoga-classes-tables .op-time {
+  #yoga-classes-tables .op-time,
+  .view-yoga-searcher-classes .op-time {
     width: 20%; }
-  #yoga-classes-tables .op-style {
+  #yoga-classes-tables .op-style,
+  .view-yoga-searcher-classes .op-style {
     width: 30%; }
-  #yoga-classes-tables .op-duration {
+  #yoga-classes-tables .op-duration,
+  .view-yoga-searcher-classes .op-duration {
     width: 20%; }
-  #yoga-classes-tables .teacher {
+  #yoga-classes-tables .teacher,
+  .view-yoga-searcher-classes .teacher {
     width: 30%; }
+
+#yoga-classes-tables .classes-list .day-wrapper,
+.view-yoga-searcher-classes .classes-list .day-wrapper {
+  display: none; }
+  #yoga-classes-tables .classes-list .day-wrapper.active,
+  .view-yoga-searcher-classes .classes-list .day-wrapper.active {
+    display: block; }
+  #yoga-classes-tables .classes-list .day-wrapper .yoga-class,
+  .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class {
+    position: relative;
+    background: #fff;
+    border: 1px solid #dfe1e3;
+    border-top: none;
+    font-weight: 300;
+    font-size: 14px;
+    float: left;
+    text-align: left;
+    width: 100%;
+    padding: 5px 0; }
+    #yoga-classes-tables .classes-list .day-wrapper .yoga-class .edit-link,
+    .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class .edit-link {
+      font-size: 11px;
+      font-weight: 600;
+      position: absolute;
+      right: 10px;
+      top: 10px; }
+      #yoga-classes-tables .classes-list .day-wrapper .yoga-class .edit-link a,
+      .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class .edit-link a {
+        color: #6F73D2; }
+    #yoga-classes-tables .classes-list .day-wrapper .yoga-class .close-btn,
+    .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px; }
+      #yoga-classes-tables .classes-list .day-wrapper .yoga-class .close-btn i,
+      .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class .close-btn i {
+        font-size: 20px; }
+    #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra,
+    .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class .yoga-class-extra {
+      display: none;
+      padding: 5px 15px; }
+      #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-img,
+      .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-img {
+        width: 70px;
+        float: left;
+        margin: 0 15px 0 0; }
+      #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-desc,
+      .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-desc {
+        margin-left: 85px; }
+        #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-desc p,
+        .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-desc p {
+          margin: 0 0 5px; }
+        #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-desc h4,
+        .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class .yoga-class-extra .yoga-class-desc h4 {
+          margin: 5px 0;
+          font-size: 16px; }
+      #yoga-classes-tables .classes-list .day-wrapper .yoga-class .yoga-class-extra h4,
+      .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class .yoga-class-extra h4 {
+        margin: 5px 0; }
+    #yoga-classes-tables .classes-list .day-wrapper .yoga-class.active,
+    .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class.active {
+      margin: 10px 0;
+      border: 1px solid #dfe1e3;
+      border-radius: 4px; }
+      #yoga-classes-tables .classes-list .day-wrapper .yoga-class.active:hover,
+      .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class.active:hover {
+        background-color: #fff; }
+      #yoga-classes-tables .classes-list .day-wrapper .yoga-class.active .options,
+      .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class.active .options {
+        display: none; }
+      #yoga-classes-tables .classes-list .day-wrapper .yoga-class.active .yoga-class-extra,
+      .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class.active .yoga-class-extra {
+        display: block; }
+      #yoga-classes-tables .classes-list .day-wrapper .yoga-class.active + .active,
+      .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class.active + .active {
+        margin-top: 0; }
+    #yoga-classes-tables .classes-list .day-wrapper .yoga-class:hover,
+    .view-yoga-searcher-classes .classes-list .day-wrapper .yoga-class:hover {
+      background-color: #f3f9fe;
+      cursor: pointer; }
+
+#yoga-classes-tables .classes-list .timetable-wrapper,
+.view-yoga-searcher-classes .classes-list .timetable-wrapper {
+  display: block; }
+
+#yoga-classes-tables .classes-list .day-wrapper .yoga-class:last-of-type {
+  border-radius: 0 0 4px 4px; }
+
+.view-yoga-searcher-classes .classes-list .day-wrapper {
+  display: block; }
+
+.view-yoga-searcher-classes .op-time {
+  width: 20%; }
+
+.view-yoga-searcher-classes .op-style {
+  width: 15%; }
+
+.view-yoga-searcher-classes .op-duration {
+  width: 15%; }
+
+.view-yoga-searcher-classes .op-teacher {
+  width: 20%; }
+
+.view-yoga-searcher-classes .op-listing {
+  width: 28%; }
+  .view-yoga-searcher-classes .op-listing a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inherit; }
 
 .node-article {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
@@ -8814,127 +8193,44 @@ div.autocomplete-deluxe-throbber {
             left: 0;
             background-color: #172A3A; }
 
-.page-search .region-search-top {
-  background-color: #172A3A; }
-
-.page-search #edit-search-wrapper {
-  display: none; }
-
-.page-search #block-views-exp-job-search-page input {
+ul.facet-searcher li {
+  list-style: none;
   font-weight: 300;
-  font-size: 13px; }
-
-.page-search .chosen-search {
-  display: none; }
-
-.page-search .views-exposed-widget {
-  padding: 0; }
-  .page-search .views-exposed-widget .views-widget {
-    margin: 5px 0; }
-  .page-search .views-exposed-widget .form-submit {
-    margin-top: 5px; }
-  .page-search .views-exposed-widget#edit-field-hb-geofield-latlon-wrapper {
-    width: 100%; }
-
-.page-search .col-sm-3 {
-  padding: 0;
-  -webkit-overflow-scrolling: touch; }
-  .page-search .col-sm-3 .region {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch; }
-  .page-search .col-sm-3 #search-api-sorts-widget-form {
-    padding: 0 10px;
-    margin-bottom: 10px; }
-    .page-search .col-sm-3 #search-api-sorts-widget-form .form-item {
-      margin-bottom: 0; }
-    .page-search .col-sm-3 #search-api-sorts-widget-form .chosen-container.form-control {
-      border: 1px solid #d6d6d6; }
-  .page-search .col-sm-3 .block h2 {
+  margin: 4px 0;
+  font-size: 14px; }
+  ul.facet-searcher li a {
+    font-weight: 300;
     font-size: 14px;
-    font-weight: 300;
-    color: #172A3A;
-    border-top: 1px solid #dfe1e3;
-    border-bottom: 1px solid #dfe1e3;
-    background-color: #EDEFF0;
-    padding: 5px 15px;
-    margin: 8px 0; }
-    .page-search .col-sm-3 .block h2:first-child {
-      margin-top: 0; }
-  .page-search .col-sm-3 .block#block-current-search-standard.block {
-    padding: 0; }
-  .page-search .col-sm-3 .block#block-current-search-standard h2 {
-    font-size: 20px;
-    font-weight: 300;
-    color: #fff;
-    margin: 0;
-    padding: 8px 15px; }
-  .page-search .col-sm-3 .block ul, .page-search .col-sm-3 .block form {
-    margin: 0;
-    margin-bottom: 10px;
-    padding: 0 10px; }
-    .page-search .col-sm-3 .block ul li, .page-search .col-sm-3 .block form li {
-      list-style: none;
-      font-weight: 300;
-      margin: 4px 0;
-      font-size: 13px; }
-      .page-search .col-sm-3 .block ul li a, .page-search .col-sm-3 .block form li a {
-        font-weight: 300;
-        font-size: 13px;
-        position: relative;
-        padding-left: 22px;
-        color: #777;
-        display: inline-block;
-        width: 100%; }
-        .page-search .col-sm-3 .block ul li a:before, .page-search .col-sm-3 .block form li a:before {
-          content: "";
-          position: absolute;
-          top: 4px;
-          left: 7px;
-          width: 11px;
-          height: 11px;
-          opacity: 0.3;
-          border: 1px solid #777;
-          transition: 0.3s all ease; }
-        .page-search .col-sm-3 .block ul li a:hover, .page-search .col-sm-3 .block form li a:hover {
-          text-decoration: none; }
-          .page-search .col-sm-3 .block ul li a:hover:before, .page-search .col-sm-3 .block form li a:hover:before {
-            opacity: 1; }
-        .page-search .col-sm-3 .block ul li a.facetapi-active, .page-search .col-sm-3 .block form li a.facetapi-active {
-          color: #172A3A; }
-          .page-search .col-sm-3 .block ul li a.facetapi-active:after, .page-search .col-sm-3 .block form li a.facetapi-active:after {
-            font-family: fontawesome;
-            content: "\f00c";
-            position: absolute;
-            top: 4px;
-            left: 8px;
-            font-size: 9px;
-            opacity: 1;
-            color: #172A3A; }
-  .page-search .col-sm-3 .block-dd {
-    height: 30px;
-    overflow: hidden; }
-    .page-search .col-sm-3 .block-dd:last-child {
-      margin-bottom: 60px; }
-    .page-search .col-sm-3 .block-dd h2 {
-      cursor: pointer;
-      position: relative; }
-      .page-search .col-sm-3 .block-dd h2:after {
-        content: "";
-        font-family: FontAwesome;
-        font-style: normal;
-        font-weight: normal;
-        text-decoration: inherit;
-        /*--adjust as necessary--*/
-        color: #fff;
+    position: relative;
+    padding-left: 22px;
+    color: #777;
+    display: inline-block;
+    width: 100%; }
+    ul.facet-searcher li a:before {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 0px;
+      width: 13px;
+      height: 13px;
+      opacity: 0.3;
+      border: 1px solid #777;
+      transition: 0.3s all ease; }
+    ul.facet-searcher li a:hover {
+      text-decoration: none; }
+      ul.facet-searcher li a:hover:before {
+        opacity: 1; }
+    ul.facet-searcher li a.selected {
+      color: #6F73D2; }
+      ul.facet-searcher li a.selected:after {
+        font-family: fontawesome;
+        content: "\f00c";
         position: absolute;
-        right: 10px;
         top: 4px;
-        color: #777;
-        font-size: 16px; }
-    .page-search .col-sm-3 .block-dd.active {
-      height: auto; }
-      .page-search .col-sm-3 .block-dd.active h2:after {
-        content: '\f106'; }
+        left: 2px;
+        font-size: 10px;
+        opacity: 1;
+        color: #6F73D2; }
 
 .chosen-container {
   width: 100% !important;
@@ -9974,5 +9270,16 @@ label {
     margin: 0;
     padding: 0;
     border: none; }
+
+#block-models-searcher-search-results-topper {
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid #dfe1e3;
+  border-bottom: none; }
+  #block-models-searcher-search-results-topper p {
+    margin-bottom: 0; }
+  #block-models-searcher-search-results-topper h2 {
+    border: none;
+    font-size: 22px; }
 
 /*# sourceMappingURL=maps/style.css.map */

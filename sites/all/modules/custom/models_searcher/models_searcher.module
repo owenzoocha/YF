@@ -8,6 +8,47 @@
  */
 
 /**
+ * Implementation of hook_views_api().
+ */
+function models_searcher_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'models_searcher'),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function models_searcher_menu() {
+  $items = array();
+  $items['events/in/%'] = array(
+    'page callback' => 'yoga_search_results',
+    'access callback' => TRUE,
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'file' => 'models_searcher.search_pages.inc',
+  );
+
+  $items['classes/in/%'] = array(
+    'page callback' => 'yoga_search_results',
+    'access callback' => TRUE,
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'file' => 'models_searcher.search_pages.inc',
+  );
+
+  $items['listings/in/%'] = array(
+    'page callback' => 'yoga_search_results',
+    'access callback' => TRUE,
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'file' => 'models_searcher.search_pages.inc',
+  );
+  return $items;
+}
+
+/**
  * Implements hook_block_info().
  */
 function models_searcher_block_info() {
@@ -15,6 +56,34 @@ function models_searcher_block_info() {
     'info' => t('HBM - Main searcher on home page'),
     'cache' => DRUPAL_CACHE_GLOBAL,
   );
+
+  $blocks['search_results_topper'] = array(
+    'info' => t('HBM - Add on for the top of the classes/in etc pages'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+
+  $blocks['yoga_facets_times'] = array(
+    'info' => t('YF - TIME Facets'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['yoga_facets_styles'] = array(
+    'info' => t('YF - STYLE Facets'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['yoga_facets_distance'] = array(
+    'info' => t('YF - DISTANCE Facets'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['yoga_facets_dates'] = array(
+    'info' => t('YF - DATES Facets'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['yoga_facets_event_type'] = array(
+    'info' => t('YF - EVENT Facets'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+
+
   return $blocks;
 }
 
@@ -29,8 +98,414 @@ function models_searcher_block_view($delta = '') {
       $block['subject'] = t('Search');
       $block['content'] = drupal_render($search_form);
       break;
+
+    case 'search_results_topper':
+      $block['subject'] = t('Search');
+      $block['content'] = theme('search_results_topper');
+      break;
+
+    case 'yoga_facets_times':
+      $block['subject'] = t('Starting after');
+      $block['content'] = theme('search_yoga_facets_times');
+      break;
+
+    case 'yoga_facets_styles':
+      $block['subject'] = t('Yoga Styles');
+      $block['content'] = theme('search_yoga_facets_styles');
+      break;
+
+    case 'yoga_facets_distance':
+      $block['subject'] = t('Distance');
+      $block['content'] = theme('search_yoga_facets_distance');
+      break;
+
+    case 'yoga_facets_dates':
+      $block['subject'] = t('Starting after');
+      $block['content'] = theme('search_yoga_facets_dates');
+      break;
+
+    case 'yoga_facets_event_type':
+      $block['subject'] = t('Event Types');
+      $block['content'] = theme('search_yoga_facets_event_type');
+      break;
   }
   return $block;
+}
+
+
+/**
+ * Implements of hook_theme().
+ */
+function models_searcher_theme() {
+  return array(
+    'search_results_topper' => array(
+      'template' => 'templates/search-results-topper',
+    ),
+    'search_yoga_facets_times' => array(
+      'template' => 'templates/search-yoga-facets-times',
+    ),
+    'search_yoga_facets_dates' => array(
+      'template' => 'templates/search-yoga-facets-times',
+    ),
+    'search_yoga_facets_styles' => array(
+      'template' => 'templates/search-yoga-facets-styles',
+    ),
+    'search_yoga_facets_distance' => array(
+      'template' => 'templates/search-yoga-facets-distance',
+    ),
+    'search_yoga_facets_event_type' => array(
+      'template' => 'templates/search-yoga-facets-distance',
+    ),
+  );
+}
+
+/**
+ * Template preprocess for yoga facet - dates
+ */
+function template_preprocess_search_yoga_facets_event_type(&$vars) {
+
+  $params = drupal_get_query_parameters();
+  if (!empty($params['within'])) {
+    $within = $params['within'];
+  }
+
+  if (arg(0) == 'events') {
+    $url = 'events/in/' . arg(2);
+  }
+
+  if (strpos(current_path(), '/during/') !== FALSE) {
+    $url .= '/during/' . arg(4);
+  }
+  else {
+    $url .= '/during/' . date('Y-m');
+  }
+
+  $markup = '<ul class="list-unstyled facet-searcher">';
+  $type = field_info_field('field_yoga_event_type');
+  $styles = list_allowed_values($type);
+  $markup .= '<li>' . l('All Types', $url) . '</li>';
+  foreach ($styles as $index => $style) {
+    if (!empty(arg(5))) {
+      $options['attributes']['class'][0] = arg(5) == strtolower(str_replace(' ', '-', $index)) ? 'selected' : '';
+    }
+    else {
+      $options = array();
+    }
+    $markup .= '<li>' . l($index, $url . '/' . strtolower(str_replace(' ', '-', $index)), $options) . '</li>';
+  }
+  $markup .= '<ul>';
+  $vars['markup'] = $markup;
+}
+
+/**
+ * Template preprocess for yoga facet - dates
+ */
+function template_preprocess_search_yoga_facets_dates(&$vars) {
+
+  $params = drupal_get_query_parameters();
+  if (!empty($params['within'])) {
+    $within = $params['within'];
+  }
+
+  if (arg(0) == 'events') {
+    $url = 'events/in/' . arg(2);
+  }
+
+  if (!empty(arg(5))) {
+    $url .= '/' . arg(5);
+  }
+
+  $markup = '<ul class="list-unstyled facet-searcher">';
+  $date = date('F Y', strtotime('now'));
+  for ($i = 0; $i < 6; $i++) {
+    if (strpos(current_path(), '/during/') !== FALSE) {
+      $options['attributes']['class'][0] = arg(4) == date('Y-m', strtotime('+' . $i . 'months')) ? 'selected' : '';
+    }
+    else {
+      $options = array();
+    }
+    $markup .= '<li>' . l(date('F Y', strtotime('+' . $i . 'months')), $url . '/during/' . date('Y-m', strtotime('+' . $i . 'months')), $options) . '</li>';
+  }
+  $markup .= '<ul>';
+  $vars['markup'] = $markup;
+}
+
+/**
+ * Template preprocess for yoga facet - times
+ */
+function template_preprocess_search_yoga_facets_times(&$vars) {
+
+  $params = drupal_get_query_parameters();
+  if (!empty($params['within'])) {
+    $within = $params['within'];
+  }
+
+  $after = 0;
+  if (!empty($params['after'])) {
+    $after = $params['after'];
+  }
+
+  if (strpos(current_path(), '/on/') !== FALSE) {
+    $url = 'classes/in/' . arg(2) . '/on/' . arg(4);
+  }
+  else {
+    $url = 'classes/in/' . arg(2) . '/on/' . strtolower(date('l', strtotime('now')));
+  }
+
+  if (!empty(arg(5))) {
+    $url .= '/' . arg(5);
+  }
+
+  $markup = '<ul class="list-unstyled facet-searcher">';
+
+  $options['query']['after'] = '6am';
+  if (isset($within)) {
+    $options['query']['within'] = $within;
+  }
+  $options['attributes']['class'][0] = $after == '6am' ? 'selected' : '';
+  $markup .= '<li>' . l('6:00am', $url, $options) . '</li>';
+
+  $options['query']['after'] = '9am';
+  if (isset($within)) {
+    $options['query']['within'] = $within;
+  }
+  $options['attributes']['class'][0] = $after == '9am' ? 'selected' : '';
+  $markup .= '<li>' . l('9:00am', $url, $options) . '</li>';
+
+  $options['query']['after'] = '12pm';
+  if (isset($within)) {
+    $options['query']['within'] = $within;
+  }
+  $options['attributes']['class'][0] = $after == '12pm' ? 'selected' : '';
+  $markup .= '<li>' . l('12:00pm', $url, $options) . '</li>';
+
+  $options['query']['after'] = '3pm';
+  if (isset($within)) {
+    $options['query']['within'] = $within;
+  }
+  $options['attributes']['class'][0] = $after == '3pm' ? 'selected' : '';
+  $markup .= '<li>' . l('3:00pm', $url, $options) . '</li>';
+
+  $options['query']['after'] = '6pm';
+  if (isset($within)) {
+    $options['query']['within'] = $within;
+  }
+  $options['attributes']['class'][0] = $after == '6pm' ? 'selected' : '';
+  $markup .= '<li>' . l('6:00pm', $url, $options) . '</li>';
+
+  $options['query']['after'] = '9pm';
+  if (isset($within)) {
+    $options['query']['within'] = $within;
+  }
+  $options['attributes']['class'][0] = $after == '9pm' ? 'selected' : '';
+  $markup .= '<li>' . l('9:00pm', $url, $options) . '</li>';
+
+  $markup .= '<ul>';
+  $vars['markup'] = $markup;
+}
+
+/**
+ * Template preprocess for yoga facet - styles
+ */
+function template_preprocess_search_yoga_facets_styles(&$vars) {
+  $params = drupal_get_query_parameters();
+  if (!empty($params['after'])) {
+    $query = $params;
+  }
+  else {
+    $query = FALSE;
+  }
+
+  if (arg(0) == 'classes') {
+    if (strpos(current_path(), '/on/') !== FALSE) {
+      $url = 'classes/in/' . arg(2) . '/on/' . arg(4);
+    }
+    else {
+      $url = 'classes/in/' . arg(2) . '/on/' . strtolower(date('l', strtotime('now')));
+    }
+  }
+  elseif (arg(0) == 'events') {
+    $url = 'events/in/' . arg(2);
+  }
+
+  $markup = '<ul class="list-unstyled facet-searcher">';
+
+  $terms = taxonomy_get_tree(3);
+  $options = array();
+
+  if (!empty($query)) {
+    $options['query'] = $query;
+  }
+  $markup .= '<li>' . l(t('All Yoga Styles'), $url, $options) . '</li>';
+  foreach ($terms as $index => $term) {
+    if (!empty(arg(5))) {
+      $options['attributes']['class'][0] = arg(5) == strtolower(str_replace(' ', '-', $term->name)) ? 'selected' : '';
+    }
+    $markup .= '<li>' . l($term->name, $url . '/' . strtolower(str_replace(' ', '-', $term->name)), $options) . '</li>';
+  }
+
+  $markup .= '<ul>';
+  $vars['markup'] = $markup;
+}
+
+/**
+ * Template preprocess for yoga facet - distance
+ */
+function template_preprocess_search_yoga_facets_distance(&$vars) {
+  $params = drupal_get_query_parameters();
+  if (!empty($params['after'])) {
+    $after = $params['after'];
+  }
+  $within = '';
+  if (!empty($params['within'])) {
+    $within = $params['within'];
+  }
+
+  if (arg(0) == 'classes') {
+    if (strpos(current_path(), '/on/') !== FALSE) {
+      $url = 'classes/in/' . arg(2) . '/on/' . arg(4);
+    }
+    else {
+      $url = 'classes/in/' . arg(2) . '/on/' . strtolower(date('l', strtotime('now')));
+    }
+  }
+  elseif (arg(0) == 'events') {
+    $url = 'events/in/' . arg(2);
+  }
+
+  if (!empty(arg(5))) {
+    $url .= '/' . arg(5);
+  }
+
+  $markup = '<ul class="list-unstyled facet-searcher">';
+
+  $options = array();
+  if (isset($after)) {
+    $options['query']['after'] = $after;
+  }
+  $markup .= '<li>' . l('auto', $url, $options) . '</li>';
+
+  $options['query']['within'] = 5;
+  if (isset($after)) {
+    $options['query']['after'] = $after;
+  }
+  $options['attributes']['class'][0] = $within == 5 ? 'selected' : '';
+  $markup .= '<li>' . l('5 miles', $url, $options) . '</li>';
+
+  $options['query']['within'] = 10;
+  if (isset($after)) {
+    $options['query']['after'] = $after;
+  }
+  $options['attributes']['class'][0] = $within == 10 ? 'selected' : '';
+  $markup .= '<li>' . l('10 miles', $url, $options) . '</li>';
+
+  $options['query']['within'] = 25;
+  if (isset($after)) {
+    $options['query']['after'] = $after;
+  }
+  $options['attributes']['class'][0] = $within == 25 ? 'selected' : '';
+  $markup .= '<li>' . l('25 miles', $url, $options) . '</li>';
+
+  $options['query']['within'] = 50;
+  if (isset($after)) {
+    $options['query']['after'] = $after;
+  }
+  $options['attributes']['class'][0] = $within == 50 ? 'selected' : '';
+  $markup .= '<li>' . l('50 miles', $url, $options) . '</li>';
+
+  $options['query']['within'] = 100;
+  if (isset($after)) {
+    $options['query']['after'] = $after;
+  }
+  $options['attributes']['class'][0] = $within == 100 ? 'selected' : '';
+  $markup .= '<li>' . l('100 miles', $url, $options) . '</li>';
+
+  $markup .= '<ul>';
+  $vars['markup'] = $markup;
+}
+
+/**
+ * Template preprocess for Search topper block - this appears on events/in or classes/in result pages etc.
+ */
+function template_preprocess_search_results_topper(&$vars) {
+  if (arg(0) == 'classes') {
+
+    $the_time = ' after' . ' ';
+
+    $params = drupal_get_query_parameters();
+    if (!empty($params['after'])) {
+      $after = timefield_time_to_integer(date('g:ia', strtotime($params['after'])));
+      $the_time .= date('g:00 a', strtotime($params['after']));
+    }
+    else {
+      $time_now = date('H', strtotime('now'));
+      if (TRUE === TRUE) { // time given?
+        if ($time_now < 6) {
+          $after = 'all';
+          $the_time = FALSE;
+        }
+        elseif ($time_now >= 6 && $time_now < 9) {
+//        $after = 21600; // 6am onwards
+          $the_time .= date('g:00 a', strtotime('6am'));
+        }
+        elseif ($time_now >= 9 && $time_now < 12) {
+//        $after = 32400; // 9am onwards
+          $the_time .= date('g:00 a', strtotime('9am'));
+        }
+        elseif ($time_now >= 12 && $time_now < 15) {
+//        $after = 43200; // 12pm onwards
+          $the_time .= date('g:00 a', strtotime('12pm'));
+        }
+        elseif ($time_now >= 15 && $time_now < 18) {
+//        $after = 54000; // 15pm onwards
+          $the_time .= date('g:00 a', strtotime('3pm'));
+        }
+        elseif ($time_now >= 18 && $time_now < 21) {
+//        $after = 64800; // 18pm onwards
+          $the_time .= date('g:00 a', strtotime('6pm'));
+        }
+        elseif ($time_now >= 21) {
+//        $after = 75600; // 21pm onwards
+          $the_time .= date('g:00 a', strtotime('9pm'));
+//        dpm(timefield_time_to_integer(date('g:ia', strtotime("6:00am"))));
+        }
+      }
+    }
+
+    if (arg(5)) {
+      $the_time .= ' (' . ucwords(str_replace('-', ' ', arg(5))) . ')';
+    }
+
+    if (arg(4)) {
+      $day_lookup = ucfirst(arg(4));
+    }
+    else {
+      $day_lookup = date('l', strtotime('now'));
+    }
+
+    $vars['heading'] = t('Yoga Classes on ' . $day_lookup . $the_time);
+    $type = 'class';
+  }
+  elseif (arg(0) == 'events') {
+    $vars['heading'] = t('Yoga Events from October onwards');
+    $type = 'event';
+  }
+  elseif (arg(0) == 'studios') {
+    $vars['heading'] = t('Yoga Studios');
+    $type = 'listing';
+  }
+
+  $intro = t('Looking to add a yoga !type? !link', array(
+    '!type' => $type,
+    '!link' => l(t('Get started on Yoga Find') . '<i class="material-icons">trending_flat</i>', 'getting-started', array(
+      'html' => TRUE,
+      'attributes' => array('class' => array('a-link link-go'))
+    ))
+  ));
+
+  $vars['intro'] = $intro;
+
+
 }
 
 /**
@@ -84,7 +559,6 @@ function models_searcher_form($form, &$form_state) {
   $form['#suffix'] = $dropdown;
 //    '#markup' => $dropdown,
 //  );
-  dpm($form);
   return $form;
 }
 

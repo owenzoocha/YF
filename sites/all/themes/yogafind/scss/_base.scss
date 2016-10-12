@@ -74,6 +74,26 @@ span.badge {
 
 .a-link {
   color: $green;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+a.link-go {
+  //transition: 0.2s ease all;
+  i {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+    transition: 0.2s ease all;
+  }
+  &:hover {
+    //transition: 0.2s ease all;
+
+    i {
+      padding-left: 5px;
+    }
+  }
 }
 
 h1, h2, h3, p {

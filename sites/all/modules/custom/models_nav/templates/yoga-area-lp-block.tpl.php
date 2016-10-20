@@ -1,3 +1,9 @@
+
+<?php if (!empty($international)) : ?>
+<div class="block area-dd">
+  <?php print $international; ?>
+</div>
+<?php endif; ?>
 <div class="block area-dd">
   <?php print $england; ?>
 </div>

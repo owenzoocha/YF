@@ -25,6 +25,11 @@ function yogafind_preprocess_node(&$variables) {
   if ($variables['view_mode'] == 'token') {
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__token';
     $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->nid . '__token';
+    if (isset($variables['field_yoga_type'])) {
+      if ($variables['field_yoga_type'][0]['value'] != 'event') {
+        $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__listing__token';
+      }
+    }
   }
 
   if ($variables['type'] == 'article') {
@@ -63,7 +68,7 @@ function yogafind_preprocess_node(&$variables) {
           'a'
         ))) : FALSE;
 
-        $uri = $nw->field_post_image->value() ? $nw->field_post_image->value()['uri'] : $nw->author->value()->picture->uri;
+        $uri = $nw->field_post_image->value() ? $nw->field_post_image->value()['uri'] : grab_default_profile_image($nw->author->getIdentifier());
 
         $pic = '<div class="event-logo">' . l(theme('image_style', array(
             'style_name' => 'profile',
@@ -90,74 +95,98 @@ function yogafind_preprocess_node(&$variables) {
     }
   }
 
-
   if ($variables['type'] == 'yoga') {
     if (!empty($variables['field_yoga_type'][0]['value'])) {
       $variables['yoga_type'] = $variables['field_yoga_type'][0]['value'];
     }
 
     if ($variables['view_mode'] == 'token') {
-      try {
-        $nw = entity_metadata_wrapper('node', $variables['nid']);
-        // Parent.
-        $query = db_query('SELECT entity_id FROM field_data_field_yoga_event_list WHERE field_yoga_event_list_nid=:nid', array('nid' => $nw->getIdentifier()));
-        $res = $query->fetchAll();
-        $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
 
-        $variables['parent_title'] = l($pw->label(), 'node/' . $pw->getIdentifier());
-        $variables['title'] = l($variables['title'], 'node/' . $nw->getIdentifier());
-        $variables['event_type'] = $nw->field_yoga_event_type->value() ? $nw->field_yoga_event_type->label() : FALSE;
+      $nw = entity_metadata_wrapper('node', $variables['nid']);
+      $variables['title'] = l(decode_entities($variables['title']), 'node/' . $nw->getIdentifier());
+      $alter = array(
+        'max_length' => 150,
+        'ellipsis' => TRUE,
+        'word_boundary' => TRUE,
+        'html' => TRUE,
+      );
+      $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
 
-        if ($nw->field_yoga_event_dates->value()) {
-          if ($nw->field_yoga_event_dates->value()['value'] == $nw->field_yoga_event_dates->value()['value2']) {
-            $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value']));
-          }
-          else {
-            $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value'])) . '<i class="material-icons">&#xE8E4;</i><span class="date-to">' . date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value2'])) . '</span>';
-          }
-
+      $styles = '';
+      if ($nw->field_yoga_style->value()) {
+        $styles = '<ul class="list-unstyled teaser-styles">';
+        foreach ($nw->field_yoga_style->getIterator() AS $k => $style) {
+          $styles .= '<li><span>' . $style->label() . '</span></li>';
         }
-        $alter = array(
-          'max_length' => 150,
-          'ellipsis' => TRUE,
-          'word_boundary' => TRUE,
-          'html' => TRUE,
-        );
-        $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
+        $styles .= '</ul>';
+      }
+      $variables['styles'] = $styles;
 
-        $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : $pw->field_yoga_logo->value()['uri'];
+      $variables['location'] = implode(', ', grab_location_blurb($nw));
 
+      if ($variables['field_yoga_type'][0]['value'] == 'event') {
+        try {
+          // Parent.
+          $query = db_query('SELECT entity_id FROM field_data_field_yoga_event_list WHERE field_yoga_event_list_nid=:nid', array('nid' => $nw->getIdentifier()));
+          $res = $query->fetchAll();
+          $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
+
+          $variables['parent_title'] = l($pw->label(), 'node/' . $pw->getIdentifier());
+          $variables['event_type'] = $nw->field_yoga_event_type->value() ? $nw->field_yoga_event_type->label() : FALSE;
+
+          if ($nw->field_yoga_event_dates->value()) {
+            if ($nw->field_yoga_event_dates->value()['value'] == $nw->field_yoga_event_dates->value()['value2']) {
+              $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value']));
+            }
+            else {
+              $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value'])) . '<i class="material-icons">&#xE8E4;</i><span class="date-to">' . date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value2'])) . '</span>';
+            }
+
+          }
+          $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : grab_default_profile_image($pw->author->getIdentifier());
+          $pic = '<div class="event-logo">' . l(theme('image_style', array(
+              'style_name' => 'profile',
+              'path' => $uri,
+              'attributes' => array('class' => array('img-responsive'))
+            )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+          $variables['logo'] = $pic;
+
+          if ($nw->field_yoga_event_price->value()) {
+            $price_class = strlen($nw->field_yoga_event_price->value()) > 10 ? 'block-this' : 'inline-this';
+          }
+          $variables['price'] = $nw->field_yoga_event_price->value() ? '<p class="event-price ' . $price_class . '">' . $nw->field_yoga_event_price->value() . '</p>' : FALSE;
+        } catch (EntityMetadataWrapperException $exc) {
+          watchdog(
+            'MODULE_NAME',
+            'EntityMetadataWrapper exception in %function() @trace',
+            array(
+              '%function' => __FUNCTION__,
+              '@trace' => $exc->getTraceAsString()
+            ),
+            WATCHDOG_ERROR
+          );
+        }
+      }
+      else {
+        $uri = $nw->field_yoga_logo->value()['uri'];
         $pic = '<div class="event-logo">' . l(theme('image_style', array(
             'style_name' => 'profile',
             'path' => $uri,
             'attributes' => array('class' => array('img-responsive'))
           )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
-
         $variables['logo'] = $pic;
 
-        if ($nw->field_yoga_location->value()) {
-          $location = $nw->field_yoga_location->value()['premise'] ? $nw->field_yoga_location->value()['premise'] . ', ' : '';
-          $location .= $nw->field_yoga_location->value()['country'] ? $nw->field_yoga_location->value()['country'] . ', ' : '';
-          $variables['location'] = rtrim($location, ', ');
-        }
-        else {
-          $variables['location'] = '-';
-        }
+        $details = '<ul class="list-unstyled teaser-yoga-info">';
+        $details .= $nw->field_yoga_classes->value() ? '<li>' . l('<i class="material-icons">schedule</i> ' . sizeof($nw->field_yoga_classes->value()) . ' ' . format_plural(sizeof($nw->field_yoga_classes->value()), t('Class'), t('Classes')), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</li>' : FALSE;
 
-        if ($nw->field_yoga_event_price->value()) {
-          $price_class = strlen($nw->field_yoga_event_price->value()) > 10 ? 'block-this' : 'inline-this';
-        }
-        $variables['price'] = $nw->field_yoga_event_price->value() ? '<p class="event-price ' . $price_class . '">' . $nw->field_yoga_event_price->value() . '</p>' : FALSE;
-      } catch (EntityMetadataWrapperException $exc) {
-        watchdog(
-          'MODULE_NAME',
-          'EntityMetadataWrapper exception in %function() @trace',
-          array(
-            '%function' => __FUNCTION__,
-            '@trace' => $exc->getTraceAsString()
-          ),
-          WATCHDOG_ERROR
-        );
+        $details .= $nw->field_yoga_teachers->value() ? '<li>' . l('<i class="material-icons">school</i> ' . sizeof($nw->field_yoga_teachers->value()) . ' ' . format_plural(sizeof($nw->field_yoga_teachers->value()), t('Teacher'), t('Teachers')), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</li>' : FALSE;
+
+        $details .= $nw->field_yoga_event_list->value() ? '<li>' . l('<i class="material-icons">event_available</i> ' . sizeof($nw->field_yoga_event_list->value()) . ' ' . format_plural(sizeof($nw->field_yoga_event_list->value()), t('Event'), t('Events')), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</li>' : FALSE;
+
+        $details .= $nw->author->field_my_posts->value() ? '<li>' . l('<i class="material-icons">rss_feed</i> ' . sizeof($nw->author->field_my_posts->value()) . ' ' . format_plural(sizeof($nw->author->field_my_posts->value()), t('Post'), t('Posts')), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</li>' : FALSE;
+        $details .= '</ul>';
+        $variables['details'] = $details;
+        $variables['view_link'] = l('view listing <i class="material-icons">trending_flat</i>', 'node/' . $nw->getIdentifier(), array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go'))));
       }
     }
   }
@@ -171,31 +200,55 @@ function yogafind_preprocess_page(&$variables) {
   global $user;
 
   $uw = entity_metadata_wrapper('user', $user);
+//
+//  dpm(current_path());
+//  dpm(drupal_get_path_alias());
+
+  // Redirect non users from edit article page
+  if (strpos(current_path(), 'post') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit') {
+    $nw = entity_metadata_wrapper('node', arg(1));
+    if ($nw->author->getIdentifier() != $uw->getIdentifier()) {
+      drupal_goto('user');
+    }
+  }
+
+  // Redirect wrong event edit pages to listings and vice versa
+  if (strpos(current_path(), 'listing') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit' || strpos(current_path(), 'event') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit') {
+    $nw = entity_metadata_wrapper('node', arg(1));
+    if ($nw->field_yoga_type->value() != 'event') {
+      if (strpos(current_path(), 'event') !== FALSE) {
+        drupal_goto('listing/' . $nw->getIdentifier() . '/edit');
+      }
+    }
+    else {
+      if (strpos(current_path(), 'listing') !== FALSE) {
+        drupal_goto('event/' . $nw->getIdentifier() . '/edit');
+      }
+    }
+  }
 
   // Breadcrumbs for search pages.
-  if (strpos(current_path(), 'events/in') !== FALSE || strpos(current_path(), 'classes/in') !== FALSE) {
-
+  if (strpos(current_path(), 'events/in') !== FALSE || strpos(current_path(), 'classes/in') !== FALSE || strpos(current_path(), 'yoga/in') !== FALSE) {
 
     // Yoga View breadcrumbs
     $my_breadcrumbs_array[] = l('Home', '/');
 
     if (strpos(current_path(), 'events/in') !== FALSE) {
       $path = 'events/in/';
-      $my_breadcrumbs_array[] = l('Events', 'events/in');
+      $my_breadcrumbs_array[] = l('Events', 'events');
     }
     elseif (strpos(current_path(), 'classes/in') !== FALSE) {
       $path = 'classes/in/';
-      $my_breadcrumbs_array[] = l('Classes', 'classes/in');
+      $my_breadcrumbs_array[] = l('Classes', 'classes');
     }
-    elseif (strpos(current_path(), 'listings/in') !== FALSE) {
-      $path = 'listings/in/';
-      $my_breadcrumbs_array[] = l('Listings', 'listings/in');
+    elseif (strpos(current_path(), 'yoga/in') !== FALSE) {
+      $path = 'yoga/in/';
+      $my_breadcrumbs_array[] = l('Yoga', 'yoga');
     }
 
     $term = ucwords(str_replace('-', ' ', arg(2)));
     $search_place = taxonomy_get_term_by_name($term);
     $search_parents = taxonomy_get_parents_all(reset($search_place)->tid);
-
     if (sizeof($search_parents) == 3) {
       $town = $search_parents[0]->name;
       $county = $search_parents[1]->name;
@@ -377,7 +430,6 @@ function yogafind_preprocess_page(&$variables) {
     (strpos(current_path(), '/timetable') !== FALSE) ||
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/events') !== FALSE)
   ) {
-
     $nw = tweaks_get_alias_wrapper();
 
     if ($nw->getBundle() == 'yoga' || $nw->getBundle() == 'article') {
@@ -387,17 +439,18 @@ function yogafind_preprocess_page(&$variables) {
 
       // Yoga View breadcrumbs
       $my_breadcrumbs_array[] = l('Home', '/');
-      $my_breadcrumbs_array[] = l('Everywhere', 'in');
+      $my_breadcrumbs_array[] = l('Everywhere', 'yoga');
 //      $my_breadcrumbs_array[] = l('UK', 'in');
 
+      $url = 'yoga/in';
       if ($nw->field_yoga_lt_country->value()) {
-        $my_breadcrumbs_array[] = l($nw->field_yoga_lt_country->label(), 'taxonomy/term/' . $nw->field_yoga_lt_country->getIdentifier());
+        $my_breadcrumbs_array[] = l($nw->field_yoga_lt_country->label(), $url . '/' . strtolower(str_replace(' ', '-', $nw->field_yoga_lt_country->label())));
       }
       if ($nw->field_yoga_lt_county->value()) {
-        $my_breadcrumbs_array[] = l($nw->field_yoga_lt_county->label(), 'taxonomy/term/' . $nw->field_yoga_lt_county->getIdentifier());
+        $my_breadcrumbs_array[] = l($nw->field_yoga_lt_county->label(), $url . '/' . strtolower(str_replace(' ', '-', $nw->field_yoga_lt_county->label())));
       }
       if ($nw->field_yoga_lt_town->value()) {
-        $my_breadcrumbs_array[] = l($nw->field_yoga_lt_town->label(), 'taxonomy/term/' . $nw->field_yoga_lt_town->getIdentifier());
+        $my_breadcrumbs_array[] = l($nw->field_yoga_lt_town->label(), $url . '/' . strtolower(str_replace(' ', '-', $nw->field_yoga_lt_town->label())));
       }
 
       drupal_set_breadcrumb($my_breadcrumbs_array);
@@ -474,7 +527,10 @@ function yogafind_preprocess_page(&$variables) {
 
         $job_details = '<p class="event-intro">';
         $job_details .= '<span class="event-type">' . $nw->field_yoga_event_type->value() . '</span> <span class="text-muted">in </span>';
-        $job_details .= '<span class="event-where">' . 'Ubud, Bali' . '</span> <span class="text-muted">organised by </span>';
+
+        $located = grab_location_blurb($nw);
+
+        $job_details .= '<span class="event-where">' . implode(', ', $located) . '</span> <span class="text-muted">organised by </span>';
         $job_details .= l($nw->author->field_my_listings[0]->label(), 'node/' . $nw->author->field_my_listings[0]->getIdentifier());
         $job_details .= '</p>';
 
@@ -500,7 +556,7 @@ function yogafind_preprocess_page(&$variables) {
     }
   }
 
-// Ignore below if user/reset is in the path.
+  // Ignore below if user/reset is in the path.
   if (strpos(current_path(), 'user/reset') === FALSE) {
 
     // Build up the users home page top bar..
@@ -597,7 +653,7 @@ function yogafind_preprocess_page(&$variables) {
   if (strpos(current_path(), 'classes/in/') !== FALSE) {
     $variables['my_nav'] = theme('my_nav', array('classes_searcher' => TRUE));
   }
-  if (strpos(current_path(), 'classes/in/') !== FALSE || strpos(current_path(), 'events/in/') !== FALSE || strpos(current_path(), 'listings/in/') !== FALSE) {
+  if (strpos(current_path(), 'classes/in/') !== FALSE || strpos(current_path(), 'events/in/') !== FALSE || strpos(current_path(), 'yoga/in/') !== FALSE) {
     $variables['content_column_class'] = ' class="col-sm-pull-3 col-sm-9"';
   }
 
@@ -627,152 +683,6 @@ function yogafind_preprocess_region(&$variables) {
 }
 
 /**
- * Implements theme_status_messages().
- */
-// function yogafind_status_messages($variables) {
-//   global $user;
-//   $display = $variables['display'];
-//   $output = '';
-
-//   $status_heading = array(
-//     'status' => t('Status message'),
-//     'error' => t('Error message'),
-//     'warning' => t('Warning message'),
-//     'info' => t('Informative message'),
-//   );
-
-//   // Map Drupal message types to their corresponding Bootstrap classes.
-//   // @see http://twitter.github.com/bootstrap/components.html#alerts
-//   $status_class = array(
-//     'status' => 'success',
-//     'success' => 'success',
-//     'error' => 'danger',
-//     'warning' => 'warning',
-//     // Not supported, but in theory a module could send any type of message.
-//     // @see drupal_set_message()
-//     // @see theme_status_messages()
-//     'info' => 'info',
-//   );
-
-//   // Custom noty stuffs..
-//   $noty = array();
-//   $capture = TRUE;
-
-//   foreach (drupal_get_messages($display) as $type => $messages) {
-
-//     if (strpos($type, ':') !== FALSE) {
-//       $typetmp = explode(':', $type);
-//       $type = $typetmp[0];
-//       $pos = $typetmp[1];
-//       $timer = $typetmp[2];
-//     }
-
-//     $class = (isset($status_class[$type])) ? ' alert-' . $status_class[$type] : '';
-
-//     $output .= "<div class=\"alert alert-block$class messages $type\">\n";
-//     $output .= "  <a class=\"close\" data-dismiss=\"alert\" href=\"#\">&times;</a>\n";
-
-//     if (!empty($status_heading[$type])) {
-//       $output .= '<h4 class="element-invisible">' . $status_heading[$type] . "</h4>\n";
-//     }
-
-//     if (count($messages) > 1) {
-//       $output .= " <ul>\n";
-//       $msg = " <ul>";
-//       foreach ($messages as $message) {
-//         $output .= '  <li>' . $message . "</li>\n";
-//         $msg .= '  <li>' . $message . "</li>";
-//       }
-//       $output .= " </ul>\n";
-//       $msg .= " </ul>";
-//     }
-//     else {
-//       $output .= $messages[0];
-//       $msg = $messages[0];
-//     }
-
-//     if ($capture) {
-//       switch ($type) {
-//         case 'status':
-//           $type = 'success';
-//           break;
-//         case 'info':
-//           $type = 'information';
-//           break;
-//       }
-//       $noty[] = array(
-//         'type' => $type,
-//         'msg' => $msg,
-//         'pos' => isset($pos) ? $pos : FALSE,
-//         'timer' => isset($timer) ? $timer : FALSE,
-//       );
-//     }
-
-//     $output .= "</div>\n";
-//   }
-
-//   if ($user->uid != 1) {
-//     if ($user->uid != 0) {
-//       // drupal_add_js(array('noty' => $noty), 'setting');
-//     }
-//     else {
-//       if (current_path() == 'user/register') {
-//         // drupal_add_js(array('noty' => $noty), 'setting');
-//       }
-//     }
-//   }
-
-//   return $output;
-// }
-
-/**
- * Returns HTML for an active facet item.
- *
- * @param $variables
- *   An associative array containing the keys 'text', 'path', and 'options'. See
- *   the l() function for information about these variables.
- *
- * @see l()
- *
- * @ingroup themeable
- */
-function yogafind_facetapi_link_active($variables) {
-
-  // Sanitizes the link text if necessary.
-  $sanitize = empty($variables['options']['html']);
-  $link_text = ($sanitize) ? check_plain($variables['text']) : $variables['text'];
-
-  // Theme function variables fro accessible markup.
-  // @see http://drupal.org/node/1316580
-  $accessible_vars = array(
-    'text' => $variables['text'],
-    'active' => TRUE,
-  );
-
-  // Builds link, passes through t() which gives us the ability to change the
-  // position of the widget on a per-language basis.
-  $replacements = array(
-    '!facetapi_deactivate_widget' => theme('facetapi_deactivate_widget', $variables),
-    '!facetapi_accessible_markup' => theme('facetapi_accessible_markup', $accessible_vars),
-  );
-  $variables['text'] = t('!facetapi_deactivate_widget !facetapi_accessible_markup', $replacements);
-  $variables['options']['html'] = TRUE;
-  // Remove trailing text
-  return theme_link($variables);
-}
-
-/**
- * yogafind_facetapi_deactivate_widget().
- * @param $variables
- * @return mixed
- */
-
-function yogafind_facetapi_deactivate_widget($variables) {
-  // Display trailing text as link.
-  return $variables['text'];
-}
-
-/**
  * Implements hook_preprocess_entity.
  */
 function yogafind_preprocess_entity(&$variables) {
@@ -781,7 +691,7 @@ function yogafind_preprocess_entity(&$variables) {
     $nw = entity_metadata_wrapper('node', $ew->uid->field_my_listings->value()[0]->nid);
 
     // DO SOME CACHE STUFF? here..
-    
+
     $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : $nw->author->value()->picture->uri;
     $pic = '<div class="event-logo">' . l(theme('image_style', array(
         'style_name' => 'profile',

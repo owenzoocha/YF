@@ -194,14 +194,13 @@ function template_preprocess_yoga_timetable_block(&$vars) {
   try {
 
     if (!is_numeric(arg(1))) {
-      $nid = explode('/', drupal_get_normal_path('studio/' . arg(1)));
+      $nid = explode('/', drupal_get_normal_path(arg(0). '/' . arg(1)));
       $nid = $nid[1];
     }
     else {
       $nid = arg(1);
     }
     $nw = entity_metadata_wrapper('node', $nid);
-
     $make_edits = $user->uid == $nw->author->getIdentifier() ? TRUE : FALSE;
 
     $class_array = array();
@@ -284,7 +283,10 @@ function template_preprocess_my_nav(&$vars) {
     else {
       $active_class = '';
     }
-    $nav .= '<li>' . l(t('Monday'), $url . 'on/monday' . '/' . $url_add, array('query' => $query, 'attributes' => array('class' => array('class-monday ' . $active_class)))) . '</li>';
+    $nav .= '<li>' . l(t('Monday'), $url . 'on/monday' . '/' . $url_add, array(
+        'query' => $query,
+        'attributes' => array('class' => array('class-monday ' . $active_class))
+      )) . '</li>';
 
     if (strpos(current_path(), '/on/') === FALSE) {
       $active_class = strtolower(date('l', strtotime('now'))) == 'tuesday' ? 'active' : '';
@@ -292,7 +294,10 @@ function template_preprocess_my_nav(&$vars) {
     else {
       $active_class = '';
     }
-    $nav .= '<li>' . l(t('Tuesday'), $url . 'on/tuesday' . '/' . $url_add, array('query' => $query, 'attributes' => array('class' => array('class-tuesday ' . $active_class)))) . '</li>';
+    $nav .= '<li>' . l(t('Tuesday'), $url . 'on/tuesday' . '/' . $url_add, array(
+        'query' => $query,
+        'attributes' => array('class' => array('class-tuesday ' . $active_class))
+      )) . '</li>';
 
     if (strpos(current_path(), '/on/') === FALSE) {
       $active_class = strtolower(date('l', strtotime('now'))) == 'wednesday' ? 'active' : '';
@@ -300,7 +305,10 @@ function template_preprocess_my_nav(&$vars) {
     else {
       $active_class = '';
     }
-    $nav .= '<li>' . l(t('Wednesday'), $url . 'on/wednesday' . '/' . $url_add, array('query' => $query, 'attributes' => array('class' => array('class-wednesday ' . $active_class)))) . '</li>';
+    $nav .= '<li>' . l(t('Wednesday'), $url . 'on/wednesday' . '/' . $url_add, array(
+        'query' => $query,
+        'attributes' => array('class' => array('class-wednesday ' . $active_class))
+      )) . '</li>';
 
     if (strpos(current_path(), '/on/') === FALSE) {
       $active_class = strtolower(date('l', strtotime('now'))) == 'thursday' ? 'active' : '';
@@ -308,7 +316,10 @@ function template_preprocess_my_nav(&$vars) {
     else {
       $active_class = '';
     }
-    $nav .= '<li>' . l(t('Thursday'), $url . 'on/thursday' . '/' . $url_add, array('query' => $query, 'attributes' => array('class' => array('class-thursday ' . $active_class)))) . '</li>';
+    $nav .= '<li>' . l(t('Thursday'), $url . 'on/thursday' . '/' . $url_add, array(
+        'query' => $query,
+        'attributes' => array('class' => array('class-thursday ' . $active_class))
+      )) . '</li>';
 
     if (strpos(current_path(), '/on/') === FALSE) {
       $active_class = strtolower(date('l', strtotime('now'))) == 'friday' ? 'active' : '';
@@ -316,7 +327,10 @@ function template_preprocess_my_nav(&$vars) {
     else {
       $active_class = '';
     }
-    $nav .= '<li>' . l(t('Friday'), $url . 'on/friday' . '/' . $url_add, array('query' => $query, 'attributes' => array('class' => array('class-friday ' . $active_class)))) . '</li>';
+    $nav .= '<li>' . l(t('Friday'), $url . 'on/friday' . '/' . $url_add, array(
+        'query' => $query,
+        'attributes' => array('class' => array('class-friday ' . $active_class))
+      )) . '</li>';
 
     if (strpos(current_path(), '/on/') === FALSE) {
       $active_class = strtolower(date('l', strtotime('now'))) == 'saturday' ? 'active' : '';
@@ -324,7 +338,10 @@ function template_preprocess_my_nav(&$vars) {
     else {
       $active_class = '';
     }
-    $nav .= '<li>' . l(t('Saturday'), $url . 'on/saturday', array('query' => $query, 'attributes' => array('class' => array('class-saturday ' . $active_class)))) . '</li>';
+    $nav .= '<li>' . l(t('Saturday'), $url . 'on/saturday', array(
+        'query' => $query,
+        'attributes' => array('class' => array('class-saturday ' . $active_class))
+      )) . '</li>';
 
     if (strpos(current_path(), '/on/') === FALSE) {
       $active_class = strtolower(date('l', strtotime('now'))) == 'sunday' ? 'active' : '';
@@ -332,7 +349,10 @@ function template_preprocess_my_nav(&$vars) {
     else {
       $active_class = '';
     }
-    $nav .= '<li>' . l(t('Sunday'), $url . 'on/sunday', array('query' => $query, 'attributes' => array('class' => array('class-sunday ' . $active_class)))) . '</li>';
+    $nav .= '<li>' . l(t('Sunday'), $url . 'on/sunday', array(
+        'query' => $query,
+        'attributes' => array('class' => array('class-sunday ' . $active_class))
+      )) . '</li>';
     $nav .= '<ul>';
 
     $vars['my_nav'] = $nav;
@@ -348,11 +368,11 @@ function template_preprocess_my_nav(&$vars) {
         if ($nw->getBundle() == 'yoga') {
           if ($nw->field_yoga_type->value() != 'event') {
             $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
-            $nav .= '<li>' . l(t('Edit'), 'listing/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+            $nav .= '<li>' . l(t('Edit'), 'listing/' . $nw->getIdentifier() . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
 
             $amt = $nw->author->field_my_posts->value() ? ' (' . sizeof($nw->author->field_my_posts->value()) . ')' : '';
             $nav .= '<li>' . l(t('Posts') . $amt, $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
-            $nav .= '<li>' . l(t('Gallery'), $alias . '/blog', array('attributes' => array('class' => array('')))) . ' </li> ';
+            $nav .= '<li>' . l(t('Gallery'), $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
 
             $amt = $nw->field_yoga_classes->value() ? ' (' . sizeof($nw->field_yoga_classes->value()) . ')' : '';
             $nav .= '<li>' . l(t('Timetable') . $amt, $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
@@ -372,7 +392,7 @@ function template_preprocess_my_nav(&$vars) {
         }
         else {
           $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
-          $nav .= '<li>' . l(t('Edit'), 'blog/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+          $nav .= '<li>' . l(t('Edit'), 'post/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
         }
       } catch (EntityMetadataWrapperException $exc) {
         watchdog(
@@ -520,72 +540,78 @@ function template_preprocess_custom_nav(&$vars) {
   global $user;
   $uw = entity_metadata_wrapper('user', $user);
 
-  $links = '<li class="first leaf">' . l('<i class="material-icons">&#xE8B6;</i> Search', 'search/type/beauty', array('html' => TRUE)) . '</li>';
-  $links .= '<li class="leaf">' . l('Studios', 'in') . '</li>';
+  $search_form = drupal_get_form('models_searcher_form_dupe');
+
+  $links = '<li class="first leaf">' .
+    l('<i class="material-icons">&#xE8B6;</i> Search <i class="material-icons">&#xE5C5;</i>', 'search/type/beauty', array(
+        'html' => TRUE,
+        'attributes' => array(
+          'data-toggle' => 'dropdown',
+          'aria-haspopup' => 'true',
+          'aria-expanded' => 'false',
+        )
+      )
+    ) . drupal_render($search_form) . '</li>';
+
+  $links .= '<li class="leaf">' . l('Studios', 'yoga') . '</li>';
   $links .= '<li class="leaf">' . l('Classes', 'classes') . '</li>';
   $links .= '<li class="leaf">' . l('Events', 'events') . '</li>';
   $links .= '<li class="leaf">' . l('Posts', 'posts') . '</li>';
 
-  $active_user_menu = '<div class="my-menu-dd">';
-  $active_user_menu .=
-    '<ul>
-    <li>
-      ' . l(t('My Jobs'), 'my-jobs') . '
-    </li>
-    <li>
-      ' . l(t('My Feedback'), 'user/' . $user->uid . '/feedback', array('html' => TRUE)) . '
-    </li>
-    <li>
-      ' . l(t('My Requests'), 'job-requests') . '
-    </li>
-    <li>
-      ' . l(t('Watchlist'), 'watchlist') . '
-    </li>
-    <li>
-      ' . l(t('Previous Jobs'), 'previous-jobs') . '
-    </li>
-    <li>
-      ' . l(t('Photos'), 'user/photos') . '
-    </li>
-    <li>
-      ' . l(t('Edit Settings'), 'user/personal-information/settings') . '
-    </li>
-    <li>
-      ' . l(t('Logout'), 'user/logout', array('html' => TRUE)) . '
-    </li>
-  </ul>';
-  $active_user_menu .= '</div>';
-  $mypic = $uw->value()->picture;
-  if ($mypic) {
-    $pic = '<div class="my-image img-circle">' . theme('image_style', array(
-        'style_name' => 'profile',
-        'path' => $uw->value()->picture->uri,
-        'attributes' => array('class' => array('img-circle'))
-      )) . '</div>';
+  if ($uw->field_my_listings->value()) {
+    $listing_url = l(t('View listing'), 'node/' . $uw->field_my_listings->value()[0]->nid);
   }
   else {
-    $pic = '<div class="my-image img-circle">' . theme('image_style', array(
+    $listing_url = l('Create listing', 'listing/add');
+  }
+
+  $dropdown = '<ul role="menu" aria-labelledby="User profile" class="dropdown-menu dropdown-menu-yogafind">
+                <li role="presentation" class="res">' . l('View profile', 'user/' . $uw->getIdentifier()) . '</li>
+                <li role="presentation" class="res">' . $listing_url . '</li>
+                <li role="presentation" class="res">' . l('Logout', 'user/logout') . '</li>
+              </ul> ';
+
+  $mypic = $uw->value()->picture;
+  if ($mypic) {
+    $pic = '<div class="my-image img-circle" > ' . theme('image_style', array(
+        'style_name' => 'profile',
+        'path' => $uw->value()->picture->uri,
+        'attributes' => array('class' => array('img - circle'))
+      )) . ' </div > ';
+  }
+  else {
+    $pic = '<div class="my-image img-circle" > ' . theme('image_style', array(
         'style_name' => 'profile',
         'path' => 'public://pictures/picture-default.png',
         'attributes' => array('class' => array('img-circle'))
       )) . '</div>';
   }
+
   $pic .= '<i class="material-icons">&#xE5C5;</i>';
 
-  $active_msgs = current_path() == 'user' ? 'active' : FALSE;
+//  $active_msgs = current_path() == 'user' ? 'active' : FALSE;
   $fname = $uw->field_first_name->value() ? $uw->field_first_name->value() : t('Me');
-  $links .= '<li class="last leaf a-dd ' . $active_msgs . '">' .
-    l('<span>' . $fname . '</span>' . $pic, 'user', array('html' => TRUE)) . $active_user_menu . '</li>';
+
+  $links .= '<li role="presentation" class="last leaf a-dd dropdown">' .
+    l('<span>' . $fname . '</span>' . $pic, 'user', array(
+        'html' => TRUE,
+        'attributes' => array(
+          'data-toggle' => 'dropdown',
+          'aria-haspopup' => 'true',
+          'aria-expanded' => 'false',
+        )
+      )
+    ) . $dropdown . '</li>';
 
   $links .= '<li class="visible-xs leaf">' . l('Logout', 'user/logout') . '</li>';
 
   $vars['links'] = $links;
 
-  // $variables['my_menu'] =
-  //   '<ul class="menu nav navbar-nav my-menu">
-  //     <li class="first leaf '.$active_link.'">
-  //       '.$link.$active_menu.'
-  //     </li>
-  //   </ul>';
+// $variables['my_menu'] =
+//   '<ul class="menu nav navbar-nav my-menu">
+//     <li class="first leaf '.$active_link.'">
+//       '.$link.$active_menu.'
+//     </li>
+//   </ul>';
 }
 

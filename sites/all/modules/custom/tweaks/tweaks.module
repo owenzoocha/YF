@@ -127,7 +127,7 @@ function tweaks_yoga_teachers($arg) {
 
 function tweaks_yoga_teachers_profile($arg1, $arg2) {
   if (!is_numeric($arg1)) {
-    $nid = explode('/', drupal_get_normal_path('studio/' . $arg1));
+    $nid = explode('/', drupal_get_normal_path(arg(0) . '/' . $arg1));
     $nid = $nid[1];
   }
   else {
@@ -150,7 +150,7 @@ function tweaks_yoga_teachers_profile($arg1, $arg2) {
 
 function tweaks_yoga_event_list($arg1) {
   if (!is_numeric($arg1)) {
-    $nid = explode('/', drupal_get_normal_path('studio/' . $arg1));
+    $nid = explode('/', drupal_get_normal_path(arg(0) . '/' . $arg1));
     $nid = $nid[1];
   }
   else {
@@ -164,7 +164,7 @@ function tweaks_yoga_event_list($arg1) {
 
 function tweaks_yoga_timetable_list($arg1) {
   if (!is_numeric($arg1)) {
-    $nid = explode('/', drupal_get_normal_path('studio/' . $arg1));
+    $nid = explode('/', drupal_get_normal_path(arg(0) . '/' . $arg1));
     $nid = $nid[1];
   }
   else {
@@ -179,7 +179,7 @@ function tweaks_yoga_timetable_list($arg1) {
 
 function tweaks_yoga_post_list($arg1) {
   if (!is_numeric($arg1)) {
-    $nid = explode('/', drupal_get_normal_path('studio/' . $arg1));
+    $nid = explode('/', drupal_get_normal_path(arg(0) . '/' . $arg1));
     $nid = $nid[1];
   }
   else {
@@ -297,20 +297,15 @@ function template_preprocess_event_organiser_block(&$vars) {
       $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
       $vars['post_type'] = t('Organiser');
 
-      if ($nw->field_yoga_location->value()) {
-        $location = $nw->field_yoga_location->value()['premise'] ? $nw->field_yoga_location->value()['premise'] . ', ' : '';
-        $location .= $nw->field_yoga_location->value()['country'] ? $nw->field_yoga_location->value()['country'] . ', ' : '';
-        $vars['location'] = rtrim($location, ', ');
-      }
-      else {
-        $vars['location'] = '-';
-      }
+      $vars['location'] = implode(', ', grab_location_blurb($pw));
       $btn_txt = t('Visit Organiser Page');
+
+      $uri = $pw->field_yoga_logo->value() ? $pw->field_yoga_logo->value()['uri'] : grab_default_profile_image($pw->author->getIdentifier());
       $pic = '<div class="event-logo">' . l(theme('image_style', array(
           'style_name' => 'profile',
-          'path' => $pw->field_yoga_logo->value()['uri'],
+          'path' => $uri,
           'attributes' => array('class' => array('img-responsive img-circle'))
-        )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+        )), 'node/' . $pw->getIdentifier(), array('html' => TRUE)) . '</div>';
 
       $vars['parent_title'] = l($pw->label(), 'node/' . $pw->getIdentifier());
     }
@@ -318,9 +313,11 @@ function template_preprocess_event_organiser_block(&$vars) {
       $pw = entity_metadata_wrapper('node', $nw->author->field_my_listings->value()[0]->nid);
       $vars['post_type'] = t('Posted by');
       $btn_txt = t('Visit Yoga Listing');
+
+      $uri = grab_default_profile_image($nw->author->getIdentifier());
       $pic = '<div class="event-logo">' . l(theme('image_style', array(
           'style_name' => 'profile',
-          'path' => $nw->author->value()->picture->uri,
+          'path' => $uri,
           'attributes' => array('class' => array('img-responsive img-circle'))
         )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
 
@@ -473,33 +470,48 @@ function tweaks_ctools_plugin_directory($module, $type) {
  * Implements hook_form_alter().
  */
 function tweaks_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'privatemsg_form_reply') {
-    $form['body']['#format'] = 'plain_text';
-  }
 
+  if ($form_id == 'article_node_form') {
+    $form['actions']['preview']['#access'] = FALSE;
+  }
   if ($form_id == 'yoga_node_form') {
     if (strpos(current_path(), 'listing/add') !== FALSE) {
+//      dpm($form);
+      unset($form['field_yoga_type']['und']['#options']['event']);
       $form['actions']['submit']['#submit'][] = 'models_forms_listing_add_submit';
       $form['field_yoga_location']['und'][0]['address']['#available_countries'] = array(236 => 'GB');
+      $form['field_yoga_event_dates']['#access'] = FALSE;
     }
     if (strpos(current_path(), 'event/add') !== FALSE) {
+      $form['field_yoga_type']['#access'] = FALSE;
 //      $form['field_yoga_type']['und']['#options'] = array('event' => 'Event');
 //      $form['field_yoga_type']['#disabled'] = TRUE;
 //      $form['actions']['submit']['#submit'][] = 'models_forms_event_add_submit';
     }
+    if (strpos(current_path(), 'listing/') !== FALSE && is_numeric(arg(1))) {
+//      $form['field_yoga_type']['#access'] = FALSE;
+      $form['field_yoga_event_dates']['#access'] = FALSE;
+    }
+
   }
   if ($form_id == 'eck__entity__form_add_class_yoga') {
     if (strpos(current_path(), 'classes/add') !== FALSE) {
       global $user;
       $uw = entity_metadata_wrapper('user', $user->uid);
       $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
+      $teachers = array();
+
       if ($nw->field_yoga_teachers->value()) {
-        $teachers = array();
         $teachers['_none'] = '- None -';
         foreach ($nw->field_yoga_teachers->getIterator() as $index => $teacher) {
           $teachers[$teacher->getIdentifier()] = $teacher->label();
         }
       }
+
+      if ($nw->field_yoga_type->value() == 'instructor') {
+        $form['field_yc_teacher']['#access'] = FALSE;
+      }
+
       $form['field_yc_teacher']['und']['#options'] = $teachers;
       $form['field_yc_start_time']['und'][0]['value']['#description'] = t('Enter a Start time e.g. 09:00AM');
       $form['field_yc_start_time']['und'][0]['value2']['#description'] = t('Enter an End time e.g. 10:30AM');
@@ -1264,7 +1276,7 @@ function tweaks_preprocess_htmlmail(&$variables) {
 /**
  * Custom Geocode jobby for yoga nodes.
  */
-function tweaks_grab_geocode($add, $node) {
+function tweaks_grab_geocode($add, $node = FALSE) {
   if ($add) {
     $point = geocoder('google', $add, array('https' => TRUE));
     $geo_array = array(
@@ -1278,13 +1290,37 @@ function tweaks_grab_geocode($add, $node) {
       'bottom' => $point->coords[1],
       // 'geohash' => ,
     );
-    models_cache_build_job_latlon_cache(md5($add), $node->nid);
-    $node->field_yoga_latlng[LANGUAGE_NONE][0] = $geo_array;
-    watchdog('models_forms_create', 'LAT LNG GENERATED FOR YOGA NODE ' . $node->title);
+    if ($node) {
+      models_cache_build_job_latlon_cache(md5($add), $node->nid);
+      watchdog('models_forms_create', 'LAT LNG GENERATED FOR YOGA NODE ' . $node->title);
+    }
     return $geo_array;
   }
   else {
     return FALSE;
+  }
+}
+
+function grab_location_blurb($nw) {
+  $located = array();
+  if ($nw->field_yoga_location->value()) {
+    if (!empty($nw->field_yoga_location->value()['locality'])) {
+      $located[] = $nw->field_yoga_location->value()['locality'];
+    }
+    if (!empty($nw->field_yoga_location->value()['administrative_area'])) {
+      $located[] =  $nw->field_yoga_location->value()['administrative_area'];
+    }
+  }
+  return $located;
+}
+
+function grab_default_profile_image($uid) {
+  $uw = entity_metadata_wrapper('user', $uid);
+  if ($uw->value()->picture) {
+    return $uw->value()->picture['uri'];
+  }
+  else {
+    return 'public://pictures/picture-default.png';
   }
 }
 

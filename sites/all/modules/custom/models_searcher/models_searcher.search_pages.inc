@@ -15,9 +15,6 @@ function yoga_search_results($term) {
   $search_parents = taxonomy_get_parents_all(reset($search_place)->tid);
   $params = drupal_get_query_parameters();
 
-//  dpm(arg(3));
-//  dpm(arg(4));
-
   if (sizeof($search_parents) == 3) {
     $town = $search_parents[0]->tid;
     $county = $search_parents[1]->tid;
@@ -34,9 +31,38 @@ function yoga_search_results($term) {
     $country = $search_parents[0]->tid;
   }
 
+  // Grab the lat long - OR, if not found, set it..
+  if (!empty(reset($search_place)->field_yoga_taxonomy_geofield[LANGUAGE_NONE])) {
+    $lat = reset($search_place)->field_yoga_taxonomy_geofield[LANGUAGE_NONE][0]['lat'];
+    $lng = reset($search_place)->field_yoga_taxonomy_geofield[LANGUAGE_NONE][0]['lon'];
+  }
+  else {
+    $add_arr = array();
+    foreach ($search_parents as $index => $search_parent) {
+      if ($search_parent->name != 'International') {
+        $add_arr[] = $search_parent->name;
+      }
+      else {
+        $international = TRUE;
+      }
+    }
+    if (!isset($international)) {
+      $add_arr[] = 'UK';
+    }
+    $add = implode(', ', $add_arr);
+    $geo_array = tweaks_grab_geocode($add);
+    if (!empty($geo_array['lat'])) {
+      $tw = entity_metadata_wrapper('taxonomy_term', reset($search_place)->tid);
+      $tw->field_yoga_taxonomy_geofield->set($geo_array);
+      $tw->save();
+    }
+    $lat = $geo_array['lat'];
+    $lng = $geo_array['lon'];
+  }
+
   // Distance
-  $lat = 51.656991;
-  $lng = -3.805476;
+//  $lat = 51.656991;
+//  $lng = -3.805476;
   $dist = !empty($params['within']) ? $params['within'] : 100;
 
 //  dpm($params);
@@ -68,11 +94,41 @@ function yoga_search_results($term) {
       $event_type = ucwords(str_replace('-', ' ', arg(5)));
     }
     else {
-      $event_type = 'all';
+      $event_type = 'All Events';
     }
 
-    dpm('Event' . '/' . $country . '/' . $county . '/' . $town . '/' . implode(',', $area) . '/' . $date . '/' . $event_type);
-    $res = views_embed_view('yoga_searcher', 'block', 'Event', $country, $county, $town, implode(',', $area), $date, $event_type);
+    if (arg(6)) {
+      $style_term = ucwords(str_replace('-', ' ', arg(6)));
+      $style = taxonomy_get_term_by_name($style_term);
+      $style = reset($style)->tid;
+    }
+    else {
+      $style = 'all';
+    }
+//    dpm('Event' . '/' . $country . '/' . $county . '/' . $town . '/' . implode(',', $area) . '/' . $date . '/' . $event_type . '/' . $style);
+    $res = views_embed_view('yoga_searcher', 'block', 'Event', $country, $county, $town, implode(',', $area), $date, $event_type, $style);
+  }
+  elseif (arg(0) == 'yoga') {
+    $type = t('Find Yoga Events in') . ' ';
+    $classes_hdr = '<div class="options-hdr clearfix">
+    <div class="options op-time">Time</div>
+    <div class="options op-style">Style</div>
+    <div class="options op-duration">Duration</div>
+    <div class="options op-teacher">Teacher</div>
+  </div>';
+
+    if (arg(3)) {
+      $style_term = ucwords(str_replace('-', ' ', arg(3)));
+      $style = taxonomy_get_term_by_name($style_term);
+      $style = reset($style)->tid;
+    }
+    else {
+      $style = 'all';
+    }
+//    dpm('Studio, Instructor' . '/' . $country . '/' . $county . '/' . $town . '/' . implode(',', $area) . '/' . $style);
+
+    $res = views_embed_view('yoga_searcher', 'block_1', 'Studio,Instructor', $country, $county, $town, implode(',', $area), $style);
+
   }
   elseif (arg(0) == 'classes') {
 

@@ -1,4 +1,4 @@
-<?php if (!$class_header) : ?>
+<?php if (empty($class_header)) : ?>
   <div id="yoga-classes-tables" class="yoga-timetable-tables">
     <?php
     $i = 0;
@@ -18,5 +18,7 @@
       <?php endforeach; ?>
   </div>
 <?php else : ?>
-  no classes yet!
+  <div class="nothing-here-yet">
+    <span>No classes yet.. <a href="/classes/add" class="a-link link-go">Add a class now<i class="material-icons">trending_flat</i></a></span>
+  </div>
 <?php endif; ?>

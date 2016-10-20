@@ -20,6 +20,17 @@
   </div>
 </div>
 
+<?php //if (strpos(current_path(), 'listing/') !== FALSE && !is_numeric(arg(1))): ?>
+<div class="row">
+  <div class="col-sm-2">
+    <label class="control-label" for="edit-field-yoga-type-und-0">Listing Type</label>
+  </div>
+  <div class="col-sm-10">
+    <?php print render($form['field_yoga_type']); ?>
+  </div>
+</div>
+<?php //endif; ?>
+
 <div class="row">
   <div class="col-sm-2">
     <label class="control-label"

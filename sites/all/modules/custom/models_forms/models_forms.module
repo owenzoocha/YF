@@ -77,14 +77,14 @@ function models_forms_menu() {
     'file' => 'models_forms.yoga_classes.inc',
   );
 
-  $items['blog/add'] = array(
+  $items['post/add'] = array(
     'title' => 'Create a Post',
     'page callback' => 'models_forms_blog_add',
     'page arguments' => array(2),
     'access callback' => 'user_is_logged_in',
     'file' => 'models_forms.yoga_blog.inc',
   );
-  $items['blog/%/edit'] = array(
+  $items['post/%/edit'] = array(
     'title' => 'Edit your Post',
     'page callback' => 'models_forms_blog_add',
     'page arguments' => array(2),
@@ -301,13 +301,15 @@ function models_forms_node_presave($node) {
 
   if ($node->type == 'yoga') {
     if ($type = variable_get('listing_add_' . $user->uid)) {
-      $node->field_yoga_type[LANGUAGE_NONE][0]['value'] = 'event';
       $node->uid = $user->uid;
-      dpm($node, 'event?');
+      dpm($node, 'listing...');
       variable_del('listing_add_' . $user->uid);
     }
-    else {
-//      dpm('nope', 'type');
+    elseif ($type = variable_get('event_add_' . $user->uid)) {
+      $node->field_yoga_type[LANGUAGE_NONE][0]['value'] = 'event';
+      $node->uid = $user->uid;
+      variable_del('event_add_' . $user->uid);
+      dpm($node, 'event...');
     }
 
     // Set up the LAT LNG.
@@ -346,9 +348,26 @@ function models_forms_node_presave($node) {
 function models_forms_node_insert($node) {
   global $user;
   if ($node->type == 'yoga') {
+    if ($node->field_yoga_type[LANGUAGE_NONE][0]['value'] != 'event') {
+      $uw = entity_metadata_wrapper('user', $user->uid);
+      $nw = entity_metadata_wrapper('node', $node->nid);
+
+      // Add the yoga listing to the user's profile.
+      if (!$uw->field_my_listings->value()) {
+        $uw->field_my_listings->offsetSet(0, $node->nid);
+      }
+      else {
+        $uw->field_my_listings->offsetSet(sizeof($uw->field_my_listings->value()), $node->nid);
+      }
+      $uw->save();
+    }
+
     if ($node->field_yoga_type[LANGUAGE_NONE][0]['value'] == 'event') {
       $uw = entity_metadata_wrapper('user', $user->uid);
       $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
+      $evw = entity_metadata_wrapper('node', $node->nid);
+
+      // Add the yoga event to the yoga listing.
       if (!$nw->field_yoga_event_list->value()) {
         $nw->field_yoga_event_list->offsetSet(0, $node->nid);
       }
@@ -357,10 +376,10 @@ function models_forms_node_insert($node) {
       }
       $nw->save();
     }
+
   }
   if ($node->type == 'article') {
     $uw = entity_metadata_wrapper('user', $user->uid);
-    $nw = entity_metadata_wrapper('node', $uw->field_my_posts->value()[0]->nid);
     if (!$uw->field_my_posts->value()) {
       $uw->field_my_posts->offsetSet(0, $node->nid);
     }

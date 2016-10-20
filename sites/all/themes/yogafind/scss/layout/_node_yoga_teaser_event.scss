@@ -91,3 +91,67 @@
     }
   }
 }
+
+.view-yoga-searcher {
+  .views-row {
+    .event-teaser {
+      .event-info {
+        margin-right: 0;
+        .event-intro {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+.teaser-styles,
+.teaser-yoga-info {
+  li {
+    display: inline-block;
+    min-width: 10px;
+    line-height: 1;
+    font-weight: 300;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-align: center;
+    margin: 1px;
+    span {
+      background-color: #172A3A;
+      color: #fff;
+      border-radius: 10px;
+    }
+    a {
+      background-color: $light-purple;
+    }
+    span, a {
+      padding: 3px 7px;
+      display: block;
+      text-decoration: none;
+      transition: 0.2s ease all;
+      //border-right: 1px solid $purple;
+      i {
+        vertical-align: middle;
+        font-size: 14px;
+      }
+    }
+    &:last-of-type {
+      a {
+        border-right: none;
+      }
+    }
+  }
+}
+
+.view-yoga-searcher {
+  .event-teaser {
+    position: relative;
+    .a-link {
+      position: absolute;
+      bottom: 15px;
+      right: 10px;
+      font-weight: 300;
+      font-size: 11px;;
+    }
+  }
+}

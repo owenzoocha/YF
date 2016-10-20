@@ -39,7 +39,7 @@ function models_forms_blog_add() {
     if (arg(0) != 'event') {
       variable_set('blog_add_' . $user->uid, 1);
       $yoga_form['get_started'] = array(
-        '#markup' => '<p class="greenify">' . t('Namaste !name, have an interesting Yoga blog post, tip, lesson or anything you would like to share? Create your Yoga Find post below.', array('!name' => $uw->field_first_name->value())) . '</p>',
+        '#markup' => '<p class="greenify">' . t('Namaste !name, have an interesting Yoga post, tip, lesson or anything you would like to share? Create your Yoga Find post below.', array('!name' => $uw->field_first_name->value())) . '</p>',
       );
     }
   }

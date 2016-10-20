@@ -18,6 +18,13 @@ function models_searcher_views_api() {
 }
 
 /**
+ * Implements hook_init().
+ */
+//function models_searcher_init() {
+//
+//}
+
+/**
  * Implements hook_menu().
  */
 function models_searcher_menu() {
@@ -38,7 +45,7 @@ function models_searcher_menu() {
     'file' => 'models_searcher.search_pages.inc',
   );
 
-  $items['listings/in/%'] = array(
+  $items['yoga/in/%'] = array(
     'page callback' => 'yoga_search_results',
     'access callback' => TRUE,
     'page arguments' => array(2),
@@ -191,7 +198,9 @@ function template_preprocess_search_yoga_facets_event_type(&$vars) {
     else {
       $options = array();
     }
-    $markup .= '<li>' . l($index, $url . '/' . strtolower(str_replace(' ', '-', $index)), $options) . '</li>';
+//    $type = !empty(arg(5)) ? '/'  . arg(5) : 'all';
+    $style = !empty(arg(6)) ? '/' . arg(6) : FALSE;
+    $markup .= '<li>' . l($index, $url . '/' . strtolower(str_replace(' ', '-', $index)) . $style, $options) . '</li>';
   }
   $markup .= '<ul>';
   $vars['markup'] = $markup;
@@ -211,10 +220,6 @@ function template_preprocess_search_yoga_facets_dates(&$vars) {
     $url = 'events/in/' . arg(2);
   }
 
-  if (!empty(arg(5))) {
-    $url .= '/' . arg(5);
-  }
-
   $markup = '<ul class="list-unstyled facet-searcher">';
   $date = date('F Y', strtotime('now'));
   for ($i = 0; $i < 6; $i++) {
@@ -224,7 +229,11 @@ function template_preprocess_search_yoga_facets_dates(&$vars) {
     else {
       $options = array();
     }
-    $markup .= '<li>' . l(date('F Y', strtotime('+' . $i . 'months')), $url . '/during/' . date('Y-m', strtotime('+' . $i . 'months')), $options) . '</li>';
+
+    $type = !empty(arg(5)) ? '/' . arg(5) : FALSE;
+    $style = !empty(arg(6)) ? '/' . arg(6) : FALSE;
+
+    $markup .= '<li>' . l(date('F Y', strtotime('+' . $i . 'months')), $url . '/during/' . date('Y-m', strtotime('+' . $i . 'months')) . $type . $style, $options) . '</li>';
   }
   $markup .= '<ul>';
   $vars['markup'] = $markup;
@@ -326,7 +335,24 @@ function template_preprocess_search_yoga_facets_styles(&$vars) {
   }
   elseif (arg(0) == 'events') {
     $url = 'events/in/' . arg(2);
+    if (strpos(current_path(), '/during/') !== FALSE) {
+      $url .= '/during/' . arg(4);
+    }
+    else {
+      $url .= '/during/' . date('Y-m');
+    }
+    if (!empty(arg(5))) {
+      $url .= '/' . arg(5);
+    }
+    else {
+      $url .= '/all-events';
+    }
   }
+  elseif (arg(0) == 'yoga') {
+    $url = 'yoga/in/' . arg(2);
+  }
+
+//  dpm($url);
 
   $markup = '<ul class="list-unstyled facet-searcher">';
 
@@ -338,9 +364,19 @@ function template_preprocess_search_yoga_facets_styles(&$vars) {
   }
   $markup .= '<li>' . l(t('All Yoga Styles'), $url, $options) . '</li>';
   foreach ($terms as $index => $term) {
-    if (!empty(arg(5))) {
-      $options['attributes']['class'][0] = arg(5) == strtolower(str_replace(' ', '-', $term->name)) ? 'selected' : '';
+
+    if (arg(0) == 'classes') {
+      if (!empty(arg(5))) {
+        $options['attributes']['class'][0] = arg(5) == strtolower(str_replace(' ', '-', $term->name)) ? 'selected' : '';
+      }
     }
+    elseif (arg(0) == 'events') {
+      $options['attributes']['class'][0] = arg(6) == strtolower(str_replace(' ', '-', $term->name)) ? 'selected' : '';
+    }
+    elseif (arg(0) == 'yoga') {
+      $options['attributes']['class'][0] = arg(3) == strtolower(str_replace(' ', '-', $term->name)) ? 'selected' : '';
+    }
+
     $markup .= '<li>' . l($term->name, $url . '/' . strtolower(str_replace(' ', '-', $term->name)), $options) . '</li>';
   }
 
@@ -487,10 +523,25 @@ function template_preprocess_search_results_topper(&$vars) {
     $type = 'class';
   }
   elseif (arg(0) == 'events') {
-    $vars['heading'] = t('Yoga Events from October onwards');
+    if (strpos(current_path(), '/during/') !== FALSE) {
+      $month = date('F, \'y', strtotime(arg(4)));
+    }
+    else {
+      $month = date('F, \'y');
+    }
+    if (!empty(arg(5))) {
+      $type = ucwords(str_replace('-', ' ', arg(5)));
+    }
+    else {
+      $type = 'event';
+    }
+    $vars['heading'] = t('Yoga !type from !date onwards', array(
+      '!date' => $month,
+      '!type' => $type
+    ));
     $type = 'event';
   }
-  elseif (arg(0) == 'studios') {
+  elseif (arg(0) == 'yoga') {
     $vars['heading'] = t('Yoga Studios');
     $type = 'listing';
   }
@@ -519,33 +570,24 @@ function models_searcher_form($form, &$form_state) {
     'aria-expanded' => 'false',
   );
 
-  $form['#attached']['js'] = array(
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY&sensor=false&libraries=places' => array(
-      'type' => 'external',
-    ),
-    drupal_get_path('module', 'models_searcher') . '/js/searcher.js',
-//    array(
-//      'data' => array('geos' => $geos),
-//      'type' => 'setting',
-//    ),
-  );
+
+  if (!drupal_is_front_page()) {
+
+    $form['#attached']['js'] = array(
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY&sensor=false&libraries=places' => array(
+        'type' => 'external',
+      ),
+      drupal_get_path('module', 'models_searcher') . '/js/searcher.js',
+    );
+  }
 
   $dropdown = '<ul role="menu" aria-labelledby="Search and find yoga listings" class="dropdown-menu dropdown-menu-yogafind">
                 <li role="presentation" class="no-results">Nothing here!</li>
                 <li role="presentation" class="dropdown-header dropdown-header-area">Places</li>
                 <li role="presentation" class="divider"></li>
-
                 <li role="presentation" class="dropdown-header dropdown-header-listings">Listings</li>
-                <li role="presentation" class="divider"></li>                
-                
-                <li role="presentation" class="dropdown-header dropdown-header-recent">Recent</li>
                 <li role="presentation" class="divider"></li>
-
-                <li role="presentation" class="dropdown-header dropdown-header-popular">Popular</li>
-                <li role="presentation" class="divider"></li>
-
-                <li role="presentation" class="dropdown-header">Places</li>
-                <li role="presentation" class="divider"></li>
+                <li role="presentation" class="dropdown-header dropdown-header-events">Events</li>
               </ul>';
 
   $form['searcher'] = array(
@@ -554,11 +596,40 @@ function models_searcher_form($form, &$form_state) {
       'id' => 'search-lookup',
       'placeholder' => t('Search by name, location or postcode'),
     ),
-//    '#suffix' => $dropdown,
   );
   $form['#suffix'] = $dropdown;
-//    '#markup' => $dropdown,
-//  );
+  return $form;
+}
+
+// Duplicated searcher form - but this is for nav - hacky but meh!
+function models_searcher_form_dupe($form, &$form_state) {
+
+  $form['#attached']['js'] = array(
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY&sensor=false&libraries=places' => array(
+      'type' => 'external',
+    ),
+    drupal_get_path('module', 'models_searcher') . '/js/searcher.js',
+  );
+
+  $dropdown_start = '<ul role="menu" aria-labelledby="Search and find yoga listings" class="dropdown-menu dropdown-menu-yogafind">';
+
+  $dropdown_end = '<li role="presentation" class="no-results">Nothing here!</li>
+                <li role="presentation" class="dropdown-header dropdown-header-area">Places</li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation" class="dropdown-header dropdown-header-listings">Listings</li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation" class="dropdown-header dropdown-header-events">Events</li>
+              </ul>';
+
+  $form['searcher'] = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'id' => 'search-lookup',
+      'placeholder' => t('Search by name, location or postcode'),
+    ),
+  );
+  $form['#prefix'] = $dropdown_start;
+  $form['#suffix'] = $dropdown_end;
   return $form;
 }
 

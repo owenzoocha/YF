@@ -135,12 +135,12 @@
 
     fadeOutAlertsOnHome : function(){
       if ($('body.front .alert-success').length ){
-        setTimeout(function(){
-          $('body.front .alert-success').addClass('alert-cya');
-          setTimeout(function(){
-            $('body.front .alert-success').remove();
-          }, 2000);
-        }, 8000);
+        // setTimeout(function(){
+        //   $('body.front .alert-success').addClass('alert-cya');
+        //   setTimeout(function(){
+        //     $('body.front .alert-success').remove();
+        //   }, 2000);
+        // }, 8000);
       };
     },
 

@@ -10,7 +10,11 @@ function yf_api_services_resources() {
     'yf_dynamic_search' => array(
       'retrieve' => array(
         'help' => 'Retrieve dynamic search data.',
-        'file' => array('type' => 'inc', 'module' => 'yf_api', 'name' => 'resources/yf'),
+        'file' => array(
+          'type' => 'inc',
+          'module' => 'yf_api',
+          'name' => 'resources/yf'
+        ),
         'callback' => '_yf_dynamic_search',
         'access callback' => '_yf_dynamic_search_permission',
         // 'access arguments' => array('view'),
@@ -20,6 +24,29 @@ function yf_api_services_resources() {
             'name' => 'srch',
             'type' => 'string',
             'description' => 'The Search Term',
+            'source' => array('path' => '0'),
+            'optional' => FALSE,
+          ),
+        ),
+      ),
+    ),    // API endpoints for the core team
+    'yf_places_lookup' => array(
+      'retrieve' => array(
+        'help' => 'Retrieve google places data.',
+        'file' => array(
+          'type' => 'inc',
+          'module' => 'yf_api',
+          'name' => 'resources/yf'
+        ),
+        'callback' => '_yf_places_lookup',
+        'access callback' => '_yf_dynamic_search_permission',
+        // 'access arguments' => array('view'),
+        'access arguments append' => TRUE,
+        'args' => array(
+          array(
+            'name' => 'places_id',
+            'type' => 'string',
+            'description' => 'The places_id',
             'source' => array('path' => '0'),
             'optional' => FALSE,
           ),

@@ -7,6 +7,68 @@ define('DRUPAL_ROOT', getcwd());
 require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
 drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
+function geo_time() {
+  $placedid = 'ChIJZbYQN2Cqd0gR4hBmNUTOVY0';
+//  $placedid = 'ChIJCT7gsUJDbkgRQX55jieEiuI';
+  $places_request = drupal_http_request('https://maps.googleapis.com/maps/api/place/details/json?placeid=' . $placedid . '&key=AIzaSyAJotW5W9qrHFoKPAJPim6w4jWr6MWNEHA');
+  if ($places_request) {
+    $json = drupal_json_decode($places_request->data);
+    dpm($json);
+    $yoga_url['url'] = 'nope';
+    if (!empty($json['result']['address_components'])) {
+      foreach ($json['result']['address_components'] as $index => $address_component) {
+        $term = taxonomy_get_term_by_name($address_component['long_name'], 'locations');
+        dpm($term);
+        if ($term) {
+          $tw = entity_metadata_wrapper('taxonomy_term', reset($term)->tid);
+
+          dpm($tw->value());
+
+          if (!$tw->field_yoga_taxonomy_geofield->value()) {
+            // Cache and save the latlong data to the term.
+            $latlng = array(
+              'lat' => $json['result']['geometry']['location']['lat'],
+              'lng' => $json['result']['geometry']['location']['lng'],
+            );
+            $geo_array = array(
+              'geom' => 'POINT (' . $latlng['lng'] . ' ' . $latlng['lat'] . ')',
+              'geo_type' => 'point',
+              'lat' => $latlng['lat'],
+              'lon' => $latlng['lng'],
+              'left' => $latlng['lng'],
+              'top' => $latlng['lat'],
+              'right' => $latlng['lng'],
+              'bottom' => $latlng['lat'],
+              // 'geohash' => ,
+            );
+
+            $tw->field_yoga_taxonomy_geofield->set($geo_array);
+            $tw->save();
+
+            $yoga_url['create'] = 1;
+          }
+          else {
+            $yoga_url['create'] = 0;
+          }
+          $yoga_url['url'] = 'yoga/in/' . strtolower(str_replace(' ', '-', $address_component['long_name']));
+          break;
+        }
+        else {
+          $yoga_url['to_add'][] = $address_component['long_name'];
+        }
+      }
+
+      if (isset($yoga_url['to_add'])) {
+        watchdog('YF_places_to_add', implode(', ', $yoga_url['to_add']) . ' for: ' . $placedid);
+      }
+      dpm($yoga_url, 'to return');
+    }
+  }
+}
+
+//geo_time();
+
+
 // town-0 county-1 country-2
 function testerr() {
   $file = fopen('counties2.csv', 'r');
@@ -69,7 +131,6 @@ function testerr() {
   return '';
 }
 
-//testerr();
 
 menu_execute_active_handler();
 // delete_out_of_date();

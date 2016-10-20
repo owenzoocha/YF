@@ -51,9 +51,9 @@
   <div id="hero">
     <div class="hero-content container">
       <div class="hero left animated fadeInUp">
-        <h1>Welcome to</br>Hair and Beauty Models</h1>
-        <h2>Training as a hair dresser or beautician? Looking for last minute models? Or just looking for a cheap cut!</h2>
-        <p><strong style="font-size: 27px;">Coming Soon!</strong> Sign up to receive the latest news</p>
+        <h1>Yoga Find</br>the easiest way to find yoga in the UK</h1>
+        <h2>We aim to provide the easiest way to find studios, instructors, yoga events and yoga classes all over the UK.</h2>
+        <p><strong style="font-size: 27px;">We've just launched</strong> It's free to get started - so create your yoga listings now!.</p>
       </div>
       <div class="hero right">
         <?php

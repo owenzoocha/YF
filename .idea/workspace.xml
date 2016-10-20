@@ -2,24 +2,223 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0a46c4b-f5cb-4646-884c-e139b8b4ab2a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-results-topper.tpl.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_search_results.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_yoga_classes_teaser.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/templates/entity/class--yoga--teaser.tpl.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sites/all/modules/custom/tweaks/tweaks.search_pages.inc" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/templates/node/node--yoga--listing--token.tpl.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CHANGELOG.txt" afterPath="$PROJECT_DIR$/CHANGELOG.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MAINTAINERS.txt" afterPath="$PROJECT_DIR$/MAINTAINERS.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dev.php" afterPath="$PROJECT_DIR$/dev.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/bootstrap.inc" afterPath="$PROJECT_DIR$/includes/bootstrap.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/common.inc" afterPath="$PROJECT_DIR$/includes/common.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/database/database.inc" afterPath="$PROJECT_DIR$/includes/database/database.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/database/mysql/database.inc" afterPath="$PROJECT_DIR$/includes/database/mysql/database.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/file.inc" afterPath="$PROJECT_DIR$/includes/file.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/locale.inc" afterPath="$PROJECT_DIR$/includes/locale.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/theme.inc" afterPath="$PROJECT_DIR$/includes/theme.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/misc/ajax.js" afterPath="$PROJECT_DIR$/misc/ajax.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/misc/autocomplete.js" afterPath="$PROJECT_DIR$/misc/autocomplete.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/misc/drupal.js" afterPath="$PROJECT_DIR$/misc/drupal.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/misc/tabledrag.js" afterPath="$PROJECT_DIR$/misc/tabledrag.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/aggregator/aggregator.info" afterPath="$PROJECT_DIR$/modules/aggregator/aggregator.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/aggregator/aggregator.processor.inc" afterPath="$PROJECT_DIR$/modules/aggregator/aggregator.processor.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/aggregator/tests/aggregator_test.info" afterPath="$PROJECT_DIR$/modules/aggregator/tests/aggregator_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/block/block.info" afterPath="$PROJECT_DIR$/modules/block/block.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/block/block.module" afterPath="$PROJECT_DIR$/modules/block/block.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/block/tests/block_test.info" afterPath="$PROJECT_DIR$/modules/block/tests/block_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/block/tests/themes/block_test_theme/block_test_theme.info" afterPath="$PROJECT_DIR$/modules/block/tests/themes/block_test_theme/block_test_theme.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/blog/blog.info" afterPath="$PROJECT_DIR$/modules/blog/blog.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/book/book.info" afterPath="$PROJECT_DIR$/modules/book/book.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/color/color.info" afterPath="$PROJECT_DIR$/modules/color/color.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/comment/comment.info" afterPath="$PROJECT_DIR$/modules/comment/comment.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/contact/contact.info" afterPath="$PROJECT_DIR$/modules/contact/contact.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/contextual/contextual.info" afterPath="$PROJECT_DIR$/modules/contextual/contextual.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/dashboard/dashboard.info" afterPath="$PROJECT_DIR$/modules/dashboard/dashboard.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/dblog/dblog.admin.inc" afterPath="$PROJECT_DIR$/modules/dblog/dblog.admin.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/dblog/dblog.info" afterPath="$PROJECT_DIR$/modules/dblog/dblog.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/dblog/dblog.install" afterPath="$PROJECT_DIR$/modules/dblog/dblog.install" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/dblog/dblog.module" afterPath="$PROJECT_DIR$/modules/dblog/dblog.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/dblog/dblog.test" afterPath="$PROJECT_DIR$/modules/dblog/dblog.test" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/field/field.crud.inc" afterPath="$PROJECT_DIR$/modules/field/field.crud.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/field/field.info" afterPath="$PROJECT_DIR$/modules/field/field.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/field/modules/field_sql_storage/field_sql_storage.info" afterPath="$PROJECT_DIR$/modules/field/modules/field_sql_storage/field_sql_storage.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/field/modules/list/list.info" afterPath="$PROJECT_DIR$/modules/field/modules/list/list.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/field/modules/list/tests/list_test.info" afterPath="$PROJECT_DIR$/modules/field/modules/list/tests/list_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/field/modules/number/number.info" afterPath="$PROJECT_DIR$/modules/field/modules/number/number.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/field/modules/options/options.info" afterPath="$PROJECT_DIR$/modules/field/modules/options/options.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/field/modules/text/text.info" afterPath="$PROJECT_DIR$/modules/field/modules/text/text.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/field/tests/field_test.info" afterPath="$PROJECT_DIR$/modules/field/tests/field_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/field_ui/field_ui.info" afterPath="$PROJECT_DIR$/modules/field_ui/field_ui.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/file/file.info" afterPath="$PROJECT_DIR$/modules/file/file.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/file/tests/file_module_test.info" afterPath="$PROJECT_DIR$/modules/file/tests/file_module_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/filter/filter.info" afterPath="$PROJECT_DIR$/modules/filter/filter.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/forum/forum.info" afterPath="$PROJECT_DIR$/modules/forum/forum.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/help/help.info" afterPath="$PROJECT_DIR$/modules/help/help.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/image/image.info" afterPath="$PROJECT_DIR$/modules/image/image.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/image/tests/image_module_test.info" afterPath="$PROJECT_DIR$/modules/image/tests/image_module_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/locale/locale.admin.inc" afterPath="$PROJECT_DIR$/modules/locale/locale.admin.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/locale/locale.info" afterPath="$PROJECT_DIR$/modules/locale/locale.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/locale/locale.test" afterPath="$PROJECT_DIR$/modules/locale/locale.test" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/locale/tests/locale_test.info" afterPath="$PROJECT_DIR$/modules/locale/tests/locale_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/menu/menu.info" afterPath="$PROJECT_DIR$/modules/menu/menu.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/node/node.info" afterPath="$PROJECT_DIR$/modules/node/node.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/node/tests/node_access_test.info" afterPath="$PROJECT_DIR$/modules/node/tests/node_access_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/node/tests/node_test.info" afterPath="$PROJECT_DIR$/modules/node/tests/node_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/node/tests/node_test_exception.info" afterPath="$PROJECT_DIR$/modules/node/tests/node_test_exception.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/openid/openid.info" afterPath="$PROJECT_DIR$/modules/openid/openid.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/openid/tests/openid_test.info" afterPath="$PROJECT_DIR$/modules/openid/tests/openid_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/overlay/overlay.info" afterPath="$PROJECT_DIR$/modules/overlay/overlay.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/path/path.info" afterPath="$PROJECT_DIR$/modules/path/path.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/php/php.info" afterPath="$PROJECT_DIR$/modules/php/php.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/poll/poll.info" afterPath="$PROJECT_DIR$/modules/poll/poll.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/profile/profile.info" afterPath="$PROJECT_DIR$/modules/profile/profile.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/rdf/rdf.info" afterPath="$PROJECT_DIR$/modules/rdf/rdf.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/rdf/tests/rdf_test.info" afterPath="$PROJECT_DIR$/modules/rdf/tests/rdf_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/search/search.info" afterPath="$PROJECT_DIR$/modules/search/search.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/search/tests/search_embedded_form.info" afterPath="$PROJECT_DIR$/modules/search/tests/search_embedded_form.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/search/tests/search_extra_type.info" afterPath="$PROJECT_DIR$/modules/search/tests/search_extra_type.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/search/tests/search_node_tags.info" afterPath="$PROJECT_DIR$/modules/search/tests/search_node_tags.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/shortcut/shortcut.info" afterPath="$PROJECT_DIR$/modules/shortcut/shortcut.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/simpletest.info" afterPath="$PROJECT_DIR$/modules/simpletest/simpletest.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/actions_loop_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/actions_loop_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/ajax_forms_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/ajax_forms_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/ajax_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/ajax_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/batch_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/batch_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/boot_test_1.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/boot_test_1.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/boot_test_2.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/boot_test_2.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/common.test" afterPath="$PROJECT_DIR$/modules/simpletest/tests/common.test" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/common_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/common_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/common_test_cron_helper.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/common_test_cron_helper.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/database_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/database_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/drupal_autoload_test/drupal_autoload_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/drupal_autoload_test/drupal_autoload_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/drupal_system_listing_compatible_test/drupal_system_listing_compatible_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/drupal_system_listing_compatible_test/drupal_system_listing_compatible_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/drupal_system_listing_incompatible_test/drupal_system_listing_incompatible_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/drupal_system_listing_incompatible_test/drupal_system_listing_incompatible_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/entity_cache_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/entity_cache_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/entity_cache_test_dependency.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/entity_cache_test_dependency.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/entity_crud_hook_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/entity_crud_hook_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/entity_query_access_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/entity_query_access_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/error_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/error_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/file_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/file_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/filter_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/filter_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/form_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/form_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/image_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/image_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/menu_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/menu_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/module_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/module_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/path_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/path_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/psr_0_test/psr_0_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/psr_0_test/psr_0_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/psr_4_test/psr_4_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/psr_4_test/psr_4_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/requirements1_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/requirements1_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/requirements2_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/requirements2_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/session_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/session_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/system_dependencies_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/system_dependencies_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/system_incompatible_core_version_dependencies_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/system_incompatible_core_version_dependencies_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/system_incompatible_core_version_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/system_incompatible_core_version_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/system_incompatible_module_version_dependencies_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/system_incompatible_module_version_dependencies_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/system_incompatible_module_version_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/system_incompatible_module_version_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/system_project_namespace_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/system_project_namespace_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/system_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/system_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/taxonomy_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/taxonomy_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/theme_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/theme_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/themes/test_basetheme/test_basetheme.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/themes/test_basetheme/test_basetheme.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/themes/test_subtheme/test_subtheme.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/themes/test_subtheme/test_subtheme.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/themes/test_theme/test_theme.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/themes/test_theme/test_theme.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/update_script_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/update_script_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/update_script_test.install" afterPath="$PROJECT_DIR$/modules/simpletest/tests/update_script_test.install" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/update_test_1.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/update_test_1.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/update_test_2.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/update_test_2.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/update_test_3.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/update_test_3.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/url_alter_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/url_alter_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/simpletest/tests/xmlrpc_test.info" afterPath="$PROJECT_DIR$/modules/simpletest/tests/xmlrpc_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/statistics/statistics.info" afterPath="$PROJECT_DIR$/modules/statistics/statistics.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/statistics/statistics.test" afterPath="$PROJECT_DIR$/modules/statistics/statistics.test" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/syslog/syslog.info" afterPath="$PROJECT_DIR$/modules/syslog/syslog.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/system/system.admin.inc" afterPath="$PROJECT_DIR$/modules/system/system.admin.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/system/system.info" afterPath="$PROJECT_DIR$/modules/system/system.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/system/system.install" afterPath="$PROJECT_DIR$/modules/system/system.install" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/system/system.module" afterPath="$PROJECT_DIR$/modules/system/system.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/system/system.test" afterPath="$PROJECT_DIR$/modules/system/system.test" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/system/tests/cron_queue_test.info" afterPath="$PROJECT_DIR$/modules/system/tests/cron_queue_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/system/tests/system_cron_test.info" afterPath="$PROJECT_DIR$/modules/system/tests/system_cron_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/taxonomy/taxonomy.info" afterPath="$PROJECT_DIR$/modules/taxonomy/taxonomy.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/toolbar/toolbar.info" afterPath="$PROJECT_DIR$/modules/toolbar/toolbar.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/tracker/tracker.info" afterPath="$PROJECT_DIR$/modules/tracker/tracker.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/translation/tests/translation_test.info" afterPath="$PROJECT_DIR$/modules/translation/tests/translation_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/translation/translation.info" afterPath="$PROJECT_DIR$/modules/translation/translation.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/trigger/tests/trigger_test.info" afterPath="$PROJECT_DIR$/modules/trigger/tests/trigger_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/trigger/trigger.info" afterPath="$PROJECT_DIR$/modules/trigger/trigger.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/tests/aaa_update_test.info" afterPath="$PROJECT_DIR$/modules/update/tests/aaa_update_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/tests/bbb_update_test.info" afterPath="$PROJECT_DIR$/modules/update/tests/bbb_update_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/tests/ccc_update_test.info" afterPath="$PROJECT_DIR$/modules/update/tests/ccc_update_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/tests/themes/update_test_basetheme/update_test_basetheme.info" afterPath="$PROJECT_DIR$/modules/update/tests/themes/update_test_basetheme/update_test_basetheme.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/tests/themes/update_test_subtheme/update_test_subtheme.info" afterPath="$PROJECT_DIR$/modules/update/tests/themes/update_test_subtheme/update_test_subtheme.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/tests/update_test.info" afterPath="$PROJECT_DIR$/modules/update/tests/update_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/tests/update_test.module" afterPath="$PROJECT_DIR$/modules/update/tests/update_test.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/update.compare.inc" afterPath="$PROJECT_DIR$/modules/update/update.compare.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/update.info" afterPath="$PROJECT_DIR$/modules/update/update.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/update.manager.inc" afterPath="$PROJECT_DIR$/modules/update/update.manager.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/update/update.test" afterPath="$PROJECT_DIR$/modules/update/update.test" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/user/tests/user_form_test.info" afterPath="$PROJECT_DIR$/modules/user/tests/user_form_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/user/user.info" afterPath="$PROJECT_DIR$/modules/user/user.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/user/user.module" afterPath="$PROJECT_DIR$/modules/user/user.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/profiles/minimal/minimal.info" afterPath="$PROJECT_DIR$/profiles/minimal/minimal.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/profiles/standard/standard.info" afterPath="$PROJECT_DIR$/profiles/standard/standard.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/profiles/testing/modules/drupal_system_listing_compatible_test/drupal_system_listing_compatible_test.info" afterPath="$PROJECT_DIR$/profiles/testing/modules/drupal_system_listing_compatible_test/drupal_system_listing_compatible_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/profiles/testing/modules/drupal_system_listing_incompatible_test/drupal_system_listing_incompatible_test.info" afterPath="$PROJECT_DIR$/profiles/testing/modules/drupal_system_listing_incompatible_test/drupal_system_listing_incompatible_test.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/profiles/testing/testing.info" afterPath="$PROJECT_DIR$/profiles/testing/testing.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/auth/services_oauth/services_oauth.info" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/auth/services_oauth/services_oauth.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/plugins/export_ui/services_ctools_export_ui.class.php" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/plugins/export_ui/services_ctools_export_ui.class.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/plugins/export_ui/services_ctools_export_ui.inc" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/plugins/export_ui/services_ctools_export_ui.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/resources/comment_resource.inc" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/resources/comment_resource.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/resources/file_resource.inc" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/resources/file_resource.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/resources/node_resource.inc" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/resources/node_resource.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/resources/taxonomy_resource.inc" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/resources/taxonomy_resource.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/resources/user_resource.inc" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/resources/user_resource.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/servers/rest_server/includes/RESTServer.inc" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/servers/rest_server/includes/RESTServer.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/servers/rest_server/includes/ServicesParser.inc" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/servers/rest_server/includes/ServicesParser.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/servers/rest_server/rest_server.info" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/servers/rest_server/rest_server.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/servers/xmlrpc_server/xmlrpc_server.info" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/servers/xmlrpc_server/xmlrpc_server.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/servers/xmlrpc_server/xmlrpc_server.module" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/servers/xmlrpc_server/xmlrpc_server.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/services.admin.inc" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/services.admin.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/services.info" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/services.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/services.install" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/services.install" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/services.module" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/services.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/contrib/services/tests/services_test_resource/services_test_resource.info" afterPath="$PROJECT_DIR$/sites/all/modules/contrib/services/tests/services_test_resource/services_test_resource.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.create.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.create.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.module" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_blog.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_blog.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_classes.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_classes.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_forms/templates/add-listing.tpl.php" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_forms/templates/add-listing.tpl.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.build_classes.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.build_classes.inc" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.module" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.module" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.yoga_area_landing_page.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.yoga_area_landing_page.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-area-lp-block.tpl.php" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-area-lp-block.tpl.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-classes-block.tpl.php" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-classes-block.tpl.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-timetable-block.tpl.php" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-timetable-block.tpl.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/js/searcher.js" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/js/searcher.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.module" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.search_pages.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.search_pages.inc" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/tweaks/tweaks.module" afterPath="$PROJECT_DIR$/sites/all/modules/custom/tweaks/tweaks.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/yf_api/resources/yf.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/yf_api/resources/yf.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/yf_api/yf_api.module" afterPath="$PROJECT_DIR$/sites/all/modules/custom/yf_api/yf_api.module" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/models/templates/page--front.tpl.php" afterPath="$PROJECT_DIR$/sites/all/themes/models/templates/page--front.tpl.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/css/maps/style.css.map" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/css/maps/style.css.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/css/style.css" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/js/hbm.js" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/js/hbm.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/_base.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/_base.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_facets.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_facets.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_yoga_classes.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_yoga_classes.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/style.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/style.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_navigation.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_navigation.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_search_menu.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_search_menu.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_footer.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_footer.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_landing_page.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_landing_page.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_article.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_article.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_job.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_job.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_yoga_teaser_event.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_yoga_teaser_event.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_page_header.scss" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_page_header.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/template.php" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/template.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/templates/node/node--yoga--token.tpl.php" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/templates/node/node--yoga--token.tpl.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/yogafind/templates/page--front.tpl.php" afterPath="$PROJECT_DIR$/sites/all/themes/yogafind/templates/page--front.tpl.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/bartik/bartik.info" afterPath="$PROJECT_DIR$/themes/bartik/bartik.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/garland/garland.info" afterPath="$PROJECT_DIR$/themes/garland/garland.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/seven/seven.info" afterPath="$PROJECT_DIR$/themes/seven/seven.info" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/stark/stark.info" afterPath="$PROJECT_DIR$/themes/stark/stark.info" />
     </list>
     <ignored path="models.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,85 +249,86 @@
     <favorites_list name="models" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="257">
-      <file leaf-file-name="models_nav.module" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.module">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="236">
+      <file leaf-file-name="models_nav.build_classes.inc" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.build_classes.inc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="266" column="4" selection-start-line="266" selection-start-column="4" selection-end-line="266" selection-end-column="4" />
-              <folding>
-                <element signature="e#6#41#0#PHP" expanded="true" />
-                <element signature="e#12411#14286#0#PHP" expanded="false" />
-                <element signature="e#15349#18147#0#PHP" expanded="false" />
-                <marker date="1476155683000" expanded="true" signature="21336:21344" ph="..." />
-                <marker date="1476155683000" expanded="true" signature="21761:22388" ph="..." />
-                <marker date="1476155683000" expanded="true" signature="21770:21821" ph="..." />
-                <marker date="1476155683000" expanded="true" signature="21830:21933" ph="..." />
-                <marker date="1476155683000" expanded="true" signature="21942:22002" ph="..." />
-                <marker date="1476155683000" expanded="true" signature="22011:22066" ph="..." />
-                <marker date="1476155683000" expanded="true" signature="22075:22138" ph="..." />
-                <marker date="1476155683000" expanded="true" signature="22147:22201" ph="..." />
-                <marker date="1476155683000" expanded="true" signature="22210:22294" ph="..." />
-                <marker date="1476155683000" expanded="true" signature="22303:22380" ph="..." />
-                <marker date="1476155683000" expanded="true" signature="23024:23032" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_facets.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_facets.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+            <state relative-caret-position="120">
+              <caret line="16" column="80" selection-start-line="16" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search-results-topper.tpl.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-results-topper.tpl.php">
+      <file leaf-file-name="models_forms.create.inc" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.create.inc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
+            <state relative-caret-position="285">
+              <caret line="22" column="41" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models_searcher.module" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.module">
+      <file leaf-file-name="add-listing.tpl.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/templates/add-listing.tpl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="226" column="156" selection-start-line="226" selection-start-column="156" selection-end-line="226" selection-end-column="156" />
+            <state relative-caret-position="465">
+              <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models_forms.module" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.module">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4512">
+              <caret line="357" column="7" selection-start-line="357" selection-start-column="7" selection-end-line="357" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="template.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/template.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="630">
+              <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
               <folding>
-                <element signature="n#template_preprocess_search_yoga_facets_times#0;n#!!top" expanded="false" />
-                <element signature="n#template_preprocess_search_yoga_facets_distance#0;n#!!top" expanded="false" />
-                <element signature="e#12115#13345#0#PHP" expanded="false" />
-                <marker date="1476234401000" expanded="true" signature="14974:15894" ph="..." />
-                <marker date="1476234401000" expanded="true" signature="16417:16465" ph="SELECT * FRO... postcodes_geo" />
+                <element signature="e#1071#3648#0#PHP" expanded="false" />
+                <element signature="e#6816#7088#0#PHP" expanded="false" />
+                <marker date="1476936979000" expanded="true" signature="4863:4954" ph="SELECT entit... field_data_field_yoga_event_list" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models_searcher.search_pages.inc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.search_pages.inc">
+      <file leaf-file-name="node--yoga--listing--token.tpl.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/templates/node/node--yoga--listing--token.tpl.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="node--yoga--token.tpl.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/templates/node/node--yoga--token.tpl.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
-              <caret line="67" column="58" selection-start-line="67" selection-start-column="58" selection-end-line="67" selection-end-column="58" />
-              <folding>
-                <marker date="1476234037000" expanded="true" signature="1212:1413" ph="..." />
-              </folding>
+              <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models_searcher.views.inc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.views.inc">
+      <file leaf-file-name="add-classes.tpl.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/templates/add-classes.tpl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+            <state relative-caret-position="225">
+              <caret line="15" column="71" selection-start-line="15" selection-start-column="71" selection-end-line="15" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -137,14 +337,24 @@
       <file leaf-file-name="tweaks.module" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/tweaks/tweaks.module">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+            <state relative-caret-position="632">
+              <caret line="491" column="30" selection-start-line="491" selection-start-column="15" selection-end-line="491" selection-end-column="30" />
               <folding>
-                <marker date="1475812893000" expanded="true" signature="7866:7957" ph="SELECT entit... field_data_field_yoga_event_list" />
-                <marker date="1475812893000" expanded="true" signature="11777:11868" ph="SELECT entit... field_data_field_yoga_event_list" />
-                <marker date="1475812893000" expanded="true" signature="15284:15291" ph="»" />
-                <marker date="1475812893000" expanded="true" signature="29458:29466" ph="..." />
+                <marker date="1476935976000" expanded="true" signature="7878:7969" ph="SELECT entit... field_data_field_yoga_event_list" />
+                <marker date="1476935976000" expanded="true" signature="11597:11688" ph="SELECT entit... field_data_field_yoga_event_list" />
+                <marker date="1476935976000" expanded="true" signature="15104:15111" ph="»" />
+                <marker date="1476935976000" expanded="true" signature="29795:29803" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="event-organiser-block.tpl.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/tweaks/templates/event-organiser-block.tpl.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="31" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -164,57 +374,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_job.scss" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-classes-block.tpl.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-timetable-block.tpl.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_blog.inc" />
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/templates/node/node--article.tpl.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.module" />
-        <option value="$PROJECT_DIR$/sites/all/modules/contrib/timefield/README.txt" />
-        <option value="$PROJECT_DIR$/sites/all/modules/contrib/timefield/timefield.module" />
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/templates/entity/class--teacher--token.tpl.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_classes.inc" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_teachers.inc" />
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_entity_teachers.scss" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-area-lp-block.tpl.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/js/yoga_classes.js" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/js/yoga_area_lp.js" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_cache/models_cache.module" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/yf_api/yf_api.info" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/yf_api/yf_api.module" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/yf_api/resources/yf.inc" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.create.inc" />
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_area_landing_page.scss" />
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_yoga_teaser_event.scss" />
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/templates/page--front.tpl.php" />
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_footer.scss" />
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_landing_page.scss" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/js/searcher.js" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/modules_nav.views.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.views.inc" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.yoga_area_landing_page.inc" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.build_classes.inc" />
         <option value="$PROJECT_DIR$/sites/all/themes/yogafind/templates/entity/class--yoga--teaser.tpl.php" />
         <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_yoga_classes.scss" />
         <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_yoga_classes_teaser.scss" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/tweaks/tweaks.search_pages.inc" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/tweaks/tweaks.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-results-topper.tpl.php" />
         <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/style.scss" />
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/_base.scss" />
         <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_search_results.scss" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-times.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-styles.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-distance.php" />
-        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/template.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-times.tpl.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-distance.tpl.php" />
         <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_facets.scss" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-styles.tpl.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.views.inc" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_footer.scss" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_yoga_teaser_event.scss" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/js/hbm.js" />
+        <option value="$PROJECT_DIR$/sites/all/modules/contrib/geofield/geofield.module" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/yf_api/yf_api.module" />
+        <option value="$PROJECT_DIR$/dev.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/yf_api/resources/yf.inc" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_landing_page.scss" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-area-lp-block.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.yoga_area_landing_page.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.search_pages.inc" />
+        <option value="$PROJECT_DIR$/sites/all/themes/models/templates/page--front.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/templates/page--front.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_navigation.scss" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/js/searcher.js" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_search_menu.scss" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.module" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_page_header.scss" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-classes-block.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_job.scss" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-timetable-block.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.build_classes.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.module" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/_base.scss" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_article.scss" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_blog.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/tweaks/templates/event-organiser-block.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_classes.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.module" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/tweaks/tweaks.module" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_forms/templates/add-listing.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.create.inc" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/template.php" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/templates/node/node--yoga--listing--token.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/themes/yogafind/templates/node/node--yoga--token.tpl.php" />
       </list>
     </option>
   </component>
@@ -236,8 +446,8 @@
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1280" />
-    <option name="height" value="727" />
+    <option name="width" value="1920" />
+    <option name="height" value="1007" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -287,7 +497,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -300,13 +510,7 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="ProjectPane">
-        <subPane />
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
@@ -314,6 +518,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="ToolWindowTerminal.ShowToolbar" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="create&#9;FILE&#9;file:///Users/owenwilliams/vmdev/www/yogafind/sites/all/modules/custom/models_forms/models_forms.create.inc" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -400,12 +605,17 @@
       <workItem from="1475453069644" duration="7801000" />
       <workItem from="1475536550550" duration="18148000" />
       <workItem from="1475626735132" duration="36704000" />
-      <workItem from="1476149883302" duration="20727000" />
+      <workItem from="1476149883302" duration="35162000" />
+      <workItem from="1476333463325" duration="22243000" />
+      <workItem from="1476607637071" duration="2000" />
+      <workItem from="1476673269106" duration="8183000" />
+      <workItem from="1476750877588" duration="6157000" />
+      <workItem from="1476848216466" duration="4570000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="411219000" />
+    <option name="totallyTimeSpent" value="466809000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -417,17 +627,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="727" extended-state="6" />
+    <frame x="0" y="23" width="1920" height="1007" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18901454" sideWeight="0.48973608" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1256656" sideWeight="0.48973608" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24153006" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34015748" sideWeight="0.5072698" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1420765" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15867944" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15519126" sideWeight="0.4927302" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2907104" sideWeight="0.4927302" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09127625" sideWeight="0.5102639" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -437,7 +647,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1431694" sideWeight="0.49353796" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25245902" sideWeight="0.49353796" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24153006" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -449,15 +659,15 @@
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896176" sideWeight="0.4978701" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15519126" sideWeight="0.4927302" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12460064" sideWeight="0.48973608" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2907104" sideWeight="0.4927302" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1256656" sideWeight="0.48973608" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1420765" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15867944" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09127625" sideWeight="0.5102639" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1431694" sideWeight="0.49353796" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25245902" sideWeight="0.49353796" order="3" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -473,227 +683,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="43" />
+      <option name="time" value="56" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_cache/models_cache.module">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/yf_api/yf_api.info">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/yf_api/yf_api.module">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/yf_api/resources/yf.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="60" column="5" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/geocoder/geocoder.admin.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1095">
-          <caret line="76" column="83" selection-start-line="76" selection-start-column="78" selection-end-line="76" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/js/models_forms_google_complete.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/js/models_forms.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="132" column="18" selection-start-line="132" selection-start-column="14" selection-end-line="132" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_post_job_form.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-area-lp-block.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_area_landing_page.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="50" column="23" selection-start-line="50" selection-start-column="23" selection-end-line="50" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/models/templates/page--front.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="59" column="51" selection-start-line="59" selection-start-column="51" selection-end-line="59" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_footer.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1125">
-          <caret line="75" column="23" selection-start-line="75" selection-start-column="23" selection-end-line="75" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_yoga_teaser_event.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_landing_page.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1740">
-          <caret line="116" column="28" selection-start-line="116" selection-start-column="27" selection-end-line="116" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/js/searcher.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="71" column="16" selection-start-line="71" selection-start-column="16" selection-end-line="71" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/templates/page.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="58" column="10" selection-start-line="58" selection-start-column="10" selection-end-line="58" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/timefield/README.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="49" column="22" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/timefield/timefield.info">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_classes.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.module">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="66" column="24" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/templates/page--front.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="68" column="8" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.views.inc" />
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_job_teaser.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="350" column="1" selection-start-line="350" selection-start-column="1" selection-end-line="350" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.yoga_area_landing_page.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-classes-block.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="10" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_yoga_classes_teaser.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="138" column="3" selection-start-line="138" selection-start-column="3" selection-end-line="138" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.build_classes.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="47" column="167" selection-start-line="47" selection-start-column="166" selection-end-line="47" selection-end-column="167" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/tweaks/tweaks.search_pages.inc" />
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_yoga_classes.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="69" column="12" selection-start-line="69" selection-start-column="12" selection-end-line="69" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/templates/entity/class--yoga--teaser.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/style.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/_base.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="86" column="17" selection-start-line="86" selection-start-column="17" selection-end-line="86" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_search_results.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -701,156 +695,402 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/timefield/timefield.api.php">
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_alerts.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/js/hbm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="142" column="20" selection-start-line="142" selection-start-column="20" selection-end-line="142" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/geophp/geoPHP/geoPHP.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="176" column="0" selection-start-line="176" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/geofield/geofield.formatters.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="300" column="26" selection-start-line="300" selection-start-column="20" selection-end-line="300" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/bootstrap.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="3163" column="0" selection-start-line="3163" selection-start-column="0" selection-end-line="3163" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/update/update.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="159" column="0" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/module.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="326" column="0" selection-start-line="326" selection-start-column="0" selection-end-line="326" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/views_data_export/views_data_export.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/vendor/composer/ClassLoader.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="304" column="0" selection-start-line="304" selection-start-column="0" selection-end-line="304" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/geophp/geophp.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/geofield/geofield.widgets.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/yf_api/yf_api.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" column="40" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/js/searcher.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" column="38" selection-start-line="38" selection-start-column="38" selection-end-line="38" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/yf_api/resources/yf.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="167" selection-start-line="8" selection-start-column="128" selection-end-line="8" selection-end-column="167" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dev.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="45" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/templates/page--front.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="53" column="26" selection-start-line="53" selection-start-column="26" selection-end-line="53" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/geofield/README.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="86" column="27" selection-start-line="86" selection-start-column="27" selection-end-line="86" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.search_pages.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/models/templates/page--front.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="795">
+          <caret line="53" column="36" selection-start-line="53" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/geofield/includes/GeoGenerator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/geofield/geofield.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="861">
+          <caret line="404" column="53" selection-start-line="404" selection-start-column="53" selection-end-line="404" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_landing_page.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1440">
+          <caret line="96" column="25" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/user/user.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1572" column="0" selection-start-line="1572" selection-start-column="0" selection-end-line="1572" selection-end-column="0" />
+          <folding>
+            <marker date="1475693142000" expanded="true" signature="11280:11332" ph="SELECT uid F... " />
+            <marker date="1475693142000" expanded="true" signature="13558:13670" ph="SELECT r.rid... " />
+            <marker date="1475693142000" expanded="true" signature="23512:23540" ph="SELECT MAX(u... " />
+            <marker date="1475693142000" expanded="true" signature="24516:24562" ph="SELECT rid F... " />
+            <marker date="1475693142000" expanded="true" signature="30371:30438" ph="SELECT rid, " />
+            <marker date="1475693142000" expanded="true" signature="54450:54535" ph="SELECT uid, " />
+            <marker date="1475693142000" expanded="true" signature="55165:55257" ph="SELECT COUNT... " />
+            <marker date="1475693142000" expanded="true" signature="55670:55877" ph="SELECT u.uid... " />
+            <marker date="1475693142000" expanded="true" signature="75342:75407" ph="SELECT modul... " />
+            <marker date="1475693142000" expanded="true" signature="79772:79827" ph="SELECT * FRO... " />
+            <marker date="1475693142000" expanded="true" signature="89967:90044" ph="SELECT uid F... " />
+            <marker date="1475693142000" expanded="true" signature="117881:117921" ph="SELECT name " />
+            <marker date="1475693142000" expanded="true" signature="131143:131208" ph="SELECT uid, " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.yoga_area_landing_page.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="861">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-area-lp-block.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="878">
+          <caret line="581" column="3" selection-start-line="581" selection-start-column="3" selection-end-line="581" selection-end-column="3" />
+          <folding>
+            <element signature="n#template_preprocess_search_yoga_facets_times#0;n#!!top" expanded="false" />
+            <element signature="n#template_preprocess_search_yoga_facets_distance#0;n#!!top" expanded="false" />
+            <element signature="e#13075#14305#0#PHP" expanded="false" />
+            <marker date="1476422640000" expanded="true" signature="16234:16755" ph="..." />
+            <marker date="1476422640000" expanded="true" signature="17537:17539" ph="..." />
+            <marker date="1476422640000" expanded="true" signature="17537:18064" ph="..." />
+            <marker date="1476422640000" expanded="true" signature="17540:18064" ph="..." />
+            <marker date="1476422640000" expanded="true" signature="18562:18610" ph="SELECT * FRO... postcodes_geo" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_search_menu.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="861">
+          <caret line="67" column="23" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_navigation.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="861">
+          <caret line="177" column="10" selection-start-line="177" selection-start-column="10" selection-end-line="177" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_yoga_classes.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-times.php" />
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-styles.php" />
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-distance.php" />
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/template.php">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_1.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="599" column="139" selection-start-line="599" selection-start-column="139" selection-end-line="599" selection-end-column="139" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/contrib/timefield/timefield.module">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7800">
-          <caret line="523" column="76" selection-start-line="523" selection-start-column="46" selection-end-line="523" selection-end-column="76" />
+        <state relative-caret-position="261">
+          <caret line="56" column="65" selection-start-line="56" selection-start-column="65" selection-end-line="56" selection-end-column="65" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/common.inc">
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_job.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="797">
-          <caret line="444" column="17" selection-start-line="444" selection-start-column="17" selection-end-line="444" selection-end-column="17" />
-          <folding>
-            <marker date="1471385708000" expanded="true" signature="43641:43746" ph="SELECT COUNT... " />
-          </folding>
+        <state relative-caret-position="105">
+          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-distance.tpl.php">
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_page_header.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="15" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/templates/create-job.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="52" selection-start-line="0" selection-start-column="52" selection-end-line="0" selection-end-column="52" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-times.tpl.php">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-timetable-block.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="52" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="52" />
-          <folding />
+        <state relative-caret-position="345">
+          <caret line="23" column="15" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-yoga-facets-styles.tpl.php">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/templates/yoga-classes-block.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="52" selection-start-line="0" selection-start-column="52" selection-end-line="0" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/components/_facets.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.create.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="385" column="0" selection-start-line="385" selection-start-column="0" selection-end-line="386" selection-end-column="40" />
-          <folding>
-            <element signature="n#models_forms_listing_add_submit#0;n#!!top" expanded="false" />
-          </folding>
+        <state relative-caret-position="255">
+          <caret line="17" column="88" selection-start-line="17" selection-start-column="88" selection-end-line="17" selection-end-column="130" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="266" column="4" selection-start-line="266" selection-start-column="4" selection-end-line="266" selection-end-column="4" />
-          <folding>
-            <element signature="e#6#41#0#PHP" expanded="true" />
-            <element signature="e#12411#14286#0#PHP" expanded="false" />
-            <element signature="e#15349#18147#0#PHP" expanded="false" />
-            <marker date="1476155683000" expanded="true" signature="21336:21344" ph="..." />
-            <marker date="1476155683000" expanded="true" signature="21761:22388" ph="..." />
-            <marker date="1476155683000" expanded="true" signature="21770:21821" ph="..." />
-            <marker date="1476155683000" expanded="true" signature="21830:21933" ph="..." />
-            <marker date="1476155683000" expanded="true" signature="21942:22002" ph="..." />
-            <marker date="1476155683000" expanded="true" signature="22011:22066" ph="..." />
-            <marker date="1476155683000" expanded="true" signature="22075:22138" ph="..." />
-            <marker date="1476155683000" expanded="true" signature="22147:22201" ph="..." />
-            <marker date="1476155683000" expanded="true" signature="22210:22294" ph="..." />
-            <marker date="1476155683000" expanded="true" signature="22303:22380" ph="..." />
-            <marker date="1476155683000" expanded="true" signature="23024:23032" ph="..." />
-          </folding>
+        <state relative-caret-position="332">
+          <caret line="562" column="3" selection-start-line="562" selection-start-column="3" selection-end-line="562" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/templates/search-results-topper.tpl.php">
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/_base.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
+        <state relative-caret-position="420">
+          <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/scss/layout/_node_article.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_blog.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="45" column="54" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.yoga_classes.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="930">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/templates/add-classes.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="71" selection-start-line="15" selection-start-column="71" selection-end-line="15" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/tweaks/templates/event-organiser-block.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="31" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/tweaks/tweaks.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+        <state relative-caret-position="632">
+          <caret line="491" column="30" selection-start-line="491" selection-start-column="15" selection-end-line="491" selection-end-column="30" />
           <folding>
-            <marker date="1475812893000" expanded="true" signature="7866:7957" ph="SELECT entit... field_data_field_yoga_event_list" />
-            <marker date="1475812893000" expanded="true" signature="11777:11868" ph="SELECT entit... field_data_field_yoga_event_list" />
-            <marker date="1475812893000" expanded="true" signature="15284:15291" ph="»" />
-            <marker date="1475812893000" expanded="true" signature="29458:29466" ph="..." />
+            <marker date="1476935976000" expanded="true" signature="7878:7969" ph="SELECT entit... field_data_field_yoga_event_list" />
+            <marker date="1476935976000" expanded="true" signature="11597:11688" ph="SELECT entit... field_data_field_yoga_event_list" />
+            <marker date="1476935976000" expanded="true" signature="15104:15111" ph="»" />
+            <marker date="1476935976000" expanded="true" signature="29795:29803" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.views.inc">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/templates/add-listing.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+        <state relative-caret-position="465">
+          <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.search_pages.inc">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_nav/models_nav.build_classes.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="67" column="58" selection-start-line="67" selection-start-column="58" selection-end-line="67" selection-end-column="58" />
+        <state relative-caret-position="120">
+          <caret line="16" column="80" selection-start-line="16" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.create.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="22" column="41" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_forms/models_forms.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4512">
+          <caret line="357" column="7" selection-start-line="357" selection-start-column="7" selection-end-line="357" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/template.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
           <folding>
-            <marker date="1476234037000" expanded="true" signature="1212:1413" ph="..." />
+            <element signature="e#1071#3648#0#PHP" expanded="false" />
+            <element signature="e#6816#7088#0#PHP" expanded="false" />
+            <marker date="1476936979000" expanded="true" signature="4863:4954" ph="SELECT entit... field_data_field_yoga_event_list" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/models_searcher/models_searcher.module">
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/templates/node/node--yoga--listing--token.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="226" column="156" selection-start-line="226" selection-start-column="156" selection-end-line="226" selection-end-column="156" />
-          <folding>
-            <element signature="n#template_preprocess_search_yoga_facets_times#0;n#!!top" expanded="false" />
-            <element signature="n#template_preprocess_search_yoga_facets_distance#0;n#!!top" expanded="false" />
-            <element signature="e#12115#13345#0#PHP" expanded="false" />
-            <marker date="1476234401000" expanded="true" signature="14974:15894" ph="..." />
-            <marker date="1476234401000" expanded="true" signature="16417:16465" ph="SELECT * FRO... postcodes_geo" />
-          </folding>
+        <state relative-caret-position="150">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/yogafind/templates/node/node--yoga--token.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>

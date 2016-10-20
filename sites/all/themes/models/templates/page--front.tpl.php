@@ -51,7 +51,7 @@
   <div id="hero">
     <div class="hero-content container">
       <div class="hero left animated fadeInUp">
-        <h1>Welcome to</br>Hair and Beauty Models</h1>
+        <h1>Welcome to</br>Yoga Find</h1>
         <h2>Training as a hair dresser or beautician? Looking for last minute models? Or just looking for a cheap cut!</h2>
         <p><strong style="font-size: 27px;">Coming Soon!</strong> Sign up to receive the latest news</p>
       </div>

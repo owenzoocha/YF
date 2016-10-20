@@ -12,10 +12,20 @@ function build_yoga_class_array($res) {
       foreach ($ew->field_yoga_style->getIterator() AS $k => $style) {
         $styles .= $style->label() . ', ';
       }
+
+      $nw = entity_metadata_wrapper('node', $ew->uid->field_my_listings->value()[0]->nid);
+      $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : grab_default_profile_image($nw->author->getIdentifier());
+      $pic = '<div class="event-logo">' . l(theme('image_style', array(
+          'style_name' => 'profile',
+          'path' => $uri,
+          'attributes' => array('class' => array('img-responsive'))
+        )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+
       //32400 = 9oclock
       $class_array[$ew->field_yc_dow->value()][] = array(
         'eid' => $ew->getIdentifier(),
         'dow' => $ew->field_yc_dow->value(),
+        'pic' => $pic,
         'times' => $ew->field_yc_start_time->value()['value_formatted'] . ' - ' . $ew->field_yc_start_time->value()['value2_formatted'],
         'desc' => $ew->field_yc_desc->value(),
         'style' => rtrim($styles, ', '),
@@ -45,7 +55,7 @@ function build_yoga_class_data($class_array, $make_edits) {
       $class_data .= '<div class="options op-duration">' . $v['duration'] . 'h</div>';
       $class_data .= '<div class="options op-teacher">' . $v['teacher'] . '</div>';
       $class_data .= '<div class="yoga-class-extra">';
-      $class_data .= '<div class="yoga-class-img"><img class="img-responsive" src="http://yogafind.dev/sites/default/files/styles/profile/public/heart.png?itok=BCKVtqjL"/></div>';
+      $class_data .= '<div class="yoga-class-img">' . $v['pic'] . '</div>';
       $class_data .= '<div class="yoga-class-desc">';
       $class_data .= '<div class="close-btn"><i class="material-icons">close</i></div>';
       $class_data .= '<h4>' . $v['style'] . '</h4>';
@@ -75,7 +85,7 @@ function build_yoga_timetable_data($class_array, $make_edits) {
     $class_data .= '<div class="options op-duration">' . $v['duration'] . 'h</div>';
     $class_data .= '<div class="options op-teacher">' . $v['teacher'] . '</div>';
     $class_data .= '<div class="yoga-class-extra">';
-    $class_data .= '<div class="yoga-class-img"><img class="img-responsive" src="http://yogafind.dev/sites/default/files/styles/profile/public/heart.png?itok=BCKVtqjL"/></div>';
+    $class_data .= '<div class="yoga-class-img">' . $v['pic'] . '</div>';
     $class_data .= '<div class="yoga-class-desc">';
     $class_data .= '<div class="close-btn"><i class="material-icons">close</i></div>';
     $class_data .= '<h4>' . $v['style'] . '</h4>';

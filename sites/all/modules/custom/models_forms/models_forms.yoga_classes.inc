@@ -33,15 +33,16 @@ function models_forms_class_add() {
   }
   else {
     $entity = entity_create('class', array('type' => 'yoga'));
-    if (!$nw->field_yoga_teachers->value()) {
-      $get_started = array(
-        '#markup' => '<p class="greenify">' . t('Post a new Yoga class for your listing below.</br>Tip! To get started, you may want to <strong>!add</strong>.', array('!add' => l(t('add a teacher'), 'teacher/add'))) . '</p>',
-      );
-    }
-    else {
-      $get_started = array(
-        '#markup' => '<p class="greenify">' . t('Post a new Yoga class for your listing below') . '</p>',
-      );
+    $get_started = array(
+      '#markup' => '<p class="greenify">' . t('Post a new Yoga class for your listing below') . '</p>',
+    );
+
+    if ($nw->field_yoga_type->value() != 'instructor') {
+      if (!$nw->field_yoga_teachers->value()) {
+        $get_started = array(
+          '#markup' => '<p class="greenify">' . t('Post a new Yoga class for your listing below.</br>Tip! To get started, you may want to <strong>!add</strong>.', array('!add' => l(t('add a teacher'), 'teacher/add'))) . '</p>',
+        );
+      }
     }
   }
 
@@ -62,7 +63,6 @@ function models_forms_class_add() {
   }
 
   $yoga_form['#theme'] = array('overwrite_classes_form');
-  dpm($yoga_form);
   return $yoga_form;
 }
 

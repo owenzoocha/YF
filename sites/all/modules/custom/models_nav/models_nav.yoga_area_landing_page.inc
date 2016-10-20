@@ -7,10 +7,13 @@ function template_preprocess_yoga_area_lp(&$vars) {
 
 //  $countries = taxonomy_get_tree(4, $parent = 0, $max_depth = 1, $load_entities = FALSE);
   drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/yoga_area_lp.js');
-  $countries['Wales'] = array(
-    'tid' => 206,
-    'url' => 'in/wales',
-  );
+
+  if (drupal_get_path_alias() == 'events') {
+    $countries['International'] = array(
+      'tid' => 1976,
+      'url' => 'in/international',
+    );
+  }
   $countries['England'] = array(
     'tid' => 207,
     'url' => 'in/england',
@@ -18,6 +21,10 @@ function template_preprocess_yoga_area_lp(&$vars) {
   $countries['Scotland'] = array(
     'tid' => 208,
     'url' => 'in/scotland',
+  );
+  $countries['Wales'] = array(
+    'tid' => 206,
+    'url' => 'in/wales',
   );
   $countries['Northern Ireland'] = array(
     'tid' => 209,
@@ -27,7 +34,7 @@ function template_preprocess_yoga_area_lp(&$vars) {
     'tid' => 210,
     'url' => 'in/repubic-of-ireland',
   );
-  ksort($countries);
+//  ksort($countries);
 
   $counties = array();
   foreach ($countries as $index => $country) {
@@ -38,7 +45,6 @@ function template_preprocess_yoga_area_lp(&$vars) {
   foreach ($counties as $i => $county_parent) {
     foreach ($county_parent as $j => $county) {
       $places[$i][$county->name] = taxonomy_get_tree(4, $county->tid, $max_depth = 1, $load_entities = FALSE);
-//      $places[$i][$county->name]['url'] = 'in/' . str_replace(' ', '-', strtolower($county->name));
     }
   }
 
@@ -47,14 +53,42 @@ function template_preprocess_yoga_area_lp(&$vars) {
 //  dpm($places);
 
   try {
-
+    
     $england = '<h2><i class="material-icons">add</i> England</h2>';
     $wales = '<h2><i class="material-icons">add</i> Wales</h2>';
     $scotland = '<h2><i class="material-icons">add</i> Scotland</h2>';
     $ni = '<h2><i class="material-icons">add</i> Northern Ireland</h2>';
 
     $srch = drupal_get_path_alias() . '/';
+//    if ($srch = 'in/') {
+//      $srch = 'yoga/';
+//    }
 
+    if (drupal_get_path_alias() == 'events') {
+      $international = '<h2><i class="material-icons">add</i> International Events</h2>';
+      // AREAS OF ENGLAND.
+      $international .= '<div class="area-showhide">';
+      $international .= '<ul class="list-unstyled">';
+
+      foreach ($places['International'] as $county => $county_of_int) {
+        $international .= '<li>';
+        $international .= '<h3>' . l($county, $srch . 'in/' . str_replace(' ', '-', strtolower($county))) . '</h3>';
+        $international .= '<ul class="list-unstyled">';
+        foreach ($county_of_int as $county_index => $town) {
+          $international .= '<li>' . l($town->name, $srch . 'in/' . str_replace(' ', '-', strtolower($town->name))) . '</li>';
+        }
+        $international .= '</ul>';
+        $international .= '</li>';
+      }
+      $international .= '</ul>';
+      $international .= '</div>';
+      $vars['international'] = $international;
+    }
+    else {
+      $vars['international'] = FALSE;
+    }
+    
+    
     // AREAS OF ENGLAND.
     $england .= '<div class="area-showhide">';
     $england .= '<ul class="list-unstyled">';

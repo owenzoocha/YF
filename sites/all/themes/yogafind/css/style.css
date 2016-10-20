@@ -5782,6 +5782,23 @@ body {
     color: #6F73D2;
     background-color: #fff; }
 
+.nothing-here-yet {
+  text-align: center;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
+  background-color: white;
+  border: 1px solid #e7eaeb;
+  border-bottom-color: #ccd1d4;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 15px;
+  font-weight: 300;
+  border: 1px dashed #6F73D2;
+  padding: 30px; }
+
+.node-type-article .field-name-body a {
+  color: #6F73D2;
+  font-weight: 500; }
+
 .view .view-header .btn-group {
   visibility: hidden; }
   .view .view-header .btn-group .btn-default {
@@ -6215,8 +6232,7 @@ body #hb-header.normal-header,
 
 #page-header-bg {
   width: 100%;
-  background-size: cover;
-  background: url("../images/yf-bg2.svg") 0px 0px no-repeat;
+  background: url("../images/bg2.png") 0px 0px no-repeat;
   height: 170px;
   position: absolute;
   top: 0;
@@ -6322,6 +6338,7 @@ body #hb-header.normal-header,
 
 .node-type-yoga #block-views-jobs-rhs-block-4,
 .node-type-article #block-views-jobs-rhs-block-4,
+.page-instructor #block-views-jobs-rhs-block-4,
 .page-studio #block-views-jobs-rhs-block-4 {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
   background-color: white;
@@ -6333,6 +6350,7 @@ body #hb-header.normal-header,
   font-size: 14px; }
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-label.small-label,
   .node-type-article #block-views-jobs-rhs-block-4 .views-label.small-label,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-label.small-label,
   .page-studio #block-views-jobs-rhs-block-4 .views-label.small-label {
     font-size: 20px;
     display: block;
@@ -6341,10 +6359,12 @@ body #hb-header.normal-header,
     width: 100px; }
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates {
     margin-top: 15px; }
     .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates span,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates span,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates span,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates span {
       font-weight: 300; }
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-location,
@@ -6357,6 +6377,11 @@ body #hb-header.normal-header,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-link,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-location,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-number,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-link,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-number,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-link,
@@ -6392,6 +6417,16 @@ body #hb-header.normal-header,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1:after,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:before,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:after,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:before,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:after,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-number:before,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-number:after,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-link:before,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-link:after,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1:before,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1:after,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:before,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:after,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:before,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:after,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-number:before,
@@ -6414,6 +6449,11 @@ body #hb-header.normal-header,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-link:after,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1:after,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:after,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:after,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-number:after,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-link:after,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1:after,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:after,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:after,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-number:after,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-link:after,
@@ -6430,6 +6470,11 @@ body #hb-header.normal-header,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-link .field-content,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1 .field-content,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates .field-content,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-location .field-content,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-number .field-content,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-link .field-content,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1 .field-content,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates .field-content,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location .field-content,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-number .field-content,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-link .field-content,
@@ -6446,6 +6491,11 @@ body #hb-header.normal-header,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-link a,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1 a,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates a,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-location a,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-number a,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-link a,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1 a,
+    .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates a,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location a,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-number a,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-link a,
@@ -6455,17 +6505,21 @@ body #hb-header.normal-header,
       font-weight: 300; }
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-location p,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-location p,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-location p,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location p {
     margin: 0;
     -webkit-font-smoothing: initial; }
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-location i,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-location i,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-location i,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location i {
     display: none; }
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-body,
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-include,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-body,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-include,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-field-body,
+  .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-include,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-body,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-include {
     padding: 10px 0;
@@ -6473,51 +6527,61 @@ body #hb-header.normal-header,
 
 .node-type-yoga #hb-header,
 .node-type-article #hb-header,
+.page-instructor #hb-header,
 .page-studio #hb-header {
   height: 310px;
   margin-top: 15px;
   background-color: #EDEFF0; }
   .node-type-yoga #hb-header .header-title,
   .node-type-article #hb-header .header-title,
+  .page-instructor #hb-header .header-title,
   .page-studio #hb-header .header-title {
     margin-left: 190px; }
     .node-type-yoga #hb-header .header-title h1,
     .node-type-article #hb-header .header-title h1,
+    .page-instructor #hb-header .header-title h1,
     .page-studio #hb-header .header-title h1 {
       padding: 105px 0 20px; }
   .node-type-yoga #hb-header .header-author-pic .my-image,
   .node-type-article #hb-header .header-author-pic .my-image,
+  .page-instructor #hb-header .header-author-pic .my-image,
   .page-studio #hb-header .header-author-pic .my-image {
     width: 170px;
     margin: 40px 0 0; }
   .node-type-yoga #hb-header .yoga-intro,
   .node-type-article #hb-header .yoga-intro,
+  .page-instructor #hb-header .yoga-intro,
   .page-studio #hb-header .yoga-intro {
     color: #272D2D;
     text-shadow: none;
     font-weight: 300; }
     .node-type-yoga #hb-header .yoga-intro span,
     .node-type-article #hb-header .yoga-intro span,
+    .page-instructor #hb-header .yoga-intro span,
     .page-studio #hb-header .yoga-intro span {
       padding: 3px 0;
       display: inline-block; }
     .node-type-yoga #hb-header .yoga-intro a,
     .node-type-article #hb-header .yoga-intro a,
+    .page-instructor #hb-header .yoga-intro a,
     .page-studio #hb-header .yoga-intro a {
       display: inline-block;
       margin-right: 3px; }
     .node-type-yoga #hb-header .yoga-intro .btn,
     .node-type-article #hb-header .yoga-intro .btn,
+    .page-instructor #hb-header .yoga-intro .btn,
     .page-studio #hb-header .yoga-intro .btn {
       font-size: 12px;
       letter-spacing: 0; }
   .node-type-yoga #hb-header.normal-header,
   .node-type-article #hb-header.normal-header,
+  .page-instructor #hb-header.normal-header,
   .page-studio #hb-header.normal-header {
     background-color: #f8f8f8; }
 
 .node-type-yoga #page-header-bg,
 .node-type-article #page-header-bg,
+.page-instructor #page-header-bg,
 .page-studio #page-header-bg {
   height: 320px;
   width: 1000px;
@@ -6528,6 +6592,7 @@ body #hb-header.normal-header,
           transform: translate(-50%, 0); }
   .node-type-yoga #page-header-bg .text-bg,
   .node-type-article #page-header-bg .text-bg,
+  .page-instructor #page-header-bg .text-bg,
   .page-studio #page-header-bg .text-bg {
     position: absolute;
     width: 100%;
@@ -6538,29 +6603,36 @@ body #hb-header.normal-header,
 
 .node-type-yoga .col-sm-3 .region-sidebar-second .material-icons,
 .node-type-article .col-sm-3 .region-sidebar-second .material-icons,
+.page-instructor .col-sm-3 .region-sidebar-second .material-icons,
 .page-studio .col-sm-3 .region-sidebar-second .material-icons {
   font-size: 16px;
   vertical-align: middle; }
 
 .node-type-yoga .col-sm-3 .region-sidebar-second .block,
 .node-type-article .col-sm-3 .region-sidebar-second .block,
+.page-instructor .col-sm-3 .region-sidebar-second .block,
 .page-studio .col-sm-3 .region-sidebar-second .block {
   padding: 5px; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block h2,
   .node-type-article .col-sm-3 .region-sidebar-second .block h2,
+  .page-instructor .col-sm-3 .region-sidebar-second .block h2,
   .page-studio .col-sm-3 .region-sidebar-second .block h2 {
     padding: 0 5px; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block .views-field-field-hb-geofield,
   .node-type-article .col-sm-3 .region-sidebar-second .block .views-field-field-hb-geofield,
+  .page-instructor .col-sm-3 .region-sidebar-second .block .views-field-field-hb-geofield,
   .page-studio .col-sm-3 .region-sidebar-second .block .views-field-field-hb-geofield {
     margin-bottom: 5px; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block#block-views-jobs-rhs-block ul,
   .node-type-article .col-sm-3 .region-sidebar-second .block#block-views-jobs-rhs-block ul,
+  .page-instructor .col-sm-3 .region-sidebar-second .block#block-views-jobs-rhs-block ul,
   .page-studio .col-sm-3 .region-sidebar-second .block#block-views-jobs-rhs-block ul {
     border-bottom: 1px solid #E7EAEB; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block p, .node-type-yoga .col-sm-3 .region-sidebar-second .block ul,
   .node-type-article .col-sm-3 .region-sidebar-second .block p,
   .node-type-article .col-sm-3 .region-sidebar-second .block ul,
+  .page-instructor .col-sm-3 .region-sidebar-second .block p,
+  .page-instructor .col-sm-3 .region-sidebar-second .block ul,
   .page-studio .col-sm-3 .region-sidebar-second .block p,
   .page-studio .col-sm-3 .region-sidebar-second .block ul {
     font-size: 14px;
@@ -6570,34 +6642,42 @@ body #hb-header.normal-header,
     .node-type-yoga .col-sm-3 .region-sidebar-second .block p a, .node-type-yoga .col-sm-3 .region-sidebar-second .block ul a,
     .node-type-article .col-sm-3 .region-sidebar-second .block p a,
     .node-type-article .col-sm-3 .region-sidebar-second .block ul a,
+    .page-instructor .col-sm-3 .region-sidebar-second .block p a,
+    .page-instructor .col-sm-3 .region-sidebar-second .block ul a,
     .page-studio .col-sm-3 .region-sidebar-second .block p a,
     .page-studio .col-sm-3 .region-sidebar-second .block ul a {
       color: #6F73D2; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block p,
   .node-type-article .col-sm-3 .region-sidebar-second .block p,
+  .page-instructor .col-sm-3 .region-sidebar-second .block p,
   .page-studio .col-sm-3 .region-sidebar-second .block p {
     border-bottom: 1px solid #E7EAEB; }
     .node-type-yoga .col-sm-3 .region-sidebar-second .block p.feedback-note,
     .node-type-article .col-sm-3 .region-sidebar-second .block p.feedback-note,
+    .page-instructor .col-sm-3 .region-sidebar-second .block p.feedback-note,
     .page-studio .col-sm-3 .region-sidebar-second .block p.feedback-note {
       border-bottom: none;
       border-top: 1px solid #E7EAEB;
       margin-bottom: 0; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block li,
   .node-type-article .col-sm-3 .region-sidebar-second .block li,
+  .page-instructor .col-sm-3 .region-sidebar-second .block li,
   .page-studio .col-sm-3 .region-sidebar-second .block li {
     list-style: none; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block .views-field-field-yoga-link p,
   .node-type-article .col-sm-3 .region-sidebar-second .block .views-field-field-yoga-link p,
+  .page-instructor .col-sm-3 .region-sidebar-second .block .views-field-field-yoga-link p,
   .page-studio .col-sm-3 .region-sidebar-second .block .views-field-field-yoga-link p {
     border-bottom: none; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block .views-field-title,
   .node-type-article .col-sm-3 .region-sidebar-second .block .views-field-title,
+  .page-instructor .col-sm-3 .region-sidebar-second .block .views-field-title,
   .page-studio .col-sm-3 .region-sidebar-second .block .views-field-title {
     font-size: 18px; }
 
 .node-type-yoga .col-sm-3 #block-views-jobs-rhs-block-3 .open-link,
 .node-type-article .col-sm-3 #block-views-jobs-rhs-block-3 .open-link,
+.page-instructor .col-sm-3 #block-views-jobs-rhs-block-3 .open-link,
 .page-studio .col-sm-3 #block-views-jobs-rhs-block-3 .open-link {
   border: none; }
 
@@ -6605,6 +6685,8 @@ body #hb-header.normal-header,
 .node-type-yoga .col-sm-3 #block-tweaks-job-client-faces,
 .node-type-article .col-sm-3 #block-views-jobs-rhs-block-1,
 .node-type-article .col-sm-3 #block-tweaks-job-client-faces,
+.page-instructor .col-sm-3 #block-views-jobs-rhs-block-1,
+.page-instructor .col-sm-3 #block-tweaks-job-client-faces,
 .page-studio .col-sm-3 #block-views-jobs-rhs-block-1,
 .page-studio .col-sm-3 #block-tweaks-job-client-faces {
   box-shadow: none;
@@ -6614,6 +6696,8 @@ body #hb-header.normal-header,
   .node-type-yoga .col-sm-3 #block-tweaks-job-client-faces .views-field-field-yoga-style,
   .node-type-article .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-field-yoga-style,
   .node-type-article .col-sm-3 #block-tweaks-job-client-faces .views-field-field-yoga-style,
+  .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-field-yoga-style,
+  .page-instructor .col-sm-3 #block-tweaks-job-client-faces .views-field-field-yoga-style,
   .page-studio .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-field-yoga-style,
   .page-studio .col-sm-3 #block-tweaks-job-client-faces .views-field-field-yoga-style {
     clear: left; }
@@ -6621,6 +6705,8 @@ body #hb-header.normal-header,
   .node-type-yoga .col-sm-3 #block-tweaks-job-client-faces .views-field-name,
   .node-type-article .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name,
   .node-type-article .col-sm-3 #block-tweaks-job-client-faces .views-field-name,
+  .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name,
+  .page-instructor .col-sm-3 #block-tweaks-job-client-faces .views-field-name,
   .page-studio .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name,
   .page-studio .col-sm-3 #block-tweaks-job-client-faces .views-field-name {
     padding: 15px 0; }
@@ -6628,6 +6714,8 @@ body #hb-header.normal-header,
     .node-type-yoga .col-sm-3 #block-tweaks-job-client-faces .views-field-name a,
     .node-type-article .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name a,
     .node-type-article .col-sm-3 #block-tweaks-job-client-faces .views-field-name a,
+    .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name a,
+    .page-instructor .col-sm-3 #block-tweaks-job-client-faces .views-field-name a,
     .page-studio .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name a,
     .page-studio .col-sm-3 #block-tweaks-job-client-faces .views-field-name a {
       font-weight: 300; }
@@ -6635,6 +6723,8 @@ body #hb-header.normal-header,
   .node-type-yoga .col-sm-3 #block-tweaks-job-client-faces .views-field-picture,
   .node-type-article .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture,
   .node-type-article .col-sm-3 #block-tweaks-job-client-faces .views-field-picture,
+  .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture,
+  .page-instructor .col-sm-3 #block-tweaks-job-client-faces .views-field-picture,
   .page-studio .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture,
   .page-studio .col-sm-3 #block-tweaks-job-client-faces .views-field-picture {
     width: 70px;
@@ -6644,6 +6734,8 @@ body #hb-header.normal-header,
     .node-type-yoga .col-sm-3 #block-tweaks-job-client-faces .views-field-picture img,
     .node-type-article .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture img,
     .node-type-article .col-sm-3 #block-tweaks-job-client-faces .views-field-picture img,
+    .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture img,
+    .page-instructor .col-sm-3 #block-tweaks-job-client-faces .views-field-picture img,
     .page-studio .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture img,
     .page-studio .col-sm-3 #block-tweaks-job-client-faces .views-field-picture img {
       border-radius: 50%;
@@ -6651,6 +6743,7 @@ body #hb-header.normal-header,
 
 .node-type-yoga .col-sm-3 #block-block-10 ul li a,
 .node-type-article .col-sm-3 #block-block-10 ul li a,
+.page-instructor .col-sm-3 #block-block-10 ul li a,
 .page-studio .col-sm-3 #block-block-10 ul li a {
   padding: 5px 10px;
   position: relative;
@@ -6662,14 +6755,17 @@ body #hb-header.normal-header,
   transition: 0.2s ease all; }
   .node-type-yoga .col-sm-3 #block-block-10 ul li a i,
   .node-type-article .col-sm-3 #block-block-10 ul li a i,
+  .page-instructor .col-sm-3 #block-block-10 ul li a i,
   .page-studio .col-sm-3 #block-block-10 ul li a i {
     vertical-align: middle; }
   .node-type-yoga .col-sm-3 #block-block-10 ul li a:hover,
   .node-type-article .col-sm-3 #block-block-10 ul li a:hover,
+  .page-instructor .col-sm-3 #block-block-10 ul li a:hover,
   .page-studio .col-sm-3 #block-block-10 ul li a:hover {
     padding-left: 13px; }
     .node-type-yoga .col-sm-3 #block-block-10 ul li a:hover:after,
     .node-type-article .col-sm-3 #block-block-10 ul li a:hover:after,
+    .page-instructor .col-sm-3 #block-block-10 ul li a:hover:after,
     .page-studio .col-sm-3 #block-block-10 ul li a:hover:after {
       transition: 0.2s ease all;
       content: '';
@@ -6682,6 +6778,7 @@ body #hb-header.normal-header,
 
 .node-type-yoga .node-job .job-content,
 .node-type-article .node-job .job-content,
+.page-instructor .node-job .job-content,
 .page-studio .node-job .job-content {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
   background-color: white;
@@ -6693,22 +6790,26 @@ body #hb-header.normal-header,
 
 .node-type-yoga .node-job .alert,
 .node-type-article .node-job .alert,
+.page-instructor .node-job .alert,
 .page-studio .node-job .alert {
   margin-bottom: 15px; }
 
 .node-type-yoga .job-lhs,
 .node-type-article .job-lhs,
+.page-instructor .job-lhs,
 .page-studio .job-lhs {
   padding-bottom: 60px !important; }
 
 @media (min-width: 1200px) {
   .node-type-yoga .container,
   .node-type-article .container,
+  .page-instructor .container,
   .page-studio .container {
     width: 970px; } }
 
 .node-type-yoga .job-info,
 .node-type-article .job-info,
+.page-instructor .job-info,
 .page-studio .job-info {
   font-size: 14px;
   margin-top: 15px;
@@ -6722,15 +6823,18 @@ body #hb-header.normal-header,
 
 .node-type-yoga .hb-rhs-job-button,
 .node-type-article .hb-rhs-job-button,
+.page-instructor .hb-rhs-job-button,
 .page-studio .hb-rhs-job-button {
   padding-top: 5px;
   border-top: 1px solid #e7eaeb; }
   .node-type-yoga .hb-rhs-job-button a,
   .node-type-article .hb-rhs-job-button a,
+  .page-instructor .hb-rhs-job-button a,
   .page-studio .hb-rhs-job-button a {
     position: relative; }
     .node-type-yoga .hb-rhs-job-button a:after,
     .node-type-article .hb-rhs-job-button a:after,
+    .page-instructor .hb-rhs-job-button a:after,
     .page-studio .hb-rhs-job-button a:after {
       content: "";
       font-family: FontAwesome;
@@ -6745,11 +6849,13 @@ body #hb-header.normal-header,
       transition: all 0.3s ease; }
     .node-type-yoga .hb-rhs-job-button a:hover:after,
     .node-type-article .hb-rhs-job-button a:hover:after,
+    .page-instructor .hb-rhs-job-button a:hover:after,
     .page-studio .hb-rhs-job-button a:hover:after {
       right: 8%; }
 
 .node-type-yoga .st-wrapper #block-sharethis-sharethis-block,
 .node-type-article .st-wrapper #block-sharethis-sharethis-block,
+.page-instructor .st-wrapper #block-sharethis-sharethis-block,
 .page-studio .st-wrapper #block-sharethis-sharethis-block {
   padding: 15px;
   background-color: #F5F7F8;
@@ -6757,10 +6863,12 @@ body #hb-header.normal-header,
 
 .node-type-yoga .field-name-field-hb-geofield .field-items,
 .node-type-article .field-name-field-hb-geofield .field-items,
+.page-instructor .field-name-field-hb-geofield .field-items,
 .page-studio .field-name-field-hb-geofield .field-items {
   font-weight: 300; }
   .node-type-yoga .field-name-field-hb-geofield .field-items .field-item,
   .node-type-article .field-name-field-hb-geofield .field-items .field-item,
+  .page-instructor .field-name-field-hb-geofield .field-items .field-item,
   .page-studio .field-name-field-hb-geofield .field-items .field-item {
     float: none;
     padding: 0;
@@ -6770,21 +6878,26 @@ body #hb-header.normal-header,
 
 .node-type-yoga .view-job-requests-block .panel,
 .node-type-article .view-job-requests-block .panel,
+.page-instructor .view-job-requests-block .panel,
 .page-studio .view-job-requests-block .panel {
   border: none;
   box-shadow: none; }
   .node-type-yoga .view-job-requests-block .panel .panel-heading,
   .node-type-article .view-job-requests-block .panel .panel-heading,
+  .page-instructor .view-job-requests-block .panel .panel-heading,
   .page-studio .view-job-requests-block .panel .panel-heading {
     display: none; }
   .node-type-yoga .view-job-requests-block .panel .panel-body,
   .node-type-article .view-job-requests-block .panel .panel-body,
+  .page-instructor .view-job-requests-block .panel .panel-body,
   .page-studio .view-job-requests-block .panel .panel-body {
     padding: 0; }
 
 .node-type-yoga .view-job-requests-block td, .node-type-yoga .view-job-requests-block th,
 .node-type-article .view-job-requests-block td,
 .node-type-article .view-job-requests-block th,
+.page-instructor .view-job-requests-block td,
+.page-instructor .view-job-requests-block th,
 .page-studio .view-job-requests-block td,
 .page-studio .view-job-requests-block th {
   vertical-align: middle;
@@ -6792,21 +6905,25 @@ body #hb-header.normal-header,
 
 .node-type-yoga .view-job-requests-block .views-field-views-bulk-operations,
 .node-type-article .view-job-requests-block .views-field-views-bulk-operations,
+.page-instructor .view-job-requests-block .views-field-views-bulk-operations,
 .page-studio .view-job-requests-block .views-field-views-bulk-operations {
   width: 40px; }
 
 .node-type-yoga .view-job-requests-block .views-field-picture .user-image,
 .node-type-article .view-job-requests-block .views-field-picture .user-image,
+.page-instructor .view-job-requests-block .views-field-picture .user-image,
 .page-studio .view-job-requests-block .views-field-picture .user-image {
   width: 50px;
   margin: 0 auto; }
   .node-type-yoga .view-job-requests-block .views-field-picture .user-image img,
   .node-type-article .view-job-requests-block .views-field-picture .user-image img,
+  .page-instructor .view-job-requests-block .views-field-picture .user-image img,
   .page-studio .view-job-requests-block .views-field-picture .user-image img {
     border-radius: 50%; }
 
 .node-type-yoga .view-job-requests-block .user-name a,
 .node-type-article .view-job-requests-block .user-name a,
+.page-instructor .view-job-requests-block .user-name a,
 .page-studio .view-job-requests-block .user-name a {
   padding-left: 5px; }
 
@@ -6909,6 +7026,54 @@ body #hb-header.normal-header,
 
 .view-user-blog-posts .views-row .event-teaser .event-info {
   margin-right: 15px; }
+
+.view-yoga-searcher .views-row .event-teaser .event-info {
+  margin-right: 0; }
+  .view-yoga-searcher .views-row .event-teaser .event-info .event-intro {
+    margin: 0; }
+
+.teaser-styles li,
+.teaser-yoga-info li {
+  display: inline-block;
+  min-width: 10px;
+  line-height: 1;
+  font-weight: 300;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-align: center;
+  margin: 1px; }
+  .teaser-styles li span,
+  .teaser-yoga-info li span {
+    background-color: #172A3A;
+    color: #fff;
+    border-radius: 10px; }
+  .teaser-styles li a,
+  .teaser-yoga-info li a {
+    background-color: rgba(111, 115, 210, 0.08); }
+  .teaser-styles li span, .teaser-styles li a,
+  .teaser-yoga-info li span,
+  .teaser-yoga-info li a {
+    padding: 3px 7px;
+    display: block;
+    text-decoration: none;
+    transition: 0.2s ease all; }
+    .teaser-styles li span i, .teaser-styles li a i,
+    .teaser-yoga-info li span i,
+    .teaser-yoga-info li a i {
+      vertical-align: middle;
+      font-size: 14px; }
+  .teaser-styles li:last-of-type a,
+  .teaser-yoga-info li:last-of-type a {
+    border-right: none; }
+
+.view-yoga-searcher .event-teaser {
+  position: relative; }
+  .view-yoga-searcher .event-teaser .a-link {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    font-weight: 300;
+    font-size: 11px; }
 
 #block-block-6 #selected-clients {
   padding: 0; }
@@ -7033,8 +7198,9 @@ body #hb-header.normal-header,
   padding-left: 5px; }
 
 .footer {
-  background-color: #172A3A;
-  margin-top: 50px; }
+  background-color: #6F73D2;
+  margin-top: 50px;
+  border-top: 4px solid #fff; }
   .footer .col-sm-4 {
     padding: 15px; }
   .footer #block-menu-block-1 a,
@@ -7093,8 +7259,8 @@ body #hb-header.normal-header,
       height: 33px; }
 
 .footer-cr {
-  color: #EDEFF0;
-  background-color: black;
+  color: #777777;
+  background-color: #fff;
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 300;
@@ -7435,7 +7601,7 @@ body #hb-header.normal-header,
               #main #hero .hero-content .hero #block-webform-client-block-166 .dropdown-menu .res.goog img, #main #hero .hero-content .hero #block-webform-client-block-166 .dropdown-menu .res.no-res img,
               #main #hero .hero-content .hero #block-models-searcher-main-searcher .dropdown-menu .res.goog img,
               #main #hero .hero-content .hero #block-models-searcher-main-searcher .dropdown-menu .res.no-res img {
-                width: 44px;
+                width: 100px;
                 height: auto; }
             #main #hero .hero-content .hero #block-webform-client-block-166 .dropdown-menu .res.no-res,
             #main #hero .hero-content .hero #block-models-searcher-main-searcher .dropdown-menu .res.no-res {
@@ -8092,51 +8258,70 @@ div.autocomplete-deluxe-throbber {
     .node-article .field-name-field-post-image img {
       margin: 0 auto; }
 
-.search-surround {
-  padding: 9px 15px;
-  transition: 0.3s ease all; }
-  .search-surround .hbm-search-icon {
-    color: #2ca1b8; }
-    .search-surround .hbm-search-icon span {
-      line-height: 31px;
-      font-size: 24px; }
-  .search-surround #models-forms-search-form .form-item-search {
-    margin-bottom: 0; }
-  .search-surround #models-forms-search-form #edit-search {
-    background: none;
-    border: none;
-    color: #2ca1b8;
-    width: 200px;
-    font-size: 13px;
-    padding: 7px;
-    letter-spacing: 1px;
-    font-weight: 300; }
-    .search-surround #models-forms-search-form #edit-search:focus {
-      border: none;
-      outline: none;
-      box-shadow: none;
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      -moz-transition: none;
-      -webkit-transition: none; }
-  .search-surround #models-forms-search-form .form-submit {
-    display: none; }
-  .search-surround.search-surround-focus {
-    background-color: rgba(255, 255, 255, 0.5); }
+.node-article-form #edit-body-und-0-format {
+  display: none; }
 
-@media (min-width: 768px) {
-  .search-surround input::-webkit-input-placeholder {
-    /* WebKit browsers */
-    color: #2ca1b8; }
-  .search-surround input:-moz-placeholder {
-    /* Mozilla Firefox 4 to 18 */
-    color: #2ca1b8; }
-  .search-surround input::-moz-placeholder {
-    /* Mozilla Firefox 19+ */
-    color: #2ca1b8; }
-  .search-surround input:-ms-input-placeholder {
-    /* Internet Explorer 10+ */
-    color: #2ca1b8; } }
+.dropdown-menu-yogafind {
+  border: 1px solid #EDEFF0; }
+  .dropdown-menu-yogafind .dropdown-header {
+    color: #6F73D2; }
+  .dropdown-menu-yogafind .divider {
+    margin: 2px 0; }
+  .dropdown-menu-yogafind .res {
+    font-size: 14px; }
+    .dropdown-menu-yogafind .res a:hover {
+      background-color: rgba(111, 115, 210, 0.08); }
+    .dropdown-menu-yogafind .res.goog, .dropdown-menu-yogafind .res.no-res {
+      padding: 1px 10px;
+      text-align: right;
+      color: #272D2D; }
+      .dropdown-menu-yogafind .res.goog img, .dropdown-menu-yogafind .res.no-res img {
+        width: 100px;
+        height: auto; }
+    .dropdown-menu-yogafind .res.no-res {
+      text-align: center; }
+
+.navbar-nav .first .dropdown-menu-yogafind {
+  min-width: 300px; }
+  .navbar-nav .first .dropdown-menu-yogafind form {
+    padding: 5px 10px; }
+    .navbar-nav .first .dropdown-menu-yogafind form .form-control {
+      font-size: 14px; }
+    .navbar-nav .first .dropdown-menu-yogafind form input {
+      border: none;
+      background-color: rgba(111, 115, 210, 0.08);
+      border-bottom: 2px solid #6F73D2; }
+    .navbar-nav .first .dropdown-menu-yogafind form ::-webkit-input-placeholder {
+      /* WebKit, Blink, Edge */
+      color: #6F73D2;
+      opacity: 0.3; }
+    .navbar-nav .first .dropdown-menu-yogafind form :-moz-placeholder {
+      /* Mozilla Firefox 4 to 18 */
+      color: #6F73D2;
+      opacity: 0.3; }
+    .navbar-nav .first .dropdown-menu-yogafind form ::-moz-placeholder {
+      /* Mozilla Firefox 19+ */
+      color: #6F73D2;
+      opacity: 0.3; }
+    .navbar-nav .first .dropdown-menu-yogafind form :-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: #6F73D2;
+      opacity: 0.3; }
+    .navbar-nav .first .dropdown-menu-yogafind form .form-group {
+      margin: 0; }
+
+#block-models-searcher-main-searcher .dropdown-menu-yogafind {
+  width: 100%;
+  min-width: 300px;
+  border-radius: 0;
+  border: none; }
+  #block-models-searcher-main-searcher .dropdown-menu-yogafind .res {
+    font-size: 12px; }
+
+.navbar-nav > li > .dropdown-menu {
+  font-weight: 300; }
+  .navbar-nav > li > .dropdown-menu a {
+    font-weight: 300; }
 
 .page-user-personal-information .col-sm-3 .block,
 .page-user-account-settings .col-sm-3 .block,
@@ -8447,62 +8632,6 @@ li.a-dd {
     li.a-dd > a .down {
       font-size: 9px;
       padding-left: 5px; }
-  li.a-dd .my-menu-dd {
-    display: none;
-    box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    position: absolute;
-    width: 150px;
-    top: 100%;
-    right: 0;
-    border-left: 1px solid #dfe1e3;
-    border-right: 1px solid #dfe1e3; }
-    li.a-dd .my-menu-dd ul {
-      padding: 0; }
-      li.a-dd .my-menu-dd ul li {
-        border: none;
-        padding: 0;
-        list-style: none; }
-        li.a-dd .my-menu-dd ul li:last-child {
-          border: none; }
-        li.a-dd .my-menu-dd ul li a {
-          padding: 10px;
-          display: block;
-          font-size: 13px;
-          color: #777;
-          border-bottom: 1px solid #dfe1e3;
-          position: relative;
-          transition: all 0.2s ease; }
-          li.a-dd .my-menu-dd ul li a:before {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 1px; }
-          li.a-dd .my-menu-dd ul li a:hover {
-            color: #172A3A !important;
-            text-decoration: none;
-            background: #EDEFF0 !important;
-            padding-left: 15px; }
-            li.a-dd .my-menu-dd ul li a:hover:after {
-              display: none !important; }
-            li.a-dd .my-menu-dd ul li a:hover:before {
-              content: '';
-              width: 2px;
-              position: absolute;
-              height: 100%;
-              top: 0;
-              left: 0;
-              background-color: #172A3A; }
-  li.a-dd.show-dd .my-menu-dd {
-    display: block; }
-  li.a-dd.a-dd-wide .my-menu-dd {
-    width: 200px;
-    left: 0; }
-    li.a-dd.a-dd-wide .my-menu-dd li {
-      float: left;
-      width: 100%; }
 
 .hide-event-menu .col-sm-3 {
   left: -220px; }

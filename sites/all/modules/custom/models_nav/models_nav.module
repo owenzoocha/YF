@@ -542,6 +542,7 @@ function template_preprocess_custom_nav(&$vars) {
 
   $search_form = drupal_get_form('models_searcher_form_dupe');
 
+  if (!drupal_is_front_page()) {
   $links = '<li class="first leaf">' .
     l('<i class="material-icons">&#xE8B6;</i> Search <i class="material-icons">&#xE5C5;</i>', 'search/type/beauty', array(
         'html' => TRUE,
@@ -552,6 +553,10 @@ function template_preprocess_custom_nav(&$vars) {
         )
       )
     ) . drupal_render($search_form) . '</li>';
+  }
+  else {
+    $links = '';
+  }
 
   $links .= '<li class="leaf">' . l('Studios', 'yoga') . '</li>';
   $links .= '<li class="leaf">' . l('Classes', 'classes') . '</li>';

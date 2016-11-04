@@ -300,6 +300,7 @@ function models_forms_node_presave($node) {
   }
 
   if ($node->type == 'yoga') {
+    dpm($node);
     if ($type = variable_get('listing_add_' . $user->uid)) {
       $node->uid = $user->uid;
       dpm($node, 'listing...');
@@ -351,6 +352,7 @@ function models_forms_node_insert($node) {
     if ($node->field_yoga_type[LANGUAGE_NONE][0]['value'] != 'event') {
       $uw = entity_metadata_wrapper('user', $user->uid);
       $nw = entity_metadata_wrapper('node', $node->nid);
+//      models_forms_listing_add_submit($nw);
 
       // Add the yoga listing to the user's profile.
       if (!$uw->field_my_listings->value()) {
@@ -366,6 +368,7 @@ function models_forms_node_insert($node) {
       $uw = entity_metadata_wrapper('user', $user->uid);
       $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
       $evw = entity_metadata_wrapper('node', $node->nid);
+//      models_forms_listing_add_submit($evw);
 
       // Add the yoga event to the yoga listing.
       if (!$nw->field_yoga_event_list->value()) {

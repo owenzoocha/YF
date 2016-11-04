@@ -70,8 +70,8 @@ function models_forms_listing_add() {
     }
   }
 
-  dpm(variable_get('listing_add_' . $uw->getIdentifier()));
-  dpm(variable_get('event_add_' . $uw->getIdentifier()));
+//  dpm(variable_get('listing_add_' . $uw->getIdentifier()), 'lis');
+//  dpm(variable_get('event_add_' . $uw->getIdentifier()), 'eve');
 
   if (arg(0) != 'event') {
     $yoga_form['#theme'] = array('overwrite_listing_form');
@@ -167,7 +167,7 @@ function models_forms_listing_add() {
 //  dpm($form_state,'here fs');
 //}
 
-function models_forms_listing_add_submit($form, &$form_state) {
+function models_forms_listing_add_submit(&$form, &$form_state) {
   $nw = entity_metadata_wrapper('node', $form_state['values']['nid']);
   if ($nw->field_yoga_location->value()) {
     if ($nw->field_yoga_location->value()['locality']) {
@@ -197,4 +197,5 @@ function models_forms_listing_add_submit($form, &$form_state) {
       $nw->save();
     }
   }
+  return TRUE;
 }

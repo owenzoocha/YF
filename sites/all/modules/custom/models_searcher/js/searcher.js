@@ -17,12 +17,12 @@
         autocomplete: new google.maps.places.AutocompleteService(),
         places: new google.maps.places.PlacesService(document.createElement("div"))
       };
-      $('.dropdown-menu-yogafind .no-results').hide();
+      $('.dropdown-menu-yogafind.dropdown-menu-searcher .no-results').hide();
       $('#search-lookup').on('keyup', function (event) {
         clearTimeout(models_searcher.placesTimeOut);
         clearTimeout(models_searcher.apiTimeOut);
         $this = $(this);
-        $('li.res').remove();
+        $('.dropdown-menu-yogafind.dropdown-menu-searcher li.res').remove();
 
         var query = $this.val();
         models_searcher.placesTimeOut = setTimeout(function () {
@@ -38,18 +38,18 @@
               // $('li.res').remove();
               // console.log(results);
               if (results) {
-                $('<li class="res goog"><img title="Google" alt="Google" src="/sites/all/themes/yogafind/images/powered_by_google_on_white.png"/></li>').insertAfter($('.dropdown-menu-yogafind .dropdown-header.dropdown-header-area'));
+                $('<li class="res goog"><img title="Google" alt="Google" src="/sites/all/themes/yogafind/images/powered_by_google_on_white.png"/></li>').insertAfter($('.dropdown-menu-yogafind.dropdown-menu-searcher .dropdown-header.dropdown-header-area'));
                 var resultString = '';
                 $.each(results, function (i, areas) {
                   // console.log(areas);
                   resultString += '<li class="res res-places"><a href="#" data-placeid="' + areas['place_id'] + '">' + areas['description'] + '</a></li>';
                 });
 
-                $(resultString).insertAfter($('.dropdown-menu-yogafind .dropdown-header.dropdown-header-area'));
+                $(resultString).insertAfter($('.dropdown-menu-yogafind.dropdown-menu-searcher .dropdown-header.dropdown-header-area'));
               }
               else {
                 // $('li.res-place').remove();
-                $('<li class="res no-res">Nothing here :(!</li>').insertAfter($('.dropdown-menu-yogafind .dropdown-header.dropdown-header-area'));
+                $('<li class="res no-res">Nothing here :(!</li>').insertAfter($('.dropdown-menu-yogafind.dropdown-menu-searcher .dropdown-header.dropdown-header-area'));
               }
               // if (thisRequest != lastRequest) {
               //   return;
@@ -73,14 +73,14 @@
                     $.each(data['listing'], function (listingTitle, listing) {
                       listingString += '<li class="res res-ajax"><a href="/' + listing['url'] + '">' + listingTitle + '</a></li>';
                     });
-                    $(listingString).insertAfter($('.dropdown-menu-yogafind .dropdown-header.dropdown-header-listings'));
+                    $(listingString).insertAfter($('.dropdown-menu-yogafind.dropdown-menu-searcher .dropdown-header.dropdown-header-listings'));
                   }
                   if (data['event']) {
                     var eventString = '';
                     $.each(data['event'], function (eventTitle, event) {
                       eventString += '<li class="res res-ajax"><a href="/' + event['url'] + '">' + eventTitle + '</a></li>';
                     });
-                    $(eventString).insertAfter($('.dropdown-menu-yogafind .dropdown-header.dropdown-header-events'));
+                    $(eventString).insertAfter($('.dropdown-menu-yogafind.dropdown-menu-searcher .dropdown-header.dropdown-header-events'));
                   }
                 }
               }

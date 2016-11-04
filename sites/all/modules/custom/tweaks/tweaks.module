@@ -478,20 +478,24 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     if (strpos(current_path(), 'listing/add') !== FALSE) {
 //      dpm($form);
       unset($form['field_yoga_type']['und']['#options']['event']);
+
+      // Build location taxonomy.
       $form['actions']['submit']['#submit'][] = 'models_forms_listing_add_submit';
       $form['field_yoga_location']['und'][0]['address']['#available_countries'] = array(236 => 'GB');
       $form['field_yoga_event_dates']['#access'] = FALSE;
     }
     if (strpos(current_path(), 'event/add') !== FALSE) {
       $form['field_yoga_type']['#access'] = FALSE;
-//      $form['field_yoga_type']['und']['#options'] = array('event' => 'Event');
-//      $form['field_yoga_type']['#disabled'] = TRUE;
-//      $form['actions']['submit']['#submit'][] = 'models_forms_event_add_submit';
     }
     if (strpos(current_path(), 'listing/') !== FALSE && is_numeric(arg(1))) {
-//      $form['field_yoga_type']['#access'] = FALSE;
       $form['field_yoga_event_dates']['#access'] = FALSE;
     }
+
+    if (strpos(current_path(), 'event/') !== FALSE || strpos(current_path(), 'listing/') !== FALSE) {
+      // Build location taxonomy.
+      $form['actions']['submit']['#submit'][] = 'models_forms_listing_add_submit';
+    }
+
 
   }
   if ($form_id == 'eck__entity__form_add_class_yoga') {

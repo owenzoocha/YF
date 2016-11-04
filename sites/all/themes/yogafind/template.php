@@ -314,7 +314,7 @@ function yogafind_preprocess_page(&$variables) {
   if (drupal_is_front_page()) {
     drupal_add_css('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css', array('type' => 'external'));
     unset($variables['page']['content']);
-    $variables['logo'] = drupal_get_path('theme', 'models') . '/' . 'white-logo.png';
+//    $variables['logo'] = drupal_get_path('theme', 'models') . '/' . 'white-logo.png';
     if (isset($_COOKIE['Drupal_visitor_not_verified_logoff'])) {
       if ($_COOKIE['Drupal_visitor_not_verified_logoff'] != 0) {
         // drupal_set_message(t('Oops - it looks like you haven\'t verified your account yet! Please check your email for the verification link - or request a new password'), 'status', FALSE);
@@ -397,6 +397,7 @@ function yogafind_preprocess_page(&$variables) {
   // Set navbar to fixed.
   // navbar navbar-default navbar-fixed-top
   $variables['navbar_classes_array'][1] = 'container-fluid';
+//  $variables['navbar_classes_array'][2] = 'navbar-fixed-top';
 
   if (strrpos(current_path(), 'search') !== FALSE && strrpos(current_path(), 'ts/') === FALSE && strrpos(current_path(), 'messages/') === FALSE ||
     strpos(current_path(), 'previous-jobs') !== FALSE ||

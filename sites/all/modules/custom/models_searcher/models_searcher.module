@@ -571,7 +571,7 @@ function models_searcher_form($form, &$form_state) {
   );
 
 
-  if (!drupal_is_front_page()) {
+//  if (!drupal_is_front_page()) {
 
     $form['#attached']['js'] = array(
       'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY&sensor=false&libraries=places' => array(
@@ -579,9 +579,9 @@ function models_searcher_form($form, &$form_state) {
       ),
       drupal_get_path('module', 'models_searcher') . '/js/searcher.js',
     );
-  }
+//  }
 
-  $dropdown = '<ul role="menu" aria-labelledby="Search and find yoga listings" class="dropdown-menu dropdown-menu-yogafind">
+  $dropdown = '<ul role="menu" aria-labelledby="Search and find yoga listings" class="dropdown-menu dropdown-menu-yogafind dropdown-menu-searcher">
                 <li role="presentation" class="no-results">Nothing here!</li>
                 <li role="presentation" class="dropdown-header dropdown-header-area">Places</li>
                 <li role="presentation" class="divider"></li>
@@ -603,6 +603,7 @@ function models_searcher_form($form, &$form_state) {
 
 // Duplicated searcher form - but this is for nav - hacky but meh!
 function models_searcher_form_dupe($form, &$form_state) {
+//  if (!drupal_is_front_page()) {
 
   $form['#attached']['js'] = array(
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY&sensor=false&libraries=places' => array(
@@ -611,7 +612,8 @@ function models_searcher_form_dupe($form, &$form_state) {
     drupal_get_path('module', 'models_searcher') . '/js/searcher.js',
   );
 
-  $dropdown_start = '<ul role="menu" aria-labelledby="Search and find yoga listings" class="dropdown-menu dropdown-menu-yogafind">';
+
+  $dropdown_start = '<ul role="menu" aria-labelledby="Search and find yoga listings" class="dropdown-menu dropdown-menu-yogafind dropdown-menu-searcher">';
 
   $dropdown_end = '<li role="presentation" class="no-results">Nothing here!</li>
                 <li role="presentation" class="dropdown-header dropdown-header-area">Places</li>

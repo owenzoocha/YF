@@ -3,16 +3,20 @@
     background-color: $light-grey;
   }
   #navbar {
-    background: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    //background: none;
+    //position: absolute;
+    //top: 0;
+    //left: 0;
+    //width: 100%;
+    background: rgba(255,255,255,0.7);
+    &.navbar-default {
+
+    }
 
     .logo {
       img {
-        width: 105px;
-        margin: 10px 0 0 15px;
+        //width: 105px;
+        //margin: 10px 0 0 15px;
       }
     }
   }
@@ -64,7 +68,7 @@
     background-size: cover;
     height: 600px;
     .hero-content {
-      padding-top: 160px;
+      padding-top: 90px;
       .hero {
         text-align: center;
         h1,
@@ -76,7 +80,7 @@
           text-shadow: 2px 1px 1px $hb-dark;
         }
 
-        h1 {
+        h1 {†
           font-size: 55px;
           margin-bottom: 15px;
         }
@@ -93,6 +97,7 @@
 
         #block-webform-client-block-166,
         #block-models-searcher-main-searcher {
+          position: relative;
           width: 500px;
           margin: 0 auto;
           text-align: left;

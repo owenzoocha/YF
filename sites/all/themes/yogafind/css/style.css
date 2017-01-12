@@ -7521,14 +7521,7 @@ body #hb-header.normal-header,
   background-color: #EDEFF0; }
 
 .front #navbar {
-  background: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%; }
-  .front #navbar .logo img {
-    width: 105px;
-    margin: 10px 0 0 15px; }
+  background: rgba(255, 255, 255, 0.7); }
 
 .front .footer {
   margin-top: 0; }
@@ -7559,7 +7552,7 @@ body #hb-header.normal-header,
   background-size: cover;
   height: 600px; }
   #main #hero .hero-content {
-    padding-top: 160px; }
+    padding-top: 90px; }
     #main #hero .hero-content .hero {
       text-align: center; }
       #main #hero .hero-content .hero h1,
@@ -7580,6 +7573,7 @@ body #hb-header.normal-header,
         letter-spacing: 0.5px; }
       #main #hero .hero-content .hero #block-webform-client-block-166,
       #main #hero .hero-content .hero #block-models-searcher-main-searcher {
+        position: relative;
         width: 500px;
         margin: 0 auto;
         text-align: left; }
@@ -8557,8 +8551,7 @@ ul.facet-searcher li {
 
 #navbar {
   padding: 0;
-  font-size: 300;
-  background-color: #fff;
+  font-weight: 300;
   z-index: 999;
   border-radius: 0;
   border: none;
@@ -8575,9 +8568,9 @@ ul.facet-searcher li {
     padding: 0;
     border-top: none; }
   #navbar .logo {
-    margin: 20px 0 0; }
+    margin: 25px 0 20px 0; }
     #navbar .logo img {
-      width: 210px; }
+      width: 160px; }
   #navbar .container-fluid {
     padding: 0; }
   #navbar a.navbar-brand {

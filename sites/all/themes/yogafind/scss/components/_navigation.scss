@@ -68,9 +68,9 @@ html body.admin-menu {
   padding: 0;
   // font-family: $roboto-slab;
   // @include gradient-horizontal(#328BFF, #4A2FBD, 0%, 100%);
-  font-size: 300;
+  font-weight: 300;
   // top: 45px;
-  background-color: $white;
+  //background-color: $white;
   z-index: 999;
   border-radius: 0;
   border: none;
@@ -94,9 +94,9 @@ html body.admin-menu {
   }
 
   .logo {
-    margin: 20px 0 0;
+    margin: 25px 0 20px 0;
     img {
-      width: 210px;
+      width: 160px;
     }
   }
   .container-fluid {

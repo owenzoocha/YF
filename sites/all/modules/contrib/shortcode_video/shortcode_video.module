@@ -83,23 +83,26 @@ function shortcode_video_attributes($form, &$form_state) {
       ),
     ),
   );
+  return $form;
 }
 
 /**
  * Provides Youtube video embedding ShortCode macro.
  *
- * <iframe width="420" height="315"
+ * <iframe width="420" height="315" title="Foo"
  * src="http://www.youtube.com/embed/EJu8ihVdygY?rel=0"
  * frameborder="0" allowfullscreen></iframe>
  */
 function shortcode_video_macro_process($attrs, $text) {
-  $attrs = shortcode_attrs(array(
+  $attrs = shortcode_attrs(
+    array(
       'class' => '',
       'width' => '',
       'height' => '',
       'showlink' => FALSE,
       'sub' => '',
       'forcesub' => FALSE,
+      'title' => '',
     ),
     $attrs
   );
@@ -115,7 +118,7 @@ function shortcode_video_macro_process($attrs, $text) {
     case 'youtu':
       $url['query']['v'] = $m[4];
     case 'youtube':
-      $embed_url = 'http://www.youtube.com/embed/';
+      $embed_url = '//www.youtube.com/embed/';
       if (!empty($url['query']['v'])) {
         $params = $url['query'];
         $params['video_id'] = $url['query']['v'];
@@ -134,6 +137,7 @@ function shortcode_video_macro_process($attrs, $text) {
         if ($attrs['forcesub']) {
           $url['query']['fs'] = 1;
         }
+        $url['external'] = TRUE;
         $params['video_url'] = url($embed_url . $params['video_id'], $url);
         $output = theme('shortcode_video_embed_youtube', $params);
       }
@@ -141,6 +145,9 @@ function shortcode_video_macro_process($attrs, $text) {
 
     case 'vimeo':
       $params = _shortcode_video_get_vimeo_videoid($m);
+      $embed_url = '//player.vimeo.com/video/';
+      $params['external'] = TRUE;
+      $params['video_url'] = url($embed_url . $params['video_id'], $params);
       if (!empty($params['video_id'])) {
         $params['attributes'] = $attrs;
         $output = theme('shortcode_video_embed_vimeo', $params);
@@ -148,6 +155,10 @@ function shortcode_video_macro_process($attrs, $text) {
       break;
 
     default:
+      $pattern = array(
+        '!http://!', '!https://!',
+      );
+      $text = preg_replace($pattern, '//', $text);
       $output = theme('shortcode_video_embed_no_provider',
         array('video_url' => $text)
       );
@@ -167,7 +178,7 @@ function shortcode_video_tip($format, $long) {
     $output[] = t('Embeds the video into the text.') . '</p>';
   }
   else {
-    $output[] = t('Embeds video into the content text. With the <em>width</em> and <em>height</em> parameter you can specify the video size.') . '</p>';
+    $output[] = t('Embeds video into the content text. With the <em>width</em> and <em>height</em> parameter you can specify the video size. Use <em>title</em> to specify a title attribute.') . '</p>';
     $output[] = '<p>' . t('For YouTube videos you can specify the width with 420, 480, 640, 960 as the default videos sizes, then the height of the video will be added according to the default embed sizes. The default video size is 480x360px.') . '</p>';
   }
 
@@ -177,21 +188,22 @@ function shortcode_video_tip($format, $long) {
 /**
  * Provides helper for get Youtube videoid.
  *
- * Gets the Youtube video id from the url part
+ * Gets the Youtube video id from the url part.
  *
  * @param string $m
- *   - exploded give video text
- *   $m[0] contains the full url of the video
+ *   The exploded video text.
+ *   $m[0] contains the full url of the video.
  *
  * @return array
- *   - the video parameters
+ *   The video parameters.
+ *
  * @codingStandardsIgnoreStart
  * Url versions
  * 1; simple Youtube link
  * http://www.youtube.com/watch?v=EJu8ihVdygY&feature=g-vrec&context=G25615bbRVAAAAAAAAAg
  *
  * 2; embed link
- * <iframe width="420" height="315" src="http://www.youtube.com/embed/EJu8ihVdygY?rel=0" frameborder="0" allowfullscreen></iframe>
+ * <iframe width="420" height="315" title="Foo" src="http://www.youtube.com/embed/EJu8ihVdygY?rel=0" frameborder="0" allowfullscreen></iframe>
  *
  * 3; embed url
  * http://www.youtube.com/embed/EJu8ihVdygY?rel=0
@@ -207,7 +219,7 @@ function _shortcode_video_get_youtube_videoid($m) {
   // the given text. Maybe it contains HTML (</iframe> tag).
   $nm = array();
   preg_match('!^([^\/]*).?([^\/\?\&]*)!', $m[4], $nm);
-  switch($nm[1]) {
+  switch ($nm[1]) {
     case 'v':
       $params['video_id'] = $nm[2];
       break;
@@ -239,14 +251,15 @@ function _shortcode_video_get_youtube_videoid($m) {
 /**
  * Provides helper for get Vimeo videoid.
  *
- * Gets the Vimeo video id from the url part
+ * Gets the Vimeo video id from the url part.
  *
  * @param string $m
- *   - exploded give video text
- *   $m[0] contains the full url of the video
+ *   The exploded video text.
+ *   $m[0] contains the full url of the video.
  *
  * @return array
- *   - the video parameters
+ *   The video parameters.
+ *
  * @codingStandardsIgnoreStart
  * Url versions
  * 1; simple Vimeo link
@@ -327,8 +340,10 @@ function theme_shortcode_video_embed_youtube($variables) {
 
   $width = $width ? ' width="' . $width . '"' : '';
   $height = $height ? ' height="' . $height . '"' : '';
+  $title = empty($attrs['title']) ? '' : ' title="' . check_plain($attrs['title']) . '"';
+
   $out = '<div class="video-container">';
-  $out .= '<iframe' . $width . $height . ' src="' . $variables['video_url'] . '" frameborder="0" allowfullscreen></iframe>';
+  $out .= '<iframe' . $width . $height . $title . ' src="' . $variables['video_url'] . '" frameborder="0" allowfullscreen></iframe>';
   $out .= '</div>';
 
   return $out;
@@ -342,6 +357,7 @@ function theme_shortcode_video_embed_vimeo($variables) {
 
   $height = empty($attrs['height']) ? 500 : intval($attrs['height']);
   $width = empty($attrs['width']) ? 281 : intval($attrs['width']);
+  $title = empty($attrs['title']) ? '' : check_plain($attrs['title']);
 
   // Set defaults.
   if (empty($width) && empty($height)) {
@@ -357,9 +373,10 @@ function theme_shortcode_video_embed_vimeo($variables) {
 
   $width = $width ? ' width="' . $width . '"' : '';
   $height = $height ? ' height="' . $height . '"' : '';
+  $title = empty($attrs['title']) ? '' : ' title="' . check_plain($attrs['title']) . '"';
 
   $out = '<div class="video-container">';
-  $out .= '<iframe src="https://player.vimeo.com/video/' . $variables['video_id'] . '" ' . $width . $height . ' frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+  $out .= '<iframe src="' . $variables['video_url'] . '" ' . $width . $height . $title . ' frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
   $out .= '</div>';
 
   return $out;

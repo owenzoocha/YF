@@ -701,11 +701,11 @@ function yogafind_preprocess_entity(&$variables) {
       )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
 
     $styles = '';
-    if ($ew->field_yoga_style->value()) {
+    if ($ew->getBundle() != 'teacher' && $ew->field_yoga_style->value()) {
       foreach ($ew->field_yoga_style->getIterator() AS $k => $style) {
         $styles .= $style->label() . ', ';
       }
-    }
+
     $class_array = array(
       'eid' => $ew->getIdentifier(),
       'dow' => $ew->field_yc_dow->value(),
@@ -739,7 +739,7 @@ function yogafind_preprocess_entity(&$variables) {
     $class_data .= '</div>';
     $class_data .= '</div>';
     $variables['class_data'] = $class_data;
-
+    }
   }
 
   if ($variables['elements']['#bundle'] == 'teacher') {

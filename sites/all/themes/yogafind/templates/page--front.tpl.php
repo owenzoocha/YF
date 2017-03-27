@@ -74,8 +74,35 @@
 
   <?php print $messages; ?>
 
+  <div id="yf-sign-up" class="container">
+    Looking to list your studio, event or classes? Join ### others and <a href="getting-started">get started</a> now!
+  </div>
+
+  <div id="yf-events" class="container">
+    <h3 class="text-center hd-pink">YogaFind Events</h3>
+    <h4>On your mat, get set, yoga!</h4>
+    --- event listings here using current styles ---
+  </div>
+
+  <div id="yf-events" class="container">
+    <h3 class="text-center hd-pink">YogaFind Posts</h3>
+    <h4>Check out these latest posts!</h4>
+    --- event posts here using current styles ---
+  </div>
+
+  <div id="yf-listings" class="container">
+    <h3 class="text-center hd-pink">Popular places</h3>
+    <ul>
+      <li>London</li>
+      <li>England</li>
+      <li>Wales</li>
+      <li>Scotland</li>
+      <li>Northern Ireland</li>
+    </ul>
+  </div>
+
   <div id="what-is-it" class="container">
-    <h3 class="text-center hd-pink">Why #HBM?</h3>
+    <h3 class="text-center hd-pink">Why YogaFind?</h3>
     <div class="col-md-3">
       <div class="info-img">
         <img src="/sites/all/themes/models/images/whyhbm.jpg" class="img-responsive" title="Why HBM info image"/>

@@ -510,7 +510,6 @@ function geocoder_widget_parse_addressfield($field_item) {
  */
 function geocoder_widget_parse_locationfield($field_item) {
   $address = '';
-  if (!empty($field_item['name']))        $address .= $field_item['name'] . ',';
   if (!empty($field_item['street']))      $address .= $field_item['street'] . ',';
   if (!empty($field_item['additional']))  $address .= $field_item['additional'] . ',';
   if (!empty($field_item['city']))        $address .= $field_item['city'] . ',';

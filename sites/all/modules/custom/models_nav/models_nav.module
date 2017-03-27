@@ -440,7 +440,7 @@ function template_preprocess_my_nav(&$vars) {
 //          'html' => TRUE,
 //          'attributes' => array('class' => array(''))
 //        )) . '</li>';
-        $nav .= '<li>' . l(t('Favourites'), 'watchlist', array('attributes' => array('class' => array('')))) . '</li>';
+//        $nav .= '<li>' . l(t('Favourites'), 'watchlist', array('attributes' => array('class' => array('')))) . '</li>';
 //      $nav .= '<li>' . l(t('Previous Jobs'), 'previous-jobs', array('attributes' => array('class' => array('')))) . '</li>';
         $nav .= '<li class="last">' . l(t('Logout'), 'user/logout', array('attributes' => array('class' => array('')))) . '</li>';
         $nav .= '</ul>';
@@ -455,7 +455,7 @@ function template_preprocess_my_nav(&$vars) {
         $uw = entity_metadata_wrapper('user', arg(1));
         $nav = '<ul>';
         $nav .= '<li>' . l($uw->label() . '\'s ' . t('profile'), 'user/' . arg(1), array('attributes' => array('class' => array('')))) . '</li>';
-        $nav .= '<li>' . l(t('Feedback'), 'user/' . arg(1) . '/feedback', array('attributes' => array('class' => array('')))) . '</li>';
+//        $nav .= '<li>' . l(t('Feedback'), 'user/' . arg(1) . '/feedback', array('attributes' => array('class' => array('')))) . '</li>';
         $nav .= '</ul>';
         $vars['my_nav'] = $nav;
         $vars['nav_2'] = FALSE;

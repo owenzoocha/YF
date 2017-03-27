@@ -10,9 +10,9 @@ files[] = views/timefield_handler_sort_timefield_duration.inc
 files[] = views/timefield_handler_filter_timefield_duration.inc
 files[] = timefield.test
 
-; Information added by Drupal.org packaging script on 2016-05-26
-version = "7.x-1.0-alpha2+12-dev"
+; Information added by Drupal.org packaging script on 2017-01-26
+version = "7.x-1.0-alpha2+13-dev"
 core = "7.x"
 project = "timefield"
-datestamp = "1464294493"
+datestamp = "1485463986"
 

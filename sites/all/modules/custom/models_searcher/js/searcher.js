@@ -93,7 +93,7 @@
     placesClicker: function () {
       $(document).on('click', 'li.res-places a', function () {
         var placeId = $(this).data('placeid');
-        // console.log(placeId);
+        console.log(placeId);
         if (placeId) {
           $.get('/api/yf_places_lookup/' + placeId + '.json', function (data, status) {
             // console.log(data);

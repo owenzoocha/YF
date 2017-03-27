@@ -196,7 +196,7 @@ function _webform_render_mailchimp($component, $value = NULL, $filter = TRUE) {
       '#type'              => 'textfield',
       '#title'             => $filter ? _webform_filter_xss($component['name']) : $component['name'],
       '#title_display'     => $component['extra']['title_display'] ? $component['extra']['title_display'] : 'before',
-      '#required'          => $component['mandatory'],
+      '#required'          => $component['required'],
       '#description'       => $filter ? _webform_filter_descriptions($component['extra']['description']) : $component['extra']['description'],
       '#default_value'     => _webform_filter_values($component['value']),
       '#theme_wrappers'    => array('webform_element'),

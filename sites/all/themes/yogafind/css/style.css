@@ -7656,6 +7656,16 @@ body #hb-header.normal-header,
       width: 615px;
       margin: 0 auto; }
 
+#main #yf-sign-up {
+  background: #48A9A6;
+  text-align: center;
+  width: 100%;
+  color: #fff;
+  padding: 13px 0; }
+  #main #yf-sign-up a {
+    color: #fff;
+    text-decoration: underline; }
+
 #main #what-is-it {
   text-align: center; }
   #main #what-is-it .what-block {

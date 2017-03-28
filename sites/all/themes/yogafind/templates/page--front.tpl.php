@@ -75,7 +75,7 @@
   <?php print $messages; ?>
 
   <div id="yf-sign-up" class="container">
-    Looking to list your studio, event or classes? Join ### others and <a href="getting-started">get started</a> now!
+    Looking to list your yoga classes, event or studio? Join ### others and <a href="/getting-started" class="a-link link-go">get started now <i class="material-icons">trending_flat</i></a>
   </div>
 
   <div id="yf-events" class="container">

@@ -1319,6 +1319,8 @@ function grab_location_blurb($nw) {
 }
 
 function grab_default_profile_image($uid) {
+  return 'public://pictures/picture-default.png';
+
   $uw = entity_metadata_wrapper('user', $uid);
   if ($uw->value()->picture) {
     return $uw->value()->picture['uri'];

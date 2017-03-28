@@ -62,6 +62,21 @@
     font-weight: 500;
   }
 
+  .hd-purple {
+    color: $purple;
+    font-size: 30px;
+    font-weight: 500;
+  }
+
+  .event-teaser {
+    .event-desc {
+      display: none;
+    }
+    .event-logo {
+      width: 90px;
+    }
+  }
+
   #hero {
     background-color: $hb-dark;
     background: url("../images/yoga.jpg") center 0 no-repeat;

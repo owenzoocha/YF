@@ -7560,6 +7560,17 @@ body #hb-header.normal-header,
   font-size: 30px;
   font-weight: 500; }
 
+#main .hd-purple {
+  color: #6F73D2;
+  font-size: 30px;
+  font-weight: 500; }
+
+#main .event-teaser .event-desc {
+  display: none; }
+
+#main .event-teaser .event-logo {
+  width: 90px; }
+
 #main #hero {
   background-color: #172A3A;
   background: url("../images/yoga.jpg") center 0 no-repeat;

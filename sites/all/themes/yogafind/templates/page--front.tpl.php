@@ -55,11 +55,8 @@
   <div id="hero">
     <div class="hero-content container">
       <div class="hero left animated fadeInUp">
-        <h1>Yoga Find</br>the easiest way to find yoga in the UK</h1>
-        <h2>We aim to provide the easiest way to find studios, instructors, yoga
-          events and yoga classes all over the UK.</h2>
-        <p><strong style="font-size: 27px;">We've just launched</strong> It's
-          free to get started - so create your yoga listings now!.</p>
+        <h1>Find yoga listings, events and classes all over the UK.</h1>
+        <h3>Looking to join? Get started <a href="getting-started">now</a></h3>
       </div>
       <div class="hero right">
         <?php
@@ -83,6 +80,16 @@
   </div>
 
   <div id="yf-events" class="container">
+    <h3 class="hd-purple">Keep up to date with YogaFind</h3>
+
+    <?php
+//    $slick_block = block_load('webform', 'client-block-132');
+//    $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
+//    print drupal_render($block);
+    ?>
+  </div>
+
+  <div id="yf-events" class="container">
     <div class="col-md-6">
       <h3 class="hd-purple">Upcoming Events</h3>
       <h4>On your mat, get set, yoga!</h4>
@@ -93,8 +100,8 @@
       ?>
     </div>
     <div class="col-md-6">
-      <h3 class="hd-purple">Latest Teachers</h3>
-      <h4>Check out our page!</h4>
+      <h3 class="hd-purple">Latest Listings</h3>
+      <h4>Check out these latest studios & instructors</h4>
       <?php
       $slick_block = block_load('views', 'yoga_searcher-block_2');
       $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
@@ -120,139 +127,6 @@
     </ul>
   </div>
 
-  <div id="what-is-it" class="container">
-    <h3 class="text-center hd-purple">Why YogaFind?</h3>
-    <div class="col-md-3">
-      <div class="info-img">
-        <img src="/sites/all/themes/models/images/whyhbm.jpg"
-             class="img-responsive" title="Why HBM info image"/>
-      </div>
-      <div class="info-surround">
-        <h2>Why Hair and Beauty Models?</h2>
-        <p>Hair and Beauty Models <strong>#HBM</strong> is here to help hair
-          dressers and beauticians, trainees or professionals connect with
-          reliable last minute models for assessments, client work or offers.
-          Interested in joining? <a href="/user/register" class="a-link">Sign
-            up</a> now! It's <strong>free!</strong></p>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="info-img">
-        <img src="/sites/all/themes/models/images/but.jpg"
-             class="img-responsive" title="But I'm not a .. info image"/>
-      </div>
-      <div class="info-surround">
-        <h2>But I'm not a hair dresser or beautician?</h2>
-        <p>We've got you covered! <a href="/user/register" class="a-link">Sign
-            up</a> as a Last Minute Model, search the available jobs and request
-          a treatment. Nothing you fancy, but looking for a job? Post a <strong>last
-            minute model</strong> job and let the professionals come to you!</p>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="info-img">
-        <img src="/sites/all/themes/models/images/noshow.jpg"
-             class="img-responsive" title="No more no shows! info image"/>
-      </div>
-      <div class="info-surround">
-        <h2>No more no shows!</h2>
-        <p>At HBM we understand your frustration when a client doesn't show up.
-          With HBM you can <strong>leave feedback</strong> and <strong>give a 5
-            star rating</strong> against the client and owner, to enable more
-          informed selections on future jobs.</p>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="info-img">
-        <img src="/sites/all/themes/models/images/what.jpg"
-             class="img-responsive" title="what about my business. info image"/>
-      </div>
-      <div class="info-surround">
-        <h2>What about my business?</h2>
-        <p>It's <strong>free</strong> to sign up - so create your profile and
-          link to your website for more traffic. Have a special offer coming up?
-          Post a quick job and get your business out there!</p>
-      </div>
-    </div>
-  </div>
-
-  <div id="what-we-offer" class="clearfix container">
-    <h3 class="text-center hd-purple">What we offer..</h3>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="what-block">
-          <h3>Create up to 5 HBM active jobs</h3>
-          <!--  <div class="search-img">
-             <img class="img-responsive" src="/sites/all/themes/models/images/search-example.png" alt="Search for jobs" title="Search for jobs"/>
-           </div> -->
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="what-block">
-          <h3>Use our search to find clients and jobs</h3>
-          <!-- <div class="manage-img">
-            <img class="img-responsive" src="/sites/all/themes/models/images/manage-clients-example.png" alt="Manage clients" title="Manage clients"/>
-          </div> -->
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="what-block">
-          <h3>Manage your clients and job offers</h3>
-          <!-- <div class="manage-img">
-            <img class="img-responsive" src="/sites/all/themes/models/images/feedback-example.png" alt="Leave feedback and ratings" title="Leave feedback and ratings"/>
-          </div> -->
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <div class="what-block">
-          <h3>Create a profile and link to your business</h3>
-          <!--  <div class="search-img">
-             <img class="img-responsive" src="/sites/all/themes/models/images/search-example.png" alt="Search for jobs" title="Search for jobs"/>
-           </div> -->
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="what-block">
-          <h3>Feeling inspired? Write a blog post for us too</h3>
-          <!-- <div class="manage-img">
-            <img class="img-responsive" src="/sites/all/themes/models/images/manage-clients-example.png" alt="Manage clients" title="Manage clients"/>
-          </div> -->
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="what-block">
-          <h3>More coming soon...</h3>
-          <!-- <div class="manage-img">
-            <img class="img-responsive" src="/sites/all/themes/models/images/feedback-example.png" alt="Leave feedback and ratings" title="Leave feedback and ratings"/>
-          </div> -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="look-and-feel" class="clearfix">
-    <div class="lhs pull-left">
-      <div class="what-block">
-        <h3 class="text-center hd-purple">Mobile Friendly</h3>
-        <p>Hair and Beauty Models has been optimised for mobile to allow you to
-          access your jobs, requests and offers in the most efficient way. What
-          are you waiting for? Check it out on mobile <a href="/user/register"
-                                                         class="a-link">Sign
-            up</a> now!</p>
-      </div>
-    </div>
-    <div class="rhs pull-right">
-      <div class="what-block">
-        <div class="mobile">
-          <img src="/sites/all/themes/models/images/mobile-view.png"
-               class="img-responsive"/>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </main>
 

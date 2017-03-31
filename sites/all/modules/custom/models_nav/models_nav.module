@@ -420,10 +420,10 @@ function template_preprocess_my_nav(&$vars) {
         $my_jobs_count = sizeof($my_jobs_count_) > 0 ? '<span class="badge">' . sizeof($my_jobs_count_) . '</span>' : FALSE;
 
         $uw = entity_metadata_wrapper('user', $vars['user_nav']);
-        if ($uw->field_flags_running_posts->value() != sizeof($my_jobs_count_)) {
-          $uw->field_flags_running_posts->set(sizeof($my_jobs_count_));
-          $uw->save();
-        }
+//        if ($uw->field_flags_running_posts->value() != sizeof($my_jobs_count_)) {
+//          $uw->field_flags_running_posts->set(sizeof($my_jobs_count_));
+//          $uw->save();
+//        }
 
         $my_requests_count = sizeof(views_get_view_result('user_profile_jobs', 'page_1')) ? '<span class="badge">' . sizeof(views_get_view_result('user_profile_jobs', 'page_1')) . '</span>' : FALSE;
 

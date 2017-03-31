@@ -542,16 +542,6 @@ function models_preprocess_page(&$variables) {
   }
 
 
-  if (strpos(current_path(), 'job/create') !== FALSE) {
-    if ($user->uid != 1) {
-      if ($uw->field_flags_running_posts->value() >= 5) {
-        drupal_set_message(t('Hi !name, you currently have 5 jobs running. To post another, you must wait until one of your jobs has completed.', array('!name' => $uw->field_first_name->value() ? $uw->field_first_name->value() : $uw->label())), 'info', FALSE);
-        drupal_goto('my-jobs');
-      }
-    }
-    // $variables['content_column_class'] = ' class="col-sm-pull-3 col-sm-9"';
-  }
-
   // Alllll stuffs for the author pic and top nav stuff.
   if ((strpos(current_path(), 'node') !== FALSE) ||
     (strpos(current_path(), 'job/') !== FALSE && strpos(current_path(), '/edit') !== FALSE) ||
@@ -683,13 +673,13 @@ function models_preprocess_page(&$variables) {
 
       $variables['author_rating'] = '<div class="hb-rating raty raty-readonly" data-rating="' . $stars . '"></div>';
 
-      if (1 == 1) {
-        $fbk = $nw->author->field_my_total_feedback->value() ? $nw->author->field_my_total_feedback->value() : 0;
-        $variables['author_feedback_amount'] = '<div class="hb-feedback-score">' . l($fbk . ' ' . t('feedback'), 'user/' . $nw->author->getIdentifier() . '/feedback') . ' | ' . l(t('send message'), 'messages/new/' . $nw->author->getIdentifier(), array('query' => array('destination' => 'node/' . $nw->getIdentifier()))) . '</div>';
-      }
-      else {
-        $variables['author_feedback_amount'] = '<div class="hb-feedback-score">' . t('- no feedback -') . '</div>';
-      }
+//      if (1 == 1) {
+//        $fbk = $nw->author->field_my_total_feedback->value() ? $nw->author->field_my_total_feedback->value() : 0;
+//        $variables['author_feedback_amount'] = '<div class="hb-feedback-score">' . l($fbk . ' ' . t('feedback'), 'user/' . $nw->author->getIdentifier() . '/feedback') . ' | ' . l(t('send message'), 'messages/new/' . $nw->author->getIdentifier(), array('query' => array('destination' => 'node/' . $nw->getIdentifier()))) . '</div>';
+//      }
+//      else {
+//        $variables['author_feedback_amount'] = '<div class="hb-feedback-score">' . t('- no feedback -') . '</div>';
+//      }
 
       $job_details = '<div class="hb-time">';
       $job_details .= '<span>' . t('Posted by') . ' ' . l($nw->author->label(), 'user/' . $nw->author->getIdentifier()) . '</span>, ';

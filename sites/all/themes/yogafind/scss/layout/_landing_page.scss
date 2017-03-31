@@ -81,28 +81,30 @@
     background-color: $hb-dark;
     background: url("../images/yoga.jpg") center 0 no-repeat;
     background-size: cover;
-    height: 600px;
+    height: 400px;
     .hero-content {
-      padding-top: 90px;
+      padding-top: 40px;
       .hero {
         text-align: center;
         h1,
         h2,
+        h3,
         p {
           color: #f8f8f8;
           border-bottom: none;
-          font-weight: normal;
+          font-weight: 300;
           text-shadow: 2px 1px 1px $hb-dark;
         }
 
         h1 {
-          font-size: 55px;
+          font-size: 50px;
           margin-bottom: 15px;
+          background-color: rgba(0,0,0,0.2);
         }
 
         h2 {
-          font-size: 18px;
-          letter-spacing: 0.5px;
+          font-size: 28px;
+          //letter-spacing: 0.5px;
           line-height: 25px;
         }
 
@@ -113,7 +115,7 @@
         #block-webform-client-block-166,
         #block-models-searcher-main-searcher {
           position: relative;
-          width: 500px;
+          width: 700px;
           margin: 0 auto;
           text-align: left;
           .form-group {

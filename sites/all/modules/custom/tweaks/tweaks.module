@@ -786,8 +786,9 @@ function tweaks_get_profile_intro($user_entity) {
  * Get feedback amount and link.
  */
 function tweaks_get_feedback_amount($user_entity) {
-  $total = $user_entity->field_my_total_feedback->value() ? $user_entity->field_my_total_feedback->value() : 0;
-  return '<div class="hb-feedback-score">' . l($total . ' feedback', 'user/' . $user_entity->getIdentifier() . '/feedback') . '</div>';
+//  $total = $user_entity->field_my_total_feedback->value() ? $user_entity->field_my_total_feedback->value() : 0;
+//  return '<div class="hb-feedback-score">' . l($total . ' feedback', 'user/' . $user_entity->getIdentifier() . '/feedback') . '</div>';
+  return FALSE;
 }
 
 /**
@@ -1319,11 +1320,10 @@ function grab_location_blurb($nw) {
 }
 
 function grab_default_profile_image($uid) {
-  return 'public://pictures/picture-default.png';
-
   $uw = entity_metadata_wrapper('user', $uid);
   if ($uw->value()->picture) {
-    return $uw->value()->picture['uri'];
+    $ee = $uw->value()->picture;
+    return $uw->value()->picture->uri;
   }
   else {
     return 'public://pictures/picture-default.png';

@@ -58,12 +58,12 @@ function models_forms_personal_info() {
   // unset($user_form['field_hb_ht']);
   // unset($user_form['field_hb_bt']);
   unset($user_form['field_hb_pics']);
-  unset($user_form['field_my_total_feedback']);
+//  unset($user_form['field_my_total_feedback']);
   unset($user_form['field_my_overall_rating']);
   unset($user_form['field_my_watchlist']);
   unset($user_form['field_my_latlon']);
   unset($user_form['field_flags_strikes']);
-  unset($user_form['field_flags_running_posts']);
+//  unset($user_form['field_flags_running_posts']);
   return drupal_render($user_form);
 
 }
@@ -129,14 +129,14 @@ function models_forms_email_settings() {
   // unset($user_form['field_hb_ht']);
   // unset($user_form['field_hb_bt']);
   unset($user_form['field_hb_pics']);
-  unset($user_form['field_my_total_feedback']);
+//  unset($user_form['field_my_total_feedback']);
   unset($user_form['field_my_overall_rating']);
   unset($user_form['field_my_watchlist']);
   unset($user_form['field_my_latlon']);
   unset($user_form['field_my_college']);
   unset($user_form['field_my_company']);
   unset($user_form['field_flags_strikes']);
-  unset($user_form['field_flags_running_posts']);
+//  unset($user_form['field_flags_running_posts']);
   unset($user_form['field_hb_cover_pic']);
   // $user_form['privatemsg']['pm_enable']['#access'] = FALSE;
   // dpm($user_form);
@@ -174,7 +174,7 @@ function models_forms_interests() {
   unset($user_form['field_hb_type']);
   unset($user_form['field_i_am_a_']);
   unset($user_form['field_hb_pics']);
-  unset($user_form['field_my_total_feedback']);
+//  unset($user_form['field_my_total_feedback']);
   unset($user_form['field_my_overall_rating']);
   unset($user_form['field_my_watchlist']);
   unset($user_form['field_my_latlon']);
@@ -182,7 +182,7 @@ function models_forms_interests() {
   unset($user_form['field_my_company']);
   unset($user_form['field_flags_strikes']);
   unset($user_form['field_hb_cover_pic']);
-  unset($user_form['field_flags_running_posts']);
+//  unset($user_form['field_flags_running_posts']);
   // $user_form['field_my_tcs']['und']['#required'] = FALSE;
   // unset($user_form['field_my_tcs']);
   return drupal_render($user_form);
@@ -219,7 +219,7 @@ function models_forms_account_settings() {
   // unset($user_form['field_hb_ht']);
   // unset($user_form['field_hb_bt']);
   unset($user_form['field_hb_pics']);
-  unset($user_form['field_my_total_feedback']);
+//  unset($user_form['field_my_total_feedback']);
   unset($user_form['field_my_overall_rating']);
   unset($user_form['field_my_watchlist']);
   unset($user_form['field_my_latlon']);
@@ -227,7 +227,7 @@ function models_forms_account_settings() {
   unset($user_form['field_my_company']);
   unset($user_form['field_hb_cover_pic']);
   unset($user_form['field_flags_strikes']);
-  unset($user_form['field_flags_running_posts']);
+//  unset($user_form['field_flags_running_posts']);
   if (isset($identity_table)) {
     return drupal_render($user_form) . $identity_table;
   }

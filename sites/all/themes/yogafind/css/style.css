@@ -7575,31 +7575,32 @@ body #hb-header.normal-header,
   background-color: #172A3A;
   background: url("../images/yoga.jpg") center 0 no-repeat;
   background-size: cover;
-  height: 600px; }
+  height: 400px; }
   #main #hero .hero-content {
-    padding-top: 90px; }
+    padding-top: 40px; }
     #main #hero .hero-content .hero {
       text-align: center; }
       #main #hero .hero-content .hero h1,
       #main #hero .hero-content .hero h2,
+      #main #hero .hero-content .hero h3,
       #main #hero .hero-content .hero p {
         color: #f8f8f8;
         border-bottom: none;
-        font-weight: normal;
+        font-weight: 300;
         text-shadow: 2px 1px 1px #172A3A; }
       #main #hero .hero-content .hero h1 {
-        font-size: 55px;
-        margin-bottom: 15px; }
+        font-size: 50px;
+        margin-bottom: 15px;
+        background-color: rgba(0, 0, 0, 0.2); }
       #main #hero .hero-content .hero h2 {
-        font-size: 18px;
-        letter-spacing: 0.5px;
+        font-size: 28px;
         line-height: 25px; }
       #main #hero .hero-content .hero p {
         letter-spacing: 0.5px; }
       #main #hero .hero-content .hero #block-webform-client-block-166,
       #main #hero .hero-content .hero #block-models-searcher-main-searcher {
         position: relative;
-        width: 500px;
+        width: 700px;
         margin: 0 auto;
         text-align: left; }
         #main #hero .hero-content .hero #block-webform-client-block-166 .form-group,

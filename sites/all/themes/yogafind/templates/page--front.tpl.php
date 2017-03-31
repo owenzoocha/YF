@@ -112,22 +112,13 @@
 
   <div id="yf-events" class="container">
     <h3 class="text-center hd-purple">YogaFind Posts</h3>
-    <h4>Check out these latest posts!</h4>
-    --- event posts here using current styles ---
+    <h4>Check out these latest posts</h4>
+    <?php
+    $slick_block = block_load('views', 'user_blog_posts-block_2');
+    $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
+    print drupal_render($block);
+    ?>
   </div>
-
-  <div id="yf-listings" class="container">
-    <h3 class="text-center hd-purple">Popular places</h3>
-    <ul>
-      <li>London</li>
-      <li>England</li>
-      <li>Wales</li>
-      <li>Scotland</li>
-      <li>Northern Ireland</li>
-    </ul>
-  </div>
-
-
 </main>
 
 <div class="main-container <?php print $container_class; ?>">

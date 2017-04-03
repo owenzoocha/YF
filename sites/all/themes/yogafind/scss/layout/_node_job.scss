@@ -95,6 +95,11 @@
       }
     }
     .yoga-intro {
+      .item-list {
+        h3 {
+          display: none;
+        }
+      }
       color: $dark;
       text-shadow: none;
       font-weight: 300;

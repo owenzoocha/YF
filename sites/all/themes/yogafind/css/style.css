@@ -6552,6 +6552,11 @@ body #hb-header.normal-header,
     color: #272D2D;
     text-shadow: none;
     font-weight: 300; }
+    .node-type-yoga #hb-header .yoga-intro .item-list h3,
+    .node-type-article #hb-header .yoga-intro .item-list h3,
+    .page-instructor #hb-header .yoga-intro .item-list h3,
+    .page-studio #hb-header .yoga-intro .item-list h3 {
+      display: none; }
     .node-type-yoga #hb-header .yoga-intro span,
     .node-type-article #hb-header .yoga-intro span,
     .page-instructor #hb-header .yoga-intro span,

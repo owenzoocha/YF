@@ -96,6 +96,7 @@ function yogafind_preprocess_node(&$variables) {
   }
 
   if ($variables['type'] == 'yoga') {
+
     if (!empty($variables['field_yoga_type'][0]['value'])) {
       $variables['yoga_type'] = $variables['field_yoga_type'][0]['value'];
     }
@@ -191,6 +192,14 @@ function yogafind_preprocess_node(&$variables) {
     }
   }
 
+}
+
+// Helper function for social link etc - if there's no http on a link, add it.
+function add_http($url) {
+  if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+    $url = "http://" . $url;
+  }
+  return $url;
 }
 
 /**
@@ -502,10 +511,33 @@ function yogafind_preprocess_page(&$variables) {
         )
       ));
 
+      $links = array();
+      if ($link = $nw->field_my_twitter->value()) {
+
+        $links[] = l('<span class="tw">Twitter</span>', add_http($link['url']), array('html' => TRUE));
+      }
+      if ($link = $nw->field_my_fb->value()) {
+        $links[] = l('<span class="fb">Facebook</span>', add_http($link['url']), array('html' => TRUE));
+      }
+      if ($link = $nw->field_my_instagram->value()) {
+        $links[] = l('<span class="insta">Instagram</span>', add_http($link['url']), array('html' => TRUE));
+      }
+
+      $vars = array(
+        'items' => $links,
+        'type' => 'ul',
+        'title' => 'Social Links',
+        'attributes' => array(
+          'class' => 'list-inline list-unstyled yoga-social',
+        ),
+      );
+      $social_links = theme_item_list($vars);
+
       $job_details = '<div class="yoga-intro">';
       $job_details .= $nw->field_yoga_introduction->value() ? '<span>' . truncate_utf8($nw->field_yoga_introduction->value(), 150, $wordsafe = FALSE, $add_ellipsis = TRUE, $min_wordsafe_length = 1) . '</span></br>' : '';
       $job_details .= $nw->field_yoga_mail->value() ? '<span>' . $contact_teacher . '</span>' : '';
       $job_details .= $nw->field_yoga_number->value() ? '<span>' . $contact_number . '</span>' : '';
+      $job_details .= $social_links;
       $job_details .= '</div>';
 
       $variables['job_details'] = $job_details;

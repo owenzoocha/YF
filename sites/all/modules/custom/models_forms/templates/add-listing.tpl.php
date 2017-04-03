@@ -52,10 +52,37 @@
 <div class="row">
   <div class="col-sm-2">
     <label class="control-label"
-           for="edit-field-yoga-link-und-0">URL</label>
+           for="edit-field-yoga-link-und-0">My Website</label>
   </div>
   <div class="col-sm-10">
     <?php print render($form['field_yoga_link']); ?>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-2">
+    <label class="control-label"
+           for="edit-field-my-fb-und-0">Facebook</label>
+  </div>
+  <div class="col-sm-10">
+    <?php print render($form['field_my_fb']); ?>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-2">
+    <label class="control-label"
+           for="edit-field-my-twitter-und-0">Twitter</label>
+  </div>
+  <div class="col-sm-10">
+    <?php print render($form['field_my_twitter']); ?>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-2">
+    <label class="control-label"
+           for="edit-field-ymy-instagram-und-0">Instagram</label>
+  </div>
+  <div class="col-sm-10">
+    <?php print render($form['field_my_instagram']); ?>
   </div>
 </div>
 

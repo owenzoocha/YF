@@ -223,6 +223,10 @@ function tweaks_block_info() {
     'info' => t('YF - Event Date Block'),
     'cache' => DRUPAL_NO_CACHE,
   );
+  $blocks['tweaks_payment_due'] = array(
+    'info' => t('YF - Payment coming soon'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
   $blocks['job_client_faces'] = array(
     'info' => t('HBM - Job Client Faces'),
     'cache' => DRUPAL_CACHE_GLOBAL,
@@ -248,6 +252,10 @@ function tweaks_block_view($delta = '') {
       $block['subject'] = t('Clients');
       $block['content'] = theme('job_client_faces');
       break;
+    case 'tweaks_payment_due':
+      $block['subject'] = t('Payment Due');
+      $block['content'] = tweaks_payment_due();
+      break;
     case 'event_date_block':
       $block['subject'] = t('Dates');
       $block['content'] = theme('event_date_block');
@@ -258,6 +266,42 @@ function tweaks_block_view($delta = '') {
       break;
   }
   return $block;
+}
+
+/**
+ * Alert logged in user to how many days they have left to make a payment.
+ */
+function tweaks_payment_due(){
+  global $user;
+  $uw = entity_metadata_wrapper('user', $user);
+
+  if (!$uw->field_yf_payment_complete->value()){
+
+    $joined = $uw->created->value();
+    $joined_plus_3 = strtotime('+ 3 months', $joined);
+
+    $now = time(); // or your date as well
+    $your_date = $joined_plus_3;
+    $datediff = $your_date - $now;
+    $days_diff = floor($datediff / (60 * 60 * 24));
+
+//    dpm(date('d-m-Y', $joined));
+//    dpm(date('d-m-Y', $joined_plus_3));
+//    dpm($days_diff);
+
+    if ($days_diff > 10) {
+      $msg = t('You have <strong>!days days</strong> remaining of your free trial, we will update you when payment is required, thanks :)', array('!days' => $days_diff));
+    }
+    else {
+      $msg = t('You have <strong>!days days</strong> remaining of your free trial, if you\'d like to continue using YogaFind please !link to make your payment, thanks :)', array('!days' => $days_diff, '!link' => l('click here', 'node')));
+
+    }
+    return $msg;
+
+  }
+  else {
+    return FALSE;
+  }
 }
 
 /**

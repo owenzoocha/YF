@@ -209,6 +209,7 @@ function yogafind_preprocess_page(&$variables) {
   global $user;
 
   $uw = entity_metadata_wrapper('user', $user);
+
 //
 //  dpm(current_path());
 //  dpm(drupal_get_path_alias());

@@ -145,7 +145,7 @@
         <?php print render($page['footer']); ?>
       </footer>
     <footer class="footer-cr container-fluid">
-      <span class="cr"><?php print '&copy; ' . t(':date hairandbeautymodels.com all rights reserved.', array(':date' => date('Y', strtotime('now')))); ?></span>
+      <span class="cr"><?php print '&copy; ' . t(':date yogafind.co.uk all rights reserved.', array(':date' => date('Y', strtotime('now')))); ?></span>
     </footer>
   </div>
   <?php endif; ?>

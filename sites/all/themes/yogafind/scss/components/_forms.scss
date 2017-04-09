@@ -97,9 +97,12 @@ ul.user-info {
   margin-top: 15px;
   padding: 0;
   font-weight: 300;
-  font-size: 12px;
+  font-size: 17px;
   li {
     list-style-position: inside;
+    a {
+      color: $purple;
+    }
   }
 }
 
@@ -118,4 +121,23 @@ ul.user-info {
 div.addressfield-container-inline > div.form-item {
   margin-right: 0;
   float: none;
+}
+
+
+#user-register-form {
+  h2 {
+    background-color: $purple;
+    color: $white;
+    padding: 5px;
+    text-align: center;
+    border: none;
+  }
+  .a-link {
+    text-align: center;
+    color: $purple;
+    margin-bottom: 15px;
+    padding: 3px 0;
+    font-size: 20px;
+    font-weight: 300;
+  }
 }

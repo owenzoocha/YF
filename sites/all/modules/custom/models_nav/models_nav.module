@@ -243,8 +243,8 @@ function template_preprocess_block_settings_nav(&$vars) {
   $nav .= '<li>' . l(t('Personal Information'), 'user/personal-information/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
   $nav .= '<li>' . l(t('Account Settings'), 'user/account/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
   // $nav .= '<li > ' . l(t('Profile'), 'user / profile / settings', array('attributes' => array('class' => array('')))) . ' </li > ';
-  $nav .= '<li>' . l(t('Interests'), 'user/interests/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
-  $nav .= '<li>' . l(t('Email Settings'), 'user/email/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
+//  $nav .= '<li>' . l(t('Interests'), 'user/interests/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
+  $nav .= '<li>' . l(t('Subscription Settings'), 'user/plan/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
   $nav .= '</ul>';
   $vars['settings_nav'] = $nav;
 }
@@ -428,8 +428,8 @@ function template_preprocess_my_nav(&$vars) {
         $my_requests_count = sizeof(views_get_view_result('user_profile_jobs', 'page_1')) ? '<span class="badge">' . sizeof(views_get_view_result('user_profile_jobs', 'page_1')) . '</span>' : FALSE;
 
         $nav = '<ul>';
-        $nav .= '<li>' . l(t('View'), 'user/' . $uw->getIdentifier(), array('attributes' => array('class' => array('')))) . '</li>';
-        $nav .= '<li>' . l(t('Edit Profile'), 'user/personal-information/settings', array('attributes' => array('class' => array('')))) . '</li>';
+        $nav .= '<li>' . l(t('Dashboard'), 'user/' . $uw->getIdentifier(), array('attributes' => array('class' => array('')))) . '</li>';
+        $nav .= '<li>' . l(t('Settings'), 'user/personal-information/settings', array('attributes' => array('class' => array('')))) . '</li>';
 //      $nav .= '<li>' . l(t('Photos'), 'user/photos', array('attributes' => array('class' => array('')))) . '</li>';
 //      $nav .= '<li>' . l(t('My Feedback'), 'user/' . $uw->getIdentifier() . '/feedback', array('attributes' => array('class' => array('')))) . '</li>';
 //      $nav .= '<li>' . l(t('My Jobs') . $my_jobs_count, 'my-jobs', array(
@@ -524,11 +524,29 @@ function template_preprocess_social_nav(&$vars) {
 function template_preprocess_home_nav(&$vars) {
   global $user;
   $uw = entity_metadata_wrapper('user', $user);
-  $links = '<li class="first leaf">' . l('Search', 'search/type/beauty') . '</li>';
-  $links .= '<li class="leaf">' . l('Studios', 'search/type/hair') . '</li>';
-  $links .= '<li class="leaf">' . l('Classes', 'search/type/personal') . '</li>';
-  $links .= '<li class="leaf">' . l('Events', 'search/type/personal') . '</li>';
-  $links .= '<li class="leaf">' . l('Blog', 'search/type/personal') . '</li>';
+
+  $search_form = drupal_get_form('models_searcher_form_dupe');
+
+  if (!drupal_is_front_page()) {
+    $links = '<li class="first leaf">' .
+      l('<i class="material-icons">&#xE8B6;</i> Search <i class="material-icons">&#xE5C5;</i>', 'search/type/beauty', array(
+          'html' => TRUE,
+          'attributes' => array(
+            'data-toggle' => 'dropdown',
+            'aria-haspopup' => 'true',
+            'aria-expanded' => 'false',
+          )
+        )
+      ) . drupal_render($search_form) . '</li>';
+  }
+  else {
+    $links = '';
+  }
+
+  $links .= '<li class="leaf">' . l('Studios', 'yoga') . '</li>';
+  $links .= '<li class="leaf">' . l('Classes', 'classes') . '</li>';
+  $links .= '<li class="leaf">' . l('Events', 'events') . '</li>';
+  $links .= '<li class="leaf">' . l('Posts', 'posts') . '</li>';
   $links .= '<li class="leaf">' . l('<span class="nav-btn">Sign Up / Sign In<span>', 'user/login', array('html' => TRUE)) . '</li>';
   $vars['links'] = $links;
 }

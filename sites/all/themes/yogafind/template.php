@@ -359,10 +359,10 @@ function yogafind_preprocess_page(&$variables) {
   $search_menu = theme('search_menu');
   $variables['search_menu'] = $search_menu;
 
-  if (!$uw->field_my_tcs->value() && $user->uid != 0) {
-    $tc_msg = t('Welcome to Hair & Beauty Models! To get started, please make sure you accept the') . ' ' . l('terms and conditions', 'terms') . ' ' . '<strong>' . l('here', 'user/personal-information/settings', array('fragment' => 'edit-field-my-tcs')) . '</strong>.';
-    drupal_set_message($tc_msg, 'warning', FALSE);
-  }
+//  if (!$uw->field_my_tcs->value() && $user->uid != 0) {
+//    $tc_msg = t('Welcome to Hair & Beauty Models! To get started, please make sure you accept the') . ' ' . l('terms and conditions', 'terms') . ' ' . '<strong>' . l('here', 'user/personal-information/settings', array('fragment' => 'edit-field-my-tcs')) . '</strong>.';
+//    drupal_set_message($tc_msg, 'warning', FALSE);
+//  }
 
   if (strrpos(current_path(), 'search') !== FALSE) {
     $variables['no_footer'] = TRUE;
@@ -636,7 +636,7 @@ function yogafind_preprocess_page(&$variables) {
           drupal_set_title($person->field_my_name->value());
           $pic = tweaks_get_profile_picture($person->value());
           $the_pic = tweaks_get_profile_url($pic, $person->getIdentifier());
-          $stars = $person->field_my_overall_rating->value() ? $person->field_my_overall_rating->value() : 0;
+//          $stars = $person->field_my_overall_rating->value() ? $person->field_my_overall_rating->value() : 0;
           $job_details = tweaks_get_profile_intro($person);
           $author_feedback_amount = tweaks_get_feedback_amount($person);
         }
@@ -644,7 +644,7 @@ function yogafind_preprocess_page(&$variables) {
       else {
         $pic = tweaks_get_profile_picture($uw->value());
         $the_pic = tweaks_get_profile_url($pic, $uw->getIdentifier());
-        $stars = $uw->field_my_overall_rating->value() ? $uw->field_my_overall_rating->value() : 0;
+//        $stars = $uw->field_my_overall_rating->value() ? $uw->field_my_overall_rating->value() : 0;
         $job_details = tweaks_get_profile_intro($uw);
         $author_feedback_amount = tweaks_get_feedback_amount($uw);
       }

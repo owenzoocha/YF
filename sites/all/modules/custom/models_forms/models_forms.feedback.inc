@@ -79,7 +79,7 @@ function models_forms_feedback_form($form, &$form_state) {
             )) . '</div>';
         }
 
-        $stars = $u->field_feedb_user->field_my_overall_rating->value() ? $u->field_feedb_user->field_my_overall_rating->value() : 0;
+//        $stars = $u->field_feedb_user->field_my_overall_rating->value() ? $u->field_feedb_user->field_my_overall_rating->value() : 0;
         $form['userpic' . $u->getIdentifier()] = array(
           '#markup' => '<div class="col-sm-2 lhs">' . $pic . '<div class="hb-rating raty raty-readonly" data-rating="' . $stars . '"></div>
           

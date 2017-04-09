@@ -37,9 +37,9 @@
           <?php if (!empty($search_menu)): ?>
             <?php // print $search_menu; ?>
           <?php endif; ?>
-          <?php if (!empty($custom_nav)): ?>
-            <?php print $custom_nav; ?>
-          <?php endif; ?>
+          <?php //if (!empty($custom_nav)): ?>
+          <?php print $custom_nav; ?>
+          <?php //endif; ?>
           <?php if (!empty($home_nav)): ?>
             <?php print $home_nav; ?>
           <?php endif; ?>
@@ -80,16 +80,6 @@
   </div>
 
   <div id="yf-events" class="container">
-    <h3 class="hd-purple">Keep up to date with YogaFind</h3>
-
-    <?php
-//    $slick_block = block_load('webform', 'client-block-132');
-//    $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
-//    print drupal_render($block);
-    ?>
-  </div>
-
-  <div id="yf-events" class="container">
     <div class="col-md-6">
       <h3 class="hd-purple">Upcoming Events</h3>
       <h4>On your mat, get set, yoga!</h4>
@@ -110,11 +100,33 @@
     </div>
   </div>
 
+  <div id="yf-subscribe">
+    <div class="container">
+      <h3 class="hd-purple">Keep up to date with YogaFind</h3>
+
+      <?php
+//      $slick_block = block_load('webform', 'client-block-132');
+//      $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
+//      print drupal_render($block);
+      ?>
+    </div>
+  </div>
+
   <div id="yf-events" class="container">
     <h3 class="text-center hd-purple">YogaFind Posts</h3>
     <h4>Check out these latest posts</h4>
     <?php
     $slick_block = block_load('views', 'user_blog_posts-block_2');
+    $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
+    print drupal_render($block);
+    ?>
+  </div>
+
+  <div id="yf-forums" class="container">
+    <h3 class="text-center hd-purple">YogaFind Forums</h3>
+    <h4>Join the Discussion</h4>
+    <?php
+    $slick_block = block_load('views', '2b3038a0dd4683e6f418c3bd54ec2f22');
     $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
     print drupal_render($block);
     ?>
@@ -153,7 +165,7 @@
     <?php endif; ?>
     <footer class="footer-cr container-fluid">
       <span
-        class="cr"><?php print '&copy; ' . t(':date hairandbeautymodels.com all rights reserved.', array(':date' => date('Y', strtotime('now')))); ?></span>
+        class="cr"><?php print '&copy; ' . t(':date yogafind.co.uk all rights reserved.', array(':date' => date('Y', strtotime('now')))); ?></span>
     </footer>
   </div>
 <?php endif; ?>

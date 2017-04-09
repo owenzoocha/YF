@@ -1,8 +1,9 @@
 .footer {
   // height: 100px;
-  background-color: $purple;
+  //background-color: $purple;
   margin-top: 50px;
   border-top: 4px solid $white;
+  background: url("#{$imagePath}/pattern.png") 0px -880px no-repeat;
 
   .col-sm-4 {
     padding: 15px;
@@ -64,7 +65,7 @@
 }
 
 
-  #block-webform-client-block-132,
+  #webform-client-form-132,
   //#block-models-searcher-main-searcher,
   #block-webform-client-block-166 {
     width: 470px;

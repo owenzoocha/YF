@@ -397,7 +397,7 @@ function field_sql_storage_field_storage_load($entity_type, $entities, $age, $fi
     $field = field_info_field_by_id($field_id);
     $field_name = $field['field_name'];
     $table = $load_current ? _field_sql_storage_tablename($field) : _field_sql_storage_revision_tablename($field);
-
+$honk = 'yes';
     $query = db_select($table, 't')
       ->fields('t')
       ->condition('entity_type', $entity_type)

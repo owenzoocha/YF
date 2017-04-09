@@ -476,7 +476,6 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
   }
   if ($form_id == 'yoga_node_form') {
     if (strpos(current_path(), 'listing/add') !== FALSE) {
-//      dpm($form);
       unset($form['field_yoga_type']['und']['#options']['event']);
 
       // Build location taxonomy.
@@ -607,8 +606,8 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     unset($form['name']['#description']);
     unset($form['pass']['#description']);
     $signup_msg = '<ul class="user-info">';
-    $signup_msg .= '<li>' . t('Not yet signed up?') . ' ' . l('Sign up now', 'user/register') . '</li>';
-    $signup_msg .= '<li>' . t('I\'ve forgotten my password!') . ' ' . l('Reset it here', 'user/password') . '</li>';
+    $signup_msg .= '<li>' . t('Not yet registered? Get started now!') . ' ' . l('Sign up now <i class="material-icons">trending_flat</i>', 'user/register', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go')))) . '</li>';
+    $signup_msg .= '<li>' . t('I\'ve forgotten my password!') . ' ' . l('Reset it here<i class="material-icons">trending_flat</i>', 'user/register', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go')))) . '</li>';
     $signup_msg .= '</ul>';
     $form['actions']['submit']['#attributes'] = array('class' => array('btn-success'));
     $form['actions']['submit']['#suffix'] = $signup_msg;
@@ -618,11 +617,18 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['submit']['#value'] = t('e-mail me a password');
     $signup_msg = '<ul class="user-info">';
     $signup_msg .= '<li>' . t('Already a member?') . ' ' . l('Sign in now', 'user/login') . '</li>';
-    $signup_msg .= '<li>' . t('Not yet signed up?') . ' ' . l('Sign up now', 'user/register') . '</li>';
+    $signup_msg .= '<li>' . t('Not yet registered? Get started now!') . ' ' . l('Sign up now', 'user/register') . '</li>';
     $signup_msg .= '</ul>';
     $form['actions']['submit']['#suffix'] = $signup_msg;
   }
   if ($form_id == 'user_register_form') {
+
+    $reg_text = '<h2>Welcome to YogaFind - getting started couldn\'t be easier!</br>Select your subscription and connect with us today</h2>';
+    $reg_text .= l('View our plans <i class="material-icons">trending_flat</i>', 'getting-started', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go btn-block')))) . '</li>';
+    $form['intro_description'] = array(
+      '#markup' => $reg_text,
+      '#weight' => -10,
+    );
 
     $form['#attached']['js'] = array(
       drupal_get_path('module', 'models_forms') . '/js/models_forms_register.js',
@@ -631,7 +637,7 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     $form['account']['name']['#description'] = t('Pick a username.');
     $form['account']['mail']['#description'] = t('A valid e-mail address, so we can keep you up to date.');
     $form['actions']['submit']['#attributes'] = array('class' => array('btn-success'));
-    $form['field_my_tcs']['und']['#description'] = t('You must agree to the') . ' ' . l('terms & conditions', 'terms', array('attributes' => array('target' => '_blank'))) . '.';
+//    $form['field_my_tcs']['und']['#description'] = t('You must agree to the') . ' ' . l('terms & conditions', 'terms', array('attributes' => array('target' => '_blank'))) . '.';
     unset($form['account']['pass']['#description']);
     $signup_msg = '<ul class="user-info">';
     $signup_msg .= '<li>' . t('Already a member?') . ' ' . l('Sign in now', 'user/login') . '</li>';
@@ -1313,7 +1319,7 @@ function grab_location_blurb($nw) {
       $located[] = $nw->field_yoga_location->value()['locality'];
     }
     if (!empty($nw->field_yoga_location->value()['administrative_area'])) {
-      $located[] =  $nw->field_yoga_location->value()['administrative_area'];
+      $located[] = $nw->field_yoga_location->value()['administrative_area'];
     }
   }
   return $located;

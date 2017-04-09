@@ -203,6 +203,16 @@
     }
   }
 
+  #yf-subscribe {
+    background-color: $white;
+    h3 {
+      margin: 0;
+    }
+    .webform-component--e-mail {
+      margin: 0;
+    }
+  }
+
   #what-is-it {
     text-align: center;
     .what-block {

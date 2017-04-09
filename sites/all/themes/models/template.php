@@ -428,7 +428,9 @@ function models_preprocess_page(&$variables) {
     }
   }
 
-  $variables['home_nav'] = $user->uid == 0 ? theme('home_nav') : FALSE;
+  $variables['home_nav'] = FALSE;
+  $variables['custom_nav'] = theme('custom_nav');
+
 
   if (drupal_is_front_page()) {
     drupal_add_css('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css', array('type' => 'external'));
@@ -463,16 +465,16 @@ function models_preprocess_page(&$variables) {
   // dpm( $msg_count );
 
   $variables['social'] = theme('social_nav');
-  $variables['custom_nav'] = $user->uid != 0 ? theme('custom_nav') : FALSE;
+  $variables['custom_nav'] = theme('custom_nav');
   $variables['title_search_class'] = FALSE;
 
   $search_menu = theme('search_menu');
   $variables['search_menu'] = $search_menu;
 
-  if (!$uw->field_my_tcs->value() && $user->uid != 0) {
-    $tc_msg = t('Welcome to Hair & Beauty Models! To get started, please make sure you accept the') . ' ' . l('terms and conditions', 'terms') . ' ' . '<strong>' . l('here', 'user/personal-information/settings', array('fragment' => 'edit-field-my-tcs')) . '</strong>.';
-    drupal_set_message($tc_msg, 'warning', FALSE);
-  }
+//  if (!$uw->field_my_tcs->value() && $user->uid != 0) {
+//    $tc_msg = t('Welcome to Hair & Beauty Models! To get started, please make sure you accept the') . ' ' . l('terms and conditions', 'terms') . ' ' . '<strong>' . l('here', 'user/personal-information/settings', array('fragment' => 'edit-field-my-tcs')) . '</strong>.';
+//    drupal_set_message($tc_msg, 'warning', FALSE);
+//  }
 
   if (strrpos(current_path(), 'search') !== FALSE) {
     $variables['no_footer'] = TRUE;

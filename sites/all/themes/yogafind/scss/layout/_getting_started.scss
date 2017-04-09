@@ -1,0 +1,45 @@
+.page-node-265 {
+  .get-started-offer {
+    margin: 15px 0;
+    background-color: $green;
+    text-align: center;
+    color: #fff;
+    padding: 30px 0;
+    a {
+      font-weight: bold;
+      color: $white;
+    }
+    h3 {
+      margin: 0;
+    }
+  }
+  .get-started-options {
+    margin-bottom: 15px;
+    h3 {
+      color: $purple;
+      font-size: 35px;
+    }
+    ul {
+      //li {
+      //  list-style: none;
+      //  background-color: $white;
+      //  padding: 3px 10px;
+      //}
+    }
+  }
+  .get-started-header {
+    text-align: center;
+    border-bottom: 7px solid $purple;
+    background-color: $white;
+    padding: 15px 0;
+    h2 {
+      border: none;
+      font-size: 35px;
+    }
+  }
+  .proceed {
+    .btn {
+      font-size: 20px;
+    }
+  }
+}

@@ -78,7 +78,8 @@ body,
     &.normal-header {
       height: auto;
       color: $dark;
-      background: $white;
+      background-color: $white;
+      //background: url("#{$imagePath}/pattern.png") 0px 0px no-repeat;
       border-top: 1px solid #f5f5f5;
       text-shadow: none;
       margin-top: 0;
@@ -105,7 +106,7 @@ body,
   // .page-user {
   #page-header-bg {
     width: 100%;
-    background: url("#{$imagePath}/bg2.png") 0px 0px no-repeat;
+      background: url("#{$imagePath}/pattern.png") 0px 0px no-repeat;
     //background: url("#{$imagePath}/yf-bg2.svg") 0px 0px no-repeat;
     //background: url("../images/HBM_Background_2.png") 0 0 no-repeat;
     //background-color: $dark;

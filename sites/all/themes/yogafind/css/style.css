@@ -6219,7 +6219,7 @@ body #hb-header.normal-header,
 .node-type-job #hb-header.normal-header {
   height: auto;
   color: #272D2D;
-  background: #fff;
+  background-color: #fff;
   border-top: 1px solid #f5f5f5;
   text-shadow: none;
   margin-top: 0; }
@@ -6229,7 +6229,7 @@ body #hb-header.normal-header,
 
 #page-header-bg {
   width: 100%;
-  background: url("../images/bg2.png") 0px 0px no-repeat;
+  background: url("../images/pattern.png") 0px 0px no-repeat;
   height: 170px;
   position: absolute;
   top: 0;
@@ -6529,16 +6529,11 @@ body #hb-header.normal-header,
   height: 310px;
   margin-top: 15px;
   background-color: #EDEFF0; }
-  .node-type-yoga #hb-header .header-title,
-  .node-type-article #hb-header .header-title,
-  .page-instructor #hb-header .header-title,
-  .page-studio #hb-header .header-title {
-    margin-left: 190px; }
-    .node-type-yoga #hb-header .header-title h1,
-    .node-type-article #hb-header .header-title h1,
-    .page-instructor #hb-header .header-title h1,
-    .page-studio #hb-header .header-title h1 {
-      padding: 105px 0 20px; }
+  .node-type-yoga #hb-header .header-title h1,
+  .node-type-article #hb-header .header-title h1,
+  .page-instructor #hb-header .header-title h1,
+  .page-studio #hb-header .header-title h1 {
+    padding: 105px 0 20px; }
   .node-type-yoga #hb-header .header-author-pic .my-image,
   .node-type-article #hb-header .header-author-pic .my-image,
   .page-instructor #hb-header .header-author-pic .my-image,
@@ -7215,9 +7210,9 @@ body #hb-header.normal-header,
   padding-left: 5px; }
 
 .footer {
-  background-color: #6F73D2;
   margin-top: 50px;
-  border-top: 4px solid #fff; }
+  border-top: 4px solid #fff;
+  background: url("../images/pattern.png") 0px -880px no-repeat; }
   .footer .col-sm-4 {
     padding: 15px; }
   .footer #block-menu-block-1 a,
@@ -7252,22 +7247,22 @@ body #hb-header.normal-header,
       .footer #block-models-nav-social-nav-footer li a:hover {
         color: #E01563; }
 
-#block-webform-client-block-132,
+#webform-client-form-132,
 #block-webform-client-block-166 {
   width: 470px;
   margin: 0 auto;
   padding: 15px 0;
   clear: both; }
-  #block-webform-client-block-132 button,
+  #webform-client-form-132 button,
   #block-webform-client-block-166 button {
     border: 1px solid #fff;
     border-left: none;
     border-radius: 0; }
-  #block-webform-client-block-132 .webform-component-email,
+  #webform-client-form-132 .webform-component-email,
   #block-webform-client-block-166 .webform-component-email {
     width: 80%;
     float: left; }
-    #block-webform-client-block-132 .webform-component-email input.email,
+    #webform-client-form-132 .webform-component-email input.email,
     #block-webform-client-block-166 .webform-component-email input.email {
       background: none;
       border: 1px solid #F5F7F8;
@@ -7409,9 +7404,10 @@ body #hb-header.normal-header,
   margin-top: 15px; }
 
 .page-user #hb-header {
-  padding: 10px 0; }
+  padding: 10px 0;
+  background: url("../images/pattern.png") 0px 0px no-repeat; }
   .page-user #hb-header .header-title {
-    margin: 15px 0; }
+    margin: 25px 0; }
   .page-user #hb-header .header-author-pic .my-image {
     width: 90px;
     margin: 0 15px 0 0; }
@@ -7682,6 +7678,13 @@ body #hb-header.normal-header,
   #main #yf-sign-up a {
     color: #fff;
     text-decoration: underline; }
+
+#main #yf-subscribe {
+  background-color: #fff; }
+  #main #yf-subscribe h3 {
+    margin: 0; }
+  #main #yf-subscribe .webform-component--e-mail {
+    margin: 0; }
 
 #main #what-is-it {
   text-align: center; }
@@ -8296,6 +8299,36 @@ div.autocomplete-deluxe-throbber {
 .node-article-form #edit-body-und-0-format {
   display: none; }
 
+.page-node-265 .get-started-offer {
+  margin: 15px 0;
+  background-color: #48A9A6;
+  text-align: center;
+  color: #fff;
+  padding: 30px 0; }
+  .page-node-265 .get-started-offer a {
+    font-weight: bold;
+    color: #fff; }
+  .page-node-265 .get-started-offer h3 {
+    margin: 0; }
+
+.page-node-265 .get-started-options {
+  margin-bottom: 15px; }
+  .page-node-265 .get-started-options h3 {
+    color: #6F73D2;
+    font-size: 35px; }
+
+.page-node-265 .get-started-header {
+  text-align: center;
+  border-bottom: 7px solid #6F73D2;
+  background-color: #fff;
+  padding: 15px 0; }
+  .page-node-265 .get-started-header h2 {
+    border: none;
+    font-size: 35px; }
+
+.page-node-265 .proceed .btn {
+  font-size: 20px; }
+
 .dropdown-menu-yogafind {
   border: 1px solid #EDEFF0; }
   .dropdown-menu-yogafind .dropdown-header {
@@ -8361,27 +8394,32 @@ div.autocomplete-deluxe-throbber {
 .page-user-personal-information .col-sm-3 .block,
 .page-user-account-settings .col-sm-3 .block,
 .page-user-email-settings .col-sm-3 .block,
+.page-user-plan-settings .col-sm-3 .block,
 .page-user-interests-settings .col-sm-3 .block {
   padding: 5px !important; }
   .page-user-personal-information .col-sm-3 .block ul,
   .page-user-account-settings .col-sm-3 .block ul,
   .page-user-email-settings .col-sm-3 .block ul,
+  .page-user-plan-settings .col-sm-3 .block ul,
   .page-user-interests-settings .col-sm-3 .block ul {
     margin: 0;
     padding: 0; }
     .page-user-personal-information .col-sm-3 .block ul li,
     .page-user-account-settings .col-sm-3 .block ul li,
     .page-user-email-settings .col-sm-3 .block ul li,
+    .page-user-plan-settings .col-sm-3 .block ul li,
     .page-user-interests-settings .col-sm-3 .block ul li {
       list-style: none; }
       .page-user-personal-information .col-sm-3 .block ul li:last-of-type a,
       .page-user-account-settings .col-sm-3 .block ul li:last-of-type a,
       .page-user-email-settings .col-sm-3 .block ul li:last-of-type a,
+      .page-user-plan-settings .col-sm-3 .block ul li:last-of-type a,
       .page-user-interests-settings .col-sm-3 .block ul li:last-of-type a {
         border-bottom: none; }
       .page-user-personal-information .col-sm-3 .block ul li a,
       .page-user-account-settings .col-sm-3 .block ul li a,
       .page-user-email-settings .col-sm-3 .block ul li a,
+      .page-user-plan-settings .col-sm-3 .block ul li a,
       .page-user-interests-settings .col-sm-3 .block ul li a {
         color: #8F8F8F;
         display: inline-block;
@@ -8394,6 +8432,8 @@ div.autocomplete-deluxe-throbber {
         .page-user-account-settings .col-sm-3 .block ul li a.active,
         .page-user-email-settings .col-sm-3 .block ul li a:hover,
         .page-user-email-settings .col-sm-3 .block ul li a.active,
+        .page-user-plan-settings .col-sm-3 .block ul li a:hover,
+        .page-user-plan-settings .col-sm-3 .block ul li a.active,
         .page-user-interests-settings .col-sm-3 .block ul li a:hover,
         .page-user-interests-settings .col-sm-3 .block ul li a.active {
           text-decoration: none;
@@ -8403,6 +8443,8 @@ div.autocomplete-deluxe-throbber {
           .page-user-account-settings .col-sm-3 .block ul li a.active:before,
           .page-user-email-settings .col-sm-3 .block ul li a:hover:before,
           .page-user-email-settings .col-sm-3 .block ul li a.active:before,
+          .page-user-plan-settings .col-sm-3 .block ul li a:hover:before,
+          .page-user-plan-settings .col-sm-3 .block ul li a.active:before,
           .page-user-interests-settings .col-sm-3 .block ul li a:hover:before,
           .page-user-interests-settings .col-sm-3 .block ul li a.active:before {
             content: '';
@@ -8936,9 +8978,11 @@ ul.user-info {
   margin-top: 15px;
   padding: 0;
   font-weight: 300;
-  font-size: 12px; }
+  font-size: 17px; }
   ul.user-info li {
     list-style-position: inside; }
+    ul.user-info li a {
+      color: #6F73D2; }
 
 .panel-heading {
   font-size: 16px;
@@ -8953,6 +8997,21 @@ ul.user-info {
 div.addressfield-container-inline > div.form-item {
   margin-right: 0;
   float: none; }
+
+#user-register-form h2 {
+  background-color: #6F73D2;
+  color: #fff;
+  padding: 5px;
+  text-align: center;
+  border: none; }
+
+#user-register-form .a-link {
+  text-align: center;
+  color: #6F73D2;
+  margin-bottom: 15px;
+  padding: 3px 0;
+  font-size: 20px;
+  font-weight: 300; }
 
 #addressfield-wrapper .form-group {
   margin-bottom: 5px; }

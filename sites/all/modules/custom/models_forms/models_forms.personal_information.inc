@@ -15,10 +15,10 @@ function models_forms_personal_info() {
   // form_load_include('inc', 'user', 'user.pages');
   $user_form = drupal_get_form('user_profile_form', $user);
 
-  if ($uw->field_my_tcs->value()) {
-    $user_form['field_my_tcs']['und']['#prefix'] = '<span class="sr-only">';
-    $user_form['field_my_tcs']['und']['#suffx'] = '</span>';
-  }
+//  if ($uw->field_my_tcs->value()) {
+//    $user_form['field_my_tcs']['und']['#prefix'] = '<span class="sr-only">';
+//    $user_form['field_my_tcs']['und']['#suffx'] = '</span>';
+//  }
 
   $wysiwyg_js['wysiwyg']['configs']['tinymce']['formatfiltered_html'] = array(
     'menubar' => FALSE,
@@ -27,25 +27,25 @@ function models_forms_personal_info() {
 
   drupal_add_js($wysiwyg_js, 'setting');
 
-  $user_form['#attached']['js'] = array(
-    'http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY' => array(
-      'type' => 'external',
-    ),
-    libraries_get_path('geocomplete') . '/' . 'jquery.geocomplete.min.js',
-    drupal_get_path('module', 'models_forms') . '/js/models_forms_google_complete.js',
-  );
+//  $user_form['#attached']['js'] = array(
+//    'http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY' => array(
+//      'type' => 'external',
+//    ),
+//    libraries_get_path('geocomplete') . '/' . 'jquery.geocomplete.min.js',
+//    drupal_get_path('module', 'models_forms') . '/js/models_forms_google_complete.js',
+//  );
 
   $user_form['#theme'] = array('overwrite_user_login');
 
-  $user_form['geocomplete'] = array(
-    '#type' => 'textfield',
-    // '#title' => 'Enter an address',
-    '#description' => t('If your address is unrecognised, try the manual option below.'),
-    '#attributes' => array(
-      'id' => array('geocomplete'),
-    ),
-    '#suffix' => '<div class="map_canvas"></div><!--<p><a href="#" class="geocomplete-manual">' . t('+ add manual location') . '</a></p>-->',
-  );
+//  $user_form['geocomplete'] = array(
+//    '#type' => 'textfield',
+//    // '#title' => 'Enter an address',
+//    '#description' => t('If your address is unrecognised, try the manual option below.'),
+//    '#attributes' => array(
+//      'id' => array('geocomplete'),
+//    ),
+//    '#suffix' => '<div class="map_canvas"></div><!--<p><a href="#" class="geocomplete-manual">' . t('+ add manual location') . '</a></p>-->',
+//  );
 
   $user_form['picture']['picture_upload']['#description'] = t('Your profile picture');
   unset($user_form['account']);
@@ -58,45 +58,49 @@ function models_forms_personal_info() {
   // unset($user_form['field_hb_ht']);
   // unset($user_form['field_hb_bt']);
   unset($user_form['field_hb_pics']);
+  unset($user_form['field_hb_cover_pic']);
 //  unset($user_form['field_my_total_feedback']);
   unset($user_form['field_my_overall_rating']);
   unset($user_form['field_my_watchlist']);
   unset($user_form['field_my_latlon']);
   unset($user_form['field_flags_strikes']);
 //  unset($user_form['field_flags_running_posts']);
+  unset($user_form['field_my_listings']);
+  unset($user_form['field_my_posts']);
+  unset($user_form['field_yf_subscription']);
   return drupal_render($user_form);
 
 }
 
 function models_forms_update_address(&$form, $form_state) {
-  global $user;
-  $uw = entity_metadata_wrapper('user', $user->uid);
-  // dpm($uw->value());
-  if ($uw->field_my_address->value()) {
-    // dpm($uw->field_my_address->value());
-    $add = '';
-    $add .= isset($uw->field_my_address->value()['thoroughfare']) ? $uw->field_my_address->value()['thoroughfare'] . ' ' : FALSE;
-    $add .= isset($uw->field_my_address->value()['premise']) ? $uw->field_my_address->value()['premise'] . ', ' : FALSE;
-    $add .= isset($uw->field_my_address->value()['locality']) ? $uw->field_my_address->value()['locality'] . ', ' : FALSE;
-    $add .= isset($uw->field_my_address->value()['dependent_locality']) ? $uw->field_my_address->value()['dependent_locality'] . ', ' : FALSE;
-    $add .= isset($uw->field_my_address->value()['administrative_locality']) ? $uw->field_my_address->value()['administrative_locality'] . ', ' : FALSE;
-    $add .= isset($uw->field_my_address->value()['postal_code']) ? $uw->field_my_address->value()['postal_code'] : FALSE;
-  }
-
-  $add = str_replace(' , ', ', ', $add);
-  $add = str_replace(',,', ',', $add);
-
-  if (!empty($add)) {
-    $point = geocoder('google', $add, array('https' => TRUE));
-    $geo_array = array(
-      'geo_type' => 'point',
-      'lat' => $point->coords[1],
-      'lon' => $point->coords[0],
-    );
-
-    $uw->field_my_latlon->set($geo_array);
-    $uw->save();
-  }
+//  global $user;
+//  $uw = entity_metadata_wrapper('user', $user->uid);
+//  // dpm($uw->value());
+//  if ($uw->field_my_address->value()) {
+//    // dpm($uw->field_my_address->value());
+//    $add = '';
+//    $add .= isset($uw->field_my_address->value()['thoroughfare']) ? $uw->field_my_address->value()['thoroughfare'] . ' ' : FALSE;
+//    $add .= isset($uw->field_my_address->value()['premise']) ? $uw->field_my_address->value()['premise'] . ', ' : FALSE;
+//    $add .= isset($uw->field_my_address->value()['locality']) ? $uw->field_my_address->value()['locality'] . ', ' : FALSE;
+//    $add .= isset($uw->field_my_address->value()['dependent_locality']) ? $uw->field_my_address->value()['dependent_locality'] . ', ' : FALSE;
+//    $add .= isset($uw->field_my_address->value()['administrative_locality']) ? $uw->field_my_address->value()['administrative_locality'] . ', ' : FALSE;
+//    $add .= isset($uw->field_my_address->value()['postal_code']) ? $uw->field_my_address->value()['postal_code'] : FALSE;
+//  }
+//
+//  $add = str_replace(' , ', ', ', $add);
+//  $add = str_replace(',,', ',', $add);
+//
+//  if (!empty($add)) {
+//    $point = geocoder('google', $add, array('https' => TRUE));
+//    $geo_array = array(
+//      'geo_type' => 'point',
+//      'lat' => $point->coords[1],
+//      'lon' => $point->coords[0],
+//    );
+//
+//    $uw->field_my_latlon->set($geo_array);
+//    $uw->save();
+//  }
 }
 
 // function models_forms_user_presave(&$edit, $account, $category) {
@@ -104,6 +108,45 @@ function models_forms_update_address(&$form, $form_state) {
 //   dpm($edit);
 //   dpm($account);
 // }
+
+function models_forms_subscription_settings() {
+  global $user;
+
+  $user = user_load($user->uid);
+  module_load_include('inc', 'user', 'user.pages');
+  $user_form = drupal_get_form('user_profile_form', $user);
+
+  $user_form['#theme'] = array('overwrite_subscription_form');
+
+  unset($user_form['account']);
+  unset($user_form['field_my_name']);
+  unset($user_form['field_first_name']);
+  unset($user_form['field_surname']);
+  unset($user_form['field_phone']);
+  unset($user_form['field_gender']);
+  unset($user_form['field_my_web']);
+  unset($user_form['field_my_address']);
+  unset($user_form['field_my_latlong']);
+  unset($user_form['timezone']);
+  unset($user_form['picture']);
+  unset($user_form['field_hb_type']);
+  unset($user_form['field_i_am_a_']);
+  unset($user_form['field_hb_pics']);
+  unset($user_form['field_my_overall_rating']);
+  unset($user_form['field_my_watchlist']);
+  unset($user_form['field_my_latlon']);
+  unset($user_form['field_my_college']);
+  unset($user_form['field_my_company']);
+  unset($user_form['field_flags_strikes']);
+  unset($user_form['field_hb_cover_pic']);
+  unset($user_form['field_my_listings']);
+  unset($user_form['field_my_posts']);
+  unset($user_form['field_my_bio']);
+//  unset($user_form['field_yf_subscription']);
+
+  return drupal_render($user_form);
+}
+
 
 function models_forms_email_settings() {
   global $user;
@@ -138,6 +181,9 @@ function models_forms_email_settings() {
   unset($user_form['field_flags_strikes']);
 //  unset($user_form['field_flags_running_posts']);
   unset($user_form['field_hb_cover_pic']);
+  unset($user_form['field_my_listings']);
+  unset($user_form['field_my_posts']);
+  unset($user_form['field_yf_subscription']);
   // $user_form['privatemsg']['pm_enable']['#access'] = FALSE;
   // dpm($user_form);
   // unset($user_form['privatemsg']['pm_email_only_user']);
@@ -205,7 +251,7 @@ function models_forms_account_settings() {
   unset($user_form['field_first_name']);
   unset($user_form['field_surname']);
   unset($user_form['field_phone']);
-  unset($user_form['field_gender']);
+  //unset($user_form['field_gender']);
   unset($user_form['field_my_web']);
   unset($user_form['field_my_address']);
   // unset($user_form['field_my_bio']);
@@ -215,6 +261,9 @@ function models_forms_account_settings() {
   unset($user_form['picture']);
   unset($user_form['field_hb_type']);
   unset($user_form['field_i_am_a_']);
+  unset($user_form['field_my_listings']);
+  unset($user_form['field_my_posts']);
+//  unset($user_form['field_yf_subscription']);
 
   // unset($user_form['field_hb_ht']);
   // unset($user_form['field_hb_bt']);

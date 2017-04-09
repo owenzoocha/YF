@@ -135,9 +135,16 @@ function models_forms_menu() {
     'access callback' => 'user_is_logged_in',
     'file' => 'models_forms.personal_information.inc',
   );
-  $items['user/email/settings'] = array(
-    'title' => 'Email Settings',
-    'page callback' => 'models_forms_email_settings',
+//  $items['user/email/settings'] = array(
+//    'title' => 'Email Settings',
+//    'page callback' => 'models_forms_email_settings',
+//    // 'page arguments' =>  array('models_forms_personal_information_form', 2),
+//    'access callback' => 'user_is_logged_in',
+//    'file' => 'models_forms.personal_information.inc',
+//  );
+  $items['user/plan/settings'] = array(
+    'title' => 'Subscription Settings',
+    'page callback' => 'models_forms_subscription_settings',
     // 'page arguments' =>  array('models_forms_personal_information_form', 2),
     'access callback' => 'user_is_logged_in',
     'file' => 'models_forms.personal_information.inc',
@@ -199,6 +206,10 @@ function models_forms_theme($existing, $type, $theme, $path) {
     'overwrite_user_login' => array(
       'render element' => 'form',
       'template' => 'templates/login-form'
+    ),
+    'overwrite_subscription_form' => array(
+      'render element' => 'form',
+      'template' => 'templates/subscription-form'
     ),
     'overwrite_create_job' => array(
       'render element' => 'form',

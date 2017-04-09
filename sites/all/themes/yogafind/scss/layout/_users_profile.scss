@@ -8,8 +8,9 @@
 
   #hb-header {
     padding: 10px 0;
+    background: url("#{$imagePath}/pattern.png") 0px 0px no-repeat;
     .header-title {
-      margin: 15px 0;
+      margin: 25px 0;
     }
     .header-author-pic {
       .my-image {

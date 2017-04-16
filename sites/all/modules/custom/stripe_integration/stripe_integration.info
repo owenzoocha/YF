@@ -1,0 +1,4 @@
+name = Stripe Integration
+description = Stripe Integration for YogaFind
+package = YF
+core = 7.x

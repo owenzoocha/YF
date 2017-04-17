@@ -1,5 +1,272 @@
 <?php
 
 /**
- * @file stripe_integration.module
+ * @file stripe_integration.module.
  */
+
+
+/**
+ * Implements hook_menu().
+ */
+function stripe_integration_menu() {
+  $items = array();
+  $items['user/stripe-sign-up'] = array(
+    'title' => 'Stripe Sign Up',
+    'page callback' => 'stripe_integration_sign_up',
+    'access callback' => 'user_is_logged_in',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['user/subscribe/%'] = array(
+    'title' => 'Stripe Sign Up',
+    'page callback' => 'stripe_integration_subscribe',
+    'page arguments' => array(2),
+    'access callback' => 'user_is_logged_in',
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+/**
+ * Initiate Stripe calls.
+ */
+function stripe_integration_stripe_api_init() {
+  // TODO: Add API key to settings.
+  \Stripe\Stripe::setApiKey("sk_test_r1WiSqZbxNMycBepOWD4LSol");
+}
+
+/**
+ * Custom function to get user details in correct format for stripe API call.
+ */
+function stripe_integration_get_user_details() {
+
+  global $user;
+  $user_fields = user_load($user->uid);
+
+  $user_details = array();
+  $user_details['stripe_ref'] = FALSE;
+  $user_details['email'] = $user->mail;
+  $user_details['metadata'] = array(
+    'drupal_nid' => $user->uid,
+  );
+
+  // Check if already signed up.
+  if (isset($user_fields->field_stripe_reference) && !empty($user_fields->field_stripe_reference)) {
+    $user_details['stripe_ref'] = $user_fields->field_stripe_reference[LANGUAGE_NONE][0]['value'];
+  }
+
+  return $user_details;
+}
+
+/**
+ * Custom function to get user subscription details from stripe.
+ */
+function stripe_integration_get_subscriptions($customer_ref) {
+
+  stripe_integration_stripe_api_init();
+  $stripe_customer = \Stripe\Customer::retrieve($customer_ref);
+  $current_subscriptions = $stripe_customer->subscriptions;
+
+  $subscriptions = array();
+  foreach ($current_subscriptions->data as $current_subscription) {
+    $plan_id = $current_subscription->plan->id;
+    $subscription_id = $current_subscription->id;
+    $subscriptions[$plan_id][] = $subscription_id;
+  }
+
+  return $subscriptions;
+}
+
+/**
+ * Custom function to subscribe a user.
+ */
+function stripe_integration_subscribe($plan) {
+
+  $valid_plans = array(
+    'standard',
+    'premium',
+  );
+
+  if (!in_array($plan, $valid_plans)) {
+    return;
+  }
+
+  stripe_integration_stripe_api_init();
+  $user_info = stripe_integration_get_user_details();
+
+  try {
+
+    if ($user_info['stripe_ref']) {
+      // Already a customer. Update with payment details.
+      $customer = \Stripe\Customer::retrieve($user_info['stripe_ref']);
+      $customer->email = $_POST['stripeEmail'];
+      $customer->source = $_POST['stripeToken'];
+      $customer->save();
+    }
+    else {
+      // Create customer.
+      unset($user_info['stripe_ref']);
+
+      $user_info['email'] = $_POST['stripeEmail'];
+      $user_info['source'] = $_POST['stripeToken'];
+
+      $customer = \Stripe\Customer::create($user_info);
+
+      // Add stripe reference to user account.
+      $stripe_id = $customer->id;
+
+      global $user;
+      $user_obj = entity_metadata_wrapper('user', $user);
+      $user_obj->field_stripe_reference = $stripe_id;
+      $user_obj->save();
+    }
+
+    // Add subscription.
+    $subscription = \Stripe\Subscription::create(array(
+      'customer' => $customer->id,
+      'plan' => $plan,
+    ));
+
+    if ($subscription->id) {
+      // Successful.
+      // TODO: Store subscription ID against user? - create new table?
+      // TODO: Check code too?
+    }
+
+  }
+  catch (Exception $e) {
+    // Do something with errors.
+  }
+
+  drupal_goto('user/plan/settings');
+  return;
+}
+
+/**
+ * Custom function to sign up a user to stripe.
+ */
+function stripe_integration_sign_up() {
+
+//  if (isset($_POST['stripeToken'])) {
+//    $token  = $_POST['stripeToken'];
+//  }
+//  else {
+//    drupal_set_message(t('There has been an error in connecting to Stripe.'), 'error');
+//    drupal_goto('user/plan/settings');
+//    return;
+//  }
+//
+//  stripe_integration_stripe_api_init();
+//  $user_info = stripe_integration_get_user_details();
+//  $user_info['source'] = $token;
+//
+//  if ($user_info['stripe_ref']) {
+//    // Already a customer.
+//    var_dump('signed up');
+//  }
+//  else {
+//    // Create customer.
+//    unset($user_info['stripe_ref']);
+//    $customer = \Stripe\Customer::create($user_info);
+//
+//    // Add stripe reference to user account.
+//    $stripe_id = $customer->id;
+//
+//    global $user;
+//    $user_obj = entity_metadata_wrapper('user', $user);
+//    $user_obj->field_stripe_reference = $stripe_id;
+//    $user_obj->save();
+//
+//    $charge = \Stripe\Charge::create(array(
+//      'customer' => $customer->id,
+//      'amount'   => 50,
+//      'currency' => 'usd'
+//    ));
+//
+//    echo '<h1>Successfully charged $50.00!</h1>';
+//  }
+//
+//  drupal_goto('user/plan/settings');
+//  return;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function stripe_integration_form_alter(&$form, &$form_state, $form_id) {
+  // Add stripe sign up stuff to user plan settings form.
+  if ($form_id == 'user_profile_form' && current_path() == 'user/plan/settings') {
+    stripe_subscription_form($form);
+  }
+}
+
+function stripe_subscription_form(&$form) {
+  // Check user for Stripe info.
+  $user_info = stripe_integration_get_user_details();
+  if ($user_info['stripe_ref']) {
+
+    // Display days left etc.
+    $subscriptions = stripe_integration_get_subscriptions($user_info['stripe_ref']);
+
+    $standard_count = $premium_count = 0;
+    if (isset($subscriptions['standard'])) {
+      $standard_count = count($subscriptions['standard']);
+    }
+    if (isset($subscriptions['premium'])) {
+      $premium_count = count($subscriptions['premium']);
+    }
+
+    $info_markup = t('You have @standard-count standard subscription(s) and @premium-count premium subscription(s).', array(
+      '@standard-count' => $standard_count,
+      '@premium-count' => $premium_count,
+    ));
+
+    $form['stripe_subscription_info'] = array(
+      '#markup' => $info_markup,
+    );
+
+
+    // TODO: Show upgrade option?
+  }
+  else {
+    // Display sign up forms.
+    $info_markup = t('You have not yet signed up. Use the links below to choose your subscription!');
+
+    // Subscription form.
+    $standard_markup = '<form action="/user/subscribe/standard" method="POST">
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="pk_test_8ulZr1Q3aJHNdbLUo7EA8x2s"
+        data-image=""
+        data-name="' . t('Standard') . '"
+        data-description="' . t('Sign up for a standard account') . '"
+        data-amount="3000"
+        data-label="' . t('Standard') . '">
+      </script>
+    </form>';
+
+    $premium_markup = '<form action="/user/subscribe/premium" method="POST">
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="pk_test_8ulZr1Q3aJHNdbLUo7EA8x2s"
+        data-image=""
+        data-name="' . t('Premium') . '"
+        data-description="' . t('Sign up for a premium account') . '"
+        data-amount="6000"
+        data-label="' . t('Premium') . '">
+      </script>
+    </form>';
+
+    $form['stripe_subscription_info'] = array(
+      '#markup' => $info_markup,
+    );
+
+    $form['stripe_subscription_standard'] = array(
+      '#markup' => $standard_markup,
+    );
+
+    $form['stripe_subscription_premium'] = array(
+      '#markup' => $premium_markup,
+    );
+  }
+
+  return $form;
+}

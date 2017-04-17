@@ -604,8 +604,9 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
       $form['#submit'][] = 'models_forms_update_address';
     }
 
-    // Hide stripe info.
-    if (isset($form['field_stripe_reference'])) {
+    // Hide stripe info from users.
+    $form['field_stripe_reference']['#disabled'] = TRUE;
+    if (isset($form['field_stripe_reference']) && !user_access('administer users')) {
       $form['field_stripe_reference']['#access'] = FALSE;
     }
   }

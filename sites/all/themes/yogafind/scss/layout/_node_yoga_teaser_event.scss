@@ -1,7 +1,7 @@
 .view-yoga-event-lists,
 .view-yoga-searcher,
-.view-my-listing-s-,
-.view-user-blog-posts {
+.view-my-listing-s- {
+//.view-user-blog-posts {
   @include blocks();
   font-size: 14px;
   .views-row {
@@ -80,19 +80,6 @@
   }
 }
 
-.view-user-blog-posts {
-  .listing-link {
-    margin: 10px 0;
-  }
-  .views-row {
-    .event-teaser {
-      .event-info {
-        margin-right: 15px;
-      }
-    }
-  }
-}
-
 .view-yoga-searcher {
   .views-row {
     .event-teaser {
@@ -152,7 +139,7 @@
       bottom: 15px;
       right: 10px;
       font-weight: 300;
-      font-size: 11px;;
+      font-size: 12px;
     }
   }
 }

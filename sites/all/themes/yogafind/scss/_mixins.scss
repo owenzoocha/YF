@@ -1,6 +1,9 @@
 .greenify {
   background-color: rgba(180, 232, 141, 0.4);
   padding: 15px;
+  a {
+    font-weight: bold;
+  }
 }
 
 // Mixins

@@ -1,3 +1,25 @@
+.form-managed-file .image-widget-data {
+  float: none;
+  .droppable-image {
+    //float: none;
+    width: 100%;
+    border: 2px solid $blue;
+    border-radius: 8px;
+    font-weight: 300;
+  }
+}
+
+a.tabledrag-handle .handle {
+  height: 24px;
+  width: 24px;
+}
+
+.form-wrapper {
+  .panel-heading {
+    margin: 0;
+  }
+}
+
 .page-classes-add,
 .page-classes-edit {
   .form-item-title {
@@ -192,6 +214,7 @@ div.autocomplete-deluxe-throbber {
   .page-classes-add,
   .page-teacher-edit,
   .page-teacher-add,
+  .page-listing-instagram,
   .page-job-create {
     .main-container {
       width: 600px;

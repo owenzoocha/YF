@@ -231,6 +231,10 @@ function tweaks_block_info() {
     'info' => t('HBM - Job Client Faces'),
     'cache' => DRUPAL_CACHE_GLOBAL,
   );
+  $blocks['listing_instagram_feed'] = array(
+    'info' => t('YF - My Instagram feed'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
   return $blocks;
 }
 
@@ -264,6 +268,10 @@ function tweaks_block_view($delta = '') {
       $block['subject'] = t('Organiser');
       $block['content'] = theme('event_organiser_block');
       break;
+    case 'listing_instagram_feed':
+      $block['subject'] = t('Instagram Feed');
+      $block['content'] = theme('listing_instagram_feed');
+      break;
   }
   return $block;
 }
@@ -271,11 +279,11 @@ function tweaks_block_view($delta = '') {
 /**
  * Alert logged in user to how many days they have left to make a payment.
  */
-function tweaks_payment_due(){
+function tweaks_payment_due() {
   global $user;
   $uw = entity_metadata_wrapper('user', $user);
 
-  if (!$uw->field_yf_payment_complete->value()){
+  if (!$uw->field_yf_payment_complete->value()) {
 
     $joined = $uw->created->value();
     $joined_plus_3 = strtotime('+ 3 months', $joined);
@@ -289,14 +297,29 @@ function tweaks_payment_due(){
 //    dpm(date('d-m-Y', $joined_plus_3));
 //    dpm($days_diff);
 
-    if ($days_diff > 10) {
-      $msg = t('You have <strong>!days days</strong> remaining of your free trial, we will update you when payment is required, thanks :)', array('!days' => $days_diff));
+    if ($days_diff > 10 && $days_diff > 0) {
+      $msg = t('You have <strong>!days days</strong> remaining of your free *!plan* trial, we will update you when payment is required, thanks :)', array(
+        '!days' => $days_diff,
+        '!plan' => '<strong>' . $uw->field_yf_subscription->value() . ' plan</strong>',
+      ));
+    }
+    else if ($days_diff <= 0) {
+      $msg = t('Your free *!plan* trial has now expired, if you\'d like to continue using YogaFind on this plan please !link - otherwise, your subscription has been updated to our free plan, if this is ok - please !link2 to remove this message! :)', array(
+        '!days' => $days_diff,
+        '!link' => l('make your payment', 'node'),
+        '!link2' => l('confirm', 'user/plan/settings'),
+        '!plan' => '<strong>' . $uw->field_yf_subscription->value() . ' plan</strong>',
+      ));
     }
     else {
-      $msg = t('You have <strong>!days days</strong> remaining of your free trial, if you\'d like to continue using YogaFind please !link to make your payment, thanks :)', array('!days' => $days_diff, '!link' => l('click here', 'node')));
-
+      $msg = t('You have <strong>!days days</strong> remaining of your free *!plan* trial, if you\'d like to continue using YogaFind please !link to make your payment, thanks :)', array(
+        '!days' => $days_diff,
+        '!link' => l('click here', 'user/plan/settings'),
+        '!plan' => '<strong>' . $uw->field_yf_subscription->value() . ' plan</strong>',
+      ));
     }
-    return $msg;
+
+    return '<p class="greenify">' . $msg . '</p>';
 
   }
   else {
@@ -324,7 +347,31 @@ function tweaks_theme() {
     'event_organiser_block' => array(
       'template' => 'templates/event-organiser-block',
     ),
+    'listing_instagram_feed' => array(
+      'template' => 'templates/listing-instagram-feed',
+    ),
   );
+}
+
+/**
+ * Template preprocess for listing_instagram_feed.
+ */
+function template_preprocess_listing_instagram_feed(&$vars) {
+
+  if (is_numeric(arg(1))){
+    $nw = entity_metadata_wrapper('node', arg(1));
+    // if user has premium..
+
+    if ($nw->field_instagram_access_token->value() && $nw->field_instagram_user_id->value() && $nw->field_instagram_feed->value()) {
+      drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/instafeed.js/1.4.1/instafeed.min.js', 'external');
+      $instafeed['listing']['instagram'] = array(
+        'access_token' => $nw->field_instagram_access_token->value(),
+  //      'client_id' => FALSE,
+        'user_id' => $nw->field_instagram_user_id->value(),
+      );
+      drupal_add_js($instafeed, 'setting');
+    }
+  }
 }
 
 /**
@@ -519,7 +566,11 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['preview']['#access'] = FALSE;
   }
   if ($form_id == 'yoga_node_form') {
+
+    $form['field_yoga_event_dates']['#access'] = FALSE;
+
     if (strpos(current_path(), 'listing/add') !== FALSE) {
+
       unset($form['field_yoga_type']['und']['#options']['event']);
 
       // Build location taxonomy.
@@ -531,6 +582,10 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
       $form['field_yoga_type']['#access'] = FALSE;
     }
     if (strpos(current_path(), 'listing/') !== FALSE && is_numeric(arg(1))) {
+      $form['field_yoga_event_dates']['#access'] = FALSE;
+    }
+
+    if (strpos(current_path(), 'listing/instagram') !== FALSE && is_numeric(arg(2))) {
       $form['field_yoga_event_dates']['#access'] = FALSE;
     }
 
@@ -650,8 +705,14 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     unset($form['name']['#description']);
     unset($form['pass']['#description']);
     $signup_msg = '<ul class="user-info">';
-    $signup_msg .= '<li>' . t('Not yet registered? Get started now!') . ' ' . l('Sign up now <i class="material-icons">trending_flat</i>', 'user/register', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go')))) . '</li>';
-    $signup_msg .= '<li>' . t('I\'ve forgotten my password!') . ' ' . l('Reset it here<i class="material-icons">trending_flat</i>', 'user/register', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go')))) . '</li>';
+    $signup_msg .= '<li>' . t('Not yet registered? Get started now!') . ' ' . l('Sign up now <i class="material-icons">trending_flat</i>', 'user/register', array(
+        'html' => TRUE,
+        'attributes' => array('class' => array('a-link link-go'))
+      )) . '</li>';
+    $signup_msg .= '<li>' . t('I\'ve forgotten my password!') . ' ' . l('Reset it here<i class="material-icons">trending_flat</i>', 'user/register', array(
+        'html' => TRUE,
+        'attributes' => array('class' => array('a-link link-go'))
+      )) . '</li>';
     $signup_msg .= '</ul>';
     $form['actions']['submit']['#attributes'] = array('class' => array('btn-success'));
     $form['actions']['submit']['#suffix'] = $signup_msg;
@@ -668,7 +729,10 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'user_register_form') {
 
     $reg_text = '<h2>Welcome to YogaFind - getting started couldn\'t be easier!</br>Select your subscription and connect with us today</h2>';
-    $reg_text .= l('View our plans <i class="material-icons">trending_flat</i>', 'getting-started', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go btn-block')))) . '</li>';
+    $reg_text .= l('View our plans <i class="material-icons">trending_flat</i>', 'getting-started', array(
+        'html' => TRUE,
+        'attributes' => array('class' => array('a-link link-go btn-block'))
+      )) . '</li>';
     $form['intro_description'] = array(
       '#markup' => $reg_text,
       '#weight' => -10,
@@ -910,360 +974,23 @@ function tweaks_field_formatter_view($entity_type, $entity, $field, $instance, $
   return $build;
 }
 
-function models_block_view_alter(&$data, $block) {
-  // Client Requests block - secondary sidebar - job/*/requests
-  if ($block->bid == 369) {
+// Implements hook_block_list_alter().
+function tweaks_block_list_alter(&$blocks) {
+
+  // Hide the instagram feed block if disabled or no plan.
+  if (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2) && (strpos(drupal_get_path_alias(), 'studio/') !== FALSE || strpos(drupal_get_path_alias(), 'teacher/') !== FALSE)) {
+
     $nw = entity_metadata_wrapper('node', arg(1));
-    $block->title = $nw->field_hb_type->value() != 'personal' ? t('Client Requests') : t('Job Offers');
-  }
-}
 
-// Changing up the no-results messages.
-function tweaks_views_pre_render(&$view) {
-  if ($view->vid == 22) {
-    if ($view->build_info['title'] == 'Jobs tags rhs') {
-      $nw = entity_metadata_wrapper('node', arg(1));
-      if ($nw->getBundle() == 'job') {
-        if ($nw->field_hb_type->value()) {
-          if (!empty($view->result[0]->field_field_hb_gender)) {
-            foreach ($view->result[0]->field_field_hb_gender as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Male':
-                  $view->result[0]->field_field_hb_gender[$key]['rendered']['#markup'] = l('Male', 'search/type/' . $nw->field_hb_type->value() . '/gender/Male');
-                  break;
-                case 'Female':
-                  $view->result[0]->field_field_hb_gender[$key]['rendered']['#markup'] = l('Female', 'search/type/' . $nw->field_hb_type->value() . '/gender/Female');
-                  break;
-              };
-            }
-          }
-          if (!empty($view->result[0]->field_field_hb_bt)) {
-            foreach ($view->result[0]->field_field_hb_bt as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Make Up':
-                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Make Up', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Make Up');
-                  break;
-                case 'Eyelashes':
-                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Eyelashes', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Eyelashes');
-                  break;
-                case 'Eyebrows':
-                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Eyebrows', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Eyebrows');
-                  break;
-                case 'Nails':
-                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Nails', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Nails');
-                  break;
-                case 'Hair Removal':
-                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Hair Removal', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Hair Removal');
-                  break;
-                case 'Facial':
-                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Facial', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Facial');
-                  break;
-                case 'Massage':
-                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Massage', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Massage');
-                  break;
-                case 'Tanning':
-                  $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Tanning', 'search/type/' . $nw->field_hb_type->value() . '/beauty-treatment/' . 'Tanning');
-                  break;
-              };
-            }
-          }
-          if (!empty($view->result[0]->field_field_hb_ht)) {
-            foreach ($view->result[0]->field_field_hb_ht as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Cut':
-                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Cut', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Cut');
-                  break;
-                case 'Colour':
-                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Colour', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Colour');
-                  break;
-                case 'Blow dry':
-                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Blow Dry', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Blow dry');
-                  break;
-                case 'Set':
-                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Set', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Set');
-                  break;
-                case 'Hair Up Style':
-                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Hair Up Style', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Hair Up Style');
-                  break;
-                case 'Perm':
-                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Perm', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Perm');
-                  break;
-                case 'Permanent Straightening':
-                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Permanent Straightening', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Permanent Straightening');
-                  break;
-                case 'Extensions':
-                  $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Extensions', 'search/type/' . $nw->field_hb_type->value() . '/hair-treatment/' . 'Extensions');
-                  break;
-              };
-            }
-          }
-          if (!empty($view->result[0]->field_field_hb_ht_colour)) {
-            foreach ($view->result[0]->field_field_hb_ht_colour as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Baylayage':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Baylayage', 'search/type/hair/colour/' . 'Baylayage');
-                  break;
-                case 'Colour correction (dark to light)':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Colour correction (dark to light)', 'search/type/hair/colour/' . 'Colour correction (dark to light)');
-                  break;
-                case 'Colour correction (light to dark)':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Colour correction (light to dark)', 'search/type/hair/colour/' . 'Colour correction (light to dark)');
-                  break;
-                case 'Foils - full head':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Foils - full head', 'search/type/hair/colour/' . 'Foils - full head');
-                  break;
-                case 'Foils - 3/4 head':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Foils - 3/4 head', 'search/type/hair/colour/' . 'Foils - 3/4 head');
-                  break;
-                case 'Foils - 1/2 head':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Foils - 1/2 head', 'search/type/hair/colour/' . 'Foils - 1/2 head');
-                  break;
-                case 'Foils - partial':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Foils - partial', 'search/type/hair/colour/' . 'Foils - partial');
-                  break;
-                case 'Highlift tint regrowth':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Highlift tint regrowth', 'search/type/hair/colour/' . 'Highlift tint regrowth');
-                  break;
-                case 'Highlift tint full head':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Highlift tint full head', 'search/type/hair/colour/' . 'Highlift tint full head');
-                  break;
-                case 'Scalp bleach regrowth':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Scalp bleach regrowth', 'search/type/hair/colour/' . 'Scalp bleach regrowth');
-                  break;
-                case 'Scalp bleach full head':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Scalp bleach full head', 'search/type/hair/colour/' . 'Scalp bleach full head');
-                  break;
-                case 'Tint regrowth':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Tint regrowth', 'search/type/hair/colour/' . 'Tint regrowth');
-                  break;
-                case 'Tint full head':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Tint full head', 'search/type/hair/colour/' . 'Tint full head');
-                  break;
-                case 'Tint with foils':
-                  $view->result[0]->field_field_hb_ht_colour[$key]['rendered']['#markup'] = l('Tint with foils', 'search/type/hair/colour/' . 'Tint with foils');
-                  break;
-              }
-            }
-          }
-          if (!empty($view->result[0]->field_field_hb_ht_cut)) {
-            foreach ($view->result[0]->field_field_hb_ht_cut as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Child':
-                  $view->result[0]->field_field_hb_ht_cut[$key]['rendered']['#markup'] = l('Child', 'search/type/hair/cut/' . 'Child');
-                  break;
-                case 'Long':
-                  $view->result[0]->field_field_hb_ht_cut[$key]['rendered']['#markup'] = l('Long', 'search/type/hair/cut/' . 'Long');
-                  break;
-                case 'Medium':
-                  $view->result[0]->field_field_hb_ht_cut[$key]['rendered']['#markup'] = l('Medium', 'search/type/hair/cut/' . 'Medium');
-                  break;
-                case 'Mens':
-                  $view->result[0]->field_field_hb_ht_cut[$key]['rendered']['#markup'] = l('Mens', 'search/type/hair/cut/' . 'Mens');
-                  break;
-                case 'Short':
-                  $view->result[0]->field_field_hb_ht_cut[$key]['rendered']['#markup'] = l('Short', 'search/type/hair/cut/' . 'Short');
-                  break;
-
-              }
-            }
-          }
-          if (!empty($view->result[0]->field_field_hb_bt_eyebrows)) {
-            foreach ($view->result[0]->field_field_hb_bt_eyebrows as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Eyebrow extensions':
-                  $view->result[0]->field_field_hb_bt_eyebrows[$key]['rendered']['#markup'] = l('Eyebrow extensions', 'search/type/beauty/eyebrows/' . 'Eyebrow extensions');
-                  break;
-                case 'Eyebrow shaping':
-                  $view->result[0]->field_field_hb_bt_eyebrows[$key]['rendered']['#markup'] = l('Eyebrow shaping', 'search/type/beauty/eyebrows/' . 'Eyebrow shaping');
-                  break;
-                case 'Eyebrow tinting':
-                  $view->result[0]->field_field_hb_bt_eyebrows[$key]['rendered']['#markup'] = l('Eyebrow tinting', 'search/type/beauty/eyebrows/' . 'Eyebrow tinting');
-                  break;
-              }
-            }
-          }
-
-          if (!empty($view->result[0]->field_field_hb_bt_eyelashes)) {
-            foreach ($view->result[0]->field_field_hb_bt_eyelashes as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Eyelash extensions':
-                  $view->result[0]->field_field_hb_bt_eyelashes[$key]['rendered']['#markup'] = l('Eyelash extensions', 'search/type/beauty/eyelashes/' . 'Eyelash extensions');
-                  break;
-                case 'Eyelash perm':
-                  $view->result[0]->field_field_hb_bt_eyelashes[$key]['rendered']['#markup'] = l('Eyelash perm', 'search/type/beauty/eyelashes/' . 'Eyelash perm');
-                  break;
-                case 'Eyelash tinting':
-                  $view->result[0]->field_field_hb_bt_eyelashes[$key]['rendered']['#markup'] = l('Eyelash tinting', 'search/type/beauty/eyelashes/' . 'Eyelash tinting');
-                  break;
-              }
-            }
-          }
-
-          if (!empty($view->result[0]->field_field_hb_bt_facials)) {
-            foreach ($view->result[0]->field_field_hb_bt_facials as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Advanced':
-                  $view->result[0]->field_field_hb_bt_facials[$key]['rendered']['#markup'] = l('Advanced', 'search/type/beauty/facials/' . 'Advanced');
-                  break;
-                case 'Basic':
-                  $view->result[0]->field_field_hb_bt_facials[$key]['rendered']['#markup'] = l('Basic', 'search/type/beauty/facials/' . 'Basic');
-                  break;
-              }
-            }
-          }
-
-          if (!empty($view->result[0]->field_field_hb_bt_massage)) {
-            foreach ($view->result[0]->field_field_hb_bt_massage as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Relaxation':
-                  $view->result[0]->field_field_hb_bt_massage[$key]['rendered']['#markup'] = l('Relaxation', 'search/type/beauty/massage/' . 'Relaxation');
-                  break;
-                case 'Remedial':
-                  $view->result[0]->field_field_hb_bt_massage[$key]['rendered']['#markup'] = l('Remedial', 'search/type/beauty/massage/' . 'Remedial');
-                  break;
-              }
-            }
-          }
-
-          if (!empty($view->result[0]->field_field_hb_bt_makeup)) {
-            foreach ($view->result[0]->field_field_hb_bt_makeup as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Cosmetic tattooing':
-                  $view->result[0]->field_field_hb_bt_makeup[$key]['rendered']['#markup'] = l('Cosmetic tattooing', 'search/type/beauty/makeup/' . 'Cosmetic tattooing');
-                  break;
-                case 'Make up application':
-                  $view->result[0]->field_field_hb_bt_makeup[$key]['rendered']['#markup'] = l('Make up application', 'search/type/beauty/makeup/' . 'Make up application');
-                  break;
-              }
-            }
-          }
-
-          if (!empty($view->result[0]->field_field_hb_bt_nails)) {
-            foreach ($view->result[0]->field_field_hb_bt_nails as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Acrylic':
-                  $view->result[0]->field_field_hb_bt_nails[$key]['rendered']['#markup'] = l('Acrylic', 'search/type/beauty/nails/' . 'Acrylic');
-                  break;
-                case 'Gel':
-                  $view->result[0]->field_field_hb_bt_nails[$key]['rendered']['#markup'] = l('Gel', 'search/type/beauty/nails/' . 'Gel');
-                  break;
-                case 'Manicure':
-                  $view->result[0]->field_field_hb_bt_nails[$key]['rendered']['#markup'] = l('Manicure', 'search/type/beauty/nails/' . 'Manicure');
-                  break;
-                case 'Pedicure':
-                  $view->result[0]->field_field_hb_bt_nails[$key]['rendered']['#markup'] = l('Pedicure', 'search/type/beauty/nails/' . 'Pedicure');
-                  break;
-                case 'Shallac':
-                  $view->result[0]->field_field_hb_bt_nails[$key]['rendered']['#markup'] = l('Shallac', 'search/type/beauty/nails/' . 'Shallac');
-                  break;
-              }
-            }
-          }
-
-          if (!empty($view->result[0]->field_field_hb_bt_waxing)) {
-            foreach ($view->result[0]->field_field_hb_bt_waxing as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Laser':
-                  $view->result[0]->field_field_hb_bt_waxing[$key]['rendered']['#markup'] = l('Laser', 'search/type/beauty/waxing/' . 'Laser');
-                  break;
-                case 'Threading':
-                  $view->result[0]->field_field_hb_bt_waxing[$key]['rendered']['#markup'] = l('Threading', 'search/type/beauty/waxing/' . 'Threading');
-                  break;
-                case 'Waxing':
-                  $view->result[0]->field_field_hb_bt_waxing[$key]['rendered']['#markup'] = l('Waxing', 'search/type/beauty/waxing/' . 'Waxing');
-                  break;
-              }
-            }
-          }
-
-          if (!empty($view->result[0]->field_field_hb_bt_tanning)) {
-            foreach ($view->result[0]->field_field_hb_bt_tanning as $key => $value) {
-              switch ($value['raw']['value']) {
-                case 'Spray Tanning':
-                  $view->result[0]->field_field_hb_bt_tanning[$key]['rendered']['#markup'] = l('Spray Tanning', 'search/type/beauty/tanning/' . 'Spray Tanning');
-                  break;
-              }
-            }
-          }
-        }
-
-        // dpm($view);
-      }
+    // Hide classes block on free plan.
+    if ($nw->author->field_yf_subscription->value() == 'free') {
+      $blocks[480]->region = BLOCK_REGION_NONE;
     }
-  }
 
-  // Interests on user profiles
-  if ($view->vid == 21) {
-    if ($view->build_info['title'] == 'Interests') {
-      if (!empty($view->result[0]->field_field_hb_bt)) {
-        foreach ($view->result[0]->field_field_hb_bt as $key => $value) {
-          switch ($value['raw']['value']) {
-            case 'Make Up':
-              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Make Up', 'search/type/beauty/beauty-treatment/' . 'Make Up');
-              break;
-            case 'Eyelashes':
-              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Eyelashes', 'search/type/beauty/beauty-treatment/' . 'Eyelashes');
-              break;
-            case 'Eyebrows':
-              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Eyebrows', 'search/type/beauty/beauty-treatment/' . 'Eyebrows');
-              break;
-            case 'Nails':
-              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Nails', 'search/type/beauty/beauty-treatment/' . 'Nails');
-              break;
-            case 'Hair Removal':
-              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Hair Removal', 'search/type/beauty/beauty-treatment/' . 'Hair Removal');
-              break;
-            case 'Facial':
-              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Facial', 'search/type/beauty/beauty-treatment/' . 'Facial');
-              break;
-            case 'Massage':
-              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Massage', 'search/type/beauty/beauty-treatment/' . 'Massage');
-              break;
-            case 'Tanning':
-              $view->result[0]->field_field_hb_bt[$key]['rendered']['#markup'] = l('Tanning', 'search/type/beauty/beauty-treatment/' . 'Tanning');
-              break;
-          };
-        }
-      }
-      if (!empty($view->result[0]->field_field_hb_ht)) {
-        foreach ($view->result[0]->field_field_hb_ht as $key => $value) {
-          switch ($value['raw']['value']) {
-            case 'Cut':
-              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Cut', 'search/type/hair/hair-treatment/' . 'Cut');
-              break;
-            case 'Colour':
-              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Colour', 'search/type/hair/hair-treatment/' . 'Colour');
-              break;
-            case 'Blow dry':
-              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Blow Dry', 'search/type/hair/hair-treatment/' . 'Blow dry');
-              break;
-            case 'Set':
-              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Set', 'search/type/hair/hair-treatment/' . 'Set');
-              break;
-            case 'Hair Up Style':
-              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Hair Up Style', 'search/type/hair/hair-treatment/' . 'Hair Up Style');
-              break;
-            case 'Perm':
-              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Perm', 'search/type/hair/hair-treatment/' . 'Perm');
-              break;
-            case 'Permanent Straightening':
-              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Permanent Straightening', 'search/type/hair/hair-treatment/' . 'Permanent Straightening');
-              break;
-            case 'Extensions':
-              $view->result[0]->field_field_hb_ht[$key]['rendered']['#markup'] = l('Extensions', 'search/type/hair/hair-treatment/' . 'Extensions');
-              break;
-          };
-        }
-      }
+    if (!$nw->field_instagram_feed->value() || ($nw->author->field_yf_subscription->value() == 'free' && $nw->author->field_yf_subscription->value() == 'standard' )) {
+      // OR CHECK THE USER PLAN!!
+      $blocks[555]->region = BLOCK_REGION_NONE;
     }
-  }
-
-  if ($view->name == 'job_requests_block') {
-    $nw = entity_metadata_wrapper('node', arg(1));
-    $no_views_text = '<h3>' . t('Nothing yet!') . '</h3>';
-    $no_views_text .= $nw->field_hb_type->value() != 'personal' ? '<p>' .
-      t('There are no requests yet, keep an eye on your !jobs page and check back soon!', array('!jobs' => l('jobs', 'my-jobs', array('attributes' => array('class' => array('a-link')))))) . '</p>' : '<p>' . t('There have been no job offers yet, keep an eye on your !jobs page and check back soon!', array('!jobs' => l('jobs', 'my-jobs', array('attributes' => array('class' => array('a-link')))))) . '</p>';
-    $view->empty['area']->options['content'] = $no_views_text;
   }
 }
 

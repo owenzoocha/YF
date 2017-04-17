@@ -5736,6 +5736,8 @@ button.close {
 .greenify {
   background-color: rgba(180, 232, 141, 0.4);
   padding: 15px; }
+  .greenify a {
+    font-weight: bold; }
 
 html,
 body {
@@ -5744,6 +5746,10 @@ body {
   html.no-scroll,
   body.no-scroll {
     overflow: hidden !important; }
+
+#tinymce.mce-content-body {
+  background: #fff;
+  padding: 15px; }
 
 .btn-purple {
   color: #fff;
@@ -5795,9 +5801,9 @@ body {
   border: 1px dashed #6F73D2;
   padding: 30px; }
 
-.node-type-article .field-name-body a {
+article a {
   color: #6F73D2;
-  font-weight: 500; }
+  font-weight: bold; }
 
 .view .view-header .btn-group {
   visibility: hidden; }
@@ -5851,7 +5857,9 @@ a.link-go i {
   transition: 0.2s ease all; }
 
 a.link-go:hover i {
-  padding-left: 5px; }
+  -webkit-transform: translateX(3px);
+      -ms-transform: translateX(3px);
+          transform: translateX(3px); }
 
 h1, h2, h3, p {
   -webkit-font-smoothing: antialiased; }
@@ -5860,11 +5868,15 @@ h1, h2, h3, h4 {
   font-weight: 300; }
 
 h2 {
-  font-size: 20px;
+  font-size: 22px;
   margin-bottom: 10px;
   padding-bottom: 5px;
   margin-top: 10px;
   border-bottom: 1px solid #e7eaeb; }
+
+h3 {
+  font-size: 18px;
+  color: #6F73D2; }
 
 input.form-text {
   border-radius: 0;
@@ -6333,9 +6345,26 @@ body #hb-header.normal-header,
   padding: 2px 5px;
   border-radius: 4px; }
 
+.node-type-yoga #instafeed a,
+.node-type-article #instafeed a,
+.page-instructor #instafeed a,
+.page-user #instafeed a,
+.page-studio #instafeed a {
+  float: left;
+  width: 16.6%;
+  border: 1px solid #fff; }
+  .node-type-yoga #instafeed a img,
+  .node-type-article #instafeed a img,
+  .page-instructor #instafeed a img,
+  .page-user #instafeed a img,
+  .page-studio #instafeed a img {
+    width: 100%;
+    height: auto; }
+
 .node-type-yoga #block-views-jobs-rhs-block-4,
 .node-type-article #block-views-jobs-rhs-block-4,
 .page-instructor #block-views-jobs-rhs-block-4,
+.page-user #block-views-jobs-rhs-block-4,
 .page-studio #block-views-jobs-rhs-block-4 {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
   background-color: white;
@@ -6348,6 +6377,7 @@ body #hb-header.normal-header,
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-label.small-label,
   .node-type-article #block-views-jobs-rhs-block-4 .views-label.small-label,
   .page-instructor #block-views-jobs-rhs-block-4 .views-label.small-label,
+  .page-user #block-views-jobs-rhs-block-4 .views-label.small-label,
   .page-studio #block-views-jobs-rhs-block-4 .views-label.small-label {
     font-size: 20px;
     display: block;
@@ -6357,11 +6387,13 @@ body #hb-header.normal-header,
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
   .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
+  .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates {
     margin-top: 15px; }
     .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates span,
     .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates span,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates span,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates span,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates span {
       font-weight: 300; }
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-location,
@@ -6379,6 +6411,11 @@ body #hb-header.normal-header,
   .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-link,
   .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1,
   .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
+  .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-location,
+  .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-number,
+  .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-link,
+  .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1,
+  .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-number,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-link,
@@ -6424,6 +6461,16 @@ body #hb-header.normal-header,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1:after,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:before,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:after,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:before,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:after,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-number:before,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-number:after,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-link:before,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-link:after,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1:before,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1:after,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:before,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:after,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:before,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:after,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-number:before,
@@ -6451,6 +6498,11 @@ body #hb-header.normal-header,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-link:after,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1:after,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:after,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:after,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-number:after,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-link:after,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1:after,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates:after,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location:after,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-number:after,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-link:after,
@@ -6472,6 +6524,11 @@ body #hb-header.normal-header,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-link .field-content,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1 .field-content,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates .field-content,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-location .field-content,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-number .field-content,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-link .field-content,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1 .field-content,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates .field-content,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location .field-content,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-number .field-content,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-link .field-content,
@@ -6493,6 +6550,11 @@ body #hb-header.normal-header,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-link a,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1 a,
     .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates a,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-location a,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-number a,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-link a,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-1 a,
+    .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-dates a,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location a,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-number a,
     .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-link a,
@@ -6503,12 +6565,14 @@ body #hb-header.normal-header,
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-location p,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-location p,
   .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-location p,
+  .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-location p,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location p {
     margin: 0;
     -webkit-font-smoothing: initial; }
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-field-yoga-location i,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-location i,
   .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-location i,
+  .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-location i,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-location i {
     display: none; }
   .node-type-yoga #block-views-jobs-rhs-block-4 .views-field-body,
@@ -6517,6 +6581,8 @@ body #hb-header.normal-header,
   .node-type-article #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-include,
   .page-instructor #block-views-jobs-rhs-block-4 .views-field-body,
   .page-instructor #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-include,
+  .page-user #block-views-jobs-rhs-block-4 .views-field-body,
+  .page-user #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-include,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-body,
   .page-studio #block-views-jobs-rhs-block-4 .views-field-field-yoga-event-price-include {
     padding: 10px 0;
@@ -6525,6 +6591,7 @@ body #hb-header.normal-header,
 .node-type-yoga #hb-header,
 .node-type-article #hb-header,
 .page-instructor #hb-header,
+.page-user #hb-header,
 .page-studio #hb-header {
   height: 310px;
   margin-top: 15px;
@@ -6532,17 +6599,20 @@ body #hb-header.normal-header,
   .node-type-yoga #hb-header .header-title h1,
   .node-type-article #hb-header .header-title h1,
   .page-instructor #hb-header .header-title h1,
+  .page-user #hb-header .header-title h1,
   .page-studio #hb-header .header-title h1 {
     padding: 105px 0 20px; }
   .node-type-yoga #hb-header .header-author-pic .my-image,
   .node-type-article #hb-header .header-author-pic .my-image,
   .page-instructor #hb-header .header-author-pic .my-image,
+  .page-user #hb-header .header-author-pic .my-image,
   .page-studio #hb-header .header-author-pic .my-image {
     width: 170px;
     margin: 40px 0 0; }
   .node-type-yoga #hb-header .yoga-intro,
   .node-type-article #hb-header .yoga-intro,
   .page-instructor #hb-header .yoga-intro,
+  .page-user #hb-header .yoga-intro,
   .page-studio #hb-header .yoga-intro {
     color: #272D2D;
     text-shadow: none;
@@ -6550,35 +6620,41 @@ body #hb-header.normal-header,
     .node-type-yoga #hb-header .yoga-intro .item-list h3,
     .node-type-article #hb-header .yoga-intro .item-list h3,
     .page-instructor #hb-header .yoga-intro .item-list h3,
+    .page-user #hb-header .yoga-intro .item-list h3,
     .page-studio #hb-header .yoga-intro .item-list h3 {
       display: none; }
     .node-type-yoga #hb-header .yoga-intro span,
     .node-type-article #hb-header .yoga-intro span,
     .page-instructor #hb-header .yoga-intro span,
+    .page-user #hb-header .yoga-intro span,
     .page-studio #hb-header .yoga-intro span {
       padding: 3px 0;
       display: inline-block; }
     .node-type-yoga #hb-header .yoga-intro a,
     .node-type-article #hb-header .yoga-intro a,
     .page-instructor #hb-header .yoga-intro a,
+    .page-user #hb-header .yoga-intro a,
     .page-studio #hb-header .yoga-intro a {
       display: inline-block;
       margin-right: 3px; }
     .node-type-yoga #hb-header .yoga-intro .btn,
     .node-type-article #hb-header .yoga-intro .btn,
     .page-instructor #hb-header .yoga-intro .btn,
+    .page-user #hb-header .yoga-intro .btn,
     .page-studio #hb-header .yoga-intro .btn {
       font-size: 12px;
       letter-spacing: 0; }
   .node-type-yoga #hb-header.normal-header,
   .node-type-article #hb-header.normal-header,
   .page-instructor #hb-header.normal-header,
+  .page-user #hb-header.normal-header,
   .page-studio #hb-header.normal-header {
     background-color: #f8f8f8; }
 
 .node-type-yoga #page-header-bg,
 .node-type-article #page-header-bg,
 .page-instructor #page-header-bg,
+.page-user #page-header-bg,
 .page-studio #page-header-bg {
   height: 320px;
   width: 1000px;
@@ -6590,6 +6666,7 @@ body #hb-header.normal-header,
   .node-type-yoga #page-header-bg .text-bg,
   .node-type-article #page-header-bg .text-bg,
   .page-instructor #page-header-bg .text-bg,
+  .page-user #page-header-bg .text-bg,
   .page-studio #page-header-bg .text-bg {
     position: absolute;
     width: 100%;
@@ -6601,6 +6678,7 @@ body #hb-header.normal-header,
 .node-type-yoga .col-sm-3 .region-sidebar-second .material-icons,
 .node-type-article .col-sm-3 .region-sidebar-second .material-icons,
 .page-instructor .col-sm-3 .region-sidebar-second .material-icons,
+.page-user .col-sm-3 .region-sidebar-second .material-icons,
 .page-studio .col-sm-3 .region-sidebar-second .material-icons {
   font-size: 16px;
   vertical-align: middle; }
@@ -6608,21 +6686,25 @@ body #hb-header.normal-header,
 .node-type-yoga .col-sm-3 .region-sidebar-second .block,
 .node-type-article .col-sm-3 .region-sidebar-second .block,
 .page-instructor .col-sm-3 .region-sidebar-second .block,
+.page-user .col-sm-3 .region-sidebar-second .block,
 .page-studio .col-sm-3 .region-sidebar-second .block {
   padding: 5px; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block h2,
   .node-type-article .col-sm-3 .region-sidebar-second .block h2,
   .page-instructor .col-sm-3 .region-sidebar-second .block h2,
+  .page-user .col-sm-3 .region-sidebar-second .block h2,
   .page-studio .col-sm-3 .region-sidebar-second .block h2 {
     padding: 0 5px; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block .views-field-field-hb-geofield,
   .node-type-article .col-sm-3 .region-sidebar-second .block .views-field-field-hb-geofield,
   .page-instructor .col-sm-3 .region-sidebar-second .block .views-field-field-hb-geofield,
+  .page-user .col-sm-3 .region-sidebar-second .block .views-field-field-hb-geofield,
   .page-studio .col-sm-3 .region-sidebar-second .block .views-field-field-hb-geofield {
     margin-bottom: 5px; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block#block-views-jobs-rhs-block ul,
   .node-type-article .col-sm-3 .region-sidebar-second .block#block-views-jobs-rhs-block ul,
   .page-instructor .col-sm-3 .region-sidebar-second .block#block-views-jobs-rhs-block ul,
+  .page-user .col-sm-3 .region-sidebar-second .block#block-views-jobs-rhs-block ul,
   .page-studio .col-sm-3 .region-sidebar-second .block#block-views-jobs-rhs-block ul {
     border-bottom: 1px solid #E7EAEB; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block p, .node-type-yoga .col-sm-3 .region-sidebar-second .block ul,
@@ -6630,6 +6712,8 @@ body #hb-header.normal-header,
   .node-type-article .col-sm-3 .region-sidebar-second .block ul,
   .page-instructor .col-sm-3 .region-sidebar-second .block p,
   .page-instructor .col-sm-3 .region-sidebar-second .block ul,
+  .page-user .col-sm-3 .region-sidebar-second .block p,
+  .page-user .col-sm-3 .region-sidebar-second .block ul,
   .page-studio .col-sm-3 .region-sidebar-second .block p,
   .page-studio .col-sm-3 .region-sidebar-second .block ul {
     font-size: 14px;
@@ -6641,17 +6725,21 @@ body #hb-header.normal-header,
     .node-type-article .col-sm-3 .region-sidebar-second .block ul a,
     .page-instructor .col-sm-3 .region-sidebar-second .block p a,
     .page-instructor .col-sm-3 .region-sidebar-second .block ul a,
+    .page-user .col-sm-3 .region-sidebar-second .block p a,
+    .page-user .col-sm-3 .region-sidebar-second .block ul a,
     .page-studio .col-sm-3 .region-sidebar-second .block p a,
     .page-studio .col-sm-3 .region-sidebar-second .block ul a {
       color: #6F73D2; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block p,
   .node-type-article .col-sm-3 .region-sidebar-second .block p,
   .page-instructor .col-sm-3 .region-sidebar-second .block p,
+  .page-user .col-sm-3 .region-sidebar-second .block p,
   .page-studio .col-sm-3 .region-sidebar-second .block p {
     border-bottom: 1px solid #E7EAEB; }
     .node-type-yoga .col-sm-3 .region-sidebar-second .block p.feedback-note,
     .node-type-article .col-sm-3 .region-sidebar-second .block p.feedback-note,
     .page-instructor .col-sm-3 .region-sidebar-second .block p.feedback-note,
+    .page-user .col-sm-3 .region-sidebar-second .block p.feedback-note,
     .page-studio .col-sm-3 .region-sidebar-second .block p.feedback-note {
       border-bottom: none;
       border-top: 1px solid #E7EAEB;
@@ -6659,22 +6747,26 @@ body #hb-header.normal-header,
   .node-type-yoga .col-sm-3 .region-sidebar-second .block li,
   .node-type-article .col-sm-3 .region-sidebar-second .block li,
   .page-instructor .col-sm-3 .region-sidebar-second .block li,
+  .page-user .col-sm-3 .region-sidebar-second .block li,
   .page-studio .col-sm-3 .region-sidebar-second .block li {
     list-style: none; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block .views-field-field-yoga-link p,
   .node-type-article .col-sm-3 .region-sidebar-second .block .views-field-field-yoga-link p,
   .page-instructor .col-sm-3 .region-sidebar-second .block .views-field-field-yoga-link p,
+  .page-user .col-sm-3 .region-sidebar-second .block .views-field-field-yoga-link p,
   .page-studio .col-sm-3 .region-sidebar-second .block .views-field-field-yoga-link p {
     border-bottom: none; }
   .node-type-yoga .col-sm-3 .region-sidebar-second .block .views-field-title,
   .node-type-article .col-sm-3 .region-sidebar-second .block .views-field-title,
   .page-instructor .col-sm-3 .region-sidebar-second .block .views-field-title,
+  .page-user .col-sm-3 .region-sidebar-second .block .views-field-title,
   .page-studio .col-sm-3 .region-sidebar-second .block .views-field-title {
     font-size: 18px; }
 
 .node-type-yoga .col-sm-3 #block-views-jobs-rhs-block-3 .open-link,
 .node-type-article .col-sm-3 #block-views-jobs-rhs-block-3 .open-link,
 .page-instructor .col-sm-3 #block-views-jobs-rhs-block-3 .open-link,
+.page-user .col-sm-3 #block-views-jobs-rhs-block-3 .open-link,
 .page-studio .col-sm-3 #block-views-jobs-rhs-block-3 .open-link {
   border: none; }
 
@@ -6684,6 +6776,8 @@ body #hb-header.normal-header,
 .node-type-article .col-sm-3 #block-tweaks-job-client-faces,
 .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1,
 .page-instructor .col-sm-3 #block-tweaks-job-client-faces,
+.page-user .col-sm-3 #block-views-jobs-rhs-block-1,
+.page-user .col-sm-3 #block-tweaks-job-client-faces,
 .page-studio .col-sm-3 #block-views-jobs-rhs-block-1,
 .page-studio .col-sm-3 #block-tweaks-job-client-faces {
   box-shadow: none;
@@ -6695,6 +6789,8 @@ body #hb-header.normal-header,
   .node-type-article .col-sm-3 #block-tweaks-job-client-faces .views-field-field-yoga-style,
   .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-field-yoga-style,
   .page-instructor .col-sm-3 #block-tweaks-job-client-faces .views-field-field-yoga-style,
+  .page-user .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-field-yoga-style,
+  .page-user .col-sm-3 #block-tweaks-job-client-faces .views-field-field-yoga-style,
   .page-studio .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-field-yoga-style,
   .page-studio .col-sm-3 #block-tweaks-job-client-faces .views-field-field-yoga-style {
     clear: left; }
@@ -6704,6 +6800,8 @@ body #hb-header.normal-header,
   .node-type-article .col-sm-3 #block-tweaks-job-client-faces .views-field-name,
   .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name,
   .page-instructor .col-sm-3 #block-tweaks-job-client-faces .views-field-name,
+  .page-user .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name,
+  .page-user .col-sm-3 #block-tweaks-job-client-faces .views-field-name,
   .page-studio .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name,
   .page-studio .col-sm-3 #block-tweaks-job-client-faces .views-field-name {
     padding: 15px 0; }
@@ -6713,6 +6811,8 @@ body #hb-header.normal-header,
     .node-type-article .col-sm-3 #block-tweaks-job-client-faces .views-field-name a,
     .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name a,
     .page-instructor .col-sm-3 #block-tweaks-job-client-faces .views-field-name a,
+    .page-user .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name a,
+    .page-user .col-sm-3 #block-tweaks-job-client-faces .views-field-name a,
     .page-studio .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-name a,
     .page-studio .col-sm-3 #block-tweaks-job-client-faces .views-field-name a {
       font-weight: 300; }
@@ -6722,6 +6822,8 @@ body #hb-header.normal-header,
   .node-type-article .col-sm-3 #block-tweaks-job-client-faces .views-field-picture,
   .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture,
   .page-instructor .col-sm-3 #block-tweaks-job-client-faces .views-field-picture,
+  .page-user .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture,
+  .page-user .col-sm-3 #block-tweaks-job-client-faces .views-field-picture,
   .page-studio .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture,
   .page-studio .col-sm-3 #block-tweaks-job-client-faces .views-field-picture {
     width: 70px;
@@ -6733,49 +6835,17 @@ body #hb-header.normal-header,
     .node-type-article .col-sm-3 #block-tweaks-job-client-faces .views-field-picture img,
     .page-instructor .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture img,
     .page-instructor .col-sm-3 #block-tweaks-job-client-faces .views-field-picture img,
+    .page-user .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture img,
+    .page-user .col-sm-3 #block-tweaks-job-client-faces .views-field-picture img,
     .page-studio .col-sm-3 #block-views-jobs-rhs-block-1 .views-field-picture img,
     .page-studio .col-sm-3 #block-tweaks-job-client-faces .views-field-picture img {
       border-radius: 50%;
       border: 3px solid #fff; }
 
-.node-type-yoga .col-sm-3 #block-block-10 ul li a,
-.node-type-article .col-sm-3 #block-block-10 ul li a,
-.page-instructor .col-sm-3 #block-block-10 ul li a,
-.page-studio .col-sm-3 #block-block-10 ul li a {
-  padding: 5px 10px;
-  position: relative;
-  display: block;
-  margin-bottom: 1px;
-  text-decoration: none;
-  color: #272D2D;
-  background-color: rgba(111, 115, 210, 0.08);
-  transition: 0.2s ease all; }
-  .node-type-yoga .col-sm-3 #block-block-10 ul li a i,
-  .node-type-article .col-sm-3 #block-block-10 ul li a i,
-  .page-instructor .col-sm-3 #block-block-10 ul li a i,
-  .page-studio .col-sm-3 #block-block-10 ul li a i {
-    vertical-align: middle; }
-  .node-type-yoga .col-sm-3 #block-block-10 ul li a:hover,
-  .node-type-article .col-sm-3 #block-block-10 ul li a:hover,
-  .page-instructor .col-sm-3 #block-block-10 ul li a:hover,
-  .page-studio .col-sm-3 #block-block-10 ul li a:hover {
-    padding-left: 13px; }
-    .node-type-yoga .col-sm-3 #block-block-10 ul li a:hover:after,
-    .node-type-article .col-sm-3 #block-block-10 ul li a:hover:after,
-    .page-instructor .col-sm-3 #block-block-10 ul li a:hover:after,
-    .page-studio .col-sm-3 #block-block-10 ul li a:hover:after {
-      transition: 0.2s ease all;
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      height: 100%;
-      width: 2px;
-      background-color: #6F73D2; }
-
 .node-type-yoga .node-job .job-content,
 .node-type-article .node-job .job-content,
 .page-instructor .node-job .job-content,
+.page-user .node-job .job-content,
 .page-studio .node-job .job-content {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
   background-color: white;
@@ -6788,12 +6858,14 @@ body #hb-header.normal-header,
 .node-type-yoga .node-job .alert,
 .node-type-article .node-job .alert,
 .page-instructor .node-job .alert,
+.page-user .node-job .alert,
 .page-studio .node-job .alert {
   margin-bottom: 15px; }
 
 .node-type-yoga .job-lhs,
 .node-type-article .job-lhs,
 .page-instructor .job-lhs,
+.page-user .job-lhs,
 .page-studio .job-lhs {
   padding-bottom: 60px !important; }
 
@@ -6801,12 +6873,14 @@ body #hb-header.normal-header,
   .node-type-yoga .container,
   .node-type-article .container,
   .page-instructor .container,
+  .page-user .container,
   .page-studio .container {
     width: 970px; } }
 
 .node-type-yoga .job-info,
 .node-type-article .job-info,
 .page-instructor .job-info,
+.page-user .job-info,
 .page-studio .job-info {
   font-size: 14px;
   margin-top: 15px;
@@ -6821,17 +6895,20 @@ body #hb-header.normal-header,
 .node-type-yoga .hb-rhs-job-button,
 .node-type-article .hb-rhs-job-button,
 .page-instructor .hb-rhs-job-button,
+.page-user .hb-rhs-job-button,
 .page-studio .hb-rhs-job-button {
   padding-top: 5px;
   border-top: 1px solid #e7eaeb; }
   .node-type-yoga .hb-rhs-job-button a,
   .node-type-article .hb-rhs-job-button a,
   .page-instructor .hb-rhs-job-button a,
+  .page-user .hb-rhs-job-button a,
   .page-studio .hb-rhs-job-button a {
     position: relative; }
     .node-type-yoga .hb-rhs-job-button a:after,
     .node-type-article .hb-rhs-job-button a:after,
     .page-instructor .hb-rhs-job-button a:after,
+    .page-user .hb-rhs-job-button a:after,
     .page-studio .hb-rhs-job-button a:after {
       content: "";
       font-family: FontAwesome;
@@ -6847,12 +6924,14 @@ body #hb-header.normal-header,
     .node-type-yoga .hb-rhs-job-button a:hover:after,
     .node-type-article .hb-rhs-job-button a:hover:after,
     .page-instructor .hb-rhs-job-button a:hover:after,
+    .page-user .hb-rhs-job-button a:hover:after,
     .page-studio .hb-rhs-job-button a:hover:after {
       right: 8%; }
 
 .node-type-yoga .st-wrapper #block-sharethis-sharethis-block,
 .node-type-article .st-wrapper #block-sharethis-sharethis-block,
 .page-instructor .st-wrapper #block-sharethis-sharethis-block,
+.page-user .st-wrapper #block-sharethis-sharethis-block,
 .page-studio .st-wrapper #block-sharethis-sharethis-block {
   padding: 15px;
   background-color: #F5F7F8;
@@ -6861,11 +6940,13 @@ body #hb-header.normal-header,
 .node-type-yoga .field-name-field-hb-geofield .field-items,
 .node-type-article .field-name-field-hb-geofield .field-items,
 .page-instructor .field-name-field-hb-geofield .field-items,
+.page-user .field-name-field-hb-geofield .field-items,
 .page-studio .field-name-field-hb-geofield .field-items {
   font-weight: 300; }
   .node-type-yoga .field-name-field-hb-geofield .field-items .field-item,
   .node-type-article .field-name-field-hb-geofield .field-items .field-item,
   .page-instructor .field-name-field-hb-geofield .field-items .field-item,
+  .page-user .field-name-field-hb-geofield .field-items .field-item,
   .page-studio .field-name-field-hb-geofield .field-items .field-item {
     float: none;
     padding: 0;
@@ -6876,17 +6957,20 @@ body #hb-header.normal-header,
 .node-type-yoga .view-job-requests-block .panel,
 .node-type-article .view-job-requests-block .panel,
 .page-instructor .view-job-requests-block .panel,
+.page-user .view-job-requests-block .panel,
 .page-studio .view-job-requests-block .panel {
   border: none;
   box-shadow: none; }
   .node-type-yoga .view-job-requests-block .panel .panel-heading,
   .node-type-article .view-job-requests-block .panel .panel-heading,
   .page-instructor .view-job-requests-block .panel .panel-heading,
+  .page-user .view-job-requests-block .panel .panel-heading,
   .page-studio .view-job-requests-block .panel .panel-heading {
     display: none; }
   .node-type-yoga .view-job-requests-block .panel .panel-body,
   .node-type-article .view-job-requests-block .panel .panel-body,
   .page-instructor .view-job-requests-block .panel .panel-body,
+  .page-user .view-job-requests-block .panel .panel-body,
   .page-studio .view-job-requests-block .panel .panel-body {
     padding: 0; }
 
@@ -6895,6 +6979,8 @@ body #hb-header.normal-header,
 .node-type-article .view-job-requests-block th,
 .page-instructor .view-job-requests-block td,
 .page-instructor .view-job-requests-block th,
+.page-user .view-job-requests-block td,
+.page-user .view-job-requests-block th,
 .page-studio .view-job-requests-block td,
 .page-studio .view-job-requests-block th {
   vertical-align: middle;
@@ -6903,24 +6989,28 @@ body #hb-header.normal-header,
 .node-type-yoga .view-job-requests-block .views-field-views-bulk-operations,
 .node-type-article .view-job-requests-block .views-field-views-bulk-operations,
 .page-instructor .view-job-requests-block .views-field-views-bulk-operations,
+.page-user .view-job-requests-block .views-field-views-bulk-operations,
 .page-studio .view-job-requests-block .views-field-views-bulk-operations {
   width: 40px; }
 
 .node-type-yoga .view-job-requests-block .views-field-picture .user-image,
 .node-type-article .view-job-requests-block .views-field-picture .user-image,
 .page-instructor .view-job-requests-block .views-field-picture .user-image,
+.page-user .view-job-requests-block .views-field-picture .user-image,
 .page-studio .view-job-requests-block .views-field-picture .user-image {
   width: 50px;
   margin: 0 auto; }
   .node-type-yoga .view-job-requests-block .views-field-picture .user-image img,
   .node-type-article .view-job-requests-block .views-field-picture .user-image img,
   .page-instructor .view-job-requests-block .views-field-picture .user-image img,
+  .page-user .view-job-requests-block .views-field-picture .user-image img,
   .page-studio .view-job-requests-block .views-field-picture .user-image img {
     border-radius: 50%; }
 
 .node-type-yoga .view-job-requests-block .user-name a,
 .node-type-article .view-job-requests-block .user-name a,
 .page-instructor .view-job-requests-block .user-name a,
+.page-user .view-job-requests-block .user-name a,
 .page-studio .view-job-requests-block .user-name a {
   padding-left: 5px; }
 
@@ -6933,10 +7023,45 @@ body #hb-header.normal-header,
 .st_fblike {
   display: none; }
 
+#block-block-14 ul li a,
+#block-block-10 ul li a {
+  padding: 5px 10px;
+  position: relative;
+  display: block;
+  margin-bottom: 1px;
+  text-decoration: none;
+  color: #272D2D;
+  background-color: rgba(111, 115, 210, 0.08);
+  transition: 0.2s ease all; }
+  #block-block-14 ul li a i,
+  #block-block-10 ul li a i {
+    vertical-align: middle; }
+  #block-block-14 ul li a:hover,
+  #block-block-10 ul li a:hover {
+    padding-left: 13px; }
+    #block-block-14 ul li a:hover:after,
+    #block-block-10 ul li a:hover:after {
+      transition: 0.2s ease all;
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 100%;
+      width: 2px;
+      background-color: #6F73D2; }
+
+.view-yf-gallery p {
+  border: none; }
+
+.views-field-field-yf-gallery li {
+  float: left;
+  width: 33.3%; }
+  .views-field-field-yf-gallery li img {
+    border: 1px solid #fff; }
+
 .view-yoga-event-lists,
 .view-yoga-searcher,
-.view-my-listing-s-,
-.view-user-blog-posts {
+.view-my-listing-s- {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.03);
   background-color: white;
   border: 1px solid #e7eaeb;
@@ -6947,30 +7072,25 @@ body #hb-header.normal-header,
   font-size: 14px; }
   .view-yoga-event-lists .views-row .event-teaser,
   .view-yoga-searcher .views-row .event-teaser,
-  .view-my-listing-s- .views-row .event-teaser,
-  .view-user-blog-posts .views-row .event-teaser {
+  .view-my-listing-s- .views-row .event-teaser {
     margin-bottom: 10px;
     border-bottom: 1px dashed #dfe1e3; }
     .view-yoga-event-lists .views-row .event-teaser .event-logo,
     .view-yoga-searcher .views-row .event-teaser .event-logo,
-    .view-my-listing-s- .views-row .event-teaser .event-logo,
-    .view-user-blog-posts .views-row .event-teaser .event-logo {
+    .view-my-listing-s- .views-row .event-teaser .event-logo {
       float: left;
       width: 100px; }
       .view-yoga-event-lists .views-row .event-teaser .event-logo img,
       .view-yoga-searcher .views-row .event-teaser .event-logo img,
-      .view-my-listing-s- .views-row .event-teaser .event-logo img,
-      .view-user-blog-posts .views-row .event-teaser .event-logo img {
+      .view-my-listing-s- .views-row .event-teaser .event-logo img {
         border-radius: 4px; }
     .view-yoga-event-lists .views-row .event-teaser .event-type,
     .view-yoga-searcher .views-row .event-teaser .event-type,
-    .view-my-listing-s- .views-row .event-teaser .event-type,
-    .view-user-blog-posts .views-row .event-teaser .event-type {
+    .view-my-listing-s- .views-row .event-teaser .event-type {
       font-size: 13px; }
     .view-yoga-event-lists .views-row .event-teaser .event-price,
     .view-yoga-searcher .views-row .event-teaser .event-price,
-    .view-my-listing-s- .views-row .event-teaser .event-price,
-    .view-user-blog-posts .views-row .event-teaser .event-price {
+    .view-my-listing-s- .views-row .event-teaser .event-price {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -6979,65 +7099,50 @@ body #hb-header.normal-header,
       font-weight: 600; }
       .view-yoga-event-lists .views-row .event-teaser .event-price.inline-this,
       .view-yoga-searcher .views-row .event-teaser .event-price.inline-this,
-      .view-my-listing-s- .views-row .event-teaser .event-price.inline-this,
-      .view-user-blog-posts .views-row .event-teaser .event-price.inline-this {
+      .view-my-listing-s- .views-row .event-teaser .event-price.inline-this {
         display: inline; }
     .view-yoga-event-lists .views-row .event-teaser .event-dates,
     .view-yoga-searcher .views-row .event-teaser .event-dates,
-    .view-my-listing-s- .views-row .event-teaser .event-dates,
-    .view-user-blog-posts .views-row .event-teaser .event-dates {
+    .view-my-listing-s- .views-row .event-teaser .event-dates {
       float: right;
       width: 100px; }
       .view-yoga-event-lists .views-row .event-teaser .event-dates i,
       .view-yoga-searcher .views-row .event-teaser .event-dates i,
-      .view-my-listing-s- .views-row .event-teaser .event-dates i,
-      .view-user-blog-posts .views-row .event-teaser .event-dates i {
+      .view-my-listing-s- .views-row .event-teaser .event-dates i {
         font-size: 14px;
         padding-right: 5px;
         vertical-align: middle; }
       .view-yoga-event-lists .views-row .event-teaser .event-dates p span.date-to,
       .view-yoga-searcher .views-row .event-teaser .event-dates p span.date-to,
-      .view-my-listing-s- .views-row .event-teaser .event-dates p span.date-to,
-      .view-user-blog-posts .views-row .event-teaser .event-dates p span.date-to {
+      .view-my-listing-s- .views-row .event-teaser .event-dates p span.date-to {
         font-size: 12px;
         color: #6F73D2;
         font-weight: 600; }
     .view-yoga-event-lists .views-row .event-teaser .event-info,
     .view-yoga-searcher .views-row .event-teaser .event-info,
-    .view-my-listing-s- .views-row .event-teaser .event-info,
-    .view-user-blog-posts .views-row .event-teaser .event-info {
+    .view-my-listing-s- .views-row .event-teaser .event-info {
       margin-left: 120px;
       margin-right: 120px; }
       .view-yoga-event-lists .views-row .event-teaser .event-info h3,
       .view-yoga-searcher .views-row .event-teaser .event-info h3,
-      .view-my-listing-s- .views-row .event-teaser .event-info h3,
-      .view-user-blog-posts .views-row .event-teaser .event-info h3 {
+      .view-my-listing-s- .views-row .event-teaser .event-info h3 {
         margin: 0;
         font-weight: 400;
         font-size: 16px; }
         .view-yoga-event-lists .views-row .event-teaser .event-info h3 a,
         .view-yoga-searcher .views-row .event-teaser .event-info h3 a,
-        .view-my-listing-s- .views-row .event-teaser .event-info h3 a,
-        .view-user-blog-posts .views-row .event-teaser .event-info h3 a {
+        .view-my-listing-s- .views-row .event-teaser .event-info h3 a {
           color: #6F73D2;
           text-decoration: none; }
       .view-yoga-event-lists .views-row .event-teaser .event-info p.event-intro,
       .view-yoga-searcher .views-row .event-teaser .event-info p.event-intro,
-      .view-my-listing-s- .views-row .event-teaser .event-info p.event-intro,
-      .view-user-blog-posts .views-row .event-teaser .event-info p.event-intro {
+      .view-my-listing-s- .views-row .event-teaser .event-info p.event-intro {
         font-size: 12px;
         color: #777; }
   .view-yoga-event-lists .views-row.views-row-last .event-teaser,
   .view-yoga-searcher .views-row.views-row-last .event-teaser,
-  .view-my-listing-s- .views-row.views-row-last .event-teaser,
-  .view-user-blog-posts .views-row.views-row-last .event-teaser {
+  .view-my-listing-s- .views-row.views-row-last .event-teaser {
     border: none; }
-
-.view-user-blog-posts .listing-link {
-  margin: 10px 0; }
-
-.view-user-blog-posts .views-row .event-teaser .event-info {
-  margin-right: 15px; }
 
 .view-yoga-searcher .views-row .event-teaser .event-info {
   margin-right: 0; }
@@ -7085,7 +7190,7 @@ body #hb-header.normal-header,
     bottom: 15px;
     right: 10px;
     font-weight: 300;
-    font-size: 11px; }
+    font-size: 12px; }
 
 #block-block-6 #selected-clients {
   padding: 0; }
@@ -7541,6 +7646,56 @@ body #hb-header.normal-header,
 .front .footer {
   margin-top: 0; }
 
+.event-desc {
+  font-size: 14px; }
+
+#block-views-yoga-event-lists-block-2 .view-yoga-event-lists, #block-views-yoga-event-lists-block-2 .view-yoga-searcher, #block-views-yoga-event-lists-block-2 .view-my-listing-s-,
+#block-views-yoga-searcher-block-2 .view-yoga-event-lists,
+#block-views-yoga-searcher-block-2 .view-yoga-searcher,
+#block-views-yoga-searcher-block-2 .view-my-listing-s- {
+  box-shadow: none;
+  background: none;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 0;
+  font-size: 14px;
+  border: none; }
+
+#block-views-yoga-event-lists-block-2 .event-teaser,
+#block-views-yoga-searcher-block-2 .event-teaser {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background: white;
+  border-bottom: none; }
+
+#block-views-yoga-event-lists-block-2 .event-logo,
+#block-views-yoga-searcher-block-2 .event-logo {
+  width: 110px; }
+
+#block-views-yoga-searcher-block-2 .event-teaser {
+  transition: 0.2s ease all; }
+  #block-views-yoga-searcher-block-2 .event-teaser:hover {
+    padding-left: 15px; }
+
+#block-views-yoga-searcher-block-2 .event-desc {
+  display: none; }
+
+#block-views-yoga-searcher-block-2 .event-logo {
+  width: 50px; }
+
+#block-views-yoga-searcher-block-2 .event-info {
+  margin-left: 60px; }
+
+#block-views-yoga-searcher-block-2 .a-link {
+  font-size: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+  #block-views-yoga-searcher-block-2 .a-link i {
+    display: none; }
+
 #models-searcher-form input {
   color: #fff; }
 
@@ -7563,14 +7718,8 @@ body #hb-header.normal-header,
 
 #main .hd-purple {
   color: #6F73D2;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 500; }
-
-#main .event-teaser .event-desc {
-  display: none; }
-
-#main .event-teaser .event-logo {
-  width: 90px; }
 
 #main #hero {
   background-color: #172A3A;
@@ -7589,13 +7738,23 @@ body #hb-header.normal-header,
         border-bottom: none;
         font-weight: 300;
         text-shadow: 2px 1px 1px #172A3A; }
+        #main #hero .hero-content .hero h1 a,
+        #main #hero .hero-content .hero h2 a,
+        #main #hero .hero-content .hero h3 a,
+        #main #hero .hero-content .hero p a {
+          color: #fff;
+          font-weight: bold; }
       #main #hero .hero-content .hero h1 {
         font-size: 50px;
         margin-bottom: 15px;
         background-color: rgba(0, 0, 0, 0.2); }
       #main #hero .hero-content .hero h2 {
-        font-size: 28px;
+        font-size: 38px;
         line-height: 25px; }
+        #main #hero .hero-content .hero h2 a i {
+          font-size: 30px; }
+        #main #hero .hero-content .hero h2 a:hover {
+          text-decoration: none; }
       #main #hero .hero-content .hero p {
         letter-spacing: 0.5px; }
       #main #hero .hero-content .hero #block-webform-client-block-166,
@@ -7672,12 +7831,15 @@ body #hb-header.normal-header,
 #main #yf-sign-up {
   background: #48A9A6;
   text-align: center;
-  width: 100%;
   color: #fff;
   padding: 13px 0; }
   #main #yf-sign-up a {
     color: #fff;
     text-decoration: underline; }
+
+#main #yf-sponsors {
+  background: #fff;
+  padding: 15px 0; }
 
 #main #yf-subscribe {
   background-color: #fff; }
@@ -7740,8 +7902,6 @@ body #hb-header.normal-header,
     border: 2px solid #EDEFF0; }
     .front #navbar .navbar-nav a .nav-btn:hover {
       background: #13222f; }
-  .front #navbar .navbar-nav a:hover {
-    background: none; }
   .front #navbar .navbar-nav a:focus {
     color: #6ECADC; } }
 
@@ -7903,6 +8063,21 @@ body #hb-header.normal-header,
     text-decoration: none; }
     #block-models-nav-yoga-area-lp ul ul li a:hover {
       background-color: #6F73D2; }
+
+.form-managed-file .image-widget-data {
+  float: none; }
+  .form-managed-file .image-widget-data .droppable-image {
+    width: 100%;
+    border: 2px solid #06BEE1;
+    border-radius: 8px;
+    font-weight: 300; }
+
+a.tabledrag-handle .handle {
+  height: 24px;
+  width: 24px; }
+
+.form-wrapper .panel-heading {
+  margin: 0; }
 
 .page-classes-add .form-item-title,
 .page-classes-edit .form-item-title {
@@ -8102,6 +8277,7 @@ div.autocomplete-deluxe-throbber {
   .page-classes-add .main-container,
   .page-teacher-edit .main-container,
   .page-teacher-add .main-container,
+  .page-listing-instagram .main-container,
   .page-job-create .main-container {
     width: 600px; } }
 
@@ -8299,6 +8475,67 @@ div.autocomplete-deluxe-throbber {
 .node-article-form #edit-body-und-0-format {
   display: none; }
 
+#block-views-user-blog-posts-block-2 {
+  margin-top: 15px; }
+
+.view-user-blog-posts .event-teaser {
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 15px;
+  font-size: 14px;
+  height: 380px;
+  overflow: hidden;
+  position: relative;
+  transition: 0.2s ease all; }
+  .view-user-blog-posts .event-teaser.live-0 {
+    border: 2px solid #48A9A6; }
+    .view-user-blog-posts .event-teaser.live-0 .to-edit {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 10px;
+      text-align: center;
+      background: #fff; }
+  .view-user-blog-posts .event-teaser:hover {
+    -webkit-transform: scale(1.02);
+        -ms-transform: scale(1.02);
+            transform: scale(1.02); }
+  .view-user-blog-posts .event-teaser .event-logo {
+    height: 125px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover; }
+    .view-user-blog-posts .event-teaser .event-logo a {
+      height: 100%;
+      width: 100%;
+      display: block; }
+      .view-user-blog-posts .event-teaser .event-logo a span {
+        display: none; }
+  .view-user-blog-posts .event-teaser .event-info {
+    padding: 5px; }
+    .view-user-blog-posts .event-teaser .event-info h3 {
+      font-size: 20px; }
+    .view-user-blog-posts .event-teaser .event-info .event-intro {
+      font-size: 14px; }
+      .view-user-blog-posts .event-teaser .event-info .event-intro a {
+        color: #48A9A6; }
+      .view-user-blog-posts .event-teaser .event-info .event-intro span {
+        font-size: 12px; }
+    .view-user-blog-posts .event-teaser .event-info .event-desc:after {
+      box-shadow: inset 0 -30px 20px white;
+      position: absolute;
+      bottom: 0;
+      left: -20px;
+      right: -20px;
+      top: auto;
+      content: " ";
+      height: 40px; }
+
+.page-node-265 h3 {
+  margin: 0;
+  font-size: 28px; }
+
 .page-node-265 .get-started-offer {
   margin: 15px 0;
   background-color: #48A9A6;
@@ -8309,13 +8546,33 @@ div.autocomplete-deluxe-throbber {
     font-weight: bold;
     color: #fff; }
   .page-node-265 .get-started-offer h3 {
-    margin: 0; }
+    color: #fff; }
+
+.page-node-265 .list-unstyled {
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  min-height: 300px;
+  display: block; }
+  .page-node-265 .list-unstyled li {
+    margin: 3px 0;
+    padding-left: 10px; }
+    .page-node-265 .list-unstyled li:before {
+      font-family: 'FontAwesome';
+      content: '\f00c';
+      margin: 0 5px 0 -15px;
+      color: #48A9A6; }
 
 .page-node-265 .get-started-options {
   margin-bottom: 15px; }
   .page-node-265 .get-started-options h3 {
     color: #6F73D2;
-    font-size: 35px; }
+    padding-bottom: 15px;
+    font-size: 25px; }
+    .page-node-265 .get-started-options h3 span {
+      font-size: 28px;
+      font-weight: bold;
+      text-decoration: line-through; }
 
 .page-node-265 .get-started-header {
   text-align: center;
@@ -8332,11 +8589,14 @@ div.autocomplete-deluxe-throbber {
 .dropdown-menu-yogafind {
   border: 1px solid #EDEFF0; }
   .dropdown-menu-yogafind .dropdown-header {
-    color: #6F73D2; }
+    color: #172a3a;
+    font-weight: 300;
+    font-family: "Raleway", sans-serif;
+    font-size: 18px; }
   .dropdown-menu-yogafind .divider {
     margin: 2px 0; }
   .dropdown-menu-yogafind .res {
-    font-size: 14px; }
+    font-size: 16px; }
     .dropdown-menu-yogafind .res a:hover {
       background-color: rgba(111, 115, 210, 0.08); }
     .dropdown-menu-yogafind .res.goog, .dropdown-menu-yogafind .res.no-res {
@@ -8349,6 +8609,10 @@ div.autocomplete-deluxe-throbber {
     .dropdown-menu-yogafind .res.no-res {
       text-align: center; }
 
+li.res {
+  font-size: 14px !important;
+  font-weight: 300; }
+
 .navbar-nav .first .dropdown-menu-yogafind {
   min-width: 300px; }
   .navbar-nav .first .dropdown-menu-yogafind form {
@@ -8357,8 +8621,7 @@ div.autocomplete-deluxe-throbber {
       font-size: 14px; }
     .navbar-nav .first .dropdown-menu-yogafind form input {
       border: none;
-      background-color: rgba(111, 115, 210, 0.08);
-      border-bottom: 2px solid #6F73D2; }
+      border-bottom: 1px solid #6F73D2; }
     .navbar-nav .first .dropdown-menu-yogafind form ::-webkit-input-placeholder {
       /* WebKit, Blink, Edge */
       color: #6F73D2;
@@ -8820,17 +9083,11 @@ li.a-dd {
 
 .alert {
   border-radius: 0;
-  font-size: 12px;
-  position: relative; }
+  font-size: 16px;
+  position: relative;
+  border-radius: 8px; }
   .alert .close {
     text-shadow: none; }
-  .alert:before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    width: 2px;
-    height: calc(100% + 2px); }
   .alert.alert-info .close {
     color: #2ca1b8; }
   .alert.alert-info:before {

@@ -36,7 +36,7 @@ function yogafind_preprocess_node(&$variables) {
     if ($variables['view_mode'] != 'teaser') {
       $nw = entity_metadata_wrapper('node', $variables['nid']);
       if ($nw->status->value() == 0) {
-        $variables['publish_msg'] = '<p class="greenify">' . t('This post is currently in preview mode - click !here when you are ready to publish.', array(
+        $variables['publish_msg'] = '<p class="greenify">' . t('This post is currently in preview mode - click !here when it\'s ready to be submitted for review.', array(
             '!here' => l('<strong>' . t('here') . '</strong>', 'node/' . arg(1), array(
               'html' => TRUE,
               'query' => array('publish' => 1)
@@ -54,8 +54,8 @@ function yogafind_preprocess_node(&$variables) {
 
       try {
         $variables['title'] = l($variables['title'], 'node/' . $nw->getIdentifier());
-        $variables['post_date'] = date('d M Y H:i', $nw->created->value());
-        $variables['author_name'] = $nw->author->label();
+        $variables['post_date'] = '</br><span>' . date('d M y H:i', $nw->created->value()) . '</span>';
+        $variables['author_name'] = l($nw->author->field_my_listings->value()[0]->title, 'node/' . $nw->author->field_my_listings->value()[0]->nid);
 
         $alter = array(
           'max_length' => 150,
@@ -70,11 +70,7 @@ function yogafind_preprocess_node(&$variables) {
 
         $uri = $nw->field_post_image->value() ? $nw->field_post_image->value()['uri'] : grab_default_profile_image($nw->author->getIdentifier());
 
-        $pic = '<div class="event-logo">' . l(theme('image_style', array(
-            'style_name' => 'profile',
-            'path' => $uri,
-            'attributes' => array('class' => array('img-responsive'))
-          )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+        $pic = '<div class="event-logo" style="background-image:url('. image_style_url('blog_thumb', $uri)  .')">' . l('<span>click</span>', 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
         $variables['logo'] = $pic;
 
         $variables['listing_link'] = $nw->author->field_my_listings->value() ? '<p class="listing-link"><small>' . t('Listing:') . '</small> ' . l($nw->author->field_my_listings->value()[0]->title, 'node/' . $nw->author->field_my_listings->value()[0]->nid, array('attributes' => array('class' => array('a-link')))) . '</p>' : FALSE;
@@ -111,7 +107,13 @@ function yogafind_preprocess_node(&$variables) {
         'word_boundary' => TRUE,
         'html' => TRUE,
       );
-      $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
+
+      if (!$nw->field_yoga_introduction->value()) {
+        $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
+      }
+      else {
+        $variables['description'] = $nw->field_yoga_introduction->value() ? '<p>' . views_trim_text($alter, $nw->field_yoga_introduction->value()) . '</p>' : FALSE;
+      }
 
       $styles = '';
       if ($nw->field_yoga_style->value()) {
@@ -169,7 +171,7 @@ function yogafind_preprocess_node(&$variables) {
         }
       }
       else {
-        $uri = $nw->field_yoga_logo->value()['uri'];
+        $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : grab_default_profile_image($nw->author->getIdentifier());
         $pic = '<div class="event-logo">' . l(theme('image_style', array(
             'style_name' => 'profile',
             'path' => $uri,
@@ -210,10 +212,6 @@ function yogafind_preprocess_page(&$variables) {
 
   $uw = entity_metadata_wrapper('user', $user);
 
-//
-//  dpm(current_path());
-//  dpm(drupal_get_path_alias());
-
   // Redirect non users from edit article page
   if (strpos(current_path(), 'post') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit') {
     $nw = entity_metadata_wrapper('node', arg(1));
@@ -225,6 +223,15 @@ function yogafind_preprocess_page(&$variables) {
   // Redirect wrong event edit pages to listings and vice versa
   if (strpos(current_path(), 'listing') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit' || strpos(current_path(), 'event') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit') {
     $nw = entity_metadata_wrapper('node', arg(1));
+
+    $wysiwyg_js['wysiwyg']['configs']['tinymce']['formatfiltered_html'] = array(
+      'menubar' => true,
+      'statusbar' => true,
+      'toolbar' => 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    );
+
+    drupal_add_js($wysiwyg_js, 'setting');
+
     if ($nw->field_yoga_type->value() != 'event') {
       if (strpos(current_path(), 'event') !== FALSE) {
         drupal_goto('listing/' . $nw->getIdentifier() . '/edit');
@@ -322,6 +329,7 @@ function yogafind_preprocess_page(&$variables) {
   $variables['home_nav'] = $user->uid == 0 ? theme('home_nav') : FALSE;
 
   if (drupal_is_front_page()) {
+
     drupal_add_css('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css', array('type' => 'external'));
     unset($variables['page']['content']);
 //    $variables['logo'] = drupal_get_path('theme', 'models') . '/' . 'white-logo.png';
@@ -397,7 +405,7 @@ function yogafind_preprocess_page(&$variables) {
   // drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.8/packaged/jquery.noty.packaged.min.js', array('type' => 'external'));
 
 //  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js', 'external');
-  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js', 'external');
+//  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js', 'external');
 //  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js', 'external');
 //  drupal_add_js(libraries_get_path('raty-fa-0.1.1') . '/' . 'lib/jquery.raty-fa.js');
 

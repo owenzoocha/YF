@@ -14,7 +14,20 @@
 .node-type-yoga,
 .node-type-article,
 .page-instructor,
+.page-user,
 .page-studio {
+
+  #instafeed {
+    a {
+      float: left;
+      width: 16.6%;
+      border: 1px solid #fff;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
 
   // THE EVENT PAGE.
   #block-views-jobs-rhs-block-4 {
@@ -223,39 +236,6 @@
       }
 
     }
-    #block-block-10 {
-      ul {
-        li {
-          a {
-            padding: 5px 10px;
-            position: relative;
-            display: block;
-            margin-bottom: 1px;
-            text-decoration: none;
-            color: $dark;
-            background-color: rgba(111, 115, 210, 0.08);
-            transition: 0.2s ease all;
-            i {
-              //display: none;
-              vertical-align: middle;
-            }
-            &:hover {
-              padding-left: 13px;
-              &:after {
-                transition: 0.2s ease all;
-                content: '';
-                position: absolute;
-                left: 0;
-                bottom: 0;
-                height: 100%;
-                width: 2px;
-                background-color: $purple;
-              }
-            }
-          }
-        }
-      }
-    }
   }
 
   .node-job {
@@ -375,4 +355,55 @@
 
 .st_fblike {
   display: none;
+}
+
+#block-block-14,
+#block-block-10 {
+  ul {
+    li {
+      a {
+        padding: 5px 10px;
+        position: relative;
+        display: block;
+        margin-bottom: 1px;
+        text-decoration: none;
+        color: $dark;
+        background-color: rgba(111, 115, 210, 0.08);
+        transition: 0.2s ease all;
+        i {
+          //display: none;
+          vertical-align: middle;
+        }
+        &:hover {
+          padding-left: 13px;
+          &:after {
+            transition: 0.2s ease all;
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 100%;
+            width: 2px;
+            background-color: $purple;
+          }
+        }
+      }
+    }
+  }
+}
+
+.view-yf-gallery {
+  p {
+    border: none;
+  }
+}
+
+.views-field-field-yf-gallery {
+  li {
+    float: left;
+    width: 33.3%;
+    img {
+      border: 1px solid $white;
+    }
+  }
 }

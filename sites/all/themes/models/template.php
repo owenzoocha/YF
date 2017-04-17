@@ -608,9 +608,7 @@ function models_preprocess_page(&$variables) {
       }
 
 
-      // if ( strpos(current_path(), 'job/') !== FALSE && is_numeric(arg(1)) ) {
       $variables['content_column_class'] = ' class="col-sm-pull-3 col-sm-9"';
-      // }
 
       drupal_add_js(libraries_get_path('slick') . '/' . 'slick/slick.min.js');
       drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick.css');
@@ -1070,22 +1068,21 @@ function models_preprocess_views_view(&$vars) {
   // if ($vars['name'] == 'related_jobs_by_terms') {
   //   $vars['view']->human_name = 'waaa';
   // }
-  dpm('e')
   if ($vars['name'] == 'jobs_rhs') {
     if ($vars['display_id'] == 'block') {
-      global $user;
-      $uw = entity_metadata_wrapper('user', $user->uid);
-      $nw = entity_metadata_wrapper('node', arg(1));
-      $job_publish = l(t('Contact Owner'), '#', array(
-        'attributes' => array(
-          'data-toggle' => array('modal'),
-          'data-target' => array('#job-publish-form-popup'),
-          'class' => array('btn btn-success btn-block')
-        )
-
-
-      $vars['job_publish_button'] = ='<div class="hb-rhs-job-button">' . $job_publish . '</div>';
-      dpm($vars);
+//      global $user;
+//      $uw = entity_metadata_wrapper('user', $user->uid);
+//      $nw = entity_metadata_wrapper('node', arg(1));
+//      $job_publish = l(t('Contact Owner'), '#', array(
+//        'attributes' => array(
+//          'data-toggle' => array('modal'),
+//          'data-target' => array('#job-publish-form-popup'),
+//          'class' => array('btn btn-success btn-block')
+//        )
+//
+//
+//      $vars['job_publish_button'] = ='<div class="hb-rhs-job-button">' . $job_publish . '</div>';
+//      dpm($vars);
 
       // If job is NOT assigned..
 //      if (!$nw->field_hb_assigned->value()) {

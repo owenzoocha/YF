@@ -5,13 +5,24 @@
     lng : false,
 
     init: function(context) {
-      if ($('.page-search').length) {
-        hbm.scrollAnimations();
-        // var h2 = $('.main-container').outerHeight(true) + $('#hb-header').outerHeight(true);
-        // $('.page-search .col-sm-3 .well').height(h2);
-      } else {
-        hbm.scrollAnimationsMenu();
+      if ($('#instafeed').length) {
+        var feed = new Instafeed({
+          get: 'user',
+          userId: Drupal.settings.listing.instagram.user_id,
+          clientId: '9d703bd716be499ebac861d0c74d4c7b',
+          accessToken: Drupal.settings.listing.instagram.access_token,
+          limit: 12
+        });
+        feed.run();
       }
+      //
+      // if ($('.page-search').length) {
+      //   hbm.scrollAnimations();
+      //   // var h2 = $('.main-container').outerHeight(true) + $('#hb-header').outerHeight(true);
+      //   // $('.page-search .col-sm-3 .well').height(h2);
+      // } else {
+      //   hbm.scrollAnimationsMenu();
+      // }
       hbm.searchHighlight();
       // hbm.skrollr();
       // hbm.hbRaty();

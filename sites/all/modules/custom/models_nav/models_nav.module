@@ -370,19 +370,36 @@ function template_preprocess_my_nav(&$vars) {
             $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
             $nav .= '<li>' . l(t('Edit'), 'listing/' . $nw->getIdentifier() . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
 
-            $amt = $nw->author->field_my_posts->value() ? ' (' . sizeof($nw->author->field_my_posts->value()) . ')' : '';
-            $nav .= '<li>' . l(t('Posts') . $amt, $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
-            $nav .= '<li>' . l(t('Gallery'), $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
+            if ($nw->author->field_yf_subscription->value() != 'free') {
 
-            $amt = $nw->field_yoga_classes->value() ? ' (' . sizeof($nw->field_yoga_classes->value()) . ')' : '';
-            $nav .= '<li>' . l(t('Timetable') . $amt, $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
+              if ($nw->author->field_yf_subscription->value() == 'premium') {
+                $nav .= '<li>' . l(t('Instagram'), 'listing/instagram/' . $nw->getIdentifier() . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+              }
 
-            $amt = $nw->field_yoga_event_list->value() ? ' (' . sizeof($nw->field_yoga_event_list->value()) . ')' : '';
-            $nav .= '<li>' . l(t('Events') . $amt, $alias . '/events', array('attributes' => array('class' => array('')))) . ' </li> ';
+              if ($nw->author->field_my_posts->value()) {
+                $posts = 0;
+                foreach ($nw->author->field_my_posts->getIterator() as $key => $value) {
+                  if ($value->promote->value()){
+                    $posts++;
+                  }
+                }
+              }
+              $amt = $nw->author->field_my_posts->value() ? ' (' . $posts . ')' : '';
+              $nav .= '<li>' . l(t('Posts') . $amt, $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
+              $nav .= '<li>' . l(t('Gallery'), $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
 
-            if ($nw->field_yoga_type->value() == 'studio') {
-              $amt = $nw->field_yoga_teachers->value() ? ' (' . sizeof($nw->field_yoga_teachers->value()) . ')' : '';
-              $nav .= '<li>' . l(t('Teachers') . $amt, $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
+              $amt = $nw->field_yoga_classes->value() ? ' (' . sizeof($nw->field_yoga_classes->value()) . ')' : '';
+              $nav .= '<li>' . l(t('Timetable') . $amt, $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+              $amt = $nw->field_yoga_event_list->value() ? ' (' . sizeof($nw->field_yoga_event_list->value()) . ')' : '';
+              $nav .= '<li>' . l(t('Events') . $amt, $alias . '/events', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+              if ($nw->field_yoga_type->value() == 'studio') {
+                $amt = $nw->field_yoga_teachers->value() ? ' (' . sizeof($nw->field_yoga_teachers->value()) . ')' : '';
+                $nav .= '<li>' . l(t('Teachers') . $amt, $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
+            }
+
+
             }
           }
           else {

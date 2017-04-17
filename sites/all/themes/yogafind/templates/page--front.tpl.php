@@ -56,7 +56,8 @@
     <div class="hero-content container">
       <div class="hero left animated fadeInUp">
         <h1>Find yoga listings, events and classes all over the UK.</h1>
-        <h3>Looking to join? Get started <a href="getting-started">now</a></h3>
+        <h2>Looking to join? Get started <a href="/getting-started" class="a-link link-go">now <i
+              class="material-icons">trending_flat</i></a></h2>
       </div>
       <div class="hero right">
         <?php
@@ -73,64 +74,88 @@
 
   <?php print $messages; ?>
 
-  <div id="yf-sign-up" class="container">
-    Looking to list your yoga classes, event or studio? Join ### others and <a
-      href="/getting-started" class="a-link link-go">get started now <i
-        class="material-icons">trending_flat</i></a>
-  </div>
-
-  <div id="yf-events" class="container">
-    <div class="col-md-6">
-      <h3 class="hd-purple">Upcoming Events</h3>
-      <h4>On your mat, get set, yoga!</h4>
-      <?php
-      $slick_block = block_load('views', 'yoga_event_lists-block_2');
-      $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
-      print drupal_render($block);
-      ?>
-    </div>
-    <div class="col-md-6">
-      <h3 class="hd-purple">Latest Listings</h3>
-      <h4>Check out these latest studios & instructors</h4>
-      <?php
-      $slick_block = block_load('views', 'yoga_searcher-block_2');
-      $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
-      print drupal_render($block);
-      ?>
-    </div>
-  </div>
-
-  <div id="yf-subscribe">
+  <div id="yf-sign-up">
     <div class="container">
-      <h3 class="hd-purple">Keep up to date with YogaFind</h3>
-
-      <?php
-//      $slick_block = block_load('webform', 'client-block-132');
-//      $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
-//      print drupal_render($block);
-      ?>
+      Looking to list your yoga classes, event or studio? Join ### others and <a
+        href="/getting-started" class="a-link link-go">get started now <i
+          class="material-icons">trending_flat</i></a>
     </div>
   </div>
 
+<!--  <div id="yf-sponsors">-->
+<!--    <div class="container">-->
+<!--      <span>YogaFind Sponsors</span>-->
+<!--    </div>-->
+<!--  </div>-->
+
   <div id="yf-events" class="container">
-    <h3 class="text-center hd-purple">YogaFind Posts</h3>
-    <h4>Check out these latest posts</h4>
-    <?php
-    $slick_block = block_load('views', 'user_blog_posts-block_2');
-    $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
-    print drupal_render($block);
-    ?>
+    <div class="row">
+      <div class="col-sm-8">
+        <h3 class="hd-purple">Upcoming Events</h3>
+        <h4>On your mat, get set, yoga!</h4>
+        <a href="/events" class="a-link link-go">View more events <i
+            class="material-icons">trending_flat</i></a>
+        <?php
+        $slick_block = block_load('views', 'yoga_event_lists-block_2');
+        $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
+        print drupal_render($block);
+        ?>
+      </div>
+      <div class="col-sm-4">
+        <h3 class="hd-purple">Latest Listings</h3>
+        <h4>Our latest studios & instructors</h4>
+        <a href="/yoga" class="a-link link-go">View more listings <i
+            class="material-icons">trending_flat</i></a>
+        <?php
+        $slick_block = block_load('views', 'yoga_searcher-block_2');
+        $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
+        print drupal_render($block);
+        ?>
+      </div>
+    </div>
   </div>
 
-  <div id="yf-forums" class="container">
-    <h3 class="text-center hd-purple">YogaFind Forums</h3>
-    <h4>Join the Discussion</h4>
-    <?php
-    $slick_block = block_load('views', '2b3038a0dd4683e6f418c3bd54ec2f22');
-    $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
-    print drupal_render($block);
-    ?>
+  <!--  <div id="yf-subscribe">-->
+  <!--    <div class="container">-->
+  <!--      <h3 class="hd-purple">Keep up to date with YogaFind</h3>-->
+  <!---->
+  <!--      --><?php
+  //      //      $slick_block = block_load('webform', 'client-block-132');
+  //      //      $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
+  //      //      print drupal_render($block);
+  //      ?>
+  <!--    </div>-->
+  <!--  </div>-->
+
+  <div id="yf-events">
+    <div class="container">
+      <div class="container">
+
+        <h3 class="hd-purple">YogaFind Posts</h3>
+        <h4>Latest yoga posts</h4>
+        <a href="/posts" class="a-link link-go">View more posts <i
+            class="material-icons">trending_flat</i></a>
+        <div class="row">
+
+          <?php
+          $slick_block = block_load('views', 'user_blog_posts-block_2');
+          $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
+          print drupal_render($block);
+          ?>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!--  <div id="yf-forums" class="container">-->
+  <!--    <h3 class="text-center hd-purple">YogaFind Forums</h3>-->
+  <!--    <h4>Join the Discussion</h4>-->
+  <!--    --><?php
+  ////    $slick_block = block_load('views', '2b3038a0dd4683e6f418c3bd54ec2f22');
+  ////    $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
+  ////    print drupal_render($block);
+  //    ?>
+  <!--  </div>-->
 </main>
 
 <div class="main-container <?php print $container_class; ?>">

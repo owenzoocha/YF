@@ -5,7 +5,14 @@ body {
   -webkit-overflow-scrolling: auto;
 
   &.no-scroll {
-    overflow: hidden!important;
+    overflow: hidden !important;
+  }
+}
+
+#tinymce {
+  &.mce-content-body {
+    background: $white;
+    padding: 15px;
   }
 }
 
@@ -22,14 +29,17 @@ body {
   padding: 30px;
 }
 
-.node-type-article {
-  .field-name-body {
-    a {
-      color: $purple;
-      font-weight: 500;
-    }
+//.node-type-article {
+//  .field-name-body {
+article {
+  a {
+    color: $purple;
+    font-weight: bold;
   }
 }
+
+//  }
+//}
 
 .view {
   .view-header {
@@ -69,7 +79,7 @@ body {
 
 .my-image {
   img {
-    background: #f4f4f4!important;
+    background: #f4f4f4 !important;
   }
 }
 
@@ -107,7 +117,7 @@ a.link-go {
     //transition: 0.2s ease all;
 
     i {
-      padding-left: 5px;
+      transform: translateX(3px);
     }
   }
 }
@@ -121,11 +131,16 @@ h1, h2, h3, h4 {
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 22px;
   margin-bottom: 10px;
   padding-bottom: 5px;
   margin-top: 10px;
   border-bottom: 1px solid #e7eaeb;
+}
+
+h3 {
+  font-size: 18px;
+  color: $purple;
 }
 
 input.form-text {
@@ -142,7 +157,7 @@ select.ios-select {
   padding-right: 1.5em;
   border-radius: 0;
   position: relative;
-  background-size:10px 5px;
+  background-size: 10px 5px;
 }
 
 // .nav-animate {
@@ -184,11 +199,10 @@ select.ios-select {
   // background-color: #fff;
 }
 
-
-@media (min-width: $screen-desktop){
+@media (min-width: $screen-desktop) {
   .not-logged-in.page-user,
   .page-user-feedback,
-  // .page-messages,
+    // .page-messages,
   .page-hybridauth {
     .main-container {
       width: 600px;
@@ -236,13 +250,12 @@ select.ios-select {
   background: none;
   border: none;
   border-radius: 0;
-  outline: none!important;
+  outline: none !important;
 }
 
 .btn {
   @include letter-and-font();
 }
-
 
 #block-block-7 {
   p {
@@ -277,8 +290,7 @@ select.ios-select {
   }
 }
 
-
-@media (min-width: $screen-tablet){
+@media (min-width: $screen-tablet) {
 
   span.badge {
     background: $hb-pink;
@@ -318,11 +330,11 @@ select.ios-select {
   }
 }
 
-@media (max-width: $screen-tablet){
+@media (max-width: $screen-tablet) {
 
   #block-block-7 {
     transition: ease 1.5s left;
-    left: 0!important;
+    left: 0 !important;
     z-index: 999999;
   }
 
@@ -337,30 +349,30 @@ select.ios-select {
 
       .block {
         h2 {
-          font-size: 16px!important;
+          font-size: 16px !important;
         }
 
-          li {
-            a {
-              font-size: 16px!important;
-              padding-left: 27px!important;
-              &:before {
-                top: 3px!important;
-                width: 15px!important;
-                height: 15px!important;
-              }
-              &:after {
-                top: 2px !important;
-                left: 8px !important;
-                font-size: 13px !important;
-              }
+        li {
+          a {
+            font-size: 16px !important;
+            padding-left: 27px !important;
+            &:before {
+              top: 3px !important;
+              width: 15px !important;
+              height: 15px !important;
+            }
+            &:after {
+              top: 2px !important;
+              left: 8px !important;
+              font-size: 13px !important;
             }
           }
+        }
 
       }
     }
     .event-page {
-      padding-left: 20px!important;
+      padding-left: 20px !important;
     }
   }
 
@@ -377,7 +389,7 @@ select.ios-select {
         }
       }
       .event-page {
-        padding-left: 20px!important;
+        padding-left: 20px !important;
       }
     }
   }
@@ -404,7 +416,7 @@ select.ios-select {
   }
 }
 
-@media (max-width: $screen-phone){
+@media (max-width: $screen-phone) {
 
   html,
   body {
@@ -437,10 +449,10 @@ select.ios-select {
       position: fixed;
       top: 0;
       left: -250px;
-      height: 100%!important;
-      z-index: 1000!important;
+      height: 100% !important;
+      z-index: 1000 !important;
       .well {
-        box-shadow: 0 -10px 38px rgba(0,0,0,0.0), 0 15px 12px rgba(0,0,0,0.22)!important;
+        box-shadow: 0 -10px 38px rgba(0, 0, 0, 0.0), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
       }
     }
   }

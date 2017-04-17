@@ -3,15 +3,17 @@
   //min-width: 300px;
   border: 1px solid $light-grey;
   .dropdown-header {
-    //background: $light-grey;
-    color: $purple;
+    color: #172a3a;
+    font-weight: 300;
+    font-family: $raleway;
+    font-size: 18px;
   }
   .divider {
     margin: 2px 0;
   }
   .res {
     //padding: 1px 20px;
-    font-size: 14px;
+    font-size: 16px;
     a {
       //color: $purple;
       &:hover {
@@ -34,6 +36,11 @@
   }
 }
 
+li.res {
+  font-size: 14px!important;
+  font-weight: 300;
+}
+
 //}
 .navbar-nav {
   .first {
@@ -48,8 +55,8 @@
         input {
           //border-radius: 20px;
           border: none;
-          background-color: $light-purple;
-          border-bottom: 2px solid $purple;
+          //background-color: $light-purple;
+          border-bottom: 1px solid $purple;
         }
         ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
           color: $purple;

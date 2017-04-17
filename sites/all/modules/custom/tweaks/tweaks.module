@@ -603,6 +603,11 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     if (strrpos(current_path(), 'personal-information/settings') !== FALSE) {
       $form['#submit'][] = 'models_forms_update_address';
     }
+
+    // Hide stripe info.
+    if (isset($form['field_stripe_reference'])) {
+      $form['field_stripe_reference']['#access'] = FALSE;
+    }
   }
   if ($form_id == 'privatemsg_list') {
     // dpm($form, $form_id);

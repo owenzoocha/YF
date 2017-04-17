@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Enable stripe_integration module.
+ */
+function tweaks_update_7001() {
+  if (!module_exists('stripe_integration')) {
+    module_enable(array('stripe_integration'), TRUE);
+  }
+}
+
+/**
+ * Enable features module.
+ */
+function tweaks_update_7002() {
+  if (!module_exists('features')) {
+    module_enable(array('features'), TRUE);
+  }
+}
+
+/**
+ * Enable user_settings feature.
+ */
+function tweaks_update_7003() {
+  if (!module_exists('user_settings')) {
+    module_enable(array('user_settings'), TRUE);
+  }
+}

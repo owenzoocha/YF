@@ -4,7 +4,6 @@
  * @file stripe_integration.module.
  */
 
-
 /**
  * Implements hook_menu().
  */
@@ -32,7 +31,7 @@ function stripe_integration_menu() {
  */
 function stripe_integration_stripe_api_init() {
   // TODO: Add API key to settings.
-  \Stripe\Stripe::setApiKey("sk_test_r1WiSqZbxNMycBepOWD4LSol");
+  \Stripe\Stripe::setApiKey("sk_test_4cjXixjK1rgeEKjOKqkYolmF");
 }
 
 /**
@@ -81,6 +80,8 @@ function stripe_integration_get_subscriptions($customer_ref) {
  * Custom function to subscribe a user.
  */
 function stripe_integration_subscribe($plan) {
+  global $user;
+  $user_obj = entity_metadata_wrapper('user', $user);
 
   $valid_plans = array(
     'standard',
@@ -89,6 +90,13 @@ function stripe_integration_subscribe($plan) {
 
   if (!in_array($plan, $valid_plans)) {
     return;
+  }
+
+  // Maybe add plan_id's into an admin back end going forward.
+  switch ($plan) {
+    case 'premium':
+      $plan_id = 'yf-plan-5';
+      break;
   }
 
   stripe_integration_stripe_api_init();
@@ -102,29 +110,33 @@ function stripe_integration_subscribe($plan) {
       $customer->email = $_POST['stripeEmail'];
       $customer->source = $_POST['stripeToken'];
       $customer->save();
+      $user_obj->field_stripe_reference = $user_info['stripe_ref'];
     }
     else {
       // Create customer.
       unset($user_info['stripe_ref']);
-
       $user_info['email'] = $_POST['stripeEmail'];
       $user_info['source'] = $_POST['stripeToken'];
-
       $customer = \Stripe\Customer::create($user_info);
 
       // Add stripe reference to user account.
       $stripe_id = $customer->id;
-
-      global $user;
-      $user_obj = entity_metadata_wrapper('user', $user);
       $user_obj->field_stripe_reference = $stripe_id;
-      $user_obj->save();
     }
+
+
+    // Set to the selected plan (only premium for now).
+    $user_obj->field_yf_subscription->set($plan);
+
+    // End the trial, but - may need to add the free days to the subscription..?
+    $user_obj->field_yf_trial_ended->set(1);
+    $user_obj->save();
+
 
     // Add subscription.
     $subscription = \Stripe\Subscription::create(array(
       'customer' => $customer->id,
-      'plan' => $plan,
+      'plan' => $plan_id,
     ));
 
     if ($subscription->id) {
@@ -138,7 +150,8 @@ function stripe_integration_subscribe($plan) {
     // Do something with errors.
   }
 
-  drupal_goto('user/plan/settings');
+  // TODO: maybe some better params so to set more detailed complete messages..
+  drupal_goto('user/plan/settings', array('query' => array('complete' => 1)));
   return;
 }
 
@@ -195,8 +208,8 @@ function stripe_integration_sign_up() {
  */
 function stripe_integration_form_alter(&$form, &$form_state, $form_id) {
   // Add stripe sign up stuff to user plan settings form.
-  if ($form_id == 'user_profile_form' && current_path() == 'user/plan/settings') {
-    stripe_subscription_form($form);
+  if (current_path() == 'user/plan/settings') {
+//    stripe_subscription_form($form);
   }
 }
 
@@ -235,7 +248,7 @@ function stripe_subscription_form(&$form) {
     // Subscription form.
     $standard_markup = '<form action="/user/subscribe/standard" method="POST">
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="pk_test_8ulZr1Q3aJHNdbLUo7EA8x2s"
+        data-key="pk_test_hrBsyqolapbKL4ukf6SMTlNh"
         data-image=""
         data-name="' . t('Standard') . '"
         data-description="' . t('Sign up for a standard account') . '"
@@ -246,12 +259,13 @@ function stripe_subscription_form(&$form) {
 
     $premium_markup = '<form action="/user/subscribe/premium" method="POST">
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="pk_test_8ulZr1Q3aJHNdbLUo7EA8x2s"
+        data-key="pk_test_hrBsyqolapbKL4ukf6SMTlNh"
         data-image=""
         data-name="' . t('Premium') . '"
         data-description="' . t('Sign up for a premium account') . '"
-        data-amount="6000"
-        data-label="' . t('Premium') . '">
+        data-amount="550"
+        data-label="' . t('Sign up for YogaFind premium plan') . '"
+        data-currency="gbp">
       </script>
     </form>';
 
@@ -264,7 +278,7 @@ function stripe_subscription_form(&$form) {
     );
 
     $form['stripe_subscription_premium'] = array(
-      '#markup' => $premium_markup,
+      '#markup' => '<p>' . $premium_markup . '</p>',
     );
   }
 

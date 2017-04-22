@@ -9,7 +9,6 @@ require_once 'models_forms.canceljob.inc';
 require_once 'models_forms.completejob.inc';
 require_once 'models_forms.pausejob.inc';
 require_once 'models_forms.confirm_clients.inc';
-require_once 'models_forms.yf_payments.inc';
 
 
 /**
@@ -31,14 +30,6 @@ function models_forms_init() {
  * Implements hook_menu().
  */
 function models_forms_menu() {
-
-  $items['yf_stripe_payment/add'] = array(
-    'title' => 'YF Stripe Payment',
-    'page callback' => 'yf_stripe_payment_add',
-    'access callback' => TRUE,
-    'file' => 'models_forms.yf_payments.inc',
-  );
-
   $items['listing/add'] = array(
     'title' => 'Your Yoga Listing',
     'page callback' => 'models_forms_listing_add',
@@ -146,20 +137,20 @@ function models_forms_menu() {
     'access callback' => 'user_is_logged_in',
     'file' => 'models_forms.personal_information.inc',
   );
-//  $items['user/email/settings'] = array(
-//    'title' => 'Email Settings',
-//    'page callback' => 'models_forms_email_settings',
-//    // 'page arguments' =>  array('models_forms_personal_information_form', 2),
-//    'access callback' => 'user_is_logged_in',
-//    'file' => 'models_forms.personal_information.inc',
-//  );
+
   $items['user/plan/settings'] = array(
     'title' => 'Subscription Settings',
     'page callback' => 'models_forms_subscription_settings',
-    // 'page arguments' =>  array('models_forms_personal_information_form', 2),
     'access callback' => 'user_is_logged_in',
     'file' => 'models_forms.personal_information.inc',
   );
+  $items['user/plan/invoices'] = array(
+    'title' => 'Invoices',
+    'page callback' => 'models_forms_invoice_settings',
+    'access callback' => 'user_is_logged_in',
+    'file' => 'models_forms.personal_information.inc',
+  );
+
   $items['user/interests/settings'] = array(
     'title' => 'Your Interests',
     'page callback' => 'models_forms_interests',
@@ -245,15 +236,6 @@ function models_forms_entity_insert($entity, $type) {
  */
 function models_forms_theme($existing, $type, $theme, $path) {
   return array(
-    // 'task_buttons' => array(
-    //   'template' => 'templates/task-buttons',
-    // ),
-    // 'task_users' => array(
-    //   'template' => 'templates/task-users',
-    // ),
-//    'search_menu' => array(
-//      'template' => 'templates/search-form',
-//    ),
     'overwrite_user_login' => array(
       'render element' => 'form',
       'template' => 'templates/login-form'
@@ -262,9 +244,11 @@ function models_forms_theme($existing, $type, $theme, $path) {
       'render element' => 'form',
       'template' => 'templates/instagram-form'
     ),
-    'overwrite_subscription_form' => array(
-      'render element' => 'form',
-      'template' => 'templates/subscription-form'
+    'stripe_subscription_page' => array(
+      'template' => 'templates/stripe-subscription-form',
+    ),
+    'stripe_invoice_page' => array(
+      'template' => 'templates/stripe-invoice-page',
     ),
     'overwrite_create_job' => array(
       'render element' => 'form',
@@ -315,22 +299,111 @@ function models_forms_hook_theme($existing, $type, $theme, $path) {
   );
 }
 
-//function template_preprocess_-mensearch_menu(&$vars) {
-//  $srch = drupal_get_form('models_forms_search_form');
-//  $vars['search_box'] = drupal_render($srch);
-//  // $active_menu = '<div class="my-menu-dd col-md-12 show-filters">';
-//  // $skills_block = block_load('search_api_sorts', 'search-sorts');
-//  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
-//  // $filters = drupal_render($block);
-//  // $skills_block = block_load('views', '-exp-current_tasks_solr_-page');
-//  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
-//  // $filters .= drupal_render($block);
-//  // $active_menu .= $filters;
-//  // $active_menu .= '</div>';
-//  // $vars['active_menu'] = $active_menu;
-//  // $vars['show_filters'] = !empty(arg(0)) && arg(0) == 'task-search' ? true : false;
-//  $vars['show_filters'] = FALSE;
-//}
+/**
+ * Template preprocess for stripe_invoices_page.
+ */
+function template_preprocess_stripe_invoice_page(&$vars) {
+
+  $header = array('Payment date', 'Plan', 'Download');
+  $row[] = array(
+    'DD/MM/YY',
+    'premium plan payment',
+    l('view invoice <i class="material-icons">trending_flat</i>', '', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go')))));
+
+  $variables = array(
+    'header' => $header,
+    'rows' => $row,
+//    'attributes' => array(),
+//    'caption' => array(),
+//    'empty' => array(),
+//    'colgroups' => array(),
+//    'sticky' => array(),
+  );
+  $vars['invoice_table'] = theme('table', $variables);
+
+}
+
+/**
+ * Template preprocess for stripe_subscription_page.
+ */
+function template_preprocess_stripe_subscription_page(&$vars) {
+  global $user;
+  $uw = entity_metadata_wrapper('user', $user->uid);
+  $current_plan = '<ul>';
+
+  $params = drupal_get_query_parameters();
+  if (isset($params['complete'])) {
+    if ($params['complete'] == 1) {
+      $vars['tavmuch'] = '<p class="greenify">' . t('Your payment was received - you are now signed up to the YogaFind <strong>premium</strong> plan') . '</p>';
+    }
+  }
+
+  if ($uw->field_yf_trial_ended->value()) {
+    switch ($uw->field_yf_subscription->value()) {
+      case 'premium':
+        $pricing_deets = t('Premium @ £5.50 p/month');
+        break;
+      case 'free':
+        $pricing_deets = t('Free');
+        break;
+    }
+  }
+  else {
+    $pricing_deets = t(' Premium @ 3 months free (# days remaining)');
+  }
+
+  $current_plan .= '<li>' . t('<strong>Current plan:</strong> !plan', array('!plan' => $pricing_deets)) . '</li>';
+  $current_plan .= '<li>' . t('<strong>Last payment:</strong> !date', array('!date' => 'DD/MM/YYYY')) . '</li>';
+  $current_plan .= '<li>' . t('<strong>Next payment:</strong> !date', array('!date' => 'DD/MM/YYYY')) . '</li>';
+  $current_plan .= '<li>' . t('<strong>Invoices:</strong> !here', array('!here' => l('Show invoices', 'user/personal-information/invoices', array('attributes' => array('class' => array('a-link')))))) . '</li>';
+  $current_plan .= $uw->field_stripe_reference->value() ? '<li>' . t('<strong>Customer ID:</strong> !cust_id', array('!cust_id' => $uw->field_stripe_reference->value())) . '</li>' : '';
+  $current_plan .= '</ul>';
+  $vars['current_plan'] = $current_plan;
+
+
+  if (!$uw->field_stripe_reference->value()) {
+    // If looking to upgrade from FREE or make initial payment >>
+    if ($uw->field_yf_subscription->value() == 'free' || !$uw->field_yf_trial_ended->value()) {
+
+      if (!$uw->field_yf_trial_ended->value()) {
+        $form_markup = '<p>' . t('To continue using the YogaFind <strong>premium</strong> plan, please make your payment below:') . '</p>';
+        $label_txt = t('Sign up for YogaFind premium');
+      }
+      else {
+        $form_markup = '<p>' . t('To upgrade your free plan to YogaFind <strong>premium</strong>, please make your payment below:') . '</p>';
+        $label_txt = t('Upgrade to YogaFind premium plan');
+      }
+
+      $form_markup .= '<form action="/user/subscribe/premium" method="POST">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="pk_test_hrBsyqolapbKL4ukf6SMTlNh"
+          data-image=""
+          data-name="' . t('Premium') . '"
+          data-description="' . t('Sign up for a premium account') . '"
+          data-amount="550"
+          data-label="' . $label_txt . '"
+          data-currency="gbp">
+        </script>
+      </form>';
+      $vars['make_payment'] = $form_markup;
+    }
+  }
+
+  // If looking to cancel >>
+  if (1 == 1) {
+
+//    $form_markup = '<p>' . t('To cancel your current plan and downgrade to a free plan:') . '</p>';
+
+    $form_markup = l('<i class="fa fa-close"></i> Cancel my subscription', 'cancel-link', array(
+      'html' => TRUE,
+      'attributes' => array('class' => array('btn btn-sm btn-danger'))
+    ));
+    $vars['cancel_payment'] = $form_markup;
+  }
+
+
+//  $vars['stripe_form'] = $premium_markup;
+}
 
 /*
 ** Implements hook_mail().

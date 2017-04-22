@@ -8694,34 +8694,29 @@ li.res {
 
 .page-user-personal-information .col-sm-3 .block,
 .page-user-account-settings .col-sm-3 .block,
-.page-user-email-settings .col-sm-3 .block,
-.page-user-plan-settings .col-sm-3 .block,
-.page-user-interests-settings .col-sm-3 .block {
+.page-user-plan-invoices .col-sm-3 .block,
+.page-user-plan-settings .col-sm-3 .block {
   padding: 5px !important; }
   .page-user-personal-information .col-sm-3 .block ul,
   .page-user-account-settings .col-sm-3 .block ul,
-  .page-user-email-settings .col-sm-3 .block ul,
-  .page-user-plan-settings .col-sm-3 .block ul,
-  .page-user-interests-settings .col-sm-3 .block ul {
+  .page-user-plan-invoices .col-sm-3 .block ul,
+  .page-user-plan-settings .col-sm-3 .block ul {
     margin: 0;
     padding: 0; }
     .page-user-personal-information .col-sm-3 .block ul li,
     .page-user-account-settings .col-sm-3 .block ul li,
-    .page-user-email-settings .col-sm-3 .block ul li,
-    .page-user-plan-settings .col-sm-3 .block ul li,
-    .page-user-interests-settings .col-sm-3 .block ul li {
+    .page-user-plan-invoices .col-sm-3 .block ul li,
+    .page-user-plan-settings .col-sm-3 .block ul li {
       list-style: none; }
       .page-user-personal-information .col-sm-3 .block ul li:last-of-type a,
       .page-user-account-settings .col-sm-3 .block ul li:last-of-type a,
-      .page-user-email-settings .col-sm-3 .block ul li:last-of-type a,
-      .page-user-plan-settings .col-sm-3 .block ul li:last-of-type a,
-      .page-user-interests-settings .col-sm-3 .block ul li:last-of-type a {
+      .page-user-plan-invoices .col-sm-3 .block ul li:last-of-type a,
+      .page-user-plan-settings .col-sm-3 .block ul li:last-of-type a {
         border-bottom: none; }
       .page-user-personal-information .col-sm-3 .block ul li a,
       .page-user-account-settings .col-sm-3 .block ul li a,
-      .page-user-email-settings .col-sm-3 .block ul li a,
-      .page-user-plan-settings .col-sm-3 .block ul li a,
-      .page-user-interests-settings .col-sm-3 .block ul li a {
+      .page-user-plan-invoices .col-sm-3 .block ul li a,
+      .page-user-plan-settings .col-sm-3 .block ul li a {
         color: #8F8F8F;
         display: inline-block;
         width: 100%;
@@ -8731,23 +8726,19 @@ li.res {
         .page-user-personal-information .col-sm-3 .block ul li a:hover, .page-user-personal-information .col-sm-3 .block ul li a.active,
         .page-user-account-settings .col-sm-3 .block ul li a:hover,
         .page-user-account-settings .col-sm-3 .block ul li a.active,
-        .page-user-email-settings .col-sm-3 .block ul li a:hover,
-        .page-user-email-settings .col-sm-3 .block ul li a.active,
+        .page-user-plan-invoices .col-sm-3 .block ul li a:hover,
+        .page-user-plan-invoices .col-sm-3 .block ul li a.active,
         .page-user-plan-settings .col-sm-3 .block ul li a:hover,
-        .page-user-plan-settings .col-sm-3 .block ul li a.active,
-        .page-user-interests-settings .col-sm-3 .block ul li a:hover,
-        .page-user-interests-settings .col-sm-3 .block ul li a.active {
+        .page-user-plan-settings .col-sm-3 .block ul li a.active {
           text-decoration: none;
           background-color: #EDEFF0; }
           .page-user-personal-information .col-sm-3 .block ul li a:hover:before, .page-user-personal-information .col-sm-3 .block ul li a.active:before,
           .page-user-account-settings .col-sm-3 .block ul li a:hover:before,
           .page-user-account-settings .col-sm-3 .block ul li a.active:before,
-          .page-user-email-settings .col-sm-3 .block ul li a:hover:before,
-          .page-user-email-settings .col-sm-3 .block ul li a.active:before,
+          .page-user-plan-invoices .col-sm-3 .block ul li a:hover:before,
+          .page-user-plan-invoices .col-sm-3 .block ul li a.active:before,
           .page-user-plan-settings .col-sm-3 .block ul li a:hover:before,
-          .page-user-plan-settings .col-sm-3 .block ul li a.active:before,
-          .page-user-interests-settings .col-sm-3 .block ul li a:hover:before,
-          .page-user-interests-settings .col-sm-3 .block ul li a.active:before {
+          .page-user-plan-settings .col-sm-3 .block ul li a.active:before {
             content: '';
             width: 3px;
             position: absolute;

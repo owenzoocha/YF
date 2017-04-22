@@ -245,6 +245,7 @@ function template_preprocess_block_settings_nav(&$vars) {
   // $nav .= '<li > ' . l(t('Profile'), 'user / profile / settings', array('attributes' => array('class' => array('')))) . ' </li > ';
 //  $nav .= '<li>' . l(t('Interests'), 'user/interests/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
   $nav .= '<li>' . l(t('Subscription Settings'), 'user/plan/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
+  $nav .= '<li>' . l(t('Invoices'), 'user/plan/invoices', array('attributes' => array('class' => array('')))) . ' </li > ';
   $nav .= '</ul>';
   $vars['settings_nav'] = $nav;
 }
@@ -452,7 +453,7 @@ function template_preprocess_my_nav(&$vars) {
         $nav = '<ul>';
         $nav .= '<li>' . l(t('Dashboard'), 'user/' . $uw->getIdentifier(), array('attributes' => array('class' => array('')))) . '</li>';
         $nav .= '<li>' . l(t('Settings'), 'user/personal-information/settings', array('attributes' => array('class' => array('')))) . '</li>';
-        $nav .= '<li>' . l(t('Invoices'), 'user/personal-information/invoices', array('attributes' => array('class' => array('')))) . '</li>';
+        $nav .= '<li>' . l(t('Invoices'), 'user/plan/invoices', array('attributes' => array('class' => array('')))) . '</li>';
 
         if ($uw->field_my_listings->value()) {
           $nav .= '<li>' . l(t('My listing'), 'node/' . $uw->field_my_listings->value()[0]->nid, array('attributes' => array('class' => array('')))) . '</li>';

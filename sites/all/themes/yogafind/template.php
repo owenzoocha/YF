@@ -371,7 +371,9 @@ function yogafind_preprocess_page(&$variables) {
     unset($variables['tabs']);
   }
 
-  if ((arg(0) == 'user' && is_numeric(arg(1)) && !arg(2) || strrpos(current_path(), '/settings') !== FALSE) && strpos(current_path(), 'user/reset') === FALSE) {
+  if ((arg(0) == 'user' && is_numeric(arg(1)) && !arg(2) ||
+      strrpos(current_path(), '/settings') !== FALSE) && strpos(current_path(), 'user/reset') === FALSE ||
+      strrpos(current_path(), '/plan/invoices') !== FALSE) {
     $variables['content_column_class'] = ' class="col-sm-pull-3 col-sm-9"';
   }
 

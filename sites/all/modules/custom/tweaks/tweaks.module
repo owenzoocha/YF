@@ -283,7 +283,7 @@ function tweaks_payment_due() {
   global $user;
   $uw = entity_metadata_wrapper('user', $user);
 
-  if (!$uw->field_yf_payment_complete->value()) {
+  if (!$uw->field_yf_trial_ended->value()) {
 
     $joined = $uw->created->value();
     $joined_plus_3 = strtotime('+ 3 months', $joined);
@@ -660,10 +660,10 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     }
 
     // Hide stripe info from users.
-    $form['field_stripe_reference']['#disabled'] = TRUE;
-    if (isset($form['field_stripe_reference']) && !user_access('administer users')) {
-      $form['field_stripe_reference']['#access'] = FALSE;
-    }
+//    $form['field_stripe_reference']['#disabled'] = TRUE;
+//    if (isset($form['field_stripe_reference']) && !user_access('administer users')) {
+//      $form['field_stripe_reference']['#access'] = FALSE;
+//    }
   }
   if ($form_id == 'privatemsg_list') {
     // dpm($form, $form_id);

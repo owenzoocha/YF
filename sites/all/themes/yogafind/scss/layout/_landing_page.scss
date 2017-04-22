@@ -3,12 +3,7 @@
     background-color: $light-grey;
   }
   #navbar {
-    //background: none;
-    //position: absolute;
-    //top: 0;
-    //left: 0;
-    //width: 100%;
-    background: rgba(255,255,255,0.7);
+    background: rgba(255, 255, 255, 0.7);
     &.navbar-default {
 
     }
@@ -25,6 +20,65 @@
   }
   .main-container {
     // display: none;
+  }
+}
+
+.event-desc {
+  font-size: 14px;
+}
+
+#block-views-yoga-event-lists-block-2,
+#block-views-yoga-searcher-block-2 {
+
+  .view-yoga-event-lists, .view-yoga-searcher, .view-my-listing-s- {
+    box-shadow: none;
+    background: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 0;
+    font-size: 14px;
+    border: none;
+  }
+
+  .event-teaser {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background: white;
+    border-bottom: none;
+  }
+
+  .event-logo {
+    width: 110px;
+    //margin-bottom: 15px;
+  }
+}
+
+#block-views-yoga-searcher-block-2 {
+  .event-teaser {
+    transition: 0.2s ease all;
+    &:hover {
+      padding-left: 15px;
+    }
+  }
+  .event-desc {
+    display: none;
+  }
+  .event-logo {
+    width: 50px;
+  }
+  .event-info {
+    margin-left: 60px;
+  }
+  .a-link {
+    font-size: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    i {
+      display: none;
+    }
   }
 }
 
@@ -64,17 +118,8 @@
 
   .hd-purple {
     color: $purple;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 500;
-  }
-
-  .event-teaser {
-    .event-desc {
-      display: none;
-    }
-    .event-logo {
-      width: 90px;
-    }
   }
 
   #hero {
@@ -94,18 +139,30 @@
           border-bottom: none;
           font-weight: 300;
           text-shadow: 2px 1px 1px $hb-dark;
+          a {
+            color: $white;
+            font-weight: bold;
+          }
         }
 
         h1 {
           font-size: 50px;
           margin-bottom: 15px;
-          background-color: rgba(0,0,0,0.2);
+          background-color: rgba(0, 0, 0, 0.2);
         }
 
         h2 {
-          font-size: 28px;
+          font-size: 38px;
           //letter-spacing: 0.5px;
           line-height: 25px;
+          a {
+            i {
+              font-size: 30px;
+            }
+            &:hover {
+              text-decoration: none;
+            }
+          }
         }
 
         p {
@@ -194,13 +251,18 @@
   #yf-sign-up {
     background: $green;
     text-align: center;
-    width: 100%;
+    //width: 100%;
     color: $white;
     padding: 13px 0;
     a {
       color: $white;
       text-decoration: underline;
     }
+  }
+
+  #yf-sponsors {
+    background: $white;
+    padding: 15px 0;
   }
 
   #yf-subscribe {
@@ -298,16 +360,16 @@
     #navbar {
       .navbar-nav {
         a {
-          .nav-btn {
-            padding: 5px 10px;
-            border-radius: 2px;
-            border: 2px solid $light-grey;
-            &:hover {
-              background: darken($hb-dark, 3%);
-            }
-          }
+          //.nav-btn {
+          //  padding: 5px 10px;
+          //  border-radius: 2px;
+          //  border: 2px solid $light-grey;
+          //  &:hover {
+          //    background: darken($hb-dark, 3%);
+          //  }
+          //}
           &:hover {
-            background: none;
+            //background: none;
           }
           &:focus {
             color: $hb-blue;

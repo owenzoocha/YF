@@ -36,7 +36,7 @@ function yogafind_preprocess_node(&$variables) {
     if ($variables['view_mode'] != 'teaser') {
       $nw = entity_metadata_wrapper('node', $variables['nid']);
       if ($nw->status->value() == 0) {
-        $variables['publish_msg'] = '<p class="greenify">' . t('This post is currently in preview mode - click !here when you are ready to publish.', array(
+        $variables['publish_msg'] = '<p class="greenify">' . t('This post is currently in preview mode - click !here when it\'s ready to be submitted for review.', array(
             '!here' => l('<strong>' . t('here') . '</strong>', 'node/' . arg(1), array(
               'html' => TRUE,
               'query' => array('publish' => 1)
@@ -54,8 +54,8 @@ function yogafind_preprocess_node(&$variables) {
 
       try {
         $variables['title'] = l($variables['title'], 'node/' . $nw->getIdentifier());
-        $variables['post_date'] = date('d M Y H:i', $nw->created->value());
-        $variables['author_name'] = $nw->author->label();
+        $variables['post_date'] = '</br><span>' . date('d M y H:i', $nw->created->value()) . '</span>';
+        $variables['author_name'] = l($nw->author->field_my_listings->value()[0]->title, 'node/' . $nw->author->field_my_listings->value()[0]->nid);
 
         $alter = array(
           'max_length' => 150,
@@ -70,11 +70,7 @@ function yogafind_preprocess_node(&$variables) {
 
         $uri = $nw->field_post_image->value() ? $nw->field_post_image->value()['uri'] : grab_default_profile_image($nw->author->getIdentifier());
 
-        $pic = '<div class="event-logo">' . l(theme('image_style', array(
-            'style_name' => 'profile',
-            'path' => $uri,
-            'attributes' => array('class' => array('img-responsive'))
-          )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+        $pic = '<div class="event-logo" style="background-image:url('. image_style_url('blog_thumb', $uri)  .')">' . l('<span>click</span>', 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
         $variables['logo'] = $pic;
 
         $variables['listing_link'] = $nw->author->field_my_listings->value() ? '<p class="listing-link"><small>' . t('Listing:') . '</small> ' . l($nw->author->field_my_listings->value()[0]->title, 'node/' . $nw->author->field_my_listings->value()[0]->nid, array('attributes' => array('class' => array('a-link')))) . '</p>' : FALSE;
@@ -111,7 +107,13 @@ function yogafind_preprocess_node(&$variables) {
         'word_boundary' => TRUE,
         'html' => TRUE,
       );
-      $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
+
+      if (!$nw->field_yoga_introduction->value()) {
+        $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
+      }
+      else {
+        $variables['description'] = $nw->field_yoga_introduction->value() ? '<p>' . views_trim_text($alter, $nw->field_yoga_introduction->value()) . '</p>' : FALSE;
+      }
 
       $styles = '';
       if ($nw->field_yoga_style->value()) {
@@ -169,7 +171,7 @@ function yogafind_preprocess_node(&$variables) {
         }
       }
       else {
-        $uri = $nw->field_yoga_logo->value()['uri'];
+        $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : grab_default_profile_image($nw->author->getIdentifier());
         $pic = '<div class="event-logo">' . l(theme('image_style', array(
             'style_name' => 'profile',
             'path' => $uri,
@@ -210,10 +212,6 @@ function yogafind_preprocess_page(&$variables) {
 
   $uw = entity_metadata_wrapper('user', $user);
 
-//
-//  dpm(current_path());
-//  dpm(drupal_get_path_alias());
-
   // Redirect non users from edit article page
   if (strpos(current_path(), 'post') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit') {
     $nw = entity_metadata_wrapper('node', arg(1));
@@ -225,6 +223,15 @@ function yogafind_preprocess_page(&$variables) {
   // Redirect wrong event edit pages to listings and vice versa
   if (strpos(current_path(), 'listing') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit' || strpos(current_path(), 'event') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit') {
     $nw = entity_metadata_wrapper('node', arg(1));
+
+    $wysiwyg_js['wysiwyg']['configs']['tinymce']['formatfiltered_html'] = array(
+      'menubar' => true,
+      'statusbar' => true,
+      'toolbar' => 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    );
+
+    drupal_add_js($wysiwyg_js, 'setting');
+
     if ($nw->field_yoga_type->value() != 'event') {
       if (strpos(current_path(), 'event') !== FALSE) {
         drupal_goto('listing/' . $nw->getIdentifier() . '/edit');
@@ -322,28 +329,27 @@ function yogafind_preprocess_page(&$variables) {
   $variables['home_nav'] = $user->uid == 0 ? theme('home_nav') : FALSE;
 
   if (drupal_is_front_page()) {
+
     drupal_add_css('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css', array('type' => 'external'));
     unset($variables['page']['content']);
-//    $variables['logo'] = drupal_get_path('theme', 'models') . '/' . 'white-logo.png';
-    if (isset($_COOKIE['Drupal_visitor_not_verified_logoff'])) {
-      if ($_COOKIE['Drupal_visitor_not_verified_logoff'] != 0) {
-        // drupal_set_message(t('Oops - it looks like you haven\'t verified your account yet! Please check your email for the verification link - or request a new password'), 'status', FALSE);
 
-        $logged_out_user = user_load($_COOKIE['Drupal_visitor_not_verified_logoff']);
-        if (in_array('unauthenticated user', $logged_out_user->roles)) {
-          drupal_set_message('Oops - it looks like you haven\'t verified your account yet! Please check your email for the verification link - or ' . l(t('resend validation e-mail'), 'revalidate-email/' . $_COOKIE['Drupal_visitor_not_verified_logoff']));
-          // user_cookie_save(array('not_verified.logoff' => 0));
-        }
-        else {
-          user_cookie_delete('not_verified.logoff');
-        }
-      }
-    }
+//    if (isset($_COOKIE['Drupal_visitor_not_verified_logoff'])) {
+//      if ($_COOKIE['Drupal_visitor_not_verified_logoff'] != 0) {
+//        $logged_out_user = user_load($_COOKIE['Drupal_visitor_not_verified_logoff']);
+//        if (in_array('unauthenticated user', $logged_out_user->roles)) {
+//          drupal_set_message('Oops - it looks like you haven\'t verified your account yet! Please check your email for the verification link - or ' . l(t('resend validation e-mail'), 'revalidate-email/' . $_COOKIE['Drupal_visitor_not_verified_logoff']));
+//          // user_cookie_save(array('not_verified.logoff' => 0));
+//        }
+//        else {
+//          user_cookie_delete('not_verified.logoff');
+//        }
+//      }
+//    }
   }
 
   // Bounce non admin onto personal info instead of user/edit.
   if (!in_array('hbm_admin', $user->roles) || $user->uid != 1) {
-//    unset($variables['tabs']);
+    // unset($variables['tabs']);
 
     if (strrpos(current_path(), 'user/' . $user->uid . '/edit') !== FALSE) {
       drupal_goto('user/personal-information/settings');
@@ -359,11 +365,6 @@ function yogafind_preprocess_page(&$variables) {
 
   $search_menu = theme('search_menu');
   $variables['search_menu'] = $search_menu;
-
-//  if (!$uw->field_my_tcs->value() && $user->uid != 0) {
-//    $tc_msg = t('Welcome to Hair & Beauty Models! To get started, please make sure you accept the') . ' ' . l('terms and conditions', 'terms') . ' ' . '<strong>' . l('here', 'user/personal-information/settings', array('fragment' => 'edit-field-my-tcs')) . '</strong>.';
-//    drupal_set_message($tc_msg, 'warning', FALSE);
-//  }
 
   if (strrpos(current_path(), 'search') !== FALSE) {
     $variables['no_footer'] = TRUE;
@@ -397,12 +398,9 @@ function yogafind_preprocess_page(&$variables) {
   // drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.8/packaged/jquery.noty.packaged.min.js', array('type' => 'external'));
 
 //  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js', 'external');
-  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js', 'external');
+//  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js', 'external');
 //  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js', 'external');
 //  drupal_add_js(libraries_get_path('raty-fa-0.1.1') . '/' . 'lib/jquery.raty-fa.js');
-
-  // dpm(current_path());
-  // dpm_once($_SERVER['REQUEST_URI']);
 
   // Set navbar to fixed.
   // navbar navbar-default navbar-fixed-top
@@ -439,7 +437,8 @@ function yogafind_preprocess_page(&$variables) {
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/teachers') !== FALSE) ||
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/posts') !== FALSE) ||
     (strpos(current_path(), '/timetable') !== FALSE) ||
-    (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/events') !== FALSE)
+    (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/events') !== FALSE) ||
+    (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/gallery') !== FALSE)
   ) {
     $nw = tweaks_get_alias_wrapper();
 
@@ -515,13 +514,13 @@ function yogafind_preprocess_page(&$variables) {
       $links = array();
       if ($link = $nw->field_my_twitter->value()) {
 
-        $links[] = l('<span class="tw">Twitter</span>', add_http($link['url']), array('html' => TRUE));
+        $links[] = l('<span class="tw"><i class="fa fa-twitter"></i></span>', add_http($link['url']), array('html' => TRUE));
       }
       if ($link = $nw->field_my_fb->value()) {
-        $links[] = l('<span class="fb">Facebook</span>', add_http($link['url']), array('html' => TRUE));
+        $links[] = l('<span class="fb"><i class="fa fa-facebook"></i></span>', add_http($link['url']), array('html' => TRUE));
       }
       if ($link = $nw->field_my_instagram->value()) {
-        $links[] = l('<span class="insta">Instagram</span>', add_http($link['url']), array('html' => TRUE));
+        $links[] = l('<span class="insta"><i class="fa fa-instagram"></i></span>', add_http($link['url']), array('html' => TRUE));
       }
 
       $vars = array(

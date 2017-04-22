@@ -8,7 +8,7 @@
 <?php print render($form['get_started']); ?>
 
 <!--<div class="col-sm-12">-->
-<h3>1. Your Event</h3>
+<h2>1. Your Event</h2>
 <!--</div>-->
 <div class="row">
   <div class="col-sm-2">
@@ -59,7 +59,7 @@
   </div>
 </div>
 
-<h3>2. About</h3>
+<h2>2. About</h2>
 <div class="row">
   <div class="col-sm-2">
     <label class="control-label"
@@ -101,7 +101,7 @@
 </div>
 
 
-<h3>3. Prices and More Information</h3>
+<h2>3. Prices and More Information</h2>
 <div class="row">
   <div class="col-sm-2">
     <label class="control-label" for="edit-field-yoga-event-price-und-0-value">£
@@ -134,7 +134,7 @@
 </div>
 
 
-<h3>4. Location</h3>
+<h2>4. Location</h2>
 <div class="row">
   <div class="col-sm-12">
     <label class="control-label"

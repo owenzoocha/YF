@@ -111,13 +111,13 @@ html body.admin-menu {
 
   .navbar-nav {
     > li > a {
-      font-weight: 300;
+      //font-weight: 500;
       padding: 0 25px;
       display: flex;
       height: 85px;
       align-items: center;
-      color: $dark-grey;
-      font-size: 15px;
+      color: #172A3A;
+      font-size: 16px;
       transition: all 0.2s ease;
       @include antialiased();
     }
@@ -131,10 +131,9 @@ html body.admin-menu {
          //}
       }
       span.nav-btn {
-        background-color: $light-blue;
-        color: $blue;
-        border: 2px solid $blue;
-        padding: 5px 10px;
+        background-color: $purple;
+        color: $white;
+        padding: 8px 10px;
         border-radius: 20px;
       }
     }

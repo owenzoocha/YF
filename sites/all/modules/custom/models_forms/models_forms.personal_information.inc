@@ -23,6 +23,8 @@ function models_forms_personal_info() {
   $wysiwyg_js['wysiwyg']['configs']['tinymce']['formatfiltered_html'] = array(
     'menubar' => FALSE,
     'statusbar' => FALSE,
+//    'toolbar' => 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    'toolbar' => "bold,italic,underline"
   );
 
   drupal_add_js($wysiwyg_js, 'setting');

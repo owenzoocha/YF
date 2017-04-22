@@ -368,21 +368,43 @@ function template_preprocess_my_nav(&$vars) {
         if ($nw->getBundle() == 'yoga') {
           if ($nw->field_yoga_type->value() != 'event') {
             $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
-            $nav .= '<li>' . l(t('Edit'), 'listing/' . $nw->getIdentifier() . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
 
-            $amt = $nw->author->field_my_posts->value() ? ' (' . sizeof($nw->author->field_my_posts->value()) . ')' : '';
-            $nav .= '<li>' . l(t('Posts') . $amt, $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
-            $nav .= '<li>' . l(t('Gallery'), $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
+            if (yf_user_plan_lookup($nw->getIdentifier())) {
+              $nav .= '<li>' . l(t('Edit'), 'listing/' . $nw->getIdentifier() . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+            }
 
-            $amt = $nw->field_yoga_classes->value() ? ' (' . sizeof($nw->field_yoga_classes->value()) . ')' : '';
-            $nav .= '<li>' . l(t('Timetable') . $amt, $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
+            if ($nw->author->field_yf_subscription->value() != 'free') {
 
-            $amt = $nw->field_yoga_event_list->value() ? ' (' . sizeof($nw->field_yoga_event_list->value()) . ')' : '';
-            $nav .= '<li>' . l(t('Events') . $amt, $alias . '/events', array('attributes' => array('class' => array('')))) . ' </li> ';
+              if (yf_user_plan_lookup(arg(1))) {
+                if ($nw->author->field_yf_subscription->value() == 'premium') {
+                  $nav .= '<li>' . l(t('Instagram'), 'listing/instagram/' . $nw->getIdentifier() . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+                }
+              }
 
-            if ($nw->field_yoga_type->value() == 'studio') {
-              $amt = $nw->field_yoga_teachers->value() ? ' (' . sizeof($nw->field_yoga_teachers->value()) . ')' : '';
-              $nav .= '<li>' . l(t('Teachers') . $amt, $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
+              if ($nw->author->field_my_posts->value()) {
+                $posts = 0;
+                foreach ($nw->author->field_my_posts->getIterator() as $key => $value) {
+                  if ($value->promote->value()){
+                    $posts++;
+                  }
+                }
+              }
+              $amt = $nw->author->field_my_posts->value() ? ' (' . $posts . ')' : '';
+              $nav .= '<li>' . l(t('Posts') . $amt, $alias . '/posts', array('attributes' => array('class' => array('')))) . ' </li> ';
+              $nav .= '<li>' . l(t('Gallery'), $alias . '/gallery', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+              $amt = $nw->field_yoga_classes->value() ? ' (' . sizeof($nw->field_yoga_classes->value()) . ')' : '';
+              $nav .= '<li>' . l(t('Timetable') . $amt, $alias . '/timetable', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+              $amt = $nw->field_yoga_event_list->value() ? ' (' . sizeof($nw->field_yoga_event_list->value()) . ')' : '';
+              $nav .= '<li>' . l(t('Events') . $amt, $alias . '/events', array('attributes' => array('class' => array('')))) . ' </li> ';
+
+              if ($nw->field_yoga_type->value() == 'studio') {
+                $amt = $nw->field_yoga_teachers->value() ? ' (' . sizeof($nw->field_yoga_teachers->value()) . ')' : '';
+                $nav .= '<li>' . l(t('Teachers') . $amt, $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
+            }
+
+
             }
           }
           else {
@@ -430,18 +452,12 @@ function template_preprocess_my_nav(&$vars) {
         $nav = '<ul>';
         $nav .= '<li>' . l(t('Dashboard'), 'user/' . $uw->getIdentifier(), array('attributes' => array('class' => array('')))) . '</li>';
         $nav .= '<li>' . l(t('Settings'), 'user/personal-information/settings', array('attributes' => array('class' => array('')))) . '</li>';
-//      $nav .= '<li>' . l(t('Photos'), 'user/photos', array('attributes' => array('class' => array('')))) . '</li>';
-//      $nav .= '<li>' . l(t('My Feedback'), 'user/' . $uw->getIdentifier() . '/feedback', array('attributes' => array('class' => array('')))) . '</li>';
-//      $nav .= '<li>' . l(t('My Jobs') . $my_jobs_count, 'my-jobs', array(
-//          'html' => TRUE,
-//          'attributes' => array('class' => array(''))
-//        )) . '</li>';
-//      $nav .= '<li>' . l(t('My Requests') . $my_requests_count, 'job-requests', array(
-//          'html' => TRUE,
-//          'attributes' => array('class' => array(''))
-//        )) . '</li>';
-//        $nav .= '<li>' . l(t('Favourites'), 'watchlist', array('attributes' => array('class' => array('')))) . '</li>';
-//      $nav .= '<li>' . l(t('Previous Jobs'), 'previous-jobs', array('attributes' => array('class' => array('')))) . '</li>';
+        $nav .= '<li>' . l(t('Invoices'), 'user/personal-information/invoices', array('attributes' => array('class' => array('')))) . '</li>';
+
+        if ($uw->field_my_listings->value()) {
+          $nav .= '<li>' . l(t('My listing'), 'node/' . $uw->field_my_listings->value()[0]->nid, array('attributes' => array('class' => array('')))) . '</li>';
+        }
+
         $nav .= '<li class="last">' . l(t('Logout'), 'user/logout', array('attributes' => array('class' => array('')))) . '</li>';
         $nav .= '</ul>';
         $vars['my_nav'] = $nav;
@@ -455,7 +471,6 @@ function template_preprocess_my_nav(&$vars) {
         $uw = entity_metadata_wrapper('user', arg(1));
         $nav = '<ul>';
         $nav .= '<li>' . l($uw->label() . '\'s ' . t('profile'), 'user/' . arg(1), array('attributes' => array('class' => array('')))) . '</li>';
-//        $nav .= '<li>' . l(t('Feedback'), 'user/' . arg(1) . '/feedback', array('attributes' => array('class' => array('')))) . '</li>';
         $nav .= '</ul>';
         $vars['my_nav'] = $nav;
         $vars['nav_2'] = FALSE;
@@ -547,7 +562,7 @@ function template_preprocess_home_nav(&$vars) {
   $links .= '<li class="leaf">' . l('Classes', 'classes') . '</li>';
   $links .= '<li class="leaf">' . l('Events', 'events') . '</li>';
   $links .= '<li class="leaf">' . l('Posts', 'posts') . '</li>';
-  $links .= '<li class="leaf">' . l('<span class="nav-btn">Sign Up / Sign In<span>', 'user/login', array('html' => TRUE)) . '</li>';
+  $links .= '<li class="leaf">' . l('<span class="nav-btn">Register / Log in</span>', 'user/login', array('html' => TRUE)) . '</li>';
   $vars['links'] = $links;
 }
 

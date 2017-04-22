@@ -14,7 +14,20 @@
 .node-type-yoga,
 .node-type-article,
 .page-instructor,
+.page-user,
 .page-studio {
+
+  #instafeed {
+    a {
+      float: left;
+      width: 16.6%;
+      border: 1px solid #fff;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
 
   // THE EVENT PAGE.
   #block-views-jobs-rhs-block-4 {
@@ -95,7 +108,33 @@
       }
     }
     .yoga-intro {
+      padding-left: 180px;
       .item-list {
+        float: left;
+        padding-right: 5px;
+        ul {
+          margin: 3px 0 0;
+          li {
+            margin: 0;
+            padding: 0;
+          }
+        }
+        a {
+          font-size: 15px;
+          height: 29px;
+          line-height: 23px;
+          border-radius: 50%;
+          width: 29px;
+          padding: 0;
+          margin: 0;
+          color: white;
+          background: $hb-dark;
+          text-align: center;
+          transition: 0.2s ease all;
+          &:hover {
+            background-color: darken($purple, 20%);
+          }
+        }
         h3 {
           display: none;
         }
@@ -223,39 +262,6 @@
       }
 
     }
-    #block-block-10 {
-      ul {
-        li {
-          a {
-            padding: 5px 10px;
-            position: relative;
-            display: block;
-            margin-bottom: 1px;
-            text-decoration: none;
-            color: $dark;
-            background-color: rgba(111, 115, 210, 0.08);
-            transition: 0.2s ease all;
-            i {
-              //display: none;
-              vertical-align: middle;
-            }
-            &:hover {
-              padding-left: 13px;
-              &:after {
-                transition: 0.2s ease all;
-                content: '';
-                position: absolute;
-                left: 0;
-                bottom: 0;
-                height: 100%;
-                width: 2px;
-                background-color: $purple;
-              }
-            }
-          }
-        }
-      }
-    }
   }
 
   .node-job {
@@ -375,4 +381,55 @@
 
 .st_fblike {
   display: none;
+}
+
+#block-block-14,
+#block-block-10 {
+  ul {
+    li {
+      a {
+        padding: 5px 10px;
+        position: relative;
+        display: block;
+        margin-bottom: 1px;
+        text-decoration: none;
+        color: $dark;
+        background-color: rgba(111, 115, 210, 0.08);
+        transition: 0.2s ease all;
+        i {
+          //display: none;
+          vertical-align: middle;
+        }
+        &:hover {
+          padding-left: 13px;
+          &:after {
+            transition: 0.2s ease all;
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 100%;
+            width: 2px;
+            background-color: $purple;
+          }
+        }
+      }
+    }
+  }
+}
+
+.view-yf-gallery {
+  p {
+    border: none!important;
+  }
+}
+
+.views-field-field-yf-gallery {
+  li {
+    float: left;
+    width: 33.3%;
+    img {
+      border: 1px solid $white;
+    }
+  }
 }

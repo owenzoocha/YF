@@ -9,6 +9,13 @@ function models_forms_class_add() {
   global $user;
   $user = user_load($user->uid);
   $uw = entity_metadata_wrapper('user', $user->uid);
+
+  // Redirect and run checks against the users' plan..
+  if ($uw->field_yf_subscription->value() == 'free') {
+    drupal_set_message(t('<i class="material-icons">schedule</i> Oops you must upgrade your current !plan plan to add classes - <strong>!link</strong> to upgrade now :)', array('!plan' => $uw->field_yf_subscription->value(), '!link' => l('click here', '/user/plan/settings'))));
+    drupal_goto('user/' . $uw->getIdentifier());
+  }
+
   $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
 
   if (is_numeric(arg(1))) {

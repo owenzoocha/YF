@@ -9,6 +9,13 @@ function models_forms_teacher_add() {
   global $user;
   $user = user_load($user->uid);
   $uw = entity_metadata_wrapper('user', $user->uid);
+
+  // Redirect and run checks against the users' plan..
+  if ($uw->field_yf_subscription->value() == 'free') {
+    drupal_set_message(t('<i class="material-icons">school</i> Oops you must upgrade your current !plan plan to add teachers - <strong>!link</strong> to upgrade now :)', array('!plan' => $uw->field_yf_subscription->value(), '!link' => l('click here', '/user/plan/settings'))));
+    drupal_goto('user/' . $uw->getIdentifier());
+  }
+
   $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
 
   if (is_numeric(arg(1))) {
@@ -57,6 +64,7 @@ function models_forms_teacher_add() {
   $wysiwyg_js['wysiwyg']['configs']['tinymce']['formatfiltered_html'] = array(
     'menubar' => FALSE,
     'statusbar' => FALSE,
+    'toolbar' => 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
   );
   drupal_add_js($wysiwyg_js, 'setting');
 

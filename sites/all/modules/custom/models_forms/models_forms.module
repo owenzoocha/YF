@@ -2,7 +2,6 @@
 /**
  * @file models_forms.module.
  */
-require_once 'models_forms.search.inc';
 require_once 'models_forms.request.inc';
 require_once 'models_forms.publish.inc';
 require_once 'models_forms.contactus.inc';
@@ -10,6 +9,7 @@ require_once 'models_forms.canceljob.inc';
 require_once 'models_forms.completejob.inc';
 require_once 'models_forms.pausejob.inc';
 require_once 'models_forms.confirm_clients.inc';
+require_once 'models_forms.yf_payments.inc';
 
 
 /**
@@ -31,17 +31,41 @@ function models_forms_init() {
  * Implements hook_menu().
  */
 function models_forms_menu() {
+
+  $items['yf_stripe_payment/add'] = array(
+    'title' => 'YF Stripe Payment',
+    'page callback' => 'yf_stripe_payment_add',
+    'access callback' => TRUE,
+    'file' => 'models_forms.yf_payments.inc',
+  );
+
   $items['listing/add'] = array(
     'title' => 'Your Yoga Listing',
     'page callback' => 'models_forms_listing_add',
-//    'page arguments' =>  array('models_forms_create_form'),
     'access callback' => 'user_is_logged_in',
     'file' => 'models_forms.create.inc',
   );
   $items['listing/%/edit'] = array(
     'title' => 'Your Yoga Listing',
     'page callback' => 'models_forms_listing_add',
+    'page arguments' => array(1),
+    'access callback' => 'yf_user_plan_lookup',
+    'access arguments' => array(1),
+    'file' => 'models_forms.create.inc',
+  );
+
+  $items['listing/instagram/%/edit'] = array(
+    'title' => 'Your Yoga Listing',
+    'page callback' => 'models_forms_instagram_add',
     'page arguments' => array(2),
+    'access callback' => 'yf_user_plan_lookup',
+    'access arguments' => array(2),
+    'file' => 'models_forms.create.inc',
+  );
+
+  $items['instagram_auth'] = array(
+    'title' => 'Your Yoga Listing',
+    'page callback' => 'models_forms_instagram_auth',
     'access callback' => 'user_is_logged_in',
     'file' => 'models_forms.create.inc',
   );
@@ -49,18 +73,18 @@ function models_forms_menu() {
   $items['event/add'] = array(
     'title' => 'Your Yoga Listing',
     'page callback' => 'models_forms_listing_add',
-//    'page arguments' =>  array('models_forms_create_form'),
-    'access callback' => 'user_is_logged_in',
-    'file' => 'models_forms.create.inc',
-  );
-  $items['event/%/edit'] = array(
-    'title' => 'Your Yoga Listing',
-    'page callback' => 'models_forms_listing_add',
-    'page arguments' => array(2),
     'access callback' => 'user_is_logged_in',
     'file' => 'models_forms.create.inc',
   );
 
+  $items['event/%/edit'] = array(
+    'title' => 'Your Yoga Listing',
+    'page callback' => 'models_forms_listing_add',
+    'page arguments' => array(1),
+    'access callback' => 'yf_user_plan_lookup',
+    'access arguments' => array(1),
+    'file' => 'models_forms.create.inc',
+  );
 
   $items['classes/add'] = array(
     'title' => 'Add a Class to Your Listing',
@@ -73,7 +97,8 @@ function models_forms_menu() {
     'title' => 'Edit your Yoga Class',
     'page callback' => 'models_forms_class_add',
     'page arguments' => array(2),
-    'access callback' => 'user_is_logged_in',
+    'access callback' => 'yf_user_plan_lookup_eck',
+    'access arguments' => array(1),
     'file' => 'models_forms.yoga_classes.inc',
   );
 
@@ -87,39 +112,25 @@ function models_forms_menu() {
   $items['post/%/edit'] = array(
     'title' => 'Edit your Post',
     'page callback' => 'models_forms_blog_add',
-    'page arguments' => array(2),
-    'access callback' => 'user_is_logged_in',
+    'page arguments' => array(1),
+    'access callback' => 'yf_user_plan_lookup',
+    'access arguments' => array(1),
     'file' => 'models_forms.yoga_blog.inc',
   );
 
   $items['teacher/add'] = array(
     'title' => 'Add a Teacher to Your Listing',
     'page callback' => 'models_forms_teacher_add',
-    'page arguments' => array(2),
     'access callback' => 'user_is_logged_in',
     'file' => 'models_forms.yoga_teachers.inc',
   );
   $items['teacher/%/edit'] = array(
     'title' => 'Edit your Teacher',
     'page callback' => 'models_forms_teacher_add',
-    'page arguments' => array(2),
-    'access callback' => 'user_is_logged_in',
+    'page arguments' => array(1),
+    'access callback' => 'yf_user_plan_lookup_eck',
+    'access arguments' => array(1),
     'file' => 'models_forms.yoga_teachers.inc',
-  );
-
-  $items['job/%/edit'] = array(
-    'title' => 'Edit your Job',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('models_forms_create_form', 2),
-    'access callback' => 'user_is_logged_in',
-    'file' => 'models_forms.create.inc',
-  );
-  $items['job/%/feedback'] = array(
-    'title' => 'Feedback',
-    'page callback' => 'models_forms_personal_info',
-    'page arguments' => array('models_forms_feedback_form', 2),
-    'access callback' => 'user_is_logged_in',
-    'file' => 'models_forms.feedback.inc',
   );
 
   $items['user/personal-information/settings'] = array(
@@ -156,6 +167,46 @@ function models_forms_menu() {
     'file' => 'models_forms.personal_information.inc',
   );
   return $items;
+}
+
+// YF user permissions based on plan.
+function yf_user_plan_lookup($nid) {
+  if (user_is_logged_in()) {
+    global $user;
+    if (in_array('administrator', $user->roles)) {
+      return TRUE;
+    }
+    $nw = entity_metadata_wrapper('node', $nid);
+    if ($user->uid == $nw->author->getIdentifier()) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
+  }
+  else {
+    return FALSE;
+  }
+}
+
+// YF user permissions based on plan.
+function yf_user_plan_lookup_eck($eid) {
+  if (user_is_logged_in()) {
+    global $user;
+    if (in_array('administrator', $user->roles)) {
+      return TRUE;
+    }
+    $ew = entity_metadata_wrapper('class', $eid);
+    if ($user->uid == $ew->uid->getIdentifier()) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
+  }
+  else {
+    return FALSE;
+  }
 }
 
 /**
@@ -200,12 +251,16 @@ function models_forms_theme($existing, $type, $theme, $path) {
     // 'task_users' => array(
     //   'template' => 'templates/task-users',
     // ),
-    'search_menu' => array(
-      'template' => 'templates/search-form',
-    ),
+//    'search_menu' => array(
+//      'template' => 'templates/search-form',
+//    ),
     'overwrite_user_login' => array(
       'render element' => 'form',
       'template' => 'templates/login-form'
+    ),
+    'overwrite_instagram_form' => array(
+      'render element' => 'form',
+      'template' => 'templates/instagram-form'
     ),
     'overwrite_subscription_form' => array(
       'render element' => 'form',
@@ -260,22 +315,22 @@ function models_forms_hook_theme($existing, $type, $theme, $path) {
   );
 }
 
-function template_preprocess_search_menu(&$vars) {
-  $srch = drupal_get_form('models_forms_search_form');
-  $vars['search_box'] = drupal_render($srch);
-  // $active_menu = '<div class="my-menu-dd col-md-12 show-filters">';
-  // $skills_block = block_load('search_api_sorts', 'search-sorts');
-  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
-  // $filters = drupal_render($block);
-  // $skills_block = block_load('views', '-exp-current_tasks_solr_-page');
-  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
-  // $filters .= drupal_render($block);
-  // $active_menu .= $filters;
-  // $active_menu .= '</div>';
-  // $vars['active_menu'] = $active_menu;
-  // $vars['show_filters'] = !empty(arg(0)) && arg(0) == 'task-search' ? true : false;
-  $vars['show_filters'] = FALSE;
-}
+//function template_preprocess_-mensearch_menu(&$vars) {
+//  $srch = drupal_get_form('models_forms_search_form');
+//  $vars['search_box'] = drupal_render($srch);
+//  // $active_menu = '<div class="my-menu-dd col-md-12 show-filters">';
+//  // $skills_block = block_load('search_api_sorts', 'search-sorts');
+//  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
+//  // $filters = drupal_render($block);
+//  // $skills_block = block_load('views', '-exp-current_tasks_solr_-page');
+//  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
+//  // $filters .= drupal_render($block);
+//  // $active_menu .= $filters;
+//  // $active_menu .= '</div>';
+//  // $vars['active_menu'] = $active_menu;
+//  // $vars['show_filters'] = !empty(arg(0)) && arg(0) == 'task-search' ? true : false;
+//  $vars['show_filters'] = FALSE;
+//}
 
 /*
 ** Implements hook_mail().
@@ -300,31 +355,26 @@ function models_forms_mail($key, &$message, $params) {
   }
 }
 
+
 function models_forms_node_presave($node) {
   global $user;
-
-  if ($node->type == 'article') {
-    if ($type = variable_get('blog_add_' . $user->uid)) {
-      $node->uid = $user->uid;
-      variable_del('blog_add_' . $user->uid);
-    }
-  }
+//
+//  if ($node->type == 'article') {
+//    if ($type = variable_get('blog_add_' . $user->uid)) {
+//      $node->uid = $user->uid;
+//      variable_del('blog_add_' . $user->uid);
+//    }
+//  }
 
   if ($node->type == 'yoga') {
-    dpm($node);
-    if ($type = variable_get('listing_add_' . $user->uid)) {
-      $node->uid = $user->uid;
-      dpm($node, 'listing...');
-      variable_del('listing_add_' . $user->uid);
-    }
-    elseif ($type = variable_get('event_add_' . $user->uid)) {
+
+    // Set yoga type
+    if (isset($node->field_yoga_event_type[LANGUAGE_NONE][0]) || isset($node->field_yoga_event_price[LANGUAGE_NONE][0])) {
       $node->field_yoga_type[LANGUAGE_NONE][0]['value'] = 'event';
-      $node->uid = $user->uid;
-      variable_del('event_add_' . $user->uid);
-      dpm($node, 'event...');
     }
 
     // Set up the LAT LNG.
+    include_once DRUPAL_ROOT . '/includes/locale.inc';
     $countries = country_get_list();
     $add = '';
     $add .= !empty($node->field_yoga_location[LANGUAGE_NONE][0]['thoroughfare']) ? $node->field_yoga_location[LANGUAGE_NONE][0]['thoroughfare'] . ' ' : FALSE;
@@ -363,25 +413,28 @@ function models_forms_node_insert($node) {
     if ($node->field_yoga_type[LANGUAGE_NONE][0]['value'] != 'event') {
       $uw = entity_metadata_wrapper('user', $user->uid);
       $nw = entity_metadata_wrapper('node', $node->nid);
-//      models_forms_listing_add_submit($nw);
+
+      // To use in the future to save more than one listing?
+//      if (!$uw->field_my_listings->value()) {
+//        $uw->field_my_listings->offsetSet(0, $node->nid);
+//      }
+//      else {
+//        $uw->field_my_listings->offsetSet(sizeof($uw->field_my_listings->value()), $node->nid);
+//      }
 
       // Add the yoga listing to the user's profile.
-      if (!$uw->field_my_listings->value()) {
-        $uw->field_my_listings->offsetSet(0, $node->nid);
-      }
-      else {
-        $uw->field_my_listings->offsetSet(sizeof($uw->field_my_listings->value()), $node->nid);
-      }
+      $uw->field_my_listings->offsetSet(0, $node->nid);
       $uw->save();
     }
 
     if ($node->field_yoga_type[LANGUAGE_NONE][0]['value'] == 'event') {
+
       $uw = entity_metadata_wrapper('user', $user->uid);
       $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
-      $evw = entity_metadata_wrapper('node', $node->nid);
-//      models_forms_listing_add_submit($evw);
 
-      // Add the yoga event to the yoga listing.
+//      $evw = entity_metadata_wrapper('node', $node->nid);
+//      models_forms_listing_add_submit($evw);
+//      // Add the yoga event to the yoga listing.
       if (!$nw->field_yoga_event_list->value()) {
         $nw->field_yoga_event_list->offsetSet(0, $node->nid);
       }

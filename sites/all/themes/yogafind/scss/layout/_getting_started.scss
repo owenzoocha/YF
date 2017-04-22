@@ -1,4 +1,10 @@
 .page-node-265 {
+
+  h3 {
+    margin: 0;
+    font-size: 28px;
+  }
+
   .get-started-offer {
     margin: 15px 0;
     background-color: $green;
@@ -10,14 +16,40 @@
       color: $white;
     }
     h3 {
-      margin: 0;
+      color: $white;
+    }
+
+  }
+  .list-unstyled {
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    min-height: 300px;
+    display: block;
+    li {
+      margin: 3px 0;
+      padding-left: 10px;
+      &:before {
+        font-family: 'FontAwesome';
+        content: '\f00c';
+        margin:0 5px 0 -15px;
+        color: $green;
+      }
     }
   }
+
   .get-started-options {
     margin-bottom: 15px;
     h3 {
       color: $purple;
-      font-size: 35px;
+      padding-bottom: 15px;
+      //font-weight: bold;
+      font-size: 25px;
+      span {
+        font-size: 28px;
+        font-weight: bold;
+        text-decoration: line-through;
+      }
     }
     ul {
       //li {

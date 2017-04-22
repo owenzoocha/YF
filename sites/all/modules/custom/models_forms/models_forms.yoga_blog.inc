@@ -10,16 +10,25 @@ function models_forms_blog_add() {
   $user = user_load($user->uid);
 
   $uw = entity_metadata_wrapper('user', $user->uid);
+
+  // Redirect and run checks against the users' plan..
+  if ($uw->field_yf_subscription->value() == 'free') {
+    drupal_set_message(t('<i class="material-icons">rss_feed</i> Oops you must upgrade your current !plan plan to create posts - <strong>!link</strong> to upgrade now :)', array('!plan' => $uw->field_yf_subscription->value(), '!link' => l('click here', '/user/plan/settings'))));
+    drupal_goto('user/' . $uw->getIdentifier());
+  }
+
   module_load_include('inc', 'node', 'node.pages');
 
   if (is_numeric(arg(1))) {
     $node_form = node_load(arg(1));
   }
   else {
-    $node_form = new stdClass;
-    $node_form->type = 'article';
-    $node_form->language = LANGUAGE_NONE;
-    $node_form->author = $uw->getIdentifier();
+    $node_form = (object) array(
+      'uid' => $user->uid,
+      'name' => (isset($user->name) ? $user->name : ''),
+      'type' => 'article',
+      'language' => LANGUAGE_NONE,
+    );
   }
 
   $yoga_form = drupal_get_form('article_node_form', $node_form);

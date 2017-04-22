@@ -3,7 +3,7 @@
     background-color: $light-grey;
   }
   #navbar {
-    background: rgba(255,255,255,0.7);
+    background: rgba(255, 255, 255, 0.7);
     &.navbar-default {
 
     }
@@ -148,7 +148,7 @@
         h1 {
           font-size: 50px;
           margin-bottom: 15px;
-          background-color: rgba(0,0,0,0.2);
+          background-color: rgba(0, 0, 0, 0.2);
         }
 
         h2 {
@@ -262,7 +262,7 @@
 
   #yf-sponsors {
     background: $white;
-    padding:15px 0;
+    padding: 15px 0;
   }
 
   #yf-subscribe {
@@ -360,14 +360,14 @@
     #navbar {
       .navbar-nav {
         a {
-          .nav-btn {
-            padding: 5px 10px;
-            border-radius: 2px;
-            border: 2px solid $light-grey;
-            &:hover {
-              background: darken($hb-dark, 3%);
-            }
-          }
+          //.nav-btn {
+          //  padding: 5px 10px;
+          //  border-radius: 2px;
+          //  border: 2px solid $light-grey;
+          //  &:hover {
+          //    background: darken($hb-dark, 3%);
+          //  }
+          //}
           &:hover {
             //background: none;
           }

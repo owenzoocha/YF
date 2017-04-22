@@ -2,12 +2,17 @@
 .view-yoga-searcher,
 .view-my-listing-s- {
 //.view-user-blog-posts {
-  @include blocks();
+//  @include blocks();
   font-size: 14px;
   .views-row {
     .event-teaser {
-      margin-bottom: 10px;
-      border-bottom: 1px dashed $light-grey-border;
+      //margin-bottom: 10px;
+      //border-bottom: 1px dashed $light-grey-border;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      background: white;
+      border-bottom: none;
 
       .event-logo {
         float: left;

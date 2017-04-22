@@ -128,10 +128,10 @@
   <!--  </div>-->
 
   <div id="yf-events">
-    <div class="container">
+    <div class="row">
       <div class="container">
 
-        <h3 class="hd-purple">YogaFind Posts</h3>
+        <h3 class="hd-pur`ple">YogaFind Posts</h3>
         <h4>Latest yoga posts</h4>
         <a href="/posts" class="a-link link-go">View more posts <i
             class="material-icons">trending_flat</i></a>

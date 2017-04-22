@@ -2,7 +2,6 @@
 /**
  * @file models_forms.module.
  */
-require_once 'models_forms.search.inc';
 require_once 'models_forms.request.inc';
 require_once 'models_forms.publish.inc';
 require_once 'models_forms.contactus.inc';
@@ -10,6 +9,7 @@ require_once 'models_forms.canceljob.inc';
 require_once 'models_forms.completejob.inc';
 require_once 'models_forms.pausejob.inc';
 require_once 'models_forms.confirm_clients.inc';
+require_once 'models_forms.yf_payments.inc';
 
 
 /**
@@ -31,6 +31,14 @@ function models_forms_init() {
  * Implements hook_menu().
  */
 function models_forms_menu() {
+
+  $items['yf_stripe_payment/add'] = array(
+    'title' => 'YF Stripe Payment',
+    'page callback' => 'yf_stripe_payment_add',
+    'access callback' => TRUE,
+    'file' => 'models_forms.yf_payments.inc',
+  );
+
   $items['listing/add'] = array(
     'title' => 'Your Yoga Listing',
     'page callback' => 'models_forms_listing_add',
@@ -243,9 +251,9 @@ function models_forms_theme($existing, $type, $theme, $path) {
     // 'task_users' => array(
     //   'template' => 'templates/task-users',
     // ),
-    'search_menu' => array(
-      'template' => 'templates/search-form',
-    ),
+//    'search_menu' => array(
+//      'template' => 'templates/search-form',
+//    ),
     'overwrite_user_login' => array(
       'render element' => 'form',
       'template' => 'templates/login-form'
@@ -307,22 +315,22 @@ function models_forms_hook_theme($existing, $type, $theme, $path) {
   );
 }
 
-function template_preprocess_search_menu(&$vars) {
-  $srch = drupal_get_form('models_forms_search_form');
-  $vars['search_box'] = drupal_render($srch);
-  // $active_menu = '<div class="my-menu-dd col-md-12 show-filters">';
-  // $skills_block = block_load('search_api_sorts', 'search-sorts');
-  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
-  // $filters = drupal_render($block);
-  // $skills_block = block_load('views', '-exp-current_tasks_solr_-page');
-  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
-  // $filters .= drupal_render($block);
-  // $active_menu .= $filters;
-  // $active_menu .= '</div>';
-  // $vars['active_menu'] = $active_menu;
-  // $vars['show_filters'] = !empty(arg(0)) && arg(0) == 'task-search' ? true : false;
-  $vars['show_filters'] = FALSE;
-}
+//function template_preprocess_-mensearch_menu(&$vars) {
+//  $srch = drupal_get_form('models_forms_search_form');
+//  $vars['search_box'] = drupal_render($srch);
+//  // $active_menu = '<div class="my-menu-dd col-md-12 show-filters">';
+//  // $skills_block = block_load('search_api_sorts', 'search-sorts');
+//  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
+//  // $filters = drupal_render($block);
+//  // $skills_block = block_load('views', '-exp-current_tasks_solr_-page');
+//  // $block = _block_get_renderable_array(_block_render_blocks(array($skills_block)));
+//  // $filters .= drupal_render($block);
+//  // $active_menu .= $filters;
+//  // $active_menu .= '</div>';
+//  // $vars['active_menu'] = $active_menu;
+//  // $vars['show_filters'] = !empty(arg(0)) && arg(0) == 'task-search' ? true : false;
+//  $vars['show_filters'] = FALSE;
+//}
 
 /*
 ** Implements hook_mail().

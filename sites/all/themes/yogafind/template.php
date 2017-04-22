@@ -332,26 +332,24 @@ function yogafind_preprocess_page(&$variables) {
 
     drupal_add_css('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css', array('type' => 'external'));
     unset($variables['page']['content']);
-//    $variables['logo'] = drupal_get_path('theme', 'models') . '/' . 'white-logo.png';
-    if (isset($_COOKIE['Drupal_visitor_not_verified_logoff'])) {
-      if ($_COOKIE['Drupal_visitor_not_verified_logoff'] != 0) {
-        // drupal_set_message(t('Oops - it looks like you haven\'t verified your account yet! Please check your email for the verification link - or request a new password'), 'status', FALSE);
 
-        $logged_out_user = user_load($_COOKIE['Drupal_visitor_not_verified_logoff']);
-        if (in_array('unauthenticated user', $logged_out_user->roles)) {
-          drupal_set_message('Oops - it looks like you haven\'t verified your account yet! Please check your email for the verification link - or ' . l(t('resend validation e-mail'), 'revalidate-email/' . $_COOKIE['Drupal_visitor_not_verified_logoff']));
-          // user_cookie_save(array('not_verified.logoff' => 0));
-        }
-        else {
-          user_cookie_delete('not_verified.logoff');
-        }
-      }
-    }
+//    if (isset($_COOKIE['Drupal_visitor_not_verified_logoff'])) {
+//      if ($_COOKIE['Drupal_visitor_not_verified_logoff'] != 0) {
+//        $logged_out_user = user_load($_COOKIE['Drupal_visitor_not_verified_logoff']);
+//        if (in_array('unauthenticated user', $logged_out_user->roles)) {
+//          drupal_set_message('Oops - it looks like you haven\'t verified your account yet! Please check your email for the verification link - or ' . l(t('resend validation e-mail'), 'revalidate-email/' . $_COOKIE['Drupal_visitor_not_verified_logoff']));
+//          // user_cookie_save(array('not_verified.logoff' => 0));
+//        }
+//        else {
+//          user_cookie_delete('not_verified.logoff');
+//        }
+//      }
+//    }
   }
 
   // Bounce non admin onto personal info instead of user/edit.
   if (!in_array('hbm_admin', $user->roles) || $user->uid != 1) {
-//    unset($variables['tabs']);
+    // unset($variables['tabs']);
 
     if (strrpos(current_path(), 'user/' . $user->uid . '/edit') !== FALSE) {
       drupal_goto('user/personal-information/settings');
@@ -367,11 +365,6 @@ function yogafind_preprocess_page(&$variables) {
 
   $search_menu = theme('search_menu');
   $variables['search_menu'] = $search_menu;
-
-//  if (!$uw->field_my_tcs->value() && $user->uid != 0) {
-//    $tc_msg = t('Welcome to Hair & Beauty Models! To get started, please make sure you accept the') . ' ' . l('terms and conditions', 'terms') . ' ' . '<strong>' . l('here', 'user/personal-information/settings', array('fragment' => 'edit-field-my-tcs')) . '</strong>.';
-//    drupal_set_message($tc_msg, 'warning', FALSE);
-//  }
 
   if (strrpos(current_path(), 'search') !== FALSE) {
     $variables['no_footer'] = TRUE;
@@ -409,9 +402,6 @@ function yogafind_preprocess_page(&$variables) {
 //  drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js', 'external');
 //  drupal_add_js(libraries_get_path('raty-fa-0.1.1') . '/' . 'lib/jquery.raty-fa.js');
 
-  // dpm(current_path());
-  // dpm_once($_SERVER['REQUEST_URI']);
-
   // Set navbar to fixed.
   // navbar navbar-default navbar-fixed-top
   $variables['navbar_classes_array'][1] = 'container-fluid';
@@ -447,7 +437,8 @@ function yogafind_preprocess_page(&$variables) {
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/teachers') !== FALSE) ||
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/posts') !== FALSE) ||
     (strpos(current_path(), '/timetable') !== FALSE) ||
-    (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/events') !== FALSE)
+    (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/events') !== FALSE) ||
+    (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/gallery') !== FALSE)
   ) {
     $nw = tweaks_get_alias_wrapper();
 
@@ -523,13 +514,13 @@ function yogafind_preprocess_page(&$variables) {
       $links = array();
       if ($link = $nw->field_my_twitter->value()) {
 
-        $links[] = l('<span class="tw">Twitter</span>', add_http($link['url']), array('html' => TRUE));
+        $links[] = l('<span class="tw"><i class="fa fa-twitter"></i></span>', add_http($link['url']), array('html' => TRUE));
       }
       if ($link = $nw->field_my_fb->value()) {
-        $links[] = l('<span class="fb">Facebook</span>', add_http($link['url']), array('html' => TRUE));
+        $links[] = l('<span class="fb"><i class="fa fa-facebook"></i></span>', add_http($link['url']), array('html' => TRUE));
       }
       if ($link = $nw->field_my_instagram->value()) {
-        $links[] = l('<span class="insta">Instagram</span>', add_http($link['url']), array('html' => TRUE));
+        $links[] = l('<span class="insta"><i class="fa fa-instagram"></i></span>', add_http($link['url']), array('html' => TRUE));
       }
 
       $vars = array(

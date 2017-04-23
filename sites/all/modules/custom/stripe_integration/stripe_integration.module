@@ -291,10 +291,17 @@ function stripe_integration_fetch_invoices() {
   if (isset($details['stripe_ref'])) {
     stripe_integration_stripe_api_init();
 
-    $invoices = \Stripe\Invoice::all(array(
-      'customer' => $details['stripe_ref'],
-      'limit' => 3,
-    ));
+    try {
+      $invoices = \Stripe\Invoice::all(array(
+        'customer' => $details['stripe_ref'],
+        'limit' => 3,
+      ));
+    }
+    catch (Exception $e) {
+      // If customer doesn't exist return empty array.
+      // Should check for other errors etc.
+      return array();
+    }
 
     $invoices_data = array();
     foreach ($invoices->data as $key => $invoice) {

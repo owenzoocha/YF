@@ -305,22 +305,20 @@ function models_forms_hook_theme($existing, $type, $theme, $path) {
 function template_preprocess_stripe_invoice_page(&$vars) {
 
   $header = array('Payment date', 'Plan', 'Download');
-  $row[] = array(
-    'DD/MM/YY',
-    'premium plan payment',
-    l('view invoice <i class="material-icons">trending_flat</i>', '', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go')))));
+  // Grab invoices.
+  $rows = stripe_integration_fetch_invoices();
 
   $variables = array(
     'header' => $header,
-    'rows' => $row,
+    'rows' => $rows,
 //    'attributes' => array(),
 //    'caption' => array(),
 //    'empty' => array(),
 //    'colgroups' => array(),
 //    'sticky' => array(),
   );
-  $vars['invoice_table'] = theme('table', $variables);
 
+  $vars['invoice_table'] = theme('table', $variables);
 }
 
 /**

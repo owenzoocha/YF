@@ -284,3 +284,32 @@ function stripe_subscription_form(&$form) {
 
   return $form;
 }
+
+function stripe_integration_fetch_invoices() {
+  $details = stripe_integration_get_user_details();
+
+  if (isset($details['stripe_ref'])) {
+    stripe_integration_stripe_api_init();
+
+    $invoices = \Stripe\Invoice::all(array(
+      'customer' => $details['stripe_ref'],
+      'limit' => 3,
+    ));
+
+    $invoices_data = array();
+    foreach ($invoices->data as $key => $invoice) {
+      // Get plan from first line item.
+      $invoice_plan = $invoice->lines->data[0]->plan->name;
+      // Get date.
+      $invoice_date = date('d/m/y', $invoice->date);
+      // Link. TODO: Not sure that we can do this.
+      $invoice_link = l('view invoice <i class="material-icons">trending_flat</i>', '', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go'))));
+
+      $invoices_data[$key]['date'] = $invoice_date;
+      $invoices_data[$key]['plan'] = $invoice_plan;
+      $invoices_data[$key]['dl_link'] = $invoice_link;
+    }
+
+    return $invoices_data;
+  }
+}

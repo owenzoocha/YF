@@ -18,7 +18,20 @@ body {
 
 // Danger and error appear as red
 .btn-purple {
-  @include button-variant($btn-purple-color, $btn-purple-bg, $btn-purple-border);
+  @include button-variant($purple, $white, $purple);
+  color: $purple;
+  &:hover {
+    background-color: #f8f8f8!important;
+  }
+}
+
+// Danger and error appear as red
+.btn-green {
+  @include button-variant($green, $white, $green);
+  color: $green;
+  &:hover {
+    background-color: #f8f8f8!important;
+  }
 }
 
 .nothing-here-yet {

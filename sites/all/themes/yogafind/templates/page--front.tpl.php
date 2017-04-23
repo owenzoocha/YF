@@ -76,7 +76,7 @@
 
   <div id="yf-sign-up">
     <div class="container">
-      Looking to list your yoga classes, event or studio? Join ### others and <a
+      Looking to list your yoga classes, events or studio? Join ### others and <a
         href="/getting-started" class="a-link link-go">get started now <i
           class="material-icons">trending_flat</i></a>
     </div>
@@ -128,15 +128,12 @@
   <!--  </div>-->
 
   <div id="yf-events">
-    <div class="row">
       <div class="container">
-
-        <h3 class="hd-pur`ple">YogaFind Posts</h3>
-        <h4>Latest yoga posts</h4>
-        <a href="/posts" class="a-link link-go">View more posts <i
-            class="material-icons">trending_flat</i></a>
         <div class="row">
-
+          <h3 class="hd-purple">YogaFind Posts</h3>
+          <h4>Latest yoga posts</h4>
+          <a href="/posts" class="a-link link-go">View more posts <i
+              class="material-icons">trending_flat</i></a>
           <?php
           $slick_block = block_load('views', 'user_blog_posts-block_2');
           $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));

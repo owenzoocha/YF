@@ -212,6 +212,9 @@ function yogafind_preprocess_page(&$variables) {
 
   $uw = entity_metadata_wrapper('user', $user);
 
+//  drupal_add_css('//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58fbd23773f291f7', array('type' => 'external'));
+
+
   // Redirect non users from edit article page
   if (strpos(current_path(), 'post') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit') {
     $nw = entity_metadata_wrapper('node', arg(1));
@@ -332,19 +335,6 @@ function yogafind_preprocess_page(&$variables) {
 
     drupal_add_css('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css', array('type' => 'external'));
     unset($variables['page']['content']);
-
-//    if (isset($_COOKIE['Drupal_visitor_not_verified_logoff'])) {
-//      if ($_COOKIE['Drupal_visitor_not_verified_logoff'] != 0) {
-//        $logged_out_user = user_load($_COOKIE['Drupal_visitor_not_verified_logoff']);
-//        if (in_array('unauthenticated user', $logged_out_user->roles)) {
-//          drupal_set_message('Oops - it looks like you haven\'t verified your account yet! Please check your email for the verification link - or ' . l(t('resend validation e-mail'), 'revalidate-email/' . $_COOKIE['Drupal_visitor_not_verified_logoff']));
-//          // user_cookie_save(array('not_verified.logoff' => 0));
-//        }
-//        else {
-//          user_cookie_delete('not_verified.logoff');
-//        }
-//      }
-//    }
   }
 
   // Bounce non admin onto personal info instead of user/edit.
@@ -495,12 +485,12 @@ function yogafind_preprocess_page(&$variables) {
         'attributes' => array('class' => array('author-pic'))
       ));
 
-      $contact_teacher = l('<i class="fa fa-envelope"></i>' . ' ' . t('Contact Teacher'), '#', array(
+      $contact_teacher = l('<i class="fa fa-envelope"></i>' . ' ' . t('Contact'), '#', array(
         'html' => TRUE,
         'attributes' => array(
           'data-toggle' => array('modal'),
           'data-target' => array('#job-publish-form-popup'),
-          'class' => array('btn btn-default')
+          'class' => array('btn btn-green')
         )
       ));
 
@@ -544,15 +534,17 @@ function yogafind_preprocess_page(&$variables) {
 
       $variables['job_details'] = $job_details;
 
-      // Client request accept / remove
-      $client_request_form = drupal_get_form('models_forms_confirm_clients_form');
+      // Contact listing owner..
+      $block = module_invoke('webform', 'block_view', 'client-block-292');
+      $contact_listing_form = render($block['content']);
+
       $modal_options = array(
         'attributes' => array(
           'id' => 'job-publish-form-popup',
           'class' => array('job-publish-form-popup-modal')
         ),
-        'heading' => t('Confirm Clients'),
-        'body' => drupal_render($client_request_form),
+        'heading' => t('Contact !listing', array('!listing' => $nw->label())),
+        'body' => '<p>' . t('Enquiring about classes? Events? Courses? Send !listing a message:', array('!listing' => $nw->label())). '</p>' . $contact_listing_form,
       );
       $variables['client_request_confirm_form'] = theme('bootstrap_modal', $modal_options);
 

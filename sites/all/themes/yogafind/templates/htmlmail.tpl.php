@@ -92,7 +92,7 @@
             </tr>
               <tr>
               <td align="center" class="footercopy" style="font-family:sans-serif;font-size:14px;color:#ccc;" >
-                © 2016 Hair and Beauty Models<br>
+                © <?php print date('Y'); ?> YogaFind.co.uk<br>
                 <!-- <a href="#" class="unsubscribe" style="color:#ccc;text-decoration:underline;" ><font color="#BBBBBB">Unsubscribe</font></a>
                 <span class="hide">from this newsletter instantly</span> -->
               </td>

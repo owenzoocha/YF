@@ -495,14 +495,18 @@ function template_preprocess_job_client_faces(&$vars) {
  * Template preprocess for Contact Us Button.
  */
 function template_preprocess_contact_us_button(&$vars) {
-  $contactus_form = drupal_get_form('models_forms_contactus_form');
+//  $contactus_form = drupal_get_form('models_forms_contactus_form');
+
+  $block = module_invoke('webform', 'block_view', 'client-block-291');
+  $contactus_form = render($block['content']);
+
   $modal_options = array(
     'attributes' => array(
       'id' => 'contactus-popup',
       'class' => array('jcontactus-popup-modal')
     ),
     'heading' => t('Contact Us:'),
-    'body' => drupal_render($contactus_form),
+    'body' => $contactus_form,
   );
   $vars['contactus_form'] = theme('bootstrap_modal', $modal_options);
   $vars['contactus_btn'] = l('<i class="fa fa-comment"></i>', '#', array(
@@ -561,6 +565,21 @@ function tweaks_ctools_plugin_directory($module, $type) {
  * Implements hook_form_alter().
  */
 function tweaks_form_alter(&$form, &$form_state, $form_id) {
+
+  // Listing contact form.
+  if ($form_id == 'webform_client_form_292') {
+
+    if (!is_numeric(arg(1))) {
+      $nid = explode('/', drupal_get_normal_path(arg(0) . '/' . arg(1)));
+      $nid = $nid[1];
+    }
+    else {
+      $nid = arg(1);
+    }
+    $nw = entity_metadata_wrapper('node', $nid);
+    $form['submitted']['listing_email']['#value'] = $nw->author->mail->value();
+    $form['submitted']['listing_fname']['#value'] = $nw->author->label();
+  }
 
   if ($form_id == 'article_node_form') {
     $form['actions']['preview']['#access'] = FALSE;
@@ -984,6 +1003,13 @@ function tweaks_field_formatter_view($entity_type, $entity, $field, $instance, $
 function tweaks_block_list_alter(&$blocks) {
 
   // Hide the instagram feed block if disabled or no plan.
+  if (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2) && (strpos(drupal_get_path_alias(), 'studio/') !== FALSE || strpos(drupal_get_path_alias(), 'instructor/') !== FALSE)) {
+
+    if (!yf_user_plan_lookup(arg(1))) {
+      $blocks[483]->region = BLOCK_REGION_NONE;
+    }
+  }
+
   if (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2) && (strpos(drupal_get_path_alias(), 'studio/') !== FALSE || strpos(drupal_get_path_alias(), 'teacher/') !== FALSE)) {
 
     $nw = entity_metadata_wrapper('node', arg(1));

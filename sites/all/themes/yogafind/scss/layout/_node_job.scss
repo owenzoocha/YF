@@ -122,17 +122,20 @@
         a {
           font-size: 15px;
           height: 29px;
-          line-height: 23px;
+          line-height: 21px;
           border-radius: 50%;
           width: 29px;
           padding: 0;
           margin: 0;
-          color: white;
-          background: $hb-dark;
+          color: $purple;
+          background: $white;
+          border: 1px solid $purple;
           text-align: center;
           transition: 0.2s ease all;
+          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
           &:hover {
             background-color: darken($purple, 20%);
+            color: $white;
           }
         }
         h3 {

@@ -5752,29 +5752,30 @@ body {
   padding: 15px; }
 
 .btn-purple {
-  color: #fff;
-  background-color: #6F73D2;
-  border-color: #5c60cc; }
+  color: #6F73D2;
+  background-color: #fff;
+  border-color: #6F73D2;
+  color: #6F73D2; }
   .btn-purple:focus, .btn-purple.focus {
-    color: #fff;
-    background-color: #484dc6;
-    border-color: #282c80; }
+    color: #6F73D2;
+    background-color: #e6e6e6;
+    border-color: #2e3293; }
   .btn-purple:hover {
-    color: #fff;
-    background-color: #484dc6;
-    border-color: #383db3; }
+    color: #6F73D2;
+    background-color: #e6e6e6;
+    border-color: #4046c3; }
   .btn-purple:active, .btn-purple.active,
   .open > .btn-purple.dropdown-toggle {
-    color: #fff;
-    background-color: #484dc6;
-    border-color: #383db3; }
+    color: #6F73D2;
+    background-color: #e6e6e6;
+    border-color: #4046c3; }
     .btn-purple:active:hover, .btn-purple:active:focus, .btn-purple:active.focus, .btn-purple.active:hover, .btn-purple.active:focus, .btn-purple.active.focus,
     .open > .btn-purple.dropdown-toggle:hover,
     .open > .btn-purple.dropdown-toggle:focus,
     .open > .btn-purple.dropdown-toggle.focus {
-      color: #fff;
-      background-color: #383db3;
-      border-color: #282c80; }
+      color: #6F73D2;
+      background-color: #d4d4d4;
+      border-color: #2e3293; }
   .btn-purple:active, .btn-purple.active,
   .open > .btn-purple.dropdown-toggle {
     background-image: none; }
@@ -5782,11 +5783,53 @@ body {
   fieldset[disabled] .btn-purple:hover,
   fieldset[disabled] .btn-purple:focus,
   fieldset[disabled] .btn-purple.focus {
-    background-color: #6F73D2;
-    border-color: #5c60cc; }
+    background-color: #fff;
+    border-color: #6F73D2; }
   .btn-purple .badge {
-    color: #6F73D2;
-    background-color: #fff; }
+    color: #fff;
+    background-color: #6F73D2; }
+  .btn-purple:hover {
+    background-color: #f8f8f8 !important; }
+
+.btn-green {
+  color: #48A9A6;
+  background-color: #fff;
+  border-color: #48A9A6;
+  color: #48A9A6; }
+  .btn-green:focus, .btn-green.focus {
+    color: #48A9A6;
+    background-color: #e6e6e6;
+    border-color: #22504e; }
+  .btn-green:hover {
+    color: #48A9A6;
+    background-color: #e6e6e6;
+    border-color: #367e7c; }
+  .btn-green:active, .btn-green.active,
+  .open > .btn-green.dropdown-toggle {
+    color: #48A9A6;
+    background-color: #e6e6e6;
+    border-color: #367e7c; }
+    .btn-green:active:hover, .btn-green:active:focus, .btn-green:active.focus, .btn-green.active:hover, .btn-green.active:focus, .btn-green.active.focus,
+    .open > .btn-green.dropdown-toggle:hover,
+    .open > .btn-green.dropdown-toggle:focus,
+    .open > .btn-green.dropdown-toggle.focus {
+      color: #48A9A6;
+      background-color: #d4d4d4;
+      border-color: #22504e; }
+  .btn-green:active, .btn-green.active,
+  .open > .btn-green.dropdown-toggle {
+    background-image: none; }
+  .btn-green.disabled:hover, .btn-green.disabled:focus, .btn-green.disabled.focus, .btn-green[disabled]:hover, .btn-green[disabled]:focus, .btn-green[disabled].focus,
+  fieldset[disabled] .btn-green:hover,
+  fieldset[disabled] .btn-green:focus,
+  fieldset[disabled] .btn-green.focus {
+    background-color: #fff;
+    border-color: #48A9A6; }
+  .btn-green .badge {
+    color: #fff;
+    background-color: #48A9A6; }
+  .btn-green:hover {
+    background-color: #f8f8f8 !important; }
 
 .nothing-here-yet {
   text-align: center;
@@ -6645,21 +6688,24 @@ body #hb-header.normal-header,
       .page-studio #hb-header .yoga-intro .item-list a {
         font-size: 15px;
         height: 29px;
-        line-height: 23px;
+        line-height: 21px;
         border-radius: 50%;
         width: 29px;
         padding: 0;
         margin: 0;
-        color: white;
-        background: #172A3A;
+        color: #6F73D2;
+        background: #fff;
+        border: 1px solid #6F73D2;
         text-align: center;
-        transition: 0.2s ease all; }
+        transition: 0.2s ease all;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26); }
         .node-type-yoga #hb-header .yoga-intro .item-list a:hover,
         .node-type-article #hb-header .yoga-intro .item-list a:hover,
         .page-instructor #hb-header .yoga-intro .item-list a:hover,
         .page-user #hb-header .yoga-intro .item-list a:hover,
         .page-studio #hb-header .yoga-intro .item-list a:hover {
-          background-color: #3439a7; }
+          background-color: #3439a7;
+          color: #fff; }
       .node-type-yoga #hb-header .yoga-intro .item-list h3,
       .node-type-article #hb-header .yoga-intro .item-list h3,
       .page-instructor #hb-header .yoga-intro .item-list h3,
@@ -9162,7 +9208,7 @@ li.a-dd {
         position: absolute;
         bottom: 0;
         left: 0;
-        background-color: #E01563; }
+        background-color: #48A9A6; }
   .modal .modal-header {
     background-color: #F5F7F8;
     color: #172A3A; }

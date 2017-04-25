@@ -77,6 +77,96 @@ function stripe_integration_get_subscriptions($customer_ref) {
 }
 
 /**
+ * Custom function to create a Stripe customer.
+ */
+function stripe_integration_customer_create($account) {
+
+  $user_obj = entity_metadata_wrapper('user', $account);
+
+  try {
+
+    stripe_integration_stripe_api_init();
+
+    $customer_details = array(
+      'email' => $account->mail,
+      'metadata' => array(
+        'drupal_nid' => $account->nid,
+      ),
+    );
+
+    $customer = \Stripe\Customer::create($customer_details);
+
+    // Add stripe reference to user account.
+    $stripe_id = $customer->id;
+    $user_obj->field_stripe_reference = $stripe_id;
+    $user_obj->save();
+
+  }
+  catch (Exception $e) {
+    // Do something with errors.
+  }
+
+  return $stripe_id;
+}
+
+/**
+ * Custom function to subscribe a user.
+ */
+function stripe_integration_customer_subscribe($account, $plan) {
+
+  $user_obj = entity_metadata_wrapper('user', $account);
+
+  $valid_plans = array(
+    'standard',
+    'premium',
+  );
+
+  if (!in_array($plan, $valid_plans)) {
+    return;
+  }
+
+  // Maybe add plan_id's into an admin back end going forward.
+  switch ($plan) {
+    case 'premium':
+      $plan_id = 'yf-plan-5';
+      break;
+  }
+
+  try {
+
+    stripe_integration_stripe_api_init();
+
+    if (isset($user_obj->field_stripe_reference)) {
+      // Add subscription.
+      $stripe_id = $user_obj->field_stripe_reference;
+
+      $subscription = \Stripe\Subscription::create(array(
+        'customer' => $stripe_id,
+        'plan' => $plan_id,
+      ));
+
+      if ($subscription->id) {
+        // Successful. Add ID to user.
+        $user_obj->field_stripe_subscr_id->set($subscription->id);
+
+        // Set to the selected plan (only premium for now).
+        $user_obj->field_yf_subscription->set($plan);
+
+        // End the trial, but - may need to add the free days to the subscription..?
+        $user_obj->field_yf_trial_ended->set(1);
+        $user_obj->save();
+      }
+    }
+
+  }
+  catch (Exception $e) {
+    // Do something with errors.
+  }
+
+  return $subscription->id;
+}
+
+/**
  * Custom function to subscribe a user.
  */
 function stripe_integration_subscribe($plan) {

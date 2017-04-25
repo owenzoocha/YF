@@ -375,6 +375,33 @@ function stripe_subscription_form(&$form) {
   return $form;
 }
 
+/**
+ * Custom function to get subscription details.
+ */
+function stripe_integration_subscription_details($account) {
+
+  $user_obj = entity_metadata_wrapper('user', $account);
+
+  try {
+
+    stripe_integration_stripe_api_init();
+
+    $subscr_id = $user_obj->field_stripe_subscr_id->value();
+    $subscription = \Stripe\Subscription::retrieve($subscr_id);
+
+    $last_payment = date('d/m/y', $subscription->current_period_start);
+    $next_payment = date('d/m/y', $subscription->current_period_end);
+
+    return array(
+      'last_payment' => $last_payment,
+      'next_payment' => $next_payment,
+    );
+  }
+  catch (Exception $e) {
+    // Do something with errors.
+  }
+}
+
 function stripe_integration_fetch_invoices() {
   $details = stripe_integration_get_user_details();
 

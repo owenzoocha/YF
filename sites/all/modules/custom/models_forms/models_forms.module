@@ -350,9 +350,14 @@ function template_preprocess_stripe_subscription_page(&$vars) {
     $pricing_deets = t(' Premium @ 3 months free (# days remaining)');
   }
 
+  // Get details.
+  $subscription_details = stripe_integration_subscription_details($user);
+  $last_payment = $subscription_details['last_payment'];
+  $next_payment = $subscription_details['next_payment'];
+
   $current_plan .= '<li>' . t('<strong>Current plan:</strong> !plan', array('!plan' => $pricing_deets)) . '</li>';
-  $current_plan .= '<li>' . t('<strong>Last payment:</strong> !date', array('!date' => 'DD/MM/YYYY')) . '</li>';
-  $current_plan .= '<li>' . t('<strong>Next payment:</strong> !date', array('!date' => 'DD/MM/YYYY')) . '</li>';
+  $current_plan .= '<li>' . t('<strong>Last payment:</strong> !date', array('!date' => $last_payment)) . '</li>';
+  $current_plan .= '<li>' . t('<strong>Next payment:</strong> !date', array('!date' => $next_payment)) . '</li>';
   $current_plan .= '<li>' . t('<strong>Invoices:</strong> !here', array('!here' => l('Show invoices', 'user/personal-information/invoices', array('attributes' => array('class' => array('a-link')))))) . '</li>';
   $current_plan .= $uw->field_stripe_reference->value() ? '<li>' . t('<strong>Customer ID:</strong> !cust_id', array('!cust_id' => $uw->field_stripe_reference->value())) . '</li>' : '';
   $current_plan .= '</ul>';

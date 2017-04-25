@@ -9,4 +9,17 @@ sites/*/files
 sites/*/private
 aus_geocode_list.sql
 dev.php
-.htaccess
+
+# Ignore other files we don't want to track
+install.php
+update.php
+CHANGELOG.txt
+INSTALL.mysql.txt
+INSTALL.sqlite.txt
+INSTALL.pgsql.txt
+INSTALL.txt
+LICENSE.txt
+MAINTAINERS.txt
+UPGRADE.txt
+
+.editorconfig

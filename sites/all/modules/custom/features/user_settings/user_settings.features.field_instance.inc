@@ -52,6 +52,48 @@ function user_settings_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_stripe_subscr_id'.
+  $field_instances['user-user-field_stripe_subscr_id'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 33,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_stripe_subscr_id',
+    'label' => 'Stripe Subscription ID',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'maxlength_js' => 0,
+        'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 3,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_yf_trial_ended'.
   $field_instances['user-user-field_yf_trial_ended'] = array(
     'bundle' => 'user',
@@ -97,6 +139,7 @@ function user_settings_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Stripe Subscription ID');
   t('Stripe reference');
   t('YF trial ended');
   t('on trial end / set flag to 1 - only admin to see this');

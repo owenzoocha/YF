@@ -55,7 +55,7 @@
   <div id="hero">
     <div class="hero-content container">
       <div class="hero left animated fadeInUp">
-        <h1>Find yoga listings, events and classes all over the UK.</h1>
+        <h1>Find yoga listings, events and classes all over the UK</h1>
         <h2>Looking to join? Get started <a href="/getting-started" class="a-link link-go">now <i
               class="material-icons">trending_flat</i></a></h2>
       </div>
@@ -76,9 +76,43 @@
 
   <div id="yf-sign-up">
     <div class="container">
-      Looking to list your yoga classes, events or studio? Join ### others and <a
-        href="/getting-started" class="a-link link-go">get started now <i
-          class="material-icons">trending_flat</i></a>
+<!--      Looking to list your yoga classes, events or studio? Join ### others and <a href="/getting-started" class="a-link link-go">get started now <i class="material-icons">trending_flat</i></a>-->
+
+      *YogaFind is currently in <strong>beta testing</strong>* - check out our site and <a href="/getting-started" class="a-link link-go">get started today for <strong>FREE</strong>! <i class="material-icons">trending_flat</i></a>
+    </div>
+  </div>
+
+  <div id="yf-infos">
+    <div class="container">
+      <div class="yf-divide col-sm-4">
+        <div class="yf-info-stuffs">
+          <img class="img-responsive" src="/sites/all/themes/yogafind/images/liz1.png" alt="YogaFind" title="YogaFind"/>
+          <h3>Create a listing</h3>
+          <p>If you're an instructor or run a studio, <a class="a-link" href="/getting-started">register</a> with YogaFind today and start promoting your business.</p>
+          <p>Make use of our toolkit to create your listing, share your timetable, promote events, post blogs, videos and much more.</p>
+          <p>YogaFind is super for SEO! Engage with fellow yogis, hook up your Instagram feed, link to your site and social media.</p>
+          <a href="/user/register" class="link-go a-link">Register <i class="material-icons">trending_flat</i></a>
+        </div>
+      </div>
+      <div class="yf-divide col-sm-4">
+        <div class="yf-info-stuffs">
+          <img class="img-responsive" src="/sites/all/themes/yogafind/images/flower.png" alt="YogaFind" title="YogaFind"/>
+          <h3>Search Yoga near you</h3>
+          <p>Use our search to locate Yoga from all areas of the UK. </p>
+          <p>YogaFind will provide you access to highly qualified instructors and studios offering all types of Yoga, from Vinyasa to Bikram.</p>
+          <p>YogaFind is the easiest and best way to locate studios, teachers workshops and retreats.
+          </p>
+          <a href="/yoga" class="link-go a-link">Search Yoga <i class="material-icons">trending_flat</i></a>
+        </div>
+      </div>
+      <div class="yf-divide col-sm-4">
+        <div class="yf-info-stuffs">
+          <img class="img-responsive" src="/sites/all/themes/yogafind/images/liz4.png" alt="YogaFind" title="YogaFind"/>
+          <h3>Yoga for the masses!</h3>
+          <p>Aenean a consectetur mi, ut suscipit lacus. Nam egestas, est eget eleifend rutrum, enim lacus tristique neque, eu egestas diam mi et lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc feugiat neque vestibulum aliquet tempor...!</p>
+
+        </div>
+      </div>
     </div>
   </div>
 
@@ -115,21 +149,9 @@
     </div>
   </div>
 
-  <!--  <div id="yf-subscribe">-->
-  <!--    <div class="container">-->
-  <!--      <h3 class="hd-purple">Keep up to date with YogaFind</h3>-->
-  <!---->
-  <!--      --><?php
-  //      //      $slick_block = block_load('webform', 'client-block-132');
-  //      //      $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
-  //      //      print drupal_render($block);
-  //      ?>
-  <!--    </div>-->
-  <!--  </div>-->
-
   <div id="yf-events">
       <div class="container">
-        <div class="row">
+<!--        <div class="col-sm-12">-->
           <h3 class="hd-purple">YogaFind Posts</h3>
           <h4>Latest yoga posts</h4>
           <a href="/posts" class="a-link link-go">View more posts <i
@@ -139,7 +161,7 @@
           $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
           print drupal_render($block);
           ?>
-        </div>
+<!--        </div>-->
       </div>
     </div>
   </div>

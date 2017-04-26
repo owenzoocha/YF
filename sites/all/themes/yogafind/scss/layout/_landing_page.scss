@@ -7,19 +7,9 @@
     &.navbar-default {
 
     }
-
-    .logo {
-      img {
-        //width: 105px;
-        //margin: 10px 0 0 15px;
-      }
-    }
   }
   .footer {
     margin-top: 0;
-  }
-  .main-container {
-    // display: none;
   }
 }
 
@@ -81,6 +71,7 @@
     }
   }
 }
+
 
 #models-searcher-form {
   input {
@@ -244,6 +235,30 @@
       .left {
         width: 615px;
         margin: 0 auto;
+      }
+    }
+  }
+
+  #yf-infos {
+    background: $white;
+    .yf-divide {
+      border-right: 1px solid rgba(16, 0, 0, 0.05);
+      &:last-of-type {
+        border: none;
+      }
+      .yf-info-stuffs {
+        padding: 40px 0;
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          border: 1px solid #e2c4fe;
+          margin: 0 auto;
+          background: white;
+        }
+        p, a {
+          font-size: 14px;
+        }
       }
     }
   }

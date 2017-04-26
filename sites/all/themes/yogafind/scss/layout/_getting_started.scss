@@ -5,6 +5,13 @@
     font-size: 28px;
   }
 
+  .gs-info {
+    background: $white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-bottom: 8px solid $green;
+  }
+
   .get-started-offer {
     margin: 15px 0;
     background-color: $green;
@@ -24,7 +31,7 @@
     padding: 15px;
     background: white;
     border-radius: 8px;
-    min-height: 300px;
+    //min-height: 300px;
     display: block;
     li {
       margin: 3px 0;

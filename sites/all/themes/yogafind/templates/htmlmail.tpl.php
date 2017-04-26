@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Hair and Beauty Models</title>
+  <title>YogaFind</title>
   <style type="text/css">
   body {margin: 0; padding: 0; min-width: 100%!important;}
   img {height: auto;}
@@ -51,7 +51,7 @@
           <table width="100" align="left" border="0" cellpadding="0" cellspacing="0">
             <tr>
               <td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >
-                <img id="hbm-logo" width="100" title="Hair & Beauty Models - HBM "src="https://s3-ap-southeast-2.amazonaws.com/hb-storage/logo.png" style="height:auto;" />
+                <img id="hbm-logo" width="100" title="YogaFind" src="http://yogafind.co.uk/sites/all/themes/yogafind/logo.png" style="height:auto;" />
               </td>
             </tr>
           </table>
@@ -68,7 +68,7 @@
             <tr>
               <td class="bodycopy" style="color:#153643;font-family:sans-serif;font-size:14px;line-height:22px;" >
                 <?php print $body; ?>
-                <p><strong>-- HBM team</strong></p>
+                <p><strong>-- YogaFind team</strong></p>
               </td>
             </tr>
           </table>
@@ -84,7 +84,7 @@
                   <tbody>
                     <tr>
                     <td style="text-align:center;padding-top:0;padding-bottom:0;padding-right:10px;padding-left:10px;font-size:11px;letter-spacing:1px;" >
-                     Follow us: <a href="https://www.facebook.com/hairandbeautymodelsaustralia/" style="color:#3C5A9A;text-decoration:underline;" >Facebook</a> | <a href="https://twitter.com/hbm_australia" style="color:#21BAF3;text-decoration:underline;" >Twitter</a> | <a href="http://instagram.com/hairandbeautymodels" style="color:#000000;text-decoration:underline;" >Instagram</a> | <a href="" style="color:#BC0D14;text-decoration:underline;" >Pinterest</a> | <a href="" style="color:#DE4931;text-decoration:underline;" >Google</a>
+                     Follow us: <a href="https://www.facebook.com//" style="color:#3C5A9A;text-decoration:underline;" >Facebook</a> | <a href="https://twitter.com/hbm_australia" style="color:#21BAF3;text-decoration:underline;" >Twitter</a> | <a href="http://instagram.com/" style="color:#000000;text-decoration:underline;" >Instagram</a> | <a href="" style="color:#BC0D14;text-decoration:underline;" >Pinterest</a> | <a href="" style="color:#DE4931;text-decoration:underline;" >Google</a>
                     </td>
                   </tr>
                 </tbody></table>

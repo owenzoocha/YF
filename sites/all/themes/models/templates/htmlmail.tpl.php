@@ -68,7 +68,7 @@
             <tr>
               <td class="bodycopy" style="color:#153643;font-family:sans-serif;font-size:14px;line-height:22px;" >
                 <?php print $body; ?>
-                <p><strong>-- HBM team</strong></p>
+                <p><strong>-- YogaFind team</strong></p>
               </td>
             </tr>
           </table>

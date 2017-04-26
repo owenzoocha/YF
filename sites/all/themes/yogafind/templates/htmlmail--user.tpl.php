@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Hair and Beauty Models</title>
+  <title>YogaFind</title>
   <style type="text/css">
   body {margin: 0; padding: 0; min-width: 100%!important;}
   img {height: auto;}
@@ -51,7 +51,7 @@
           <table width="100" align="left" border="0" cellpadding="0" cellspacing="0">
             <tr>
               <td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;" >
-                <img id="hbm-logo" width="100" title="Hair & Beauty Models - HBM "src="https://s3-ap-southeast-2.amazonaws.com/hb-storage/logo.png" style="height:auto;" />
+                <img id="hbm-logo" width="100" title="YogaFind" src="http://yogafind.co.uk/sites/all/themes/yogafind/logo.png" style="height:auto;" />
               </td>
             </tr>
           </table>
@@ -68,7 +68,7 @@
             <tr>
               <td class="bodycopy" style="color:#153643;font-family:sans-serif;font-size:14px;line-height:22px;" >
                 <?php print $body; ?>
-                <p><strong>-- HBM team</strong></p>
+                <p><strong>-- YogaFind team</strong></p>
               </td>
             </tr>
           </table>

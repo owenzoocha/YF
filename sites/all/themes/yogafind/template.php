@@ -353,8 +353,8 @@ function yogafind_preprocess_page(&$variables) {
   $variables['custom_nav'] = $user->uid != 0 ? theme('custom_nav') : FALSE;
   $variables['title_search_class'] = FALSE;
 
-  $search_menu = theme('search_menu');
-  $variables['search_menu'] = $search_menu;
+//  $search_menu = theme('search_menu');
+//  $variables['search_menu'] = $search_menu;
 
   if (strrpos(current_path(), 'search') !== FALSE) {
     $variables['no_footer'] = TRUE;

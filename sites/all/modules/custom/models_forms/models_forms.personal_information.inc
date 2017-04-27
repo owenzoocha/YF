@@ -16,8 +16,8 @@ function models_forms_personal_info() {
   $user_form = drupal_get_form('user_profile_form', $user);
 
   $wysiwyg_js['wysiwyg']['configs']['tinymce']['formatfiltered_html'] = array(
-    'menubar' => FALSE,
-    'statusbar' => FALSE,
+    'menubar' => TRUE,
+    'statusbar' => TRUE,
 //    'toolbar' => 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
     'toolbar' => "bold,italic,underline"
   );
@@ -60,6 +60,9 @@ function models_forms_personal_info() {
   unset($user_form['field_my_listings']);
   unset($user_form['field_my_posts']);
   unset($user_form['field_yf_subscription']);
+  unset($user_form['field_stripe_reference']);
+  unset($user_form['field_yf_trial_ended']);
+  unset($user_form['field_stripe_subscr_id']);
   return drupal_render($user_form);
 }
 
@@ -96,27 +99,20 @@ function models_forms_email_settings() {
   unset($user_form['picture']);
   unset($user_form['field_hb_type']);
   unset($user_form['field_i_am_a_']);
-  // unset($user_form['field_hb_ht']);
-  // unset($user_form['field_hb_bt']);
   unset($user_form['field_hb_pics']);
-//  unset($user_form['field_my_total_feedback']);
   unset($user_form['field_my_overall_rating']);
   unset($user_form['field_my_watchlist']);
   unset($user_form['field_my_latlon']);
   unset($user_form['field_my_college']);
   unset($user_form['field_my_company']);
   unset($user_form['field_flags_strikes']);
-//  unset($user_form['field_flags_running_posts']);
   unset($user_form['field_hb_cover_pic']);
   unset($user_form['field_my_listings']);
   unset($user_form['field_my_posts']);
   unset($user_form['field_yf_subscription']);
-  // $user_form['privatemsg']['pm_enable']['#access'] = FALSE;
-  // dpm($user_form);
-  // unset($user_form['privatemsg']['pm_email_only_user']);
-  // $user_form['privatemsg']['pm_enable']['#value'] = TRUE;
-  // $user_form['privatemsg']['pm_enable']['#default_value'] = TRUE;
-  // $user_form['privatemsg']['pm_enable']['#checked'] = TRUE;
+  unset($user_form['field_stripe_reference']);
+  unset($user_form['field_yf_trial_ended']);
+  unset($user_form['field_stripe_subscr_id']);
   return drupal_render($user_form);
 }
 
@@ -178,24 +174,20 @@ function models_forms_account_settings() {
   unset($user_form['field_first_name']);
   unset($user_form['field_surname']);
   unset($user_form['field_phone']);
-  //unset($user_form['field_gender']);
   unset($user_form['field_my_web']);
   unset($user_form['field_my_address']);
-  // unset($user_form['field_my_bio']);
   unset($user_form['field_my_latlong']);
-  // unset($user_form['privatemsg']);
   unset($user_form['timezone']);
   unset($user_form['picture']);
   unset($user_form['field_hb_type']);
   unset($user_form['field_i_am_a_']);
   unset($user_form['field_my_listings']);
   unset($user_form['field_my_posts']);
-//  unset($user_form['field_yf_subscription']);
-
-  // unset($user_form['field_hb_ht']);
-  // unset($user_form['field_hb_bt']);
+  unset($user_form['field_yf_subscription']);
+  unset($user_form['field_stripe_reference']);
+  unset($user_form['field_yf_trial_ended']);
+  unset($user_form['field_stripe_subscr_id']);
   unset($user_form['field_hb_pics']);
-//  unset($user_form['field_my_total_feedback']);
   unset($user_form['field_my_overall_rating']);
   unset($user_form['field_my_watchlist']);
   unset($user_form['field_my_latlon']);
@@ -203,7 +195,6 @@ function models_forms_account_settings() {
   unset($user_form['field_my_company']);
   unset($user_form['field_hb_cover_pic']);
   unset($user_form['field_flags_strikes']);
-//  unset($user_form['field_flags_running_posts']);
   if (isset($identity_table)) {
     return drupal_render($user_form) . $identity_table;
   }

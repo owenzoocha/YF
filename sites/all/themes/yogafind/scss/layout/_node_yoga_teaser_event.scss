@@ -103,6 +103,7 @@
   li {
     display: inline-block;
     min-width: 10px;
+    font-size: 12px;
     line-height: 1;
     font-weight: 300;
     vertical-align: baseline;
@@ -110,12 +111,9 @@
     text-align: center;
     margin: 1px;
     span {
-      background-color: #172A3A;
+      background-color: darken($purple, 1%);
       color: #fff;
-      border-radius: 10px;
-    }
-    a {
-      background-color: $light-purple;
+      border-radius: 4px;
     }
     span, a {
       padding: 3px 7px;
@@ -133,6 +131,13 @@
         border-right: none;
       }
     }
+  }
+}
+
+.teaser-yoga-info {
+  a {
+    background: $light-purple;
+    border-radius: 4p;
   }
 }
 

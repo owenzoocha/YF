@@ -565,7 +565,6 @@ function tweaks_ctools_plugin_directory($module, $type) {
  * Implements hook_form_alter().
  */
 function tweaks_form_alter(&$form, &$form_state, $form_id) {
-
   // Listing contact form.
   if ($form_id == 'webform_client_form_292') {
 
@@ -752,12 +751,16 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['submit']['#suffix'] = $signup_msg;
   }
   if ($form_id == 'user_register_form') {
+//    $reg_text = '<h2>Welcome to YogaFind - select your subscription and connect with us today</h2>';
+    $reg_text = '<h2>Welcome to YogaFind - register now for a FREE premium plan!</h2>';
+//    $reg_text .= l('View our plans <i class="material-icons">trending_flat</i>', 'getting-started', array(
+//        'html' => TRUE,
+//        'attributes' => array('class' => array('a-link link-go btn-block'))
+//      )) . '</li>';
 
-    $reg_text = '<h2>Welcome to YogaFind - getting started couldn\'t be easier!</br>Select your subscription and connect with us today</h2>';
-    $reg_text .= l('View our plans <i class="material-icons">trending_flat</i>', 'getting-started', array(
-        'html' => TRUE,
-        'attributes' => array('class' => array('a-link link-go btn-block'))
-      )) . '</li>';
+    $form['field_yf_subscription']['und']['#default_value'] = 'premium';
+    $form['field_yf_subscription']['und']['#disabled'] = TRUE;
+
     $form['intro_description'] = array(
       '#markup' => $reg_text,
       '#weight' => -10,
@@ -916,7 +919,11 @@ function tweaks_get_profile_intro($user_entity) {
   $job_details .= '</div>';
   $job_details .= '<div>';
   // $job_details .= '<span>' . t('member since ') . format_date($user_entity->created->value(), 'timeago', 'Y-m-d H:i:s', 'UTC') . '</span>';
-  $job_details .= '<span>' . t('joined ') . format_date($user_entity->created->value(), 'custom', 'M, Y', 'UTC') . '</span>';
+
+  if (strpos(current_path(), 'user/') !== FALSE && is_numeric(arg(1))) {
+    $job_details .= '<span class="header__joined">' . t('member since') . ' ' . format_date($user_entity->created->value(), 'custom', 'M\'y', 'UTC') . '</span>';
+  }
+
   $job_details .= '</div>';
   return $job_details;
 }
@@ -1001,6 +1008,12 @@ function tweaks_field_formatter_view($entity_type, $entity, $field, $instance, $
 
 // Implements hook_block_list_alter().
 function tweaks_block_list_alter(&$blocks) {
+  global $user;
+
+  if (strpos(current_path(), 'user/') !== FALSE && (is_numeric(arg(1))) && $user->uid == arg(1)) {
+    // yoga listing rhs
+    $blocks[453]->region = BLOCK_REGION_NONE;
+  }
 
   // Hide the instagram feed block if disabled or no plan.
   if (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2) && (strpos(drupal_get_path_alias(), 'studio/') !== FALSE || strpos(drupal_get_path_alias(), 'instructor/') !== FALSE)) {

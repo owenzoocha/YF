@@ -7238,6 +7238,7 @@ body #hb-header.normal-header,
 .teaser-yoga-info li {
   display: inline-block;
   min-width: 10px;
+  font-size: 12px;
   line-height: 1;
   font-weight: 300;
   vertical-align: baseline;
@@ -7246,12 +7247,9 @@ body #hb-header.normal-header,
   margin: 1px; }
   .teaser-styles li span,
   .teaser-yoga-info li span {
-    background-color: #172A3A;
+    background-color: #6b6fd1;
     color: #fff;
-    border-radius: 10px; }
-  .teaser-styles li a,
-  .teaser-yoga-info li a {
-    background-color: rgba(111, 115, 210, 0.08); }
+    border-radius: 4px; }
   .teaser-styles li span, .teaser-styles li a,
   .teaser-yoga-info li span,
   .teaser-yoga-info li a {
@@ -7267,6 +7265,10 @@ body #hb-header.normal-header,
   .teaser-styles li:last-of-type a,
   .teaser-yoga-info li:last-of-type a {
     border-right: none; }
+
+.teaser-yoga-info a {
+  background: rgba(111, 115, 210, 0.08);
+  border-radius: 4p; }
 
 .view-yoga-searcher .event-teaser {
   position: relative; }
@@ -7493,7 +7495,7 @@ body #hb-header.normal-header,
   right: 15px;
   z-index: 9;
   position: fixed;
-  background: #172A3A;
+  background: #6F73D2;
   text-align: center;
   border-radius: 5px 5px 0 0;
   font-size: 13px;
@@ -7513,7 +7515,7 @@ body #hb-header.normal-header,
   color: #EDEFF0;
   outline: none !important; }
   #block-tweaks-contact-us-button a.contact-btn:hover {
-    background-color: #E01563; }
+    background-color: #3439a7; }
   #block-tweaks-contact-us-button a.contact-btn .fa {
     font-size: 24px; }
 
@@ -7604,6 +7606,10 @@ body #hb-header.normal-header,
     .page-user #hb-header .header-author-pic .my-image img {
       border-radius: 50%; }
 
+.page-user .header__joined {
+  font-size: 14px;
+  font-weight: normal; }
+
 .page-user .edit-this {
   position: absolute;
   top: 2px;
@@ -7648,6 +7654,10 @@ body #hb-header.normal-header,
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
+
+.page-user-login #hb-header,
+.page-user-register #hb-header {
+  background: none; }
 
 #user-profile-form .panel-heading {
   display: none; }

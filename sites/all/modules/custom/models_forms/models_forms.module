@@ -164,7 +164,7 @@ function models_forms_menu() {
 function yf_user_plan_lookup($nid) {
   if (user_is_logged_in()) {
     global $user;
-    if (in_array('administrator', $user->roles)) {
+    if ($user->uid == 1 ||in_array('administrator', $user->roles)) {
       return TRUE;
     }
     $nw = entity_metadata_wrapper('node', $nid);
@@ -184,7 +184,7 @@ function yf_user_plan_lookup($nid) {
 function yf_user_plan_lookup_eck($eid) {
   if (user_is_logged_in()) {
     global $user;
-    if (in_array('administrator', $user->roles)) {
+    if ($user->uid == 1 ||in_array('administrator', $user->roles)) {
       return TRUE;
     }
     $ew = entity_metadata_wrapper('class', $eid);

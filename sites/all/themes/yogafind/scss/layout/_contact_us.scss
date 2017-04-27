@@ -5,7 +5,7 @@
     right: 15px;
     z-index: 9;
     position: fixed;
-    background: $hb-dark;
+    background: $purple;
     text-align: center;
     border-radius: 5px 5px 0 0;
     font-size: 13px;
@@ -25,7 +25,7 @@
     color: $light-grey;
     outline: none!important;
     &:hover {
-      background-color: $hb-pink;
+      background-color: darken($purple, 20%);
     }
     .fa {
       font-size: 24px;

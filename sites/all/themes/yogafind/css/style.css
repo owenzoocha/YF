@@ -6388,6 +6388,9 @@ body #hb-header.normal-header,
   padding: 2px 5px;
   border-radius: 4px; }
 
+.organiser-link {
+  color: #6F73D2; }
+
 .node-type-yoga #instafeed a,
 .node-type-article #instafeed a,
 .page-instructor #instafeed a,

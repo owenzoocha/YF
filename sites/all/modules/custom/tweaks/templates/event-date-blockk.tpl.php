@@ -35,3 +35,6 @@
   </div>
 <?php endif; ?>
 
+<?php if (!empty($org)): ?>
+  <?php print $org_popup; ?>
+<?php endif; ?>

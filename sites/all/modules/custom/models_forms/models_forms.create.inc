@@ -149,9 +149,6 @@ function models_forms_listing_add() {
   $uw = entity_metadata_wrapper('user', $user->uid);
   module_load_include('inc', 'node', 'node.pages');
 
-//  variable_del('listing_add_' . $uw->getIdentifier());
-//  variable_del('event_add_' . $uw->getIdentifier());
-
   if (is_numeric(arg(1))) {
     $node_form = node_load(arg(1));
   }
@@ -170,8 +167,6 @@ function models_forms_listing_add() {
   if (is_numeric(arg(1))) {
     $nw = entity_metadata_wrapper('node', arg(1));
     if (arg(0) != 'event') {
-//      variable_set('listing_add_' . $uw->getIdentifier(), 1);
-
       $yoga_form['get_started'] = array(
         '#markup' => '<p class="greenify">' . t('Updating your Yoga listing: <strong>!yoga</strong>', array(
             '!name' => $uw->field_first_name->value(),
@@ -180,8 +175,6 @@ function models_forms_listing_add() {
       );
     }
     else {
-//      variable_set('event_add_' . $uw->getIdentifier(), 1);
-
       drupal_set_title('Update your Yoga Event');
       $yoga_form['get_started'] = array(
         '#markup' => '<p class="greenify">' . t('Updating your Yoga listing: <strong>!yoga</strong>', array(
@@ -193,13 +186,11 @@ function models_forms_listing_add() {
   }
   else {
     if (arg(0) != 'event') {
-//      variable_set('listing_add_' . $uw->getIdentifier(), 1);
       $yoga_form['get_started'] = array(
         '#markup' => '<p class="greenify">' . t('Namaste !name :) to get your Yoga listing published, complete the below form, hit submit and start adding your classes, events, teachers, yoga posts and more!', array('!name' => $uw->field_first_name->value())) . '</p>',
       );
     }
     else {
-
       // Redirect and run checks against the users' plan..
       if ($uw->field_yf_subscription->value() == 'free') {
         drupal_set_message(t('<i class="material-icons">event_available</i> Oops you must upgrade your current !plan plan to add events - <strong>!link</strong> to upgrade now :)', array('!plan' => $uw->field_yf_subscription->value(), '!link' => l('click here', '/user/plan/settings'))));
@@ -259,9 +250,6 @@ function models_forms_listing_add() {
     $yoga_form['field_yoga_number'][LANGUAGE_NONE][0]['value']['#value'] = $nw->field_yoga_number->value();
   }
 
-//  $yoga_form['field_yoga_mail'][LANGUAGE_NONE][0]['value']['#value'] = $uw->mail->value();
-  $yoga_form['field_yoga_mail'][LANGUAGE_NONE][0]['value']['#value'] = $uw->mail->value();
-
   $yoga_form['hide_country'] = array(
     '#type' => 'hidden',
     '#attributes' => array(
@@ -275,18 +263,15 @@ function models_forms_listing_add() {
     ),
   );
 
-//  $yoga_form['field_yoga_link']['und'][0]['#value']['#attributes']['placeholder'] = t('example.co.uk2');
-//  $yoga_form['field_yoga_link']['und'][0]['value']['#attributes']['placeholder'] = t('example.co.uk2');
-//  $yoga_form['field_yoga_link'][LANGUAGE_NONE]['#attributes']['placeholder'] = t('example.co.uk3');
-//  $yoga_form['field_yoga_link'][LANGUAGE_NONE][0]['#attributes']['placeholder'] = t('example.co.uk3');
-//  $yoga_form['field_yoga_link']['#attributes']['placeholder'] = t('example.co.uk3');
-//  $yoga_form['']
-
   if (arg(0) == 'event') {
     $yoga_form['field_yoga_type']['und']['#value'] = 'event';
     unset($yoga_form['field_yoga_cover_picture']);
     unset($yoga_form['field_yoga_introduction']);
-
+    unset($yoga_form['field_yoga_type']);
+    unset($yoga_form['field_my_fb']);
+    unset($yoga_form['field_my_twitter']);
+    unset($yoga_form['field_my_instagram']);
+    unset($yoga_form['field_yf_gallery']);
   }
   else {
     unset($yoga_form['field_yoga_event_type']);

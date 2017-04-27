@@ -425,7 +425,16 @@ function template_preprocess_event_organiser_block(&$vars) {
 
     $details .= $pw->field_yoga_event_list->value() ? '<li>' . l('<i class="material-icons">event_available</i> ' . sizeof($pw->field_yoga_event_list->value()) . ' ' . format_plural(sizeof($pw->field_yoga_event_list->value()), t('Event'), t('Events')), $url . '/events', array('html' => TRUE)) . '</li>' : FALSE;
 
-    $details .= $nw->author->field_my_posts->value() ? '<li>' . l('<i class="material-icons">rss_feed</i> ' . sizeof($nw->author->field_my_posts->value()) . ' ' . format_plural(sizeof($nw->author->field_my_posts->value()), t('Post'), t('Posts')), $url . '/posts', array('html' => TRUE)) . '</li>' : FALSE;
+    if ($nw->author->field_my_posts->value()) {
+      $posts = 0;
+      foreach ($nw->author->field_my_posts->getIterator() as $key => $value) {
+        if ($value->promote->value()){
+          $posts++;
+        }
+      }
+    }
+
+    $details .= $nw->author->field_my_posts->value() ? '<li>' . l('<i class="material-icons">rss_feed</i> ' . $posts . ' ' . format_plural($posts, t('Post'), t('Posts')), $url . '/posts', array('html' => TRUE)) . '</li>' : FALSE;
     $details .= '</ul>';
 
     $vars['details'] = $details;
@@ -468,17 +477,34 @@ function template_preprocess_event_date_block(&$vars) {
     'html' => TRUE,
   )) : FALSE;
 
-  $vars['org'] = $nw->field_yoga_mail->value() ? l(t('Contact Organiser'), '#' . $nw->field_yoga_number->value(), array(
+
+  // Contact listing owner..
+  $block = module_invoke('webform', 'block_view', 'client-block-293');
+  $contact_listing_form = render($block['content']);
+  $modal_options = array(
+    'attributes' => array(
+      'id' => 'job-publish-form-popup',
+      'class' => array('job-publish-form-popup-modal')
+    ),
+    'heading' => t('Interested in this event? Message !listing', array('!listing' => $nw->author->field_my_listings[0]->label())),
+    'body' => $contact_listing_form,
+  );
+  $vars['org_popup'] = theme('bootstrap_modal', $modal_options);
+
+  $vars['org'] = l('<i class="fa fa-envelope"></i>' . ' ' . t('Contact Organiser'), '#', array(
     'html' => TRUE,
     'attributes' => array(
+      'data-toggle' => array('modal'),
+      'data-target' => array('#job-publish-form-popup'),
       'class' => array('btn btn-purple btn-block')
     )
-  )) : FALSE;
+  ));
 
   $vars['book'] = $nw->field_yoga_link->value() ? l(t('Make a Booking'), $nw->field_yoga_link->value()['url'], array(
     'html' => TRUE,
     'attributes' => array(
-      'class' => array('btn btn-block btn-info')
+      'class' => array('btn btn-block btn-info'),
+      'rel' => 'nofollow',
     )
   )) : FALSE;
 
@@ -566,6 +592,19 @@ function tweaks_ctools_plugin_directory($module, $type) {
  */
 function tweaks_form_alter(&$form, &$form_state, $form_id) {
   // Listing contact form.
+  if ($form_id == 'webform_client_form_293') {
+
+    if (!is_numeric(arg(1))) {
+      $nid = explode('/', drupal_get_normal_path(arg(0) . '/' . arg(1)));
+      $nid = $nid[1];
+    }
+    else {
+      $nid = arg(1);
+    }
+    $nw = entity_metadata_wrapper('node', $nid);
+    $form['submitted']['#nid'] = arg(1);
+    $form['submitted']['listing_email']['#value'] = $nw->field_yoga_mail->value() ? $nw->field_yoga_mail->value() : $nw->author->mail->value();
+  }
   if ($form_id == 'webform_client_form_292') {
 
     if (!is_numeric(arg(1))) {
@@ -584,8 +623,6 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['preview']['#access'] = FALSE;
   }
   if ($form_id == 'yoga_node_form') {
-
-    $form['field_yoga_event_dates']['#access'] = FALSE;
 
     if (strpos(current_path(), 'listing/add') !== FALSE) {
 
@@ -1009,6 +1046,12 @@ function tweaks_field_formatter_view($entity_type, $entity, $field, $instance, $
 // Implements hook_block_list_alter().
 function tweaks_block_list_alter(&$blocks) {
   global $user;
+
+  if (strpos(current_path(), 'event/') !== FALSE && arg(2) == 'edit') {
+    if (isset($blocks[565])) {
+      $blocks[565]->region = BLOCK_REGION_NONE;
+    }
+  }
 
   if (strpos(current_path(), 'user/') !== FALSE && (is_numeric(arg(1))) && $user->uid == arg(1)) {
     // yoga listing rhs

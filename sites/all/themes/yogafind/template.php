@@ -558,7 +558,7 @@ function yogafind_preprocess_page(&$variables) {
         $located = grab_location_blurb($nw);
 
         $job_details .= '<span class="event-where">' . implode(', ', $located) . '</span> <span class="text-muted">organised by </span>';
-        $job_details .= l($nw->author->field_my_listings[0]->label(), 'node/' . $nw->author->field_my_listings[0]->getIdentifier());
+        $job_details .= l($nw->author->field_my_listings[0]->label(), 'node/' . $nw->author->field_my_listings[0]->getIdentifier(), array('attributes' => array('class' => array('organiser-link'))));
         $job_details .= '</p>';
 
         $variables['job_details'] = $job_details;

@@ -5735,9 +5735,12 @@ button.close {
 
 .greenify {
   background-color: rgba(180, 232, 141, 0.4);
-  padding: 15px; }
+  padding: 15px;
+  border-radius: 8px; }
   .greenify a {
     font-weight: bold; }
+  .greenify img {
+    width: 25px; }
 
 html,
 body {
@@ -9223,7 +9226,8 @@ li.a-dd {
 
 .btn {
   border-radius: 60px;
-  font-size: 14px; }
+  font-size: 14px;
+  font-weight: normal; }
 
 .modal {
   margin-top: 30px; }

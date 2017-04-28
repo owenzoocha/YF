@@ -212,8 +212,6 @@ function yogafind_preprocess_page(&$variables) {
 
   $uw = entity_metadata_wrapper('user', $user);
 
-//  drupal_add_css('//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58fbd23773f291f7', array('type' => 'external'));
-
 
   // Redirect non users from edit article page
   if (strpos(current_path(), 'post') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit') {
@@ -336,18 +334,6 @@ function yogafind_preprocess_page(&$variables) {
     drupal_add_css('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css', array('type' => 'external'));
     unset($variables['page']['content']);
   }
-
-  // Bounce non admin onto personal info instead of user/edit.
-  if (!in_array('hbm_admin', $user->roles) || $user->uid != 1) {
-    // unset($variables['tabs']);
-
-    if (strrpos(current_path(), 'user/' . $user->uid . '/edit') !== FALSE) {
-      drupal_goto('user/personal-information/settings');
-    }
-  }
-
-  // $msg_count = privatemsg_unread_count($uw->value());
-  // dpm( $msg_count );
 
   $variables['social'] = theme('social_nav');
   $variables['custom_nav'] = $user->uid != 0 ? theme('custom_nav') : FALSE;

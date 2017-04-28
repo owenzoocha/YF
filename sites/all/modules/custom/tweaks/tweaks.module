@@ -293,32 +293,32 @@ function tweaks_payment_due() {
     $datediff = $your_date - $now;
     $days_diff = floor($datediff / (60 * 60 * 24));
 
-//    dpm(date('d-m-Y', $joined));
-//    dpm(date('d-m-Y', $joined_plus_3));
-//    dpm($days_diff);
+    // We'll introduce this when we're out of testing moddddeeeee awoooga!
+//    if ($days_diff > 10 && $days_diff > 0) {
+//      $msg = t('You have <strong>!days days</strong> remaining of your free *!plan* trial, we will update you when payment is required, thanks :)', array(
+//        '!days' => $days_diff,
+//        '!plan' => '<strong>' . $uw->field_yf_subscription->value() . ' plan</strong>',
+//      ));
+//    }
+//    else if ($days_diff <= 0) {
+//      $msg = t('Your free *!plan* trial has now expired, if you\'d like to continue using YogaFind on this plan please !link - otherwise, your subscription has been updated to our free plan, if this is ok - please !link2 to remove this message! :)', array(
+//        '!days' => $days_diff,
+//        '!link' => l('make your payment', 'node'),
+//        '!link2' => l('confirm', 'user/plan/settings'),
+//        '!plan' => '<strong>' . $uw->field_yf_subscription->value() . ' plan</strong>',
+//      ));
+//    }
+//    else {
+//      $msg = t('You have <strong>!days days</strong> remaining of your free *!plan* trial, if you\'d like to continue using YogaFind please !link to make your payment, thanks :)', array(
+//        '!days' => $days_diff,
+//        '!link' => l('click here', 'user/plan/settings'),
+//        '!plan' => '<strong>' . $uw->field_yf_subscription->value() . ' plan</strong>',
+//      ));
+//    }
 
-    if ($days_diff > 10 && $days_diff > 0) {
-      $msg = t('You have <strong>!days days</strong> remaining of your free *!plan* trial, we will update you when payment is required, thanks :)', array(
-        '!days' => $days_diff,
-        '!plan' => '<strong>' . $uw->field_yf_subscription->value() . ' plan</strong>',
-      ));
-    }
-    else if ($days_diff <= 0) {
-      $msg = t('Your free *!plan* trial has now expired, if you\'d like to continue using YogaFind on this plan please !link - otherwise, your subscription has been updated to our free plan, if this is ok - please !link2 to remove this message! :)', array(
-        '!days' => $days_diff,
-        '!link' => l('make your payment', 'node'),
-        '!link2' => l('confirm', 'user/plan/settings'),
-        '!plan' => '<strong>' . $uw->field_yf_subscription->value() . ' plan</strong>',
-      ));
-    }
-    else {
-      $msg = t('You have <strong>!days days</strong> remaining of your free *!plan* trial, if you\'d like to continue using YogaFind please !link to make your payment, thanks :)', array(
-        '!days' => $days_diff,
-        '!link' => l('click here', 'user/plan/settings'),
-        '!plan' => '<strong>' . $uw->field_yf_subscription->value() . ' plan</strong>',
-      ));
-    }
 
+    $msg = t('<strong>Howdy. Welcome to YogaFind :)</strong> As an early adopter (during this beta testing stage) you can check out our premium features for free! We\'d love hear your thoughts, any issues !link - YF team <img class="img-circle" src="/sites/all/themes/yogafind/images/flower.png"/>', array(
+    '!link' => l('drop us a message', 'contact-us')));
     return '<p class="greenify">' . $msg . '</p>';
 
   }

@@ -1,8 +1,12 @@
 .greenify {
   background-color: rgba(180, 232, 141, 0.4);
   padding: 15px;
+  border-radius: 8px;
   a {
     font-weight: bold;
+  }
+  img {
+    width: 25px;
   }
 }
 

@@ -347,7 +347,7 @@ function template_preprocess_stripe_subscription_page(&$vars) {
     }
   }
   else {
-    $pricing_deets = t(' Premium @ 3 months free (# days remaining)');
+    $pricing_deets = t(' Premium @ # months free (# days remaining)...');
   }
 
   // Get details.
@@ -388,7 +388,8 @@ function template_preprocess_stripe_subscription_page(&$vars) {
           data-currency="gbp">
         </script>
       </form>';
-      $vars['make_payment'] = $form_markup;
+//      $vars['make_payment'] = $form_markup;
+      $vars['make_payment'] = '<p>Subscription plans coming at a later date...</p>';
     }
   }
 

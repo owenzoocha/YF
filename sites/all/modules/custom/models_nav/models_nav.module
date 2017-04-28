@@ -97,7 +97,7 @@ function social_nav_footer_block() {
     'html' => TRUE,
     'attributes' => array('class' => array('social-icon'))
   ));
-  $login[] = l(t('#HBM'), 'user/login');
+  $login[] = l(t('#yogafind'), 'user/login');
   $login[] = $user->uid == 0 ? l(t('Sign Up / Sign In'), 'user/login') : FALSE;
   $content = '<ul class="footer-social">';
   foreach ($login as $key => $link) {
@@ -242,8 +242,6 @@ function template_preprocess_block_settings_nav(&$vars) {
   $nav = '<ul>';
   $nav .= '<li>' . l(t('Personal Information'), 'user/personal-information/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
   $nav .= '<li>' . l(t('Account Settings'), 'user/account/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
-  // $nav .= '<li > ' . l(t('Profile'), 'user / profile / settings', array('attributes' => array('class' => array('')))) . ' </li > ';
-//  $nav .= '<li>' . l(t('Interests'), 'user/interests/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
   $nav .= '<li>' . l(t('Subscription Settings'), 'user/plan/settings', array('attributes' => array('class' => array('')))) . ' </li > ';
   $nav .= '<li>' . l(t('Invoices'), 'user/plan/invoices', array('attributes' => array('class' => array('')))) . ' </li > ';
   $nav .= '</ul>';
@@ -443,10 +441,12 @@ function template_preprocess_my_nav(&$vars) {
         $my_jobs_count = sizeof($my_jobs_count_) > 0 ? '<span class="badge">' . sizeof($my_jobs_count_) . '</span>' : FALSE;
 
         $uw = entity_metadata_wrapper('user', $vars['user_nav']);
-//        if ($uw->field_flags_running_posts->value() != sizeof($my_jobs_count_)) {
-//          $uw->field_flags_running_posts->set(sizeof($my_jobs_count_));
-//          $uw->save();
-//        }
+
+        // Temp set up to just save everyone as premium!
+        if (!$uw->field_yf_subscription->value()) {
+          $uw->field_yf_subscription->set('premium');
+          $uw->save();
+        }
 
         $my_requests_count = sizeof(views_get_view_result('user_profile_jobs', 'page_1')) ? '<span class="badge">' . sizeof(views_get_view_result('user_profile_jobs', 'page_1')) . '</span>' : FALSE;
 
@@ -612,10 +612,10 @@ function template_preprocess_custom_nav(&$vars) {
 
   $mypic = $uw->value()->picture;
   if ($mypic) {
-    $pic = '<div class="my-image img-circle" > ' . theme('image_style', array(
+    $pic = '<div class="my-image" > ' . theme('image_style', array(
         'style_name' => 'profile',
         'path' => $uw->value()->picture->uri,
-        'attributes' => array('class' => array('img - circle'))
+        'attributes' => array('class' => array('img-circle'))
       )) . ' </div > ';
   }
   else {

@@ -367,6 +367,7 @@ function stripe_subscription_form(&$form) {
       '#markup' => $standard_markup,
     );
 
+    $premium_markup = 'Subscription option coming soon..';
     $form['stripe_subscription_premium'] = array(
       '#markup' => '<p>' . $premium_markup . '</p>',
     );

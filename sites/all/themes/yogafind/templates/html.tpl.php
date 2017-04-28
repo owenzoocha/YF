@@ -59,7 +59,7 @@
   <link rel="profile" href="<?php print $grddl_profile; ?>" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="google-site-verification" content="FZq03SrZzVGICQJvEWqGI_6xlN8nc2b0Mt95LGbuysM" />
+  <meta name="google-site-verification" content="lLE6GcWQ5CMV24iCmKMVBqZ3cexOV47wBkdX-RZzH8U" />
   <meta name="p:domain_verify" content="7001dae4e1ad93d29be9fa6999cbd8ad"/>
   <?php print $head; ?>
   <title><?php print $head_title; ?></title>
@@ -77,7 +77,6 @@
   <?php print $page_top; ?>
   <?php print $page; ?>
   <?php print $page_bottom; ?>
-  <!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58fbd23773f291f7"></script>
-  <!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58fbd23773f291f7"></script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58fbd23773f291f7"></script>
 </body>
 </html>

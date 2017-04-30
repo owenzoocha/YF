@@ -123,6 +123,22 @@ html body.admin-menu {
   }
 }
 
+.a-dd {
+  a {
+    span,
+    .my-image,
+    i {
+      vertical-align: middle;
+      display: inline-block;
+    }
+    .my-image {
+      width: 30px;
+      margin: 0 5px;
+    }
+  }
+}
+
+
 @media (max-width: $screen-sm-min) {
   .navbar-default .navbar-nav {
     float: none !important;
@@ -157,11 +173,19 @@ html body.admin-menu {
     li {
       a {
         padding: 30px 15px;
+        line-height: 40px;
       }
       &.res {
         a {
           padding: 2px 15px;
         }
+      }
+    }
+  }
+  .a-dd {
+    a {
+      .my-image {
+        width: 40px;
       }
     }
   }

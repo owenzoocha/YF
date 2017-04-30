@@ -6609,7 +6609,7 @@ body #hb-header.normal-header,
   .page-instructor #hb-header .header-title,
   .page-user #hb-header .header-title,
   .page-studio #hb-header .header-title {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.35);
     padding: 15px;
     margin: 15px 0; }
     .node-type-yoga #hb-header .header-title h1,
@@ -7441,29 +7441,30 @@ body #hb-header.normal-header,
     .footer #block-models-nav-social-nav-footer li a {
       display: inline-block; }
       .footer #block-models-nav-social-nav-footer li a:hover {
-        color: #E01563; }
+        color: #3439a7; }
 
 #webform-client-form-132,
 #block-webform-client-block-166 {
   margin: 0 auto;
   padding: 15px 0;
   clear: both; }
-  #webform-client-form-132 button,
-  #block-webform-client-block-166 button {
-    border: 1px solid #fff;
-    border-left: none;
-    border-radius: 0; }
-  #webform-client-form-132 .webform-component-email,
-  #block-webform-client-block-166 .webform-component-email {
-    width: 80%;
-    float: left; }
-    #webform-client-form-132 .webform-component-email input.email,
-    #block-webform-client-block-166 .webform-component-email input.email {
-      background: none;
-      border: 1px solid #F5F7F8;
-      color: #F5F7F8;
-      outline: none;
-      height: 33px; }
+  #webform-client-form-132 .form-actions,
+  #block-webform-client-block-166 .form-actions {
+    display: table-cell;
+    vertical-align: top;
+    position: relative; }
+    #webform-client-form-132 .form-actions button,
+    #block-webform-client-block-166 .form-actions button {
+      border: 1px solid #fff;
+      border-left: none;
+      border-radius: 0; }
+  #webform-client-form-132 .webform-component-email input.email,
+  #block-webform-client-block-166 .webform-component-email input.email {
+    background: none;
+    border: 1px solid #F5F7F8;
+    color: #F5F7F8;
+    outline: none;
+    height: 33px; }
 
 .footer-cr {
   color: #777777;
@@ -7604,10 +7605,10 @@ body #hb-header.normal-header,
   padding: 10px 0;
   background: url("../images/pattern.png") 0px 0px no-repeat; }
   .page-user #hb-header .header-title {
-    margin: 25px 0; }
+    margin: 15px auto; }
   .page-user #hb-header .header-author-pic .my-image {
     width: 90px;
-    margin: 0 15px 0 0; }
+    margin: 0 auto; }
     .page-user #hb-header .header-author-pic .my-image img {
       border-radius: 50%; }
 
@@ -7663,6 +7664,15 @@ body #hb-header.normal-header,
 .page-user-login #hb-header,
 .page-user-register #hb-header {
   background: none; }
+
+@media (min-width: 768px) {
+  .page-user #hb-header .header-author-pic {
+    float: left;
+    margin: 15px 0; }
+  .page-user #hb-header .header-title {
+    margin-left: 15px;
+    background: rgba(255, 255, 255, 0.35);
+    display: inline-block; } }
 
 #user-profile-form .panel-heading {
   display: none; }
@@ -7932,6 +7942,21 @@ body #hb-header.normal-header,
       margin: 30px auto;
       padding: 95px 23px; }
 
+#block-webform-client-block-132,
+#block-models-searcher-main-searcher,
+#block-webform-client-block-166 {
+  width: 350px;
+  margin: 0 auto;
+  float: none;
+  clear: both; }
+  #block-webform-client-block-132 .webform-component-email,
+  #block-models-searcher-main-searcher .webform-component-email,
+  #block-webform-client-block-166 .webform-component-email {
+    display: table-cell;
+    vertical-align: top;
+    position: relative;
+    width: 100%; }
+
 #block-webform-client-block-166,
 #block-models-searcher-main-searcher {
   position: relative;
@@ -8074,21 +8099,13 @@ body #hb-header.normal-header,
     #main #hero .hero-content .left {
       width: 300px; }
     #main #hero .hero-content .hero h1 {
-      font-size: 35px; }
+      font-size: 35px; } }
+
+@media (min-width: 768px) {
   #block-webform-client-block-132,
   #block-models-searcher-main-searcher,
   #block-webform-client-block-166 {
-    width: auto; }
-    #block-webform-client-block-132 .webform-component-email,
-    #block-models-searcher-main-searcher .webform-component-email,
-    #block-webform-client-block-166 .webform-component-email {
-      width: 52%; } }
-
-@media (min-width: 992px) {
-  #block-webform-client-block-166,
-  #block-models-searcher-main-searcher {
-    position: relative;
-    width: 700px; } }
+    width: 500px; } }
 
 .page-user-register .field-name-field-my-college,
 .page-user-register .field-name-field-my-company {
@@ -9041,6 +9058,16 @@ ul.facet-searcher li {
 .nav-search i, .nav-search span {
   vertical-align: middle; }
 
+.a-dd a span,
+.a-dd a .my-image,
+.a-dd a i {
+  vertical-align: middle;
+  display: inline-block; }
+
+.a-dd a .my-image {
+  width: 30px;
+  margin: 0 5px; }
+
 @media (max-width: 768px) {
   .navbar-default .navbar-nav {
     float: none !important;
@@ -9063,9 +9090,12 @@ ul.facet-searcher li {
     padding: 8px 10px;
     border-radius: 20px; }
   .navbar-default .navbar-nav li a {
-    padding: 30px 15px; }
+    padding: 30px 15px;
+    line-height: 40px; }
   .navbar-default .navbar-nav li.res a {
-    padding: 2px 15px; } }
+    padding: 2px 15px; }
+  .a-dd a .my-image {
+    width: 40px; } }
 
 @media (min-width: 992px) {
   .navbar-default .navbar-nav li a {

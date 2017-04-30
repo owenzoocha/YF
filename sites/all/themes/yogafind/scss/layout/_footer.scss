@@ -57,7 +57,7 @@
       a {
         display: inline-block;
         &:hover {
-          color: $hb-pink;
+          color: darken($purple, 20%);
         }
       }
     }
@@ -66,20 +66,21 @@
 
 
   #webform-client-form-132,
-  //#block-models-searcher-main-searcher,
   #block-webform-client-block-166 {
-    //width: 470px;
     margin: 0 auto;
     padding: 15px 0;
     clear: both;
-    button {
-      border: 1px solid $white;
-      border-left: none;
-      border-radius: 0;
+    .form-actions {
+      display: table-cell;
+      vertical-align: top;
+      position: relative;
+      button {
+        border: 1px solid $white;
+        border-left: none;
+        border-radius: 0;
+      }
     }
     .webform-component-email {
-      width: 80%;
-      float: left;
       input.email {
         background: none;
         border: 1px solid $hb-light-grey;

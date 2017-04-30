@@ -27,7 +27,7 @@
       // hbm.skrollr();
       // hbm.hbRaty();
       hbm.loginFormHacks();
-      hbm.hbmMenu();
+      // hbm.hbmMenu();
       hbm.watchlist();
       hbm.reorder();
       hbm.selectClient();

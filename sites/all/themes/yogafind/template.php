@@ -629,7 +629,7 @@ function yogafind_preprocess_page(&$variables) {
         $author_feedback_amount = tweaks_get_feedback_amount($uw);
       }
 
-      $variables['hb_header_class'] = 'header-title pull-left';
+      $variables['hb_header_class'] = 'header-title';
       $variables['the_pic'] = $the_pic;
 //      $variables['author_rating'] = '<div class="hb-rating raty raty-readonly" data-rating="' . $stars . '"></div>';
       $variables['author_feedback_amount'] = $author_feedback_amount;

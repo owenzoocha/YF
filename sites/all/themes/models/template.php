@@ -536,7 +536,7 @@ function models_preprocess_page(&$variables) {
     $variables['container_class'] = 'container-fluid';
     $variables['title_search_class'] = 'event-page';
     $variables['content_column_class'] = ' class="col-sm-12 event-page"';
-    $variables['hb_header_class'] = 'pull-left';
+    $variables['hb_header_class'] = '';
 
     $slick_block = block_load('search_api_sorts', 'search-sorts');
     $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
@@ -647,7 +647,7 @@ function models_preprocess_page(&$variables) {
         $variables['show_bg'] = TRUE;
       }
 
-      $variables['hb_header_class'] = 'header-title pull-left';
+      $variables['hb_header_class'] = 'header-title';
 
       $mypic = $nw->author->value()->picture;
       if ($mypic) {
@@ -797,7 +797,7 @@ function models_preprocess_page(&$variables) {
         $author_feedback_amount = tweaks_get_feedback_amount($uw);
       }
 
-      $variables['hb_header_class'] = 'header-title pull-left';
+      $variables['hb_header_class'] = 'header-title';
       $variables['author_pic'] = $author_pic;
       $variables['author_rating'] = '<div class="hb-rating raty raty-readonly" data-rating="' . $stars . '"></div>';
       $variables['author_feedback_amount'] = $author_feedback_amount;

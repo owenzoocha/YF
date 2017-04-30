@@ -10,12 +10,12 @@
     padding: 10px 0;
     background: url("#{$imagePath}/pattern.png") 0px 0px no-repeat;
     .header-title {
-      margin: 25px 0;
+      margin: 15px auto;
     }
     .header-author-pic {
       .my-image {
         width: 90px;
-        margin: 0 15px 0 0;
+        margin: 0 auto;
         img {
           border-radius: 50%;
         }
@@ -63,7 +63,7 @@
 
     span,
     .material-icons {
-      font-size:  14px;
+      font-size: 14px;
     }
     .views-field-name {
       span {
@@ -93,6 +93,18 @@
   }
 }
 
-//#block-tweaks-tweaks-payment-due {
-//  background-color: $green;
-//}
+@media (min-width: $screen-sm-min) {
+  .page-user {
+    #hb-header {
+      .header-author-pic {
+        float: left;
+        margin: 15px 0;
+      }
+      .header-title {
+        margin-left: 15px;
+        background: rgba(255, 255, 255, 0.35);
+        display: inline-block;
+      }
+    }
+  }
+}

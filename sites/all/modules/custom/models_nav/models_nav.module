@@ -85,7 +85,7 @@ function social_nav_footer_block() {
     'html' => TRUE,
     'attributes' => array('class' => array('social-icon'))
   ));
-  $login[] = l('<span class="fa fa-2x fa-instagram"></span> <span class="sr-only">' . t('Instagram') . '</span>', 'http://instagram.com/hairandbeautymodels', array(
+  $login[] = l('<span class="fa fa-2x fa-instagram"></span> <span class="sr-only">' . t('Instagram') . '</span>', 'https://instagram.com/yogafind', array(
     'html' => TRUE,
     'attributes' => array('class' => array('social-icon'))
   ));
@@ -504,7 +504,7 @@ function template_preprocess_social_nav(&$vars) {
     'html' => TRUE,
     'attributes' => array('class' => array('social-icon'))
   ));
-  $login[] = l('<span class="fa fa-instagram"></span> <span class="sr-only">' . t('Instagram') . '</span>', 'http://instagram.com/hairandbeautymodels', array(
+  $login[] = l('<span class="fa fa-instagram"></span> <span class="sr-only">' . t('Instagram') . '</span>', 'https://instagram.com/yogafind', array(
     'html' => TRUE,
     'attributes' => array('class' => array('social-icon'))
   ));

@@ -67,14 +67,14 @@
   <?php if (!empty($show_bg)): ?>
     <div
       id="page-header-bg" <?php if (!empty($cover_pic)): print $cover_pic; endif; ?>>
-      <div class="text-bg"></div>
+<!--      <div class="text-bg"></div>-->
     </div>
   <?php endif; ?>
 
   <div class="container">
     <?php
     if (!empty($the_pic)) {
-      print '<div class="pull-left header-author-pic">' . $the_pic . '</div>';
+      print '<div class="header-author-pic">' . $the_pic . '</div>';
     }
     //    if (!empty($filter_blocks)) {
     //      print '<div class="">' . $filter_blocks . '</div>';

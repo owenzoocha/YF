@@ -110,31 +110,30 @@ function build_yoga_class_widget_header($class_array) {
   // Create the classes header.
   $hdr = !empty($class_array['Monday']) ? 'yes' : 'no';
   $active_class = date('l', strtotime('now')) == 'Monday' ? 'active' : '';
-  $class_header = '<div class="day ' . $hdr . '-classes"><a data-day="Monday" class="' . $active_class . '" href="#"><span class="">Monday</span></a></div>';
+  $class_header = '<div class="day ' . $hdr . '-classes"><a data-day="Monday" class="' . $active_class . '" href="#"><span class="hidden-lg">Mon</span><span class="visible-lg-inline">Monday</span></a></div>';
 
   $hdr = !empty($class_array['Tuesday']) ? 'yes' : 'no';
   $active_class = date('l', strtotime('now')) == 'Tuesday' ? 'active' : '';
-  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Tuesday" class="' . $active_class . '" href="#"><span class="">Tuesday</span></a></div>';
-
+  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Tuesday" class="' . $active_class . '" href="#"><span class="hidden-lg">Tue</span><span class="visible-lg-inline">Tuesday</span></a></div>';
   $hdr = !empty($class_array['Wednesday']) ? 'yes' : 'no';
   $active_class = date('l', strtotime('now')) == 'Wednesday' ? 'active' : '';
-  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Wednesday" class="' . $active_class . '" href="#"><span class="">Wednesday</span></a></div>';
+  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Wednesday" class="' . $active_class . '" href="#"><span class="hidden-lg">Wed</span><span class="visible-lg-inline">Wednesday</span></a></div>';
 
   $hdr = !empty($class_array['Thursday']) ? 'yes' : 'no';
   $active_class = date('l', strtotime('now')) == 'Thursday' ? 'active' : '';
-  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Thursday" class="' . $active_class . '" href="#"><span class="">Thursday</span></a></div>';
+  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Thursday" class="' . $active_class . '" href="#"><span class="hidden-lg">Thur</span><span class="visible-lg-inline">Thursday</span></a></div>';
 
   $hdr = !empty($class_array['Friday']) ? 'yes' : 'no';
   $active_class = date('l', strtotime('now')) == 'Friday' ? 'active' : '';
-  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Friday" class="' . $active_class . '" href="#"><span class="">Friday</span></a></div>';
+  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Friday" class="' . $active_class . '" href="#"><span class="hidden-lg">Fri</span><span class="visible-lg-inline">Friday</span></a></div>';
 
   $hdr = !empty($class_array['Saturday']) ? 'yes' : 'no';
   $active_class = date('l', strtotime('now')) == 'Saturday' ? 'active' : '';
-  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Saturday" class="' . $active_class . '" href="#"><span class="">Saturday</span></a></div>';
+  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Saturday" class="' . $active_class . '" href="#"><span class="hidden-lg">Sat</span><span class="visible-lg-inline">Saturday</span></a></div>';
 
   $hdr = !empty($class_array['Sunday']) ? 'yes' : 'no';
   $active_class = date('l', strtotime('now')) == 'Sunday' ? 'active' : '';
-  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Sunday" class="' . $active_class . '" href="#"><span class="">Sunday</span></a></div>';
+  $class_header .= '<div class="day ' . $hdr . '-classes"><a data-day="Sunday" class="' . $active_class . '" href="#"><span class="hidden-lg">Sun</span><span class="visible-lg-inline">Sunday</span></a></div>';
 
   return $class_header;
 }

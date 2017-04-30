@@ -1,51 +1,11 @@
-//#block-models-searcher-main-searcher {
-.dropdown-menu-yogafind {
-  //min-width: 300px;
-  border: 1px solid $light-grey;
-  .dropdown-header {
-    color: #172a3a;
-    font-weight: 300;
-    font-family: $raleway;
-    font-size: 18px;
-  }
-  .divider {
-    margin: 2px 0;
-  }
-  .res {
-    //padding: 1px 20px;
-    font-size: 16px;
-    a {
-      //color: $purple;
-      &:hover {
-        background-color: $light-purple;
-      }
-    }
-    &.goog,
-    &.no-res {
-      padding: 1px 10px;
-      text-align: right;
-      color: $dark;
-      img {
-        width: 100px;
-        height: auto;
-      }
-    }
-    &.no-res {
-      text-align: center;
-    }
-  }
-}
-
 li.res {
   font-size: 14px!important;
   font-weight: 300;
 }
 
-//}
 .navbar-nav {
   .first {
     .dropdown-menu-yogafind {
-      //width: 100%;
       min-width: 300px;
       form {
         padding: 5px 10px;
@@ -53,9 +13,7 @@ li.res {
           font-size: 14px;
         }
         input {
-          //border-radius: 20px;
           border: none;
-          //background-color: $light-purple;
           border-bottom: 1px solid $purple;
         }
         ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
@@ -89,7 +47,6 @@ li.res {
     border-radius: 0;
     border: none;
     .res {
-      //padding: 1px 20px;
       font-size: 12px;
     }
   }
@@ -102,3 +59,68 @@ li.res {
   }
 }
 
+li.res {
+  &.goog,
+  &.no-res {
+    padding: 1px 10px;
+    text-align: right;
+    color: $dark;
+    img {
+      width: 100px;
+      height: auto;
+    }
+  }
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  color: $purple;
+  background: $light-purple;
+}
+
+@media (max-width: $screen-sm-min) {
+
+  .navbar-nav .first .dropdown-menu-yogafind form {
+    padding: 5px 0;
+    .form-control {
+      padding: 0 5px;
+    }
+  }
+
+  .navbar-nav .open .dropdown-menu > li > a,
+  .navbar-nav .open .dropdown-menu .dropdown-header {
+    padding: 5px;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    background: none;
+    padding: 0 5px;
+    color: $purple;
+  }
+  .dropdown-menu .divider {
+    margin: 0;
+  }
+}
+
+@media (min-width: $screen-sm-min) {
+  .dropdown-menu-yogafind {
+    border: 1px solid $light-grey;
+    .dropdown-header {
+      color: darken($purple, 10%);
+      padding: 3px 15px;
+    }
+    .divider {
+      margin: 2px 0;
+    }
+    .res {
+      font-size: 16px;
+      a {
+        &:hover {
+          background-color: $light-purple;
+        }
+      }
+
+      &.no-res {
+        text-align: center;
+      }
+    }
+  }
+}

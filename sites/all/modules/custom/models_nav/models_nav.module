@@ -545,9 +545,10 @@ function template_preprocess_home_nav(&$vars) {
 
   if (!drupal_is_front_page()) {
     $links = '<li class="first leaf">' .
-      l('<i class="material-icons">&#xE8B6;</i> Search <i class="material-icons">&#xE5C5;</i>', 'search/type/beauty', array(
+      l('<i class="material-icons">&#xE8B6;</i> <span>Search</span> <i class="material-icons">&#xE5C5;</i>', '', array(
           'html' => TRUE,
           'attributes' => array(
+            'class' => array('nav-search'),
             'data-toggle' => 'dropdown',
             'aria-haspopup' => 'true',
             'aria-expanded' => 'false',
@@ -578,9 +579,10 @@ function template_preprocess_custom_nav(&$vars) {
 
   if (!drupal_is_front_page()) {
   $links = '<li class="first leaf">' .
-    l('<i class="material-icons">&#xE8B6;</i> Search <i class="material-icons">&#xE5C5;</i>', 'search/type/beauty', array(
+    l('<i class="material-icons">&#xE8B6;</i> <span>Search</span> <i class="material-icons">&#xE5C5;</i>', '', array(
         'html' => TRUE,
         'attributes' => array(
+          'class' => array('nav-search'),
           'data-toggle' => 'dropdown',
           'aria-haspopup' => 'true',
           'aria-expanded' => 'false',

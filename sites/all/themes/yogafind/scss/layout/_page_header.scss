@@ -12,7 +12,7 @@
   padding: 15px;
   border-bottom: 1px solid $light-grey-border;
   color: $light-grey;
-  text-shadow: 1px 1px 1px $hb-dark;
+  //text-shadow: 1px 1px 1px $hb-dark;
 
   a {
     //color: $light-grey-border;
@@ -37,7 +37,7 @@
 
   // Bring these rules in when viewing a job.
   .header-title {
-    margin: 15px 0;
+    //margin: 15px 0;
 
     h1 {
       padding-bottom: 5px;
@@ -46,26 +46,7 @@
       //padding: 30px 15px;
     }
   }
-  .header-author-pic {
-    margin: 10px 10px 10px 0;
-    .my-image {
-      width: 150px;
-      margin: 0 auto;
-      img {
-        border: 3px solid $white;
-        border-radius: 15px;
-        //background: #f4f4f4;
-      }
-    }
-    .hb-rating {
-      margin: 3px 0;
-    }
-    .hb-feedback-score {
-      text-align: center;
-      font-weight: 300;
-      font-size: 13px;
-    }
-  }
+
   #block-search-api-sorts-search-sorts {
     margin-top: 5px;
     width: 150px;
@@ -93,83 +74,14 @@ body,
   }
 }
 
-  //
-  //.node-type-job,
-  //.page-job-feedback {
-  //  #hb-header.no-my-nav {
-  //    margin-bottom: 15px;
-  //    color: $light-grey-border;
-  //    text-shadow: 1px 1px 1px $hb-dark;
-  //  }
-  //}
-
   // .page-user {
   #page-header-bg {
     width: 100%;
-      background: url("#{$imagePath}/pattern.png") 0px 0px no-repeat;
-    //background: url("#{$imagePath}/yf-bg2.svg") 0px 0px no-repeat;
-    //background: url("../images/HBM_Background_2.png") 0 0 no-repeat;
-    //background-color: $dark;
-    height: 170px;
+    background: url("#{$imagePath}/pattern.png") 0px 0px no-repeat;
+    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
     background-size: cover;
-  }
-
-  // }
-
-  // Screen Desktop and UP UP UP!
-  @media (max-width: $screen-desktop) {
-    #hb-header {
-      .header-title {
-        h1 {
-          font-size: 20px;
-        }
-      }
-    }
-  }
-
-  // Screen Desktop and UP UP UP!
-  @media (max-width: $screen-tablet) {
-    #hb-header {
-      .header-title {
-        width: 300px;
-      }
-      .header-author-pic {
-        .my-image {
-          width: 60px;
-        }
-      }
-    }
-  }
-
-  // Screen Desktop and UP UP UP!
-  @media (max-width: 540px) {
-    #hb-header {
-      .header-title {
-        width: 200px;
-      }
-      #page-header-bg {
-        height: 580px;
-      }
-      .header-author-pic {
-        .my-image {
-          width: 60px;
-        }
-        .hb-feedback-score {
-          width: 100px;
-        }
-      }
-    }
-  }
-
-  // Screen Desktop and UP UP UP!
-  @media (max-width: 360px) {
-    #hb-header {
-      .header-title {
-        width: 180px;
-      }
-    }
   }

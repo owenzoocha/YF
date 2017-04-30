@@ -1,13 +1,9 @@
 .view-yoga-event-lists,
 .view-yoga-searcher,
 .view-my-listing-s- {
-//.view-user-blog-posts {
-//  @include blocks();
   font-size: 14px;
   .views-row {
     .event-teaser {
-      //margin-bottom: 10px;
-      //border-bottom: 1px dashed $light-grey-border;
       margin: 10px 0;
       padding: 10px;
       border-radius: 5px;
@@ -29,8 +25,6 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         background: $light-purple;
-        //text-align: center;
-        //display: block;
         padding: 2px;
         font-weight: 600;
         &.inline-this {
@@ -63,9 +57,6 @@
           a {
             color: $purple;
             text-decoration: none;
-            &:hover {
-              //font-weight: ;
-            }
           }
         }
         p {
@@ -120,7 +111,6 @@
       display: block;
       text-decoration: none;
       transition: 0.2s ease all;
-      //border-right: 1px solid $purple;
       i {
         vertical-align: middle;
         font-size: 14px;
@@ -137,7 +127,7 @@
 .teaser-yoga-info {
   a {
     background: $light-purple;
-    border-radius: 4p;
+    border-radius: 4px;
   }
 }
 
@@ -152,4 +142,29 @@
       font-size: 12px;
     }
   }
+}
+
+@media (max-width: $screen-xs-min) {
+
+  .view-yoga-event-lists .views-row .event-teaser .event-dates,
+  .view-yoga-searcher .views-row .event-teaser .event-dates,
+  .view-my-listing-s- .views-row .event-teaser .event-dates {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .view-yoga-event-lists .views-row .event-teaser .event-info,
+  .view-yoga-searcher .views-row .event-teaser .event-info,
+  .view-my-listing-s- .views-row .event-teaser .event-info {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .view-yoga-event-lists .views-row .event-teaser .event-logo img,
+  .view-yoga-searcher .views-row .event-teaser .event-logo img,
+  .view-my-listing-s- .views-row .event-teaser .event-logo img {
+    padding: 0 15px 5px 0;
+  }
+
 }

@@ -3,7 +3,7 @@
   //background-color: $purple;
   margin-top: 50px;
   border-top: 4px solid $white;
-  background: url("#{$imagePath}/pattern.png") 0px -880px no-repeat;
+  background: url("#{$imagePath}/pattern.png") 0px -780px no-repeat;
 
   .col-sm-4 {
     padding: 15px;
@@ -68,7 +68,7 @@
   #webform-client-form-132,
   //#block-models-searcher-main-searcher,
   #block-webform-client-block-166 {
-    width: 470px;
+    //width: 470px;
     margin: 0 auto;
     padding: 15px 0;
     clear: both;
@@ -125,6 +125,9 @@
 }
 
 @media (max-width: $screen-phone){
+  .footer-surround {
+    padding-bottom: 50px;
+  }
   .footer {
     #block-menu-block-1 {
       li {

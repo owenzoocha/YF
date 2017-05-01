@@ -146,25 +146,33 @@
 
 @media (max-width: $screen-xs-min) {
 
+  #block-views-yoga-event-lists-block-2 .event-logo {
+    width: 70px;
+    float: left;
+  }
+
   .view-yoga-event-lists .views-row .event-teaser .event-dates,
   .view-yoga-searcher .views-row .event-teaser .event-dates,
   .view-my-listing-s- .views-row .event-teaser .event-dates {
-    width: 100%;
-    text-align: center;
-    margin-top: 10px;
+    //width: 100%;
+    text-align: left;
+    float: left;
+    //clear: both;
+    //margin-top: 10px;
   }
 
-  .view-yoga-event-lists .views-row .event-teaser .event-info,
-  .view-yoga-searcher .views-row .event-teaser .event-info,
-  .view-my-listing-s- .views-row .event-teaser .event-info {
+  .view-yoga-event-lists .views-row .event-teaser .event-info {
+    //.view-yoga-searcher .views-row .event-teaser .event-info,
+  //.view-my-listing-s- .views-row .event-teaser .event-info {
     margin-left: 5px;
     margin-right: 5px;
+    clear: both;
   }
 
   .view-yoga-event-lists .views-row .event-teaser .event-logo img,
   .view-yoga-searcher .views-row .event-teaser .event-logo img,
   .view-my-listing-s- .views-row .event-teaser .event-logo img {
-    padding: 0 15px 5px 0;
+    padding: 0 15px 15px 0;
   }
 
 }

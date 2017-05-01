@@ -574,7 +574,7 @@ function models_searcher_form($form, &$form_state) {
 //  if (!drupal_is_front_page()) {
 
     $form['#attached']['js'] = array(
-      'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY&sensor=false&libraries=places' => array(
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY&libraries=places' => array(
         'type' => 'external',
       ),
       drupal_get_path('module', 'models_searcher') . '/js/searcher.js',
@@ -606,7 +606,7 @@ function models_searcher_form_dupe($form, &$form_state) {
 //  if (!drupal_is_front_page()) {
 
   $form['#attached']['js'] = array(
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY&sensor=false&libraries=places' => array(
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY&libraries=places' => array(
       'type' => 'external',
     ),
     drupal_get_path('module', 'models_searcher') . '/js/searcher.js',

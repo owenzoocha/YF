@@ -402,6 +402,17 @@ function yogafind_preprocess_page(&$variables) {
 
   if (drupal_is_front_page()) {
 
+    drupal_set_title('YogaFind - the easiest way to find yoga across the UK');
+    $metatag_description = array(
+      '#type' => 'html_tag',
+      '#tag' => 'meta',
+      '#attributes' => array(
+        'name' => 'description',
+        'content' => 'YogaFind - the easiest way to find Yoga studios, instructors, events and teacher training online - YogaFind.co.uk',
+      )
+    );
+    drupal_add_html_head($metatag_description, 'description');
+
     drupal_add_css('https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css', array('type' => 'external'));
     unset($variables['page']['content']);
   }

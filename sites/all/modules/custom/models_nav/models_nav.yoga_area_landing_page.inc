@@ -115,7 +115,8 @@ function template_preprocess_yoga_area_lp(&$vars) {
       $wales .= '<h3>' . l($county, $srch . 'in/' . str_replace(' ', '-', strtolower($county))) . '</h3>';
       $wales .= '<ul class="list-unstyled">';
       foreach ($county_of_eng as $county_index => $town) {
-        $wales .= '<li>' . l($town->name . ' - ' . $town->tid, $srch . 'in/' . str_replace(' ', '-', strtolower($town->name))) . '</li>';
+//        $wales .= '<li>' . l($town->name . ' - ' . $town->tid, $srch . 'in/' . str_replace(' ', '-', strtolower($town->name))) . '</li>';
+        $wales .= '<li>' . l($town->name, $srch . 'in/' . str_replace(' ', '-', strtolower($town->name))) . '</li>';
       }
       $wales .= '</ul>';
       $wales .= '</li>';

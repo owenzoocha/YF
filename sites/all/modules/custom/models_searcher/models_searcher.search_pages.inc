@@ -69,6 +69,17 @@ function yoga_search_results($term) {
     $area = array($lat, $lng, $dist);
 
     if (arg(0) == 'events') {
+
+      $metatag_description = array(
+        '#type' => 'html_tag',
+        '#tag' => 'meta',
+        '#attributes' => array(
+          'name' => 'description',
+          'content' => 'Description for meta-tags',
+        )
+      );
+      drupal_add_html_head($metatag_description, 'description');
+
       $type = t('Find Yoga Events in') . ' ';
       $classes_hdr = '<div class="options-hdr clearfix">
       <div class="options op-time">Time</div>

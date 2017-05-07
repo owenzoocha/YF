@@ -2,14 +2,16 @@
   #block-models-searcher-search-results-topper {
     background-color: $white;
     padding: 15px;
-    border: 1px solid $light-grey-border;
-    border-bottom: none;
+    border: 1px solid #e7eaeb;
+    //border-radius: 8px;
     p {
       margin-bottom: 0;
     }
     h2 {
       border: none;
       font-size: 22px;
+      padding: 0;
+      margin: 0;
     }
   }
 }

@@ -574,7 +574,7 @@ function timefield_time_validate($element, &$form_state, $form) {
     }
     $date_value = date_parse($values['value']);
     if ($date_value['error_count']) {
-      form_error($element['value'], t('The time is not in a format that I understand.'));
+      form_error($element['value'], t('Oops! The time is not in a format that I understand.'));
     }
     else {
       $parsed_value = timefield_time_to_integer($values['value']);
@@ -584,7 +584,7 @@ function timefield_time_validate($element, &$form_state, $form) {
     if (!empty($values['value2'])) {
       $date_value2 = date_parse($values['value2']);
       if ($date_value2['error_count']) {
-        form_error($element['value2'], t('The to time is not in a format that I understand.'));
+        form_error($element['value2'], t('Oops! The to time is not in a format that I understand.'));
       }
       else {
         $parsed_value = timefield_time_to_integer($values['value2']);

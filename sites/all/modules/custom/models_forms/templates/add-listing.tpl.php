@@ -116,23 +116,36 @@
 </div>
 
 <h2>3. Personalise</h2>
+<div class="help-block">
+  <strong>Default settings:</strong> You may leave the logo & cover pic blank to use the default YogaFind imagery</br>
+  <strong>File types:</strong> png, gif, jpg, jpeg
+</div>
+<hr/>
 <div class="row">
-  <div class="col-sm-2">
+  <div class="col-sm-12">
     <label class="control-label"
            for="edit-field-yoga-logo-und-0-upload">Logo</label>
   </div>
-  <div class="col-sm-10">
+  <div class="col-sm-12">
     <?php print render($form['field_yoga_logo']); ?>
   </div>
 </div>
 <div class="row">
-  <div class="col-sm-2">
+  <div class="col-sm-12">
     <label class="control-label"
            for="edit-field-yoga-cover-picture-und-0-upload">Cover
       Picture</label>
   </div>
-  <div class="col-sm-10">
+  <div class="col-sm-12">
     <?php print render($form['field_yoga_cover_picture']); ?>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <label class="control-label" for="edit-field-yf-text-bg-und">Heading text background opacity</label>
+  </div>
+  <div class="col-sm-12">
+    <?php print render($form['field_yf_text_bg']); ?>
   </div>
 </div>
 

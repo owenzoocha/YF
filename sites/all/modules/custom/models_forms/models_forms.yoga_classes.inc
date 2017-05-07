@@ -10,6 +10,13 @@ function models_forms_class_add() {
   $user = user_load($user->uid);
   $uw = entity_metadata_wrapper('user', $user->uid);
 
+  $wysiwyg_js['wysiwyg']['configs']['tinymce']['formatfiltered_html'] = array(
+    'menubar' => FALSE,
+    'statusbar' => TRUE,
+    'toolbar' => 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+  );
+  drupal_add_js($wysiwyg_js, 'setting');
+
   // Redirect and run checks against the users' plan..
   if ($uw->field_yf_subscription->value() == 'free') {
     drupal_set_message(t('<i class="material-icons">schedule</i> Oops you must upgrade your current !plan plan to add classes - <strong>!link</strong> to upgrade now :)', array('!plan' => $uw->field_yf_subscription->value(), '!link' => l('click here', '/user/plan/settings'))));
@@ -73,14 +80,14 @@ function models_forms_class_add() {
   return $yoga_form;
 }
 
-function models_forms_class_add_submit($form, &$form_state) {
-  global $user;
-  dpm($user);
-  $uw = entity_metadata_wrapper('user', $user->uid);
-
-  $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
-
-  dpm($form_state['values'], 'fs');
-  dpm('here!!www');
-}
-
+//function models_forms_class_add_submit($form, &$form_state) {
+//  global $user;
+//  dpm($user);
+//  $uw = entity_metadata_wrapper('user', $user->uid);
+//
+//  $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
+//
+//  dpm($form_state['values'], 'fs');
+//  dpm('here!!www');
+//}
+//

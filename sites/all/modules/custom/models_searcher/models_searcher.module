@@ -464,6 +464,7 @@ function template_preprocess_search_yoga_facets_distance(&$vars) {
  * Template preprocess for Search topper block - this appears on events/in or classes/in result pages etc.
  */
 function template_preprocess_search_results_topper(&$vars) {
+  global $user;
   if (arg(0) == 'classes') {
 
     $the_time = ' after' . ' ';
@@ -542,7 +543,7 @@ function template_preprocess_search_results_topper(&$vars) {
     $type = 'event';
   }
   elseif (arg(0) == 'yoga') {
-    $vars['heading'] = t('Yoga Studios');
+    $vars['heading'] = t('Yoga Listings');
     $type = 'listing';
   }
 
@@ -554,7 +555,7 @@ function template_preprocess_search_results_topper(&$vars) {
     ))
   ));
 
-  $vars['intro'] = $intro;
+  $vars['intro'] = $user->uid != 0 ? '' : $intro;
 
 
 }

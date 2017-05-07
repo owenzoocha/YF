@@ -6,8 +6,8 @@
  */
 
 function models_forms_instagram_auth() {
-  //http://yogafind.dev/instagram_auth?nid=123&access_token=12345
   global $user;
+  global $base_url;
 
   $res = drupal_get_query_parameters();
   if (isset($res['nid']) && isset($res['code'])) {
@@ -20,7 +20,7 @@ function models_forms_instagram_auth() {
           'client_id' => '9d703bd716be499ebac861d0c74d4c7b',
           'client_secret' => '09535536698540c48e4cf5d3d6d2cb11',
           'grant_type' => 'authorization_code',
-          'redirect_uri' => 'http://yogafind.dev/instagram_auth?nid=' . $res['nid'],
+          'redirect_uri' => $base_url . '/instagram_auth?nid=' . $res['nid'],
           'code' => $res['code']
         );
         $curl = curl_init($url);
@@ -56,6 +56,7 @@ function models_forms_instagram_auth() {
 
 function models_forms_instagram_add() {
   global $user;
+  global $base_url;
 
   $uw = entity_metadata_wrapper('user', $user->uid);
   module_load_include('inc', 'node', 'node.pages');
@@ -77,7 +78,7 @@ function models_forms_instagram_add() {
 //  $node_form = node_load(202);
   $yoga_form = drupal_get_form('yoga_node_form', $node_form);
   $client_id = '9d703bd716be499ebac861d0c74d4c7b';
-  $redirect_url = 'http://yogafind.dev/instagram_auth?nid=' . arg(2);
+  $redirect_url = $base_url . '/instagram_auth?nid=' . arg(2);
   $auth_link = 'https://api.instagram.com/oauth/authorize/?client_id=' . $client_id . '&redirect_uri=' . $redirect_url . '&response_type=code';
 
   if (is_numeric(arg(2))) {
@@ -92,7 +93,7 @@ function models_forms_instagram_add() {
     }
     else {
       $yoga_form['get_started'] = array(
-        '#markup' => '<p class="greenify">' . t('Hi !name, to display your Instagram feed you will need to authorise YogaFind - to continue: <strong>!link</strong> and follow the instructions.  Any issues, contact us', array(
+        '#markup' => '<p class="greenify">' . t('Hi !name, to display your Instagram feed you will need to authorise YogaFind - to continue, first click: <strong>!link</strong> and follow the instructions. Any issues, please let us know', array(
             '!name' => $uw->field_first_name->value(),
             '!link' => l('authorise my account now', $auth_link)
           )) . '</p>',
@@ -112,6 +113,7 @@ function models_forms_instagram_add() {
   unset($yoga_form['field_yoga_event_price']);
   unset($yoga_form['field_yoga_event_price_include']);
   unset($yoga_form['field_yoga_itinerary']);
+  unset($yoga_form['field_yf_text_bg']);
 
   unset($yoga_form['field_yoga_lt_town']);
   unset($yoga_form['field_yoga_lt_country']);
@@ -139,7 +141,7 @@ function models_forms_instagram_add() {
   unset($yoga_form['field_yoga_mail']);
   unset($yoga_form['field_yoga_type']);
   unset($yoga_form['field_yoga_number']);
-
+  unset($yoga_form['field_yf_gallery']);
   return $yoga_form;
 }
 
@@ -151,18 +153,34 @@ function models_forms_listing_add() {
 
   if (is_numeric(arg(1))) {
     $node_form = node_load(arg(1));
+    if (arg(0) != 'event') {
+      $yoga_form = drupal_get_form('yoga_node_form', $node_form);
+    }
+    else {
+      $yoga_form = drupal_get_form('yoga_event_node_form', $node_form);
+    }
   }
   else {
-    $node_form = (object) array(
-      'uid' => $user->uid,
-      'name' => (isset($user->name) ? $user->name : ''),
-      'type' => 'yoga',
-      'language' => LANGUAGE_NONE,
-    );
+    if (arg(0) != 'event') {
+      $node_form = (object) array(
+        'uid' => $user->uid,
+        'name' => (isset($user->name) ? $user->name : ''),
+        'type' => 'yoga',
+        'language' => LANGUAGE_NONE,
+      );
+      $yoga_form = drupal_get_form('yoga_node_form', $node_form);
+    }
+    else {
+      $node_form = (object) array(
+        'uid' => $user->uid,
+        'name' => (isset($user->name) ? $user->name : ''),
+        'type' => 'yoga_event',
+        'language' => LANGUAGE_NONE,
+      );
+      $yoga_form = drupal_get_form('yoga_event_node_form', $node_form);
+    }
   }
 
-  $yoga_form = drupal_get_form('yoga_node_form', $node_form);
-//  YF google - AIzaSyBFrus52HY5XQTU5xBfVmEh0LvxpUGTVcY
 
   if (is_numeric(arg(1))) {
     $nw = entity_metadata_wrapper('node', arg(1));
@@ -216,8 +234,8 @@ function models_forms_listing_add() {
   }
 
   $wysiwyg_js['wysiwyg']['configs']['tinymce']['formatfiltered_html'] = array(
-    'menubar' => FALSE,
-    'statusbar' => FALSE,
+    'menubar' => TRUE,
+    'statusbar' => TRUE,
     'toolbar' => 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
   );
   drupal_add_js($wysiwyg_js, 'setting');
@@ -264,13 +282,7 @@ function models_forms_listing_add() {
   );
 
   if (arg(0) == 'event') {
-    $yoga_form['field_yoga_type']['und']['#value'] = 'event';
-    unset($yoga_form['field_yoga_cover_picture']);
     unset($yoga_form['field_yoga_introduction']);
-    unset($yoga_form['field_yoga_type']);
-    unset($yoga_form['field_my_fb']);
-    unset($yoga_form['field_my_twitter']);
-    unset($yoga_form['field_my_instagram']);
     unset($yoga_form['field_yf_gallery']);
   }
   else {
@@ -286,17 +298,13 @@ function models_forms_listing_add() {
   unset($yoga_form['field_yoga_classes']);
   unset($yoga_form['field_yoga_teachers']);
   unset($yoga_form['field_yoga_event_list']);
-
+//
   unset($yoga_form['field_instagram_user_id']);
   unset($yoga_form['field_instagram_access_token']);
-  unset($yoga_form['field_instagram_feed']);
 
   return $yoga_form;
 }
 
-//function models_forms_event_add_submit($form, &$form_state) {
-//  dpm($form_state,'here fs');
-//}
 
 function models_forms_listing_add_submit(&$form, &$form_state) {
   $nw = entity_metadata_wrapper('node', $form_state['values']['nid']);

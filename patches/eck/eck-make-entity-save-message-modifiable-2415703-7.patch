@@ -1,0 +1,90 @@
+diff --git a/eck.api.php b/eck.api.php
+index 4d27d2b..6caf1d9 100644
+--- a/eck.api.php
++++ b/eck.api.php
+@@ -116,3 +116,31 @@ function hook_eck_property_type_schema_alter(&$schema, $type) {
+     );
+   }
+ }
++
++/**
++ * Set custom title for entity save message.
++ *
++ * @param string $msg
++ *   the string to be passed on to drupal_set_message() for entity save.
++ * @param array $args
++ *   array of arguments.
++ * @param array $context
++ *   context array.
++ */
++function hook_eck_entity_save_message_alter($msg, $args, $context) {
++  $msg = 'set this variable to change save message.';
++}
++
++/**
++ * Set custom title for bundle save message.
++ *
++ * @param string $msg
++ *   the string to be passed on to drupal_set_message() for entity save.
++ * @param array $args
++ *   array of arguments.
++ * @param array $context
++ *   context array.
++ */
++function hook_eck_bundle_save_message_alter($msg, $args, $context) {
++  $msg = 'set this variable to change save message.';
++}
+diff --git a/eck.bundle.inc b/eck.bundle.inc
+index 3c8c327..dd70e23 100644
+--- a/eck.bundle.inc
++++ b/eck.bundle.inc
+@@ -281,9 +281,19 @@ function eck__bundle__add_submit($form, &$form_state) {
+   $bundle->label = $bundle_label;
+   $bundle->entity_type = $entity_type->name;
+   $bundle->save();
++  
++  $msg = 'the bundle @bundle for entity type @entity_type has been created.';
++  $args = array(
++   '@bundle' => $bundle->label,
++   '@entity_type' => $entity_type->label,
++  );
++
++  $context = array('bundle' => $bundle, 'form_state' => $form_state);
++  drupal_alter('eck_bundle_save_message', $msg, $args, $context);
+ 
+-  drupal_set_message(t('the bundle %bundle for entity type %entity_type has been created.',
+-      array('%bundle' => $bundle->label, '%entity_type' => $entity_type->label)));
++  if($msg){
++    drupal_set_message(t($msg, $args));
++  }
+ 
+   $form_state['redirect'] = "{$path}/{$entity_type->name}";
+ }
+diff --git a/eck.entity.inc b/eck.entity.inc
+index 54e935e..b2fecf3 100755
+--- a/eck.entity.inc
++++ b/eck.entity.inc
+@@ -479,11 +479,18 @@ function eck__entity__form_submit($form, &$state) {
+ 
+   $entity->save();
+ 
+-  drupal_set_message(t("Entity @entity_id - @entity_label has been saved",
+-    array(
+-      "@entity_id" => $entity->id,
+-      "@entity_label" => entity_label($form['#entity_type'], $entity),
+-    )));
++  $msg = 'Entity @entity_id - @entity_label has been saved';
++  $args = array(
++   '@entity_id' => $entity->id,
++   '@entity_label' => entity_label($form['#entity_type'], $entity),
++  );
++
++  $context = array('entity' => $entity, 'form' => $form, 'form_state' => $state);
++  drupal_alter('eck_entity_save_message', $msg, $args, $context);
++
++  if($msg){
++    drupal_set_message(t($msg, $args));
++  }
+ 
+   $uri = entity_uri($entity->entityType(), $entity);
+   $state['redirect'] = $uri['path'];

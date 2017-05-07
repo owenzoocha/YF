@@ -7,10 +7,10 @@
 .page-user {
 
   #hb-header {
-    padding: 10px 0;
+    padding: 20px 0;
     background: url("#{$imagePath}/pattern.png") 0px 0px no-repeat;
     .header-title {
-      margin: 15px auto;
+      margin: 0;
     }
     .header-author-pic {
       .my-image {
@@ -96,14 +96,22 @@
 @media (min-width: $screen-sm-min) {
   .page-user {
     #hb-header {
+      .page-header {
+        padding: 30px 0 0 0!important;
+      }
       .header-author-pic {
         float: left;
         margin: 15px 0;
+        padding: 0 30px 0 0;
+        margin-left: -130px;
       }
       .header-title {
-        margin-left: 15px;
+        //margin-left: 15px;
         background: rgba(255, 255, 255, 0.35);
+        padding: 0 15px;
+        margin-left: 120px;
         display: inline-block;
+        //width: 60%;
       }
     }
   }

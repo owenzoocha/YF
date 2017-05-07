@@ -73,30 +73,30 @@ function models_nav_block_view($delta = '') {
 function social_nav_footer_block() {
   global $user;
   $login = array();
-  $login[] = l('<span class="fa fa-2x fa-envelope"></span> <span class="sr-only">' . t('Contact') . '</span>', 'mailto:', array(
+  $login[] = l('<span class="fa fa-2x fa-envelope"></span> <span class="sr-only">' . t('Contact') . '</span>', 'contact', array(
     'html' => TRUE,
     'attributes' => array('class' => array('social-icon'))
   ));
-  $login[] = l('<span class="fa fa-2x fa-facebook"></span> <span class="sr-only">' . t('Facebook') . '</span>', 'https://www.facebook.com/hairandbeautymodelsaustralia/', array(
+  $login[] = l('<span class="fa fa-2x fa-facebook"></span> <span class="sr-only">' . t('Facebook') . '</span>', 'https://www.facebook.com/yogafind.co.uk/', array(
     'html' => TRUE,
     'attributes' => array('class' => array('social-icon'))
   ));
-  $login[] = l('<span class="fa fa-2x fa-twitter"></span> <span class="sr-only">' . t('Twitter') . '</span>', 'https://twitter.com/hbm_australia', array(
+  $login[] = l('<span class="fa fa-2x fa-twitter"></span> <span class="sr-only">' . t('Twitter') . '</span>', 'https://twitter.com/yogafinduk', array(
     'html' => TRUE,
     'attributes' => array('class' => array('social-icon'))
   ));
-  $login[] = l('<span class="fa fa-2x fa-instagram"></span> <span class="sr-only">' . t('Instagram') . '</span>', 'https://instagram.com/yogafind', array(
+  $login[] = l('<span class="fa fa-2x fa-instagram"></span> <span class="sr-only">' . t('Instagram') . '</span>', 'https://www.instagram.com/yogafind/', array(
     'html' => TRUE,
     'attributes' => array('class' => array('social-icon'))
   ));
-  $login[] = l('<span class="fa fa-2x fa-pinterest"></span> <span class="sr-only">' . t('Pinterest') . '</span>', '/', array(
-    'html' => TRUE,
-    'attributes' => array('class' => array('social-icon'))
-  ));
-  $login[] = l('<span class="fa fa-2x fa-google"></span> <span class="sr-only">' . t('Google') . '</span>', '/', array(
-    'html' => TRUE,
-    'attributes' => array('class' => array('social-icon'))
-  ));
+//  $login[] = l('<span class="fa fa-2x fa-pinterest"></span> <span class="sr-only">' . t('Pinterest') . '</span>', '/', array(
+//    'html' => TRUE,
+//    'attributes' => array('class' => array('social-icon'))
+//  ));
+//  $login[] = l('<span class="fa fa-2x fa-google"></span> <span class="sr-only">' . t('Google') . '</span>', '/', array(
+//    'html' => TRUE,
+//    'attributes' => array('class' => array('social-icon'))
+//  ));
   $login[] = l(t('#yogafind'), 'user/login');
   $login[] = $user->uid == 0 ? l(t('Sign Up / Sign In'), 'user/login') : FALSE;
   $content = '<ul class="footer-social">';
@@ -158,6 +158,7 @@ function template_preprocess_yoga_classes_block(&$vars) {
 
     $class_array = array();
     $make_edits = $user->uid == $nw->author->getIdentifier() ? TRUE : FALSE;
+    $vars['make_edits'] = $make_edits;
 
     if ($nw->field_yoga_classes->value()) {
 
@@ -202,6 +203,7 @@ function template_preprocess_yoga_timetable_block(&$vars) {
     }
     $nw = entity_metadata_wrapper('node', $nid);
     $make_edits = $user->uid == $nw->author->getIdentifier() ? TRUE : FALSE;
+    $vars['make_edits'] = $make_edits;
 
     $class_array = array();
     if ($nw->field_yoga_classes->value()) {
@@ -365,7 +367,6 @@ function template_preprocess_my_nav(&$vars) {
       try {
         $nav = '<ul>';
         if ($nw->getBundle() == 'yoga') {
-          if ($nw->field_yoga_type->value() != 'event') {
             $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
 
             if (yf_user_plan_lookup($nw->getIdentifier())) {
@@ -374,7 +375,7 @@ function template_preprocess_my_nav(&$vars) {
 
             if ($nw->author->field_yf_subscription->value() != 'free') {
 
-              if (yf_user_plan_lookup(arg(1))) {
+              if (yf_user_plan_lookup($nw->getIdentifier())) {
                 if ($nw->author->field_yf_subscription->value() == 'premium') {
                   $nav .= '<li>' . l(t('Instagram'), 'listing/instagram/' . $nw->getIdentifier() . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
                 }
@@ -402,14 +403,12 @@ function template_preprocess_my_nav(&$vars) {
                 $amt = $nw->field_yoga_teachers->value() ? ' (' . sizeof($nw->field_yoga_teachers->value()) . ')' : '';
                 $nav .= '<li>' . l(t('Teachers') . $amt, $alias . '/teachers', array('attributes' => array('class' => array('')))) . ' </li> ';
             }
-
-
-            }
           }
-          else {
-            $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
-            $nav .= '<li>' . l(t('Edit'), 'event/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
-          }
+
+        }
+        else if ($nw->getBundle() == 'yoga_event') {
+          $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
+          $nav .= '<li>' . l(t('Edit'), 'event/' . arg(1) . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
         }
         else {
           $nav .= '<li>' . l(t('View'), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('')))) . ' </li> ';
@@ -457,6 +456,9 @@ function template_preprocess_my_nav(&$vars) {
 
         if ($uw->field_my_listings->value()) {
           $nav .= '<li>' . l(t('My listing'), 'node/' . $uw->field_my_listings->value()[0]->nid, array('attributes' => array('class' => array('')))) . '</li>';
+        }
+        else {
+          $nav .= '<li>' . l(t('+ Create listing'), 'listing/add', array('attributes' => array('class' => array('')))) . '</li>';
         }
 
         $nav .= '<li class="last">' . l(t('Logout'), 'user/logout', array('attributes' => array('class' => array('')))) . '</li>';
@@ -607,7 +609,7 @@ function template_preprocess_custom_nav(&$vars) {
   }
 
   $dropdown = '<ul role="menu" aria-labelledby="User profile" class="dropdown-menu dropdown-menu-yogafind">
-                <li role="presentation" class="res">' . l('View profile', 'user/' . $uw->getIdentifier()) . '</li>
+                <li role="presentation" class="res">' . l('View dashboard', 'user/' . $uw->getIdentifier()) . '</li>
                 <li role="presentation" class="res">' . $listing_url . '</li>
                 <li role="presentation" class="res">' . l('Logout', 'user/logout') . '</li>
               </ul> ';

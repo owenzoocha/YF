@@ -16,6 +16,7 @@
 }
 
 .node-type-yoga,
+.node-type-yoga-event,
 .node-type-article,
 .page-instructor,
 .page-user,
@@ -43,8 +44,8 @@
         font-size: 20px;
         display: block;
         font-weight: 300;
-        float: left;
-        width: 100px;
+        //float: left;
+        width: 100%;
       }
     }
 
@@ -60,7 +61,7 @@
     .views-field-field-yoga-link,
     .views-field-field-yoga-event-price-1,
     .views-field-field-yoga-event-dates {
-      display: flex;
+      //display: flex;
       align-items: center;
       @include clearfix();
       padding: 10px;
@@ -447,6 +448,7 @@
 
 @media (min-width: $screen-sm-min) {
   .node-type-yoga #hb-header,
+  .page-instructor #hb-header,
   .page-studio #hb-header {
     //height: 330px;
     height: auto;
@@ -455,25 +457,27 @@
     background-color: $light-grey;
 
     .header-title {
-      margin: 90px 0 90px 200px;
-      //background: rgba(255, 255, 255, 0.80);
       padding: 10px 15px;
-      //border-radius: 20px;
+      margin: 65px 0;
+      margin-left: 165px;
 
       h1 {
-        //margin: 175px 0 0 155px;
         color: $dark;
         text-shadow: none;
-        //padding: 105px 0 20px;
       }
     }
     .header-author-pic {
       float: left;
-      padding: 90px 0px 0 5px;
+      margin: 0 15px 0 0;
+      margin-left: -180px;
       .my-image {
         margin: 0;
-        width: 160px;
+        width: 140px;
       }
     } 
+  }
+  .event-mode #hb-header .header-title {
+    margin: 15px 0;
+    padding: 0;
   }
 }

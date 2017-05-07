@@ -55,7 +55,7 @@ function yogafind_preprocess_node(&$variables) {
       try {
         $variables['title'] = l($variables['title'], 'node/' . $nw->getIdentifier());
         $variables['post_date'] = '</br><span>' . date('d M y H:i', $nw->created->value()) . '</span>';
-        $variables['author_name'] = l($nw->author->field_my_listings->value()[0]->title, 'node/' . $nw->author->field_my_listings->value()[0]->nid);
+        $variables['author_name'] = $nw->author->field_my_listings->value() ? l($nw->author->field_my_listings->value()[0]->title, 'node/' . $nw->author->field_my_listings->value()[0]->nid) : '-';
 
         $alter = array(
           'max_length' => 150,
@@ -70,7 +70,7 @@ function yogafind_preprocess_node(&$variables) {
 
         $uri = $nw->field_post_image->value() ? $nw->field_post_image->value()['uri'] : grab_default_profile_image($nw->author->getIdentifier());
 
-        $pic = '<div class="event-logo" style="background-image:url('. image_style_url('blog_thumb', $uri)  .')">' . l('<span>click</span>', 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+        $pic = '<div class="event-logo" style="background-image:url(' . image_style_url('blog_thumb', $uri) . ')">' . l('<span>click</span>', 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
         $variables['logo'] = $pic;
 
         $variables['listing_link'] = $nw->author->field_my_listings->value() ? '<p class="listing-link"><small>' . t('Listing:') . '</small> ' . l($nw->author->field_my_listings->value()[0]->title, 'node/' . $nw->author->field_my_listings->value()[0]->nid, array('attributes' => array('class' => array('a-link')))) . '</p>' : FALSE;
@@ -88,6 +88,115 @@ function yogafind_preprocess_node(&$variables) {
       }
 
 
+    }
+  }
+
+  if ($variables['type'] == 'yoga_event') {
+
+    if ($variables['view_mode'] == 'full') {
+      unset($variables['content']);
+    }
+
+    try {
+      $nw = entity_metadata_wrapper('node', $variables['nid']);
+
+      // Parent.
+      $query = db_query('SELECT entity_id FROM field_data_field_yoga_event_list WHERE field_yoga_event_list_nid=:nid', array('nid' => $nw->getIdentifier()));
+      $res = $query->fetchAll();
+      $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
+
+      $variables['parent_title'] = l($pw->label(), 'node/' . $pw->getIdentifier());
+      $variables['event_type'] = $nw->field_yoga_event_type->value() ? $nw->field_yoga_event_type->label() : FALSE;
+
+      if ($nw->field_yoga_event_dates->value()) {
+        if ($nw->field_yoga_event_dates->value()['value'] == $nw->field_yoga_event_dates->value()['value2']) {
+          $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value']));
+        }
+        else {
+          $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value'])) . '<i class="material-icons">&#xE8E4;</i><span class="date-to">' . date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value2'])) . '</span>';
+        }
+
+      }
+      $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : grab_default_profile_image($pw->author->getIdentifier());
+      $pic = '<div class="event-logo">' . l(theme('image_style', array(
+          'style_name' => 'profile',
+          'path' => $uri,
+          'attributes' => array('class' => array('img-responsive'))
+        )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+      $variables['logo'] = $pic;
+
+      if ($nw->field_yoga_event_price->value()) {
+        $price_class = strlen($nw->field_yoga_event_price->value()) > 10 ? 'block-this' : 'inline-this';
+      }
+      $variables['price'] = $nw->field_yoga_event_price->value() ? '<p class="event-price ' . $price_class . '">' . $nw->field_yoga_event_price->value() . '</p>' : FALSE;
+//      if ($variables['view_mode'] == 'token') {
+
+        $nw = entity_metadata_wrapper('node', $variables['nid']);
+        $variables['title'] = l(decode_entities($variables['title']), 'node/' . $nw->getIdentifier());
+        $alter = array(
+          'max_length' => 150,
+          'ellipsis' => TRUE,
+          'word_boundary' => TRUE,
+          'html' => TRUE,
+        );
+
+        if (!$nw->field_yoga_introduction->value()) {
+          $variables['description'] = $nw->body->value() ? views_trim_text($alter, $nw->body->value()['value']) : FALSE;
+        }
+        else {
+          $variables['description'] = $nw->field_yoga_introduction->value() ? '<p>' . views_trim_text($alter, $nw->field_yoga_introduction->value()) . '</p>' : FALSE;
+        }
+
+        $styles = '';
+        if ($nw->field_yoga_style->value()) {
+          $styles = '<ul class="list-unstyled teaser-styles">';
+          foreach ($nw->field_yoga_style->getIterator() AS $k => $style) {
+            $styles .= '<li><span>' .l($style->label(), 'taxonomy/term/' . $style->getIdentifier()) . '</span></li>';
+          }
+          $styles .= '</ul>';
+        }
+        $variables['styles'] = $styles;
+
+        $variables['location'] = implode(', ', grab_location_blurb($nw));
+
+//        else {
+//          $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : grab_default_profile_image($nw->author->getIdentifier());
+//          $pic = '<div class="event-logo">' . l(theme('image_style', array(
+//              'style_name' => 'profile',
+//              'path' => $uri,
+//              'attributes' => array('class' => array('img-responsive'))
+//            )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
+//          $variables['logo'] = $pic;
+//
+//          $details = '<ul class="list-unstyled teaser-yoga-info">';
+//          $details .= $nw->field_yoga_classes->value() ? '<li>' . l('<i class="material-icons">schedule</i> ' . sizeof($nw->field_yoga_classes->value()) . ' ' . format_plural(sizeof($nw->field_yoga_classes->value()), t('Class'), t('Classes')), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</li>' : FALSE;
+//
+//          $details .= $nw->field_yoga_teachers->value() ? '<li>' . l('<i class="material-icons">school</i> ' . sizeof($nw->field_yoga_teachers->value()) . ' ' . format_plural(sizeof($nw->field_yoga_teachers->value()), t('Teacher'), t('Teachers')), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</li>' : FALSE;
+//
+//          $details .= $nw->field_yoga_event_list->value() ? '<li>' . l('<i class="material-icons">event_available</i> ' . sizeof($nw->field_yoga_event_list->value()) . ' ' . format_plural(sizeof($nw->field_yoga_event_list->value()), t('Event'), t('Events')), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</li>' : FALSE;
+//
+//          $details .= $nw->author->field_my_posts->value() ? '<li>' . l('<i class="material-icons">rss_feed</i> ' . sizeof($nw->author->field_my_posts->value()) . ' ' . format_plural(sizeof($nw->author->field_my_posts->value()), t('Post'), t('Posts')), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</li>' : FALSE;
+//          $details .= '</ul>';
+//          $variables['details'] = $details;
+//          $variables['view_link'] = l('view listing <i class="material-icons">trending_flat</i>', 'node/' . $nw->getIdentifier(), array(
+//            'html' => TRUE,
+//            'attributes' => array('class' => array('a-link link-go'))
+//          ));
+//        }
+//      }
+
+
+    }
+    catch (EntityMetadataWrapperException $exc) {
+      watchdog(
+        'MODULE_NAME',
+        'EntityMetadataWrapper exception in %function() @trace',
+        array(
+          '%function' => __FUNCTION__,
+          '@trace' => $exc->getTraceAsString()
+        ),
+        WATCHDOG_ERROR
+      );
     }
   }
 
@@ -119,7 +228,7 @@ function yogafind_preprocess_node(&$variables) {
       if ($nw->field_yoga_style->value()) {
         $styles = '<ul class="list-unstyled teaser-styles">';
         foreach ($nw->field_yoga_style->getIterator() AS $k => $style) {
-          $styles .= '<li><span>' . $style->label() . '</span></li>';
+          $styles .= '<li><span>' .l($style->label(), 'taxonomy/term/' . $style->getIdentifier()) . '</span></li>';
         }
         $styles .= '</ul>';
       }
@@ -128,47 +237,7 @@ function yogafind_preprocess_node(&$variables) {
       $variables['location'] = implode(', ', grab_location_blurb($nw));
 
       if ($variables['field_yoga_type'][0]['value'] == 'event') {
-        try {
-          // Parent.
-          $query = db_query('SELECT entity_id FROM field_data_field_yoga_event_list WHERE field_yoga_event_list_nid=:nid', array('nid' => $nw->getIdentifier()));
-          $res = $query->fetchAll();
-          $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
-
-          $variables['parent_title'] = l($pw->label(), 'node/' . $pw->getIdentifier());
-          $variables['event_type'] = $nw->field_yoga_event_type->value() ? $nw->field_yoga_event_type->label() : FALSE;
-
-          if ($nw->field_yoga_event_dates->value()) {
-            if ($nw->field_yoga_event_dates->value()['value'] == $nw->field_yoga_event_dates->value()['value2']) {
-              $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value']));
-            }
-            else {
-              $variables['dates'] = date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value'])) . '<i class="material-icons">&#xE8E4;</i><span class="date-to">' . date('dS M Y', strtotime($nw->field_yoga_event_dates->value()['value2'])) . '</span>';
-            }
-
-          }
-          $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : grab_default_profile_image($pw->author->getIdentifier());
-          $pic = '<div class="event-logo">' . l(theme('image_style', array(
-              'style_name' => 'profile',
-              'path' => $uri,
-              'attributes' => array('class' => array('img-responsive'))
-            )), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</div>';
-          $variables['logo'] = $pic;
-
-          if ($nw->field_yoga_event_price->value()) {
-            $price_class = strlen($nw->field_yoga_event_price->value()) > 10 ? 'block-this' : 'inline-this';
-          }
-          $variables['price'] = $nw->field_yoga_event_price->value() ? '<p class="event-price ' . $price_class . '">' . $nw->field_yoga_event_price->value() . '</p>' : FALSE;
-        } catch (EntityMetadataWrapperException $exc) {
-          watchdog(
-            'MODULE_NAME',
-            'EntityMetadataWrapper exception in %function() @trace',
-            array(
-              '%function' => __FUNCTION__,
-              '@trace' => $exc->getTraceAsString()
-            ),
-            WATCHDOG_ERROR
-          );
-        }
+        // meh
       }
       else {
         $uri = $nw->field_yoga_logo->value() ? $nw->field_yoga_logo->value()['uri'] : grab_default_profile_image($nw->author->getIdentifier());
@@ -189,7 +258,10 @@ function yogafind_preprocess_node(&$variables) {
         $details .= $nw->author->field_my_posts->value() ? '<li>' . l('<i class="material-icons">rss_feed</i> ' . sizeof($nw->author->field_my_posts->value()) . ' ' . format_plural(sizeof($nw->author->field_my_posts->value()), t('Post'), t('Posts')), 'node/' . $nw->getIdentifier(), array('html' => TRUE)) . '</li>' : FALSE;
         $details .= '</ul>';
         $variables['details'] = $details;
-        $variables['view_link'] = l('view listing <i class="material-icons">trending_flat</i>', 'node/' . $nw->getIdentifier(), array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go'))));
+        $variables['view_link'] = l('view listing <i class="material-icons">trending_flat</i>', 'node/' . $nw->getIdentifier(), array(
+          'html' => TRUE,
+          'attributes' => array('class' => array('a-link link-go'))
+        ));
       }
     }
   }
@@ -212,7 +284,6 @@ function yogafind_preprocess_page(&$variables) {
 
   $uw = entity_metadata_wrapper('user', $user);
 
-
   // Redirect non users from edit article page
   if (strpos(current_path(), 'post') !== FALSE && is_numeric(arg(1)) && arg(2) == 'edit') {
     $nw = entity_metadata_wrapper('node', arg(1));
@@ -226,23 +297,23 @@ function yogafind_preprocess_page(&$variables) {
     $nw = entity_metadata_wrapper('node', arg(1));
 
     $wysiwyg_js['wysiwyg']['configs']['tinymce']['formatfiltered_html'] = array(
-      'menubar' => true,
-      'statusbar' => true,
+      'menubar' => TRUE,
+      'statusbar' => TRUE,
       'toolbar' => 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
     );
 
     drupal_add_js($wysiwyg_js, 'setting');
 
-    if ($nw->field_yoga_type->value() != 'event') {
-      if (strpos(current_path(), 'event') !== FALSE) {
-        drupal_goto('listing/' . $nw->getIdentifier() . '/edit');
-      }
-    }
-    else {
-      if (strpos(current_path(), 'listing') !== FALSE) {
-        drupal_goto('event/' . $nw->getIdentifier() . '/edit');
-      }
-    }
+//    if ($nw->field_yoga_type->value() != 'event') {
+//      if (strpos(current_path(), 'event') !== FALSE) {
+//        drupal_goto('listing/' . $nw->getIdentifier() . '/edit');
+//      }
+//    }
+//    else {
+//      if (strpos(current_path(), 'listing') !== FALSE) {
+//        drupal_goto('event/' . $nw->getIdentifier() . '/edit');
+//      }
+//    }
   }
 
   // Breadcrumbs for search pages.
@@ -339,9 +410,6 @@ function yogafind_preprocess_page(&$variables) {
   $variables['custom_nav'] = $user->uid != 0 ? theme('custom_nav') : FALSE;
   $variables['title_search_class'] = FALSE;
 
-//  $search_menu = theme('search_menu');
-//  $variables['search_menu'] = $search_menu;
-
   if (strrpos(current_path(), 'search') !== FALSE) {
     $variables['no_footer'] = TRUE;
     unset($variables['tabs']);
@@ -349,7 +417,8 @@ function yogafind_preprocess_page(&$variables) {
 
   if ((arg(0) == 'user' && is_numeric(arg(1)) && !arg(2) ||
       strrpos(current_path(), '/settings') !== FALSE) && strpos(current_path(), 'user/reset') === FALSE ||
-      strrpos(current_path(), '/plan/invoices') !== FALSE) {
+    strrpos(current_path(), '/plan/invoices') !== FALSE
+  ) {
     $variables['content_column_class'] = ' class="col-sm-pull-3 col-sm-9"';
   }
 
@@ -385,45 +454,23 @@ function yogafind_preprocess_page(&$variables) {
   $variables['navbar_classes_array'][1] = 'container-fluid';
 //  $variables['navbar_classes_array'][2] = 'navbar-fixed-top';
 
-  if (strrpos(current_path(), 'search') !== FALSE && strrpos(current_path(), 'ts/') === FALSE && strrpos(current_path(), 'messages/') === FALSE ||
-    strpos(current_path(), 'previous-jobs') !== FALSE ||
-    strpos(current_path(), 'my-jobs') !== FALSE ||
-    strpos(current_path(), 'watchlist') !== FALSE ||
-    strpos(current_path(), 'job-requests') !== FALSE
-  ) {
-//    drupal_add_js('https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js', 'external');
-//    drupal_add_js('https://npmcdn.com/masonry-layout@4.0.0/dist/masonry.pkgd.min.js', 'external');
-    drupal_add_js(drupal_get_path('theme', 'models') . '/' . 'js/hbm_user_jobs.js');
-  }
-
-  if (strrpos(current_path(), 'search') !== FALSE && strrpos(current_path(), 'ts/') === FALSE && strrpos(current_path(), 'messages/') === FALSE) {
-    drupal_add_js(drupal_get_path('theme', 'models') . '/' . 'js/hbm_search.js');
-    // drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js', 'external');
-    $variables['container_class'] = 'container-fluid';
-    $variables['title_search_class'] = 'event-page';
-    $variables['content_column_class'] = ' class="col-sm-12 event-page"';
-    $variables['hb_header_class'] = '';
-
-    $slick_block = block_load('search_api_sorts', 'search-sorts');
-    $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
-    $variables['filter_blocks'] = drupal_render($block);
-  }
-
-
   // Alllll stuffs for the author pic and top nav stuff.
   if ((strpos(current_path(), 'node') !== FALSE) ||
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/teachers') !== FALSE) ||
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/posts') !== FALSE) ||
+    (strpos(current_path(), 'instructor/') !== FALSE && strpos(current_path(), '/posts') !== FALSE) ||
     (strpos(current_path(), '/timetable') !== FALSE) ||
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/events') !== FALSE) ||
+    (strpos(current_path(), 'instructor/') !== FALSE && strpos(current_path(), '/events') !== FALSE) ||
+    (strpos(current_path(), 'instructor/') !== FALSE && strpos(current_path(), '/gallery') !== FALSE) ||
     (strpos(current_path(), 'studio/') !== FALSE && strpos(current_path(), '/gallery') !== FALSE)
   ) {
     $nw = tweaks_get_alias_wrapper();
 
-    if ($nw->getBundle() == 'yoga' || $nw->getBundle() == 'article') {
+    if ($nw->getBundle() == 'yoga' || $nw->getBundle() == 'article' || $nw->getBundle() == 'yoga_event') {
       $variables['content_column_class'] = ' class="col-sm-pull-3 col-sm-9"';
     }
-    if ($nw->getBundle() == 'yoga') {
+    if ($nw->getBundle() == 'yoga' || $nw->getBundle() == 'yoga_event') {
 
       // Yoga View breadcrumbs
       $my_breadcrumbs_array[] = l('Home', '/');
@@ -443,33 +490,14 @@ function yogafind_preprocess_page(&$variables) {
 
       drupal_set_breadcrumb($my_breadcrumbs_array);
 
-      $variables['cover_pic'] = $nw->field_yoga_cover_picture->value() ? 'style="background:url(' . image_style_url('coverpic', $nw->field_yoga_cover_picture->value()['uri']) . ')"' : FALSE;
+//      drupal_add_js(libraries_get_path('slick') . '/' . 'slick/slick.min.js');
+//      drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick.css');
+//      drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick-theme.css');
 
-      drupal_add_js(libraries_get_path('slick') . '/' . 'slick/slick.min.js');
-      drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick.css');
-      drupal_add_css(libraries_get_path('slick') . '/' . 'slick/slick-theme.css');
       drupal_add_js(drupal_get_path('module', 'models_nav') . '/js/models_nav.js');
 
 
-      $variables['hb_header_class'] = 'header-title';
-      if ($nw->field_yoga_logo->value()) {
-        $pic = '<div class="my-image">' . theme('image_style', array(
-            'style_name' => 'profile',
-            'path' => $nw->field_yoga_logo->value()['uri'],
-            'attributes' => array('class' => array(''))
-          )) . '</div>';
-      }
-      else {
-        $pic = '<div class="my-image">' . theme('image_style', array(
-            'style_name' => 'profile',
-            'path' => 'public://pictures/picture-default.png',
-            'attributes' => array('class' => array(''))
-          )) . '</div>';
-      }
-      $variables['the_pic'] = l($pic, 'user/' . $nw->author->getIdentifier(), array(
-        'html' => TRUE,
-        'attributes' => array('class' => array('author-pic'))
-      ));
+      $variables['hb_header_class'] = 'header-title clearfix';
 
       $contact_teacher = l('<i class="fa fa-envelope"></i>' . ' ' . t('Contact'), '#', array(
         'html' => TRUE,
@@ -483,39 +511,60 @@ function yogafind_preprocess_page(&$variables) {
       $contact_number = l('<i class="fa fa-phone"></i> ' . $nw->field_yoga_number->value(), 'tel:' . $nw->field_yoga_number->value(), array(
         'html' => TRUE,
         'attributes' => array(
-//          'data-toggle' => array('modal'),
-//          'data-target' => array('#job-publish-form-popup'),
           'class' => array('btn btn-purple')
         )
       ));
 
-      $links = array();
-      if ($link = $nw->field_my_twitter->value()) {
+      if ($nw->getBundle() == 'yoga') {
+        $variables['cover_pic'] = $nw->field_yoga_cover_picture->value() ? 'style="background:url(' . image_style_url('coverpic', $nw->field_yoga_cover_picture->value()['uri']) . ')"' : FALSE;
+        $variables['opacity'] = $nw->getBundle() == 'yoga' && $nw->field_yf_text_bg->value() ? '0.' . $nw->field_yf_text_bg->value() : FALSE;
+        if ($nw->field_yoga_logo->value()) {
+          $pic = '<div class="my-image">' . theme('image_style', array(
+              'style_name' => 'profile',
+              'path' => $nw->field_yoga_logo->value()['uri'],
+              'attributes' => array('class' => array(''))
+            )) . '</div>';
+        }
+        else {
+          $pic = '<div class="my-image">' . theme('image_style', array(
+              'style_name' => 'profile',
+              'path' => 'public://pictures/picture-default.png',
+              'attributes' => array('class' => array(''))
+            )) . '</div>';
+        }
+        $variables['the_pic'] = l($pic, 'user/' . $nw->author->getIdentifier(), array(
+          'html' => TRUE,
+          'attributes' => array('class' => array('author-pic'))
+        ));
 
-        $links[] = l('<span class="tw"><i class="fa fa-twitter"></i></span>', add_http($link['url']), array('html' => TRUE));
-      }
-      if ($link = $nw->field_my_fb->value()) {
-        $links[] = l('<span class="fb"><i class="fa fa-facebook"></i></span>', add_http($link['url']), array('html' => TRUE));
-      }
-      if ($link = $nw->field_my_instagram->value()) {
-        $links[] = l('<span class="insta"><i class="fa fa-instagram"></i></span>', add_http($link['url']), array('html' => TRUE));
-      }
+        $links = array();
+        if ($link = $nw->field_my_twitter->value()) {
 
-      $vars = array(
-        'items' => $links,
-        'type' => 'ul',
-        'title' => 'Social Links',
-        'attributes' => array(
-          'class' => 'list-inline list-unstyled yoga-social',
-        ),
-      );
-      $social_links = theme_item_list($vars);
+          $links[] = l('<span class="tw"><i class="fa fa-twitter"></i></span>', add_http($link['url']), array('html' => TRUE));
+        }
+        if ($link = $nw->field_my_fb->value()) {
+          $links[] = l('<span class="fb"><i class="fa fa-facebook"></i></span>', add_http($link['url']), array('html' => TRUE));
+        }
+        if ($link = $nw->field_my_instagram->value()) {
+          $links[] = l('<span class="insta"><i class="fa fa-instagram"></i></span>', add_http($link['url']), array('html' => TRUE));
+        }
+
+        $vars = array(
+          'items' => $links,
+          'type' => 'ul',
+          'title' => 'Social Links',
+          'attributes' => array(
+            'class' => 'list-inline list-unstyled yoga-social',
+          ),
+        );
+        $social_links = theme_item_list($vars);
+      }
 
       $job_details = '<div class="yoga-intro">';
       $job_details .= $nw->field_yoga_introduction->value() ? '<span>' . truncate_utf8($nw->field_yoga_introduction->value(), 150, $wordsafe = FALSE, $add_ellipsis = TRUE, $min_wordsafe_length = 1) . '</span></br>' : '';
       $job_details .= $nw->field_yoga_mail->value() ? '<span>' . $contact_teacher . '</span>' : '';
       $job_details .= $nw->field_yoga_number->value() ? '<span>' . $contact_number . '</span>' : '';
-      $job_details .= $social_links;
+      $job_details .= isset($social_links) ? $social_links: '';
       $job_details .= '</div>';
 
       $variables['job_details'] = $job_details;
@@ -530,11 +579,12 @@ function yogafind_preprocess_page(&$variables) {
           'class' => array('job-publish-form-popup-modal')
         ),
         'heading' => t('Contact !listing', array('!listing' => $nw->label())),
-        'body' => '<p>' . t('Enquiring about classes? Events? Courses? Send !listing a message:', array('!listing' => $nw->label())). '</p>' . $contact_listing_form,
+        'body' => '<p>' . t('Enquiring about classes? Events? Courses? Send !listing a message:', array('!listing' => $nw->label())) . '</p>' . $contact_listing_form,
       );
       $variables['client_request_confirm_form'] = theme('bootstrap_modal', $modal_options);
 
-      if ($nw->field_yoga_type->value() == 'event') {
+      // YOGA EVENT stuffs..
+      if ($nw->getBundle() == 'yoga_event') {
         $variables['show_bg'] = FALSE;
         $variables['the_pic'] = FALSE;
 
@@ -676,9 +726,7 @@ function yogafind_preprocess_page(&$variables) {
  * Implements hook_preprocess_html().
  */
 function yogafind_preprocess_html(&$variables) {
-  if ((strpos(current_path(), 'node') !== FALSE) ||
-    (strpos(current_path(), 'job/') !== FALSE && strpos(current_path(), '/clients') !== FALSE)
-  ) {
+  if (strpos(current_path(), 'node') !== FALSE && strpos(drupal_get_path_alias(), 'event/') !== FALSE) {
     $variables['classes_array'][] = 'event-mode';
   }
 }
@@ -718,39 +766,39 @@ function yogafind_preprocess_entity(&$variables) {
         $styles .= $style->label() . ', ';
       }
 
-    $class_array = array(
-      'eid' => $ew->getIdentifier(),
-      'dow' => $ew->field_yc_dow->value(),
-      'times' => $ew->field_yc_start_time->value()['value_formatted'] . ' - ' . $ew->field_yc_start_time->value()['value2_formatted'],
-      'desc' => $ew->field_yc_desc->value(),
-      'pic' => $pic,
-      'style' => rtrim($styles, ', '),
-      'teacher' => $ew->field_yc_teacher->value() ? $ew->field_yc_teacher->label() : '-',
-      'duration' => timefield_time_to_duration($ew->field_yc_start_time->value()['value'], $ew->field_yc_start_time->value()['value2'], 'time'),
-      'listing' => l($nw->label(), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('a-link')))),
-    );
+      $class_array = array(
+        'eid' => $ew->getIdentifier(),
+        'dow' => $ew->field_yc_dow->value(),
+        'times' => $ew->field_yc_start_time->value()['value_formatted'] . ' - ' . $ew->field_yc_start_time->value()['value2_formatted'],
+        'desc' => $ew->field_yc_desc->value(),
+        'pic' => $pic,
+        'style' => rtrim($styles, ', '),
+        'teacher' => $ew->field_yc_teacher->value() ? $ew->field_yc_teacher->label() : '-',
+        'duration' => timefield_time_to_duration($ew->field_yc_start_time->value()['value'], $ew->field_yc_start_time->value()['value2'], 'time'),
+        'listing' => l($nw->label(), 'node/' . $nw->getIdentifier(), array('attributes' => array('class' => array('a-link')))),
+      );
 
-    $class_data = '<div class="day-wrapper">';
+      $class_data = '<div class="day-wrapper">';
 //    $editable = $make_edits === TRUE ? '<span class="edit-link">' . l(t('edit'), 'classes/' . $v['eid'] . '/edit') . '</span>' : FALSE;
-    $editable = FALSE;
-    $class_data .= '<div class="class-' . $ew->getIdentifier() . ' yoga-class">';
-    $class_data .= '<div class="options op-time">' . $editable . ' ' . $class_array['times'] . '</div>';
-    $class_data .= '<div class="options op-style">' . $class_array['style'] . '</div>';
-    $class_data .= '<div class="options op-duration">' . $class_array['duration'] . 'h</div>';
-    $class_data .= '<div class="options op-teacher">' . $class_array['teacher'] . '</div>';
-    $class_data .= '<div class="options op-listing">' . $class_array['listing'] . '</div>';
-    $class_data .= '<div class="yoga-class-extra">';
-    $class_data .= '<div class="yoga-class-img">' . $class_array['pic'] . '</div>';
-    $class_data .= '<div class="yoga-class-desc">';
-    $class_data .= '<div class="close-btn"><i class="material-icons">close</i></div>';
-    $class_data .= '<h4>' . $class_array['style'] . '</h4>';
-    $class_data .= '<p><strong>' . $class_array['times'] . '</strong> with <strong>' . $class_array['teacher'] . '</strong></p>';
-    $class_data .= '<p>' . $class_array['desc'] . '</p>';
-    $class_data .= '</div>';
-    $class_data .= '</div>';
-    $class_data .= '</div>';
-    $class_data .= '</div>';
-    $variables['class_data'] = $class_data;
+      $editable = FALSE;
+      $class_data .= '<div class="class-' . $ew->getIdentifier() . ' yoga-class">';
+      $class_data .= '<div class="options op-time">' . $editable . ' ' . $class_array['times'] . '</div>';
+      $class_data .= '<div class="options op-style">' . $class_array['style'] . '</div>';
+      $class_data .= '<div class="options op-duration">' . $class_array['duration'] . 'h</div>';
+      $class_data .= '<div class="options op-teacher">' . $class_array['teacher'] . '</div>';
+      $class_data .= '<div class="options op-listing">' . $class_array['listing'] . '</div>';
+      $class_data .= '<div class="yoga-class-extra">';
+      $class_data .= '<div class="yoga-class-img">' . $class_array['pic'] . '</div>';
+      $class_data .= '<div class="yoga-class-desc">';
+      $class_data .= '<div class="close-btn"><i class="material-icons">close</i></div>';
+      $class_data .= '<h4>' . $class_array['style'] . '</h4>';
+      $class_data .= '<p><strong>' . $class_array['times'] . '</strong> with <strong>' . $class_array['teacher'] . '</strong></p>';
+      $class_data .= '<p>' . $class_array['desc'] . '</p>';
+      $class_data .= '</div>';
+      $class_data .= '</div>';
+      $class_data .= '</div>';
+      $class_data .= '</div>';
+      $variables['class_data'] = $class_data;
     }
   }
 
@@ -818,3 +866,22 @@ function yogafind_preprocess_views_view(&$vars) {
   }
 }
 
+// Update the classes/teachers etc save message
+function yogafind_eck_entity_save_message_alter(&$msg, $args, $context) {
+  if (isset($context['form']['field_yc_start_time'])) {
+    if (strpos($context['form']['#action'], 'edit') !== FALSE) {
+      $msg = t('Your class has been updated');
+    }
+    else {
+      $msg = t('Your class has been added to your timetable below :) To update, click edit');
+    }
+  }
+  if (isset($context['form']['field_teach_pic'])) {
+    if (strpos($context['form']['#action'], 'edit') !== FALSE) {
+      $msg = t('Your teacher has been updated');
+    }
+    else {
+      $msg = t('Your teacher has been added :)');
+    }
+  }
+}

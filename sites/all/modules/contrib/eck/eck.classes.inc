@@ -220,6 +220,23 @@ class EntityType extends DBObject {
   }
 
   /**
+   * @param string[] $names
+   * @return EntityType[]
+   */
+  public static function loadMultipleByName(array $names) {
+    $entityTypes = [];
+
+    foreach ($names as $name) {
+      $entityType = self::loadByName($name);
+      if (!empty($entityType)) {
+        $entityTypes[$name] = $entityType;
+      }
+    }
+
+    return $entityTypes;
+  }
+
+  /**
    * Add a new property to the entity type.
    *
    * @param string $name
@@ -429,8 +446,7 @@ class EntityType extends DBObject {
    * @param string $name
    *   The name of the entity type.
    *
-   * @return EntityType
-   *   The entity type object, or Null.
+   * @return EntityType|NULL
    */
   public static function loadByName($name) {
     $entity_types = EntityType::loadAll();
@@ -495,6 +511,23 @@ class Bundle extends DBObject {
   public function __construct() {
     parent::__construct('eck_bundle');
     $this->config = array();
+  }
+
+  /**
+   * @param array $machineNames
+   * @return Bundle[]
+   */
+  public static function loadMultipleByMachineName(array $machineNames) {
+    $bundles = [];
+
+    foreach ($machineNames as $machineName) {
+      $bundle = self::loadByMachineName($machineName);
+      if (!empty($bundle)) {
+        $bundles[$machineName] = $bundle;
+      }
+    }
+
+    return $bundles;
   }
 
   /**
@@ -604,8 +637,7 @@ class Bundle extends DBObject {
    *   A string composed of the entity type name and the bundle name.
    *   "{$entity_type_name}_{$bundle_name}"
    *
-   * @return mixed
-   *   A Bundle object or Null.
+   * @return Bundle|Null
    */
   public static function loadByMachineName($machine_name) {
     $bundles = Bundle::loadAll();

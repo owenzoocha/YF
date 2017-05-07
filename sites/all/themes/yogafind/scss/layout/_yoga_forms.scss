@@ -49,6 +49,12 @@ a.tabledrag-handle .handle {
 .page-listing-edit {
   form {
 
+    .form-type-link-field {
+      .form-group {
+        margin: 0;
+      }
+    }
+
     #field-yoga-event-dates-add-more-wrapper {
 
       .date-form-element-content-multiline {

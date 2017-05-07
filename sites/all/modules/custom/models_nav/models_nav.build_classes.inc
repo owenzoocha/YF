@@ -29,7 +29,7 @@ function build_yoga_class_array($res) {
         'times' => $ew->field_yc_start_time->value()['value_formatted'] . ' - ' . $ew->field_yc_start_time->value()['value2_formatted'],
         'desc' => $ew->field_yc_desc->value(),
         'style' => rtrim($styles, ', '),
-        'teacher' => $ew->field_yc_teacher->value() ? $ew->field_yc_teacher->label() : '-',
+        'teacher' => $ew->field_yc_teacher->value() ? $ew->field_yc_teacher->label() : $nw->author->field_my_name->value(),
         'duration' => timefield_time_to_duration($ew->field_yc_start_time->value()['value'], $ew->field_yc_start_time->value()['value2'], 'time'),
       );
     }
@@ -60,7 +60,7 @@ function build_yoga_class_data($class_array, $make_edits) {
       $class_data .= '<div class="close-btn"><i class="material-icons">close</i></div>';
       $class_data .= '<h4>' . $v['style'] . '</h4>';
       $class_data .= '<p><strong>' . $v['times'] . '</strong> with <strong>' . $v['teacher'] . '</strong></p>';
-      $class_data .= '<p>' . $v['desc'] . '</p>';
+      $class_data .= '<p>' . $v['desc']['safe_value'] . '</p>';
       $class_data .= '</div>';
       $class_data .= '</div>';
       $class_data .= '</div>';
@@ -90,7 +90,7 @@ function build_yoga_timetable_data($class_array, $make_edits) {
     $class_data .= '<div class="close-btn"><i class="material-icons">close</i></div>';
     $class_data .= '<h4>' . $v['style'] . '</h4>';
     $class_data .= '<p><strong>' . $v['times'] . '</strong> with <strong>' . $v['teacher'] . '</strong></p>';
-    $class_data .= '<p>' . $v['desc'] . '</p>';
+    $class_data .= '<p>' . $v['desc']['safe_value'] . '</p>';
     $class_data .= '</div>';
     $class_data .= '</div>';
     $class_data .= '</div>';

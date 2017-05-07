@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Yoga content types feature.
+ */
+
+include_once 'yoga_content_types.features.inc';

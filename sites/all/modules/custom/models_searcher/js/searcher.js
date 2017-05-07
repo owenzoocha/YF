@@ -18,6 +18,11 @@
         places: new google.maps.places.PlacesService(document.createElement("div"))
       };
       $('.dropdown-menu-yogafind.dropdown-menu-searcher .no-results').hide();
+
+      $('#search-lookup').on('focus', function (event) {
+        $(this).val('');
+      });
+
       $('#search-lookup').on('keyup', function (event) {
         clearTimeout(models_searcher.placesTimeOut);
         clearTimeout(models_searcher.apiTimeOut);
@@ -88,12 +93,18 @@
           }
         }, 400);
       });
+
+      $('#models-searcher-form').submit(function(event) {
+        window.location.href = '/yoga/in/' +  $('#search-lookup').val();
+        event.preventDefault();
+      });
+
     },
 
     placesClicker: function () {
       $(document).on('click', 'li.res-places a', function () {
         var placeId = $(this).data('placeid');
-        console.log(placeId);
+        // console.log(placeId);
         if (placeId) {
           $.get('/api/yf_places_lookup/' + placeId + '.json', function (data, status) {
             // console.log(data);

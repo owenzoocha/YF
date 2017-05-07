@@ -158,7 +158,7 @@ function tweaks_yoga_event_list($arg1) {
   }
   $nw = entity_metadata_wrapper('node', $nid);
   drupal_set_title($nw->label());
-  $result = views_embed_view('yoga_event_lists', 'default', $nid);
+  $result = views_embed_view('yoga_event_lists', 'block_1', $nid);
   return $result;
 }
 
@@ -318,7 +318,7 @@ function tweaks_payment_due() {
 
 
     $msg = t('<strong>Howdy. Welcome to YogaFind :)</strong> As an early adopter (during this beta testing stage) you can check out our premium features for free! We\'d love hear your thoughts, any issues !link - YF team <img class="img-circle" src="/sites/all/themes/yogafind/images/flower.png"/>', array(
-    '!link' => l('drop us a message', 'contact-us')));
+    '!link' => l('drop us a message', 'contact')));
     return '<p class="greenify">' . $msg . '</p>';
 
   }
@@ -371,6 +371,9 @@ function template_preprocess_listing_instagram_feed(&$vars) {
       );
       drupal_add_js($instafeed, 'setting');
     }
+    else {
+      $vars['instagram_get_started'] = t('Link to your Instagram feed !here', array('!here' => l('here <i class="material-icons">trending_flat</i>', 'listing/instagram/' . arg(1) . '/edit', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go'))))));
+    }
   }
 }
 
@@ -382,7 +385,7 @@ function template_preprocess_event_organiser_block(&$vars) {
 
   try {
     // Parent.
-    if ($nw->getBundle() == 'yoga') {
+    if ($nw->getBundle() == 'yoga' || $nw->getBundle() == 'yoga_event') {
       $query = db_query('SELECT entity_id FROM field_data_field_yoga_event_list WHERE field_yoga_event_list_nid=:nid', array('nid' => $nw->getIdentifier()));
       $res = $query->fetchAll();
       $pw = entity_metadata_wrapper('node', $res[0]->entity_id);
@@ -618,26 +621,31 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     $form['submitted']['listing_email']['#value'] = $nw->author->mail->value();
     $form['submitted']['listing_fname']['#value'] = $nw->author->label();
   }
-
   if ($form_id == 'article_node_form') {
     $form['actions']['preview']['#access'] = FALSE;
+  }
+  if ($form_id == 'yoga_event_node_form') {
+    if (strpos(current_path(), 'event/add') !== FALSE) {
+      global $user;
+      $form['field_yoga_mail'][LANGUAGE_NONE][0]['value']['#default_value'] = $user->mail;
+    }
+    $form['actions']['submit']['#submit'][] = 'models_forms_listing_add_submit';
   }
   if ($form_id == 'yoga_node_form') {
 
     if (strpos(current_path(), 'listing/add') !== FALSE) {
-
-      unset($form['field_yoga_type']['und']['#options']['event']);
+      global $user;
+      $form['field_yoga_mail'][LANGUAGE_NONE][0]['value']['#default_value'] = $user->mail;
 
       // Build location taxonomy.
       $form['actions']['submit']['#submit'][] = 'models_forms_listing_add_submit';
       $form['field_yoga_location']['und'][0]['address']['#available_countries'] = array(236 => 'GB');
-      $form['field_yoga_event_dates']['#access'] = FALSE;
+      $form['field_instagram_feed']['#access'] = FALSE;
     }
-    if (strpos(current_path(), 'event/add') !== FALSE) {
-      $form['field_yoga_type']['#access'] = FALSE;
-    }
+
     if (strpos(current_path(), 'listing/') !== FALSE && is_numeric(arg(1))) {
       $form['field_yoga_event_dates']['#access'] = FALSE;
+      $form['field_instagram_feed']['#access'] = FALSE;
     }
 
     if (strpos(current_path(), 'listing/instagram') !== FALSE && is_numeric(arg(2))) {
@@ -648,16 +656,20 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
       // Build location taxonomy.
       $form['actions']['submit']['#submit'][] = 'models_forms_listing_add_submit';
     }
-
-
   }
   if ($form_id == 'eck__entity__form_add_class_yoga') {
-    if (strpos(current_path(), 'classes/add') !== FALSE) {
-      global $user;
-      $uw = entity_metadata_wrapper('user', $user->uid);
-      $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
-      $teachers = array();
+    global $user;
 
+    $form['field_yc_desc']['widget'][0]['#format'] = 'filtered_html';
+
+    $uw = entity_metadata_wrapper('user', $user->uid);
+    $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
+    if ($nw->field_yoga_type->value() == 'instructor') {
+      $form['field_yc_teacher']['#access'] = FALSE;
+    }
+
+    if (strpos(current_path(), 'classes/add') !== FALSE) {
+      $teachers = array();
       if ($nw->field_yoga_teachers->value()) {
         $teachers['_none'] = '- None -';
         foreach ($nw->field_yoga_teachers->getIterator() as $index => $teacher) {
@@ -665,43 +677,38 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
         }
       }
 
-      if ($nw->field_yoga_type->value() == 'instructor') {
-        $form['field_yc_teacher']['#access'] = FALSE;
-      }
-
       $form['field_yc_teacher']['und']['#options'] = $teachers;
       $form['field_yc_start_time']['und'][0]['value']['#description'] = t('Enter a Start time e.g. 09:00AM');
       $form['field_yc_start_time']['und'][0]['value2']['#description'] = t('Enter an End time e.g. 10:30AM');
-//      $form['actions']['submit']['#submit'][] = 'models_forms_class_add_submit';
     };
   }
-  if ($form_id == 'user_pass_reset') {
-    $uw = entity_metadata_wrapper('user', arg(2));
-    $just_registered = variable_get('just_registered_' . arg(2));
-    if (!empty($just_registered)) {
-      $intro = '<h2>' . t('Welcome to HBM') . '</h2>';
-      $intro .= '<h4>' . t('Hey !name.', array('!name' => $uw->label())) . '</h4>';
-      $intro .= '<p>' . t('Welcome to Hair & Beauty Models, to verify your account click <strong>Confirm</strong> below!') . '</p>';
-      $form['intro'] = array(
-        '#markup' => $intro,
-        '#weight' => -1,
-      );
-      $msg = explode('.', $form['message']['#markup']);
-      $form['message']['#markup'] = $msg[0] . '</p>';
-      // $form['help']['#markup'] = '<p>' . t('Click confirm to continue to your HBM profile.') . '</p>';
-      $form['help']['#markup'] = '';
-      $form['actions']['submit']['#value'] = t('Confirm');
-    }
-    else {
-      // $intro = '<h2>' . t('Hi there!') . '</h2>';
-      $intro = '<h2>' . t('Hey !name', array('!name' => $uw->field_first_name->value())) . '</h2>';
-      $intro .= '<p>' . t('Please follow the instructions below to reset your password.') . '</p>';
-      $form['intro'] = array(
-        '#markup' => $intro,
-        '#weight' => -1,
-      );
-    }
-  }
+//  if ($form_id == 'user_pass_reset') {
+//    $uw = entity_metadata_wrapper('user', arg(2));
+//    $just_registered = variable_get('just_registered_' . arg(2));
+//    if (!empty($just_registered)) {
+//      $intro = '<h2>' . t('Welcome to HBM') . '</h2>';
+//      $intro .= '<h4>' . t('Hey !name.', array('!name' => $uw->label())) . '</h4>';
+//      $intro .= '<p>' . t('Welcome to Hair & Beauty Models, to verify your account click <strong>Confirm</strong> below!') . '</p>';
+//      $form['intro'] = array(
+//        '#markup' => $intro,
+//        '#weight' => -1,
+//      );
+//      $msg = explode('.', $form['message']['#markup']);
+//      $form['message']['#markup'] = $msg[0] . '</p>';
+//      // $form['help']['#markup'] = '<p>' . t('Click confirm to continue to your HBM profile.') . '</p>';
+//      $form['help']['#markup'] = '';
+//      $form['actions']['submit']['#value'] = t('Confirm');
+//    }
+//    else {
+//      // $intro = '<h2>' . t('Hi there!') . '</h2>';
+//      $intro = '<h2>' . t('Hey !name', array('!name' => $uw->field_first_name->value())) . '</h2>';
+//      $intro .= '<p>' . t('Please follow the instructions below to reset your password.') . '</p>';
+//      $form['intro'] = array(
+//        '#markup' => $intro,
+//        '#weight' => -1,
+//      );
+//    }
+//  }
   if ($form_id == 'webform_client_form_132') {
     $form['submitted']['e_mail']['#attributes']['placeholder'] = t('Subscribe to YogaFind Newsletter');
   }
@@ -711,23 +718,14 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
   }
   if ($form_id == 'user_profile_form') {
     if (strrpos(current_path(), 'personal-information/settings') !== FALSE) {
-      $form['#submit'][] = 'models_forms_update_address';
-    }
+      $form['actions']['submit']['#value'] = t('Save / Upload');
 
+    }
     // Hide stripe info from users.
 //    $form['field_stripe_reference']['#disabled'] = TRUE;
 //    if (isset($form['field_stripe_reference']) && !user_access('administer users')) {
 //      $form['field_stripe_reference']['#access'] = FALSE;
 //    }
-  }
-  if ($form_id == 'privatemsg_list') {
-    // dpm($form, $form_id);
-  }
-  if ($form_id == 'privatemsg_new') {
-    $p = drupal_get_query_parameters();
-    if (isset($p['to'])) {
-      $form['recipient']['#value'] = $p['to'];
-    }
   }
   if ($form_id == 'views_exposed_form') {
     if (!empty($form['field_hb_geofield_latlon_op'])) {
@@ -770,7 +768,7 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
         'html' => TRUE,
         'attributes' => array('class' => array('a-link link-go'))
       )) . '</li>';
-    $signup_msg .= '<li>' . t('I\'ve forgotten my password!') . ' ' . l('Reset it here<i class="material-icons">trending_flat</i>', 'user/register', array(
+    $signup_msg .= '<li>' . t('I\'ve forgotten my password!') . ' ' . l('Reset it here<i class="material-icons">trending_flat</i>', 'user/password', array(
         'html' => TRUE,
         'attributes' => array('class' => array('a-link link-go'))
       )) . '</li>';
@@ -782,8 +780,8 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     // $form['actions']['submit']['#attributes'] = array('class' => array('btn-success'));
     $form['actions']['submit']['#value'] = t('e-mail me a password');
     $signup_msg = '<ul class="user-info">';
-    $signup_msg .= '<li>' . t('Already a member?') . ' ' . l('Sign in now', 'user/login') . '</li>';
-    $signup_msg .= '<li>' . t('Not yet registered? Get started now!') . ' ' . l('Sign up now', 'user/register') . '</li>';
+    $signup_msg .= '<li>' . t('Already a member?') . ' ' . l('Sign in', 'user/login') . '</li>';
+    $signup_msg .= '<li>' . t('Not yet registered? Get started now') . ' ' . l('Register', 'user/register') . '</li>';
     $signup_msg .= '</ul>';
     $form['actions']['submit']['#suffix'] = $signup_msg;
   }
@@ -820,6 +818,14 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     $form['#submit'][] = 'tweaks_registered_user';
   }
 }
+
+
+// Hiding text formats..
+//function tweaks_hide_text_formats(&$form) {
+////dpm($form,'here?');
+//  $form['body'][LANGUAGE_NONE][0]['format']['#access'] = false;
+//  return $form;
+//}
 
 // Flag this user as just registered.
 function tweaks_registered_user(&$form, &$form_state) {
@@ -1047,7 +1053,7 @@ function tweaks_field_formatter_view($entity_type, $entity, $field, $instance, $
 function tweaks_block_list_alter(&$blocks) {
   global $user;
 
-  if (strpos(current_path(), 'event/') !== FALSE && arg(2) == 'edit') {
+  if (strpos(current_path(), 'event/') !== FALSE && (arg(2) == 'edit' || arg(1) == 'add')) {
     if (isset($blocks[565])) {
       $blocks[565]->region = BLOCK_REGION_NONE;
     }
@@ -1066,7 +1072,7 @@ function tweaks_block_list_alter(&$blocks) {
     }
   }
 
-  if (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2) && (strpos(drupal_get_path_alias(), 'studio/') !== FALSE || strpos(drupal_get_path_alias(), 'teacher/') !== FALSE)) {
+  if (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2) && (strpos(drupal_get_path_alias(), 'studio/') !== FALSE || strpos(drupal_get_path_alias(), 'teacher/') !== FALSE || strpos(drupal_get_path_alias(), 'instructor/') !== FALSE)) {
 
     $nw = entity_metadata_wrapper('node', arg(1));
 
@@ -1075,10 +1081,15 @@ function tweaks_block_list_alter(&$blocks) {
       $blocks[480]->region = BLOCK_REGION_NONE;
     }
 
-    if (!$nw->field_instagram_feed->value() || ($nw->author->field_yf_subscription->value() == 'free' && $nw->author->field_yf_subscription->value() == 'standard' )) {
-      // OR CHECK THE USER PLAN!!
+    // Hide Instagram block when turned off.
+    if (!$nw->field_instagram_feed->value()) {
       $blocks[555]->region = BLOCK_REGION_NONE;
     }
+
+//    if (!$nw->field_instagram_feed->value() || ($nw->author->field_yf_subscription->value() == 'free' && $nw->author->field_yf_subscription->value() == 'standard' )) {
+//      // OR CHECK THE USER PLAN!!
+//      $blocks[555]->region = BLOCK_REGION_NONE;
+//    }
   }
 }
 
@@ -1192,6 +1203,23 @@ function grab_default_profile_image($uid) {
   }
   else {
     return 'public://pictures/picture-default.png';
+  }
+}
+
+function tweaks_init() {
+  global $user;
+
+  // Redirect users accessing their edit page.
+  if (strpos(current_path(), 'user/' . $user->uid . '/edit') !== FALSE) {
+    if ($user->uid != 1) {
+      drupal_goto('user/personal-information/settings');
+    }
+  }
+  // Redirect users accessing their edit page.
+  if (strpos(current_path(), 'node/') !== FALSE && (is_numeric(arg(1)) && arg(2) == 'edit')) {
+    if ($user->uid != 1) {
+      drupal_goto('node/' . arg(1));
+    }
   }
 }
 

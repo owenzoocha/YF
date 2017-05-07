@@ -65,23 +65,18 @@
      if (empty($show_bg)): print 'normal-header '; endif; ?><?php print $title_search_class; ?>">
 
   <?php if (!empty($show_bg)): ?>
-    <div
-      id="page-header-bg" <?php if (!empty($cover_pic)): print $cover_pic; endif; ?>>
-<!--      <div class="text-bg"></div>-->
+    <div id="page-header-bg" <?php if (!empty($cover_pic)): print $cover_pic; endif; ?>>
     </div>
   <?php endif; ?>
 
   <div class="container">
-    <?php
-    if (!empty($the_pic)) {
-      print '<div class="header-author-pic">' . $the_pic . '</div>';
-    }
-    //    if (!empty($filter_blocks)) {
-    //      print '<div class="">' . $filter_blocks . '</div>';
-    //    }
-    ?>
     <div
-      class="<?php if (!empty($hb_header_class)): print $hb_header_class; endif; ?>">
+      class="<?php if (!empty($hb_header_class)): print $hb_header_class; endif; ?>" <?php if (!empty($opacity)): print 'style="background: rgba(255, 255, 255, ' . $opacity . ')"'; endif; ?>>
+      <?php
+      if (!empty($the_pic)) {
+        print '<div class="header-author-pic">' . $the_pic . '</div>';
+      }
+      ?>
       <h1 class="page-header"><?php print $title; ?></h1>
       <?php
       if (!empty($job_details)) {

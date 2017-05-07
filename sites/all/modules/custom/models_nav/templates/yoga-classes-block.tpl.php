@@ -14,7 +14,9 @@
   </div>
 </div>
 <?php else : ?>
-  <div class="nothing-here-yet">
-    <span>No classes yet.. <a href="/classes/add" class="a-link link-go">Add a class now<i class="material-icons">trending_flat</i></a></span>
-  </div>
+  <?php if ($make_edits) { ?>
+    <div class="nothing-here-yet">
+      <span>Add your classes. <a href="/classes/add" class="a-link link-go">here <i class="material-icons">trending_flat</i></a></span>
+    </div>
+  <?php } ?>
 <?php endif; ?>

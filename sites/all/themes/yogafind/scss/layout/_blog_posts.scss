@@ -1,6 +1,11 @@
 #block-views-user-blog-posts-block-2 {
   margin-top: 15px;
 }
+.video-container {
+  iframe {
+    width: 100%;
+  }
+}
 .view-user-blog-posts {
   .event-teaser {
     background-color: $white;

@@ -164,7 +164,7 @@ function models_forms_menu() {
 function yf_user_plan_lookup($nid) {
   if (user_is_logged_in()) {
     global $user;
-    if ($user->uid == 1 ||in_array('administrator', $user->roles)) {
+    if ($user->uid == 1 || in_array('administrator', $user->roles)) {
       return TRUE;
     }
     $nw = entity_metadata_wrapper('node', $nid);
@@ -443,12 +443,7 @@ function models_forms_node_presave($node) {
 //    }
 //  }
 
-  if ($node->type == 'yoga') {
-
-    // Set yoga type
-    if (isset($node->field_yoga_event_type[LANGUAGE_NONE][0]) || isset($node->field_yoga_event_price[LANGUAGE_NONE][0])) {
-      $node->field_yoga_type[LANGUAGE_NONE][0]['value'] = 'event';
-    }
+  if ($node->type == 'yoga' ||  $node->type == 'yoga_event') {
 
     // Set up the LAT LNG.
     include_once DRUPAL_ROOT . '/includes/locale.inc';
@@ -504,24 +499,20 @@ function models_forms_node_insert($node) {
       $uw->save();
     }
 
-    if ($node->field_yoga_type[LANGUAGE_NONE][0]['value'] == 'event') {
-
-      $uw = entity_metadata_wrapper('user', $user->uid);
-      $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
-
-//      $evw = entity_metadata_wrapper('node', $node->nid);
-//      models_forms_listing_add_submit($evw);
-//      // Add the yoga event to the yoga listing.
-      if (!$nw->field_yoga_event_list->value()) {
-        $nw->field_yoga_event_list->offsetSet(0, $node->nid);
-      }
-      else {
-        $nw->field_yoga_event_list->offsetSet(sizeof($nw->field_yoga_event_list->value()), $node->nid);
-      }
-      $nw->save();
-    }
-
   }
+
+  if ($node->type == 'yoga_event') {
+    $uw = entity_metadata_wrapper('user', $user->uid);
+    $nw = entity_metadata_wrapper('node', $uw->field_my_listings->value()[0]->nid);
+    if (!$nw->field_yoga_event_list->value()) {
+      $nw->field_yoga_event_list->offsetSet(0, $node->nid);
+    }
+    else {
+      $nw->field_yoga_event_list->offsetSet(sizeof($nw->field_yoga_event_list->value()), $node->nid);
+    }
+    $nw->save();
+  }
+
   if ($node->type == 'article') {
     $uw = entity_metadata_wrapper('user', $user->uid);
     if (!$uw->field_my_posts->value()) {

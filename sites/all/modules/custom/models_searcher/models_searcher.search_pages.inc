@@ -99,8 +99,8 @@ function yoga_search_results($term) {
       else {
         $style = 'all';
       }
-      //    dpm('Event' . '/' . $country . '/' . $county . '/' . $town . '/' . implode(',', $area) . '/' . $date . '/' . $event_type . '/' . $style);
-      $res = views_embed_view('yoga_searcher', 'block', 'Event', $country, $county, $town, implode(',', $area), $date, $event_type, $style);
+      $srch_string = 'Event' . '/' . $country . '/' . $county . '/' . $town . '/' . implode(',', $area) . '/' . $date . '/' . $event_type . '/' . $style;
+//      $res = views_embed_view('yoga_searcher', 'block', 'Event', $country, $county, $town, implode(',', $area), $date, $event_type, $style);
     }
     elseif (arg(0) == 'yoga') {
       $type = t('Find Yoga Listings in') . ' ';

@@ -95,7 +95,12 @@
       });
 
       $('#models-searcher-form').submit(function(event) {
-        window.location.href = '/yoga/in/' +  $('#search-lookup').val();
+        if ($('#search-lookup').val() != '') {
+          window.location.href = '/yoga/in/' + $('#search-lookup').val();
+        }
+        else {
+          window.location.href = '/yoga';
+        }
         event.preventDefault();
       });
 

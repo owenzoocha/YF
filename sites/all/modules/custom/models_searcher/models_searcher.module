@@ -61,7 +61,7 @@ function models_searcher_menu() {
 function models_searcher_block_info() {
   $blocks['main_searcher'] = array(
     'info' => t('HBM - Main searcher on home page'),
-    'cache' => DRUPAL_CACHE_GLOBAL,
+    'cache' => DRUPAL_NO_CACHE,
   );
 
   $blocks['search_results_topper'] = array(

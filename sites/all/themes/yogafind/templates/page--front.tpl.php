@@ -109,8 +109,8 @@
         <div class="yf-info-stuffs">
           <img class="img-responsive" src="/sites/all/themes/yogafind/images/liz4.png" alt="YogaFind" title="YogaFind"/>
           <h3>Yoga for the masses!</h3>
-          <p>Aenean a consectetur mi, ut suscipit lacus. Nam egestas, est eget eleifend rutrum, enim lacus tristique neque, eu egestas diam mi et lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc feugiat neque vestibulum aliquet tempor...!</p>
-
+          <p>Yoga is for everyone - it doesn't matter what age, size, shape, gender you are!</p>
+          <p>Start searching for Yoga near you today and jump on board :)</p>
         </div>
       </div>
     </div>
@@ -151,7 +151,6 @@
 
   <div id="yf-events">
       <div class="container">
-<!--        <div class="col-sm-12">-->
           <h3 class="hd-purple">YogaFind Posts</h3>
           <h4>Latest yoga posts</h4>
           <a href="/posts" class="a-link link-go">View more posts <i
@@ -161,20 +160,10 @@
           $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
           print drupal_render($block);
           ?>
-<!--        </div>-->
       </div>
     </div>
   </div>
-
-  <!--  <div id="yf-forums" class="container">-->
-  <!--    <h3 class="text-center hd-purple">YogaFind Forums</h3>-->
-  <!--    <h4>Join the Discussion</h4>-->
-  <!--    --><?php
-  ////    $slick_block = block_load('views', '2b3038a0dd4683e6f418c3bd54ec2f22');
-  ////    $block = _block_get_renderable_array(_block_render_blocks(array($slick_block)));
-  ////    print drupal_render($block);
-  //    ?>
-  <!--  </div>-->
+  
 </main>
 
 <div class="main-container <?php print $container_class; ?>">

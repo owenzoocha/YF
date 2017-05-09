@@ -649,6 +649,8 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
     }
 
     if (strpos(current_path(), 'listing/instagram') !== FALSE && is_numeric(arg(2))) {
+      $form['field_yoga_cover_picture']['#access'] = FALSE;
+      $form['field_yoga_logo']['#access'] = FALSE;
       $form['field_yoga_event_dates']['#access'] = FALSE;
     }
 

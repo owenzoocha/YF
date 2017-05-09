@@ -107,7 +107,7 @@ function models_forms_instagram_add() {
   $yoga_form['actions']['submit']['#value'] = t('Submit');
   unset($yoga_form['actions']['preview']);
 
-  unset($yoga_form['field_yoga_cover_picture']);
+//  unset($yoga_form['field_yoga_cover_picture']);
   unset($yoga_form['field_yoga_introduction']);
   unset($yoga_form['field_yoga_event_type']);
   unset($yoga_form['field_yoga_event_price']);
@@ -133,8 +133,8 @@ function models_forms_instagram_add() {
   unset($yoga_form['field_location_taxonomy']);
   unset($yoga_form['field_yoga_style']);
   unset($yoga_form['body']);
-  unset($yoga_form['field_yoga_cover_picture']);
-  unset($yoga_form['field_yoga_logo']);
+//  unset($yoga_form['field_yoga_cover_picture']);
+//  unset($yoga_form['field_yoga_logo']);
 
   unset($yoga_form['field_yoga_event_dates']);
   unset($yoga_form['field_yoga_link']);

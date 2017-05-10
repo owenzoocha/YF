@@ -377,7 +377,7 @@ function template_preprocess_my_nav(&$vars) {
 
               if (yf_user_plan_lookup($nw->getIdentifier())) {
                 if ($nw->author->field_yf_subscription->value() == 'premium') {
-//                  $nav .= '<li>' . l(t('Instagram'), 'listing/instagram/' . $nw->getIdentifier() . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
+                  $nav .= '<li>' . l(t('Instagram'), 'listing/instagram/' . $nw->getIdentifier() . '/edit', array('attributes' => array('class' => array('')))) . ' </li> ';
                 }
               }
 

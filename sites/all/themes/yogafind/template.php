@@ -421,11 +421,6 @@ function yogafind_preprocess_page(&$variables) {
   $variables['custom_nav'] = $user->uid != 0 ? theme('custom_nav') : FALSE;
   $variables['title_search_class'] = FALSE;
 
-  if (strrpos(current_path(), 'search') !== FALSE) {
-    $variables['no_footer'] = TRUE;
-    unset($variables['tabs']);
-  }
-
   if ((arg(0) == 'user' && is_numeric(arg(1)) && !arg(2) ||
       strrpos(current_path(), '/settings') !== FALSE) && strpos(current_path(), 'user/reset') === FALSE ||
     strrpos(current_path(), '/plan/invoices') !== FALSE
@@ -447,6 +442,10 @@ function yogafind_preprocess_page(&$variables) {
     if (current_path() == 'user/password') {
       drupal_set_title('Request new password');
     }
+  }
+
+  if ($uw->getIdentifier() != 1) {
+    unset($variables['tabs']);
   }
 
   // Tweenmax
@@ -736,8 +735,7 @@ function yogafind_preprocess_page(&$variables) {
 /**
  * Implements hook_preprocess_html().
  */
-function yogafind_preprocess_html(&$variables) {
-  if (strpos(current_path(), 'node') !== FALSE && strpos(drupal_get_path_alias(), 'event/') !== FALSE) {
+function yogafind_preprocess_html(&$variables) {if (strpos(current_path(), 'node') !== FALSE && strpos(drupal_get_path_alias(), 'event/') !== FALSE) {
     $variables['classes_array'][] = 'event-mode';
   }
 }

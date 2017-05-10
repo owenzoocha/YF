@@ -562,7 +562,7 @@ function template_preprocess_home_nav(&$vars) {
     $links = '';
   }
 
-  $links .= '<li class="leaf">' . l('Studios', 'yoga') . '</li>';
+  $links .= '<li class="leaf">' . l('Listings', 'yoga') . '</li>';
   $links .= '<li class="leaf">' . l('Classes', 'classes') . '</li>';
   $links .= '<li class="leaf">' . l('Events', 'events') . '</li>';
   $links .= '<li class="leaf">' . l('Posts', 'posts') . '</li>';
@@ -596,7 +596,7 @@ function template_preprocess_custom_nav(&$vars) {
     $links = '';
   }
 
-  $links .= '<li class="leaf">' . l('Studios', 'yoga') . '</li>';
+  $links .= '<li class="leaf">' . l('Listings', 'yoga') . '</li>';
   $links .= '<li class="leaf">' . l('Classes', 'classes') . '</li>';
   $links .= '<li class="leaf">' . l('Events', 'events') . '</li>';
   $links .= '<li class="leaf">' . l('Posts', 'posts') . '</li>';

@@ -304,38 +304,3 @@ function models_forms_listing_add() {
 
   return $yoga_form;
 }
-
-
-function models_forms_listing_add_submit(&$form, &$form_state) {
-  $nw = entity_metadata_wrapper('node', $form_state['values']['nid']);
-  if ($nw->field_yoga_location->value()) {
-    if ($nw->field_yoga_location->value()['locality']) {
-      $town = $nw->field_yoga_location->value()['locality'];
-    }
-    else {
-      if ($nw->field_yoga_location->value()['administrative_area']) {
-        $town = $nw->field_yoga_location->value()['administrative_area'];
-      }
-    }
-
-
-    $town = taxonomy_get_term_by_name($town);
-    if (!empty($town)) {
-      $locations_tax = taxonomy_get_parents_all(reset($town)->tid);
-      foreach ($locations_tax as $key => $val) {
-        if ($key == 0) {
-          $nw->field_yoga_lt_town->set($val->tid);
-        }
-        if ($key == 1) {
-          $nw->field_yoga_lt_county->set($val->tid);
-        }
-        if ($key == 2) {
-          $nw->field_yoga_lt_country->set($val->tid);
-        }
-        $nw->field_location_taxonomy->offsetSet($key, $val->tid);
-      }
-      $nw->save();
-    }
-  }
-  return TRUE;
-}

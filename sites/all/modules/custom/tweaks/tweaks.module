@@ -358,22 +358,32 @@ function tweaks_theme() {
  */
 function template_preprocess_listing_instagram_feed(&$vars) {
 
-  if (is_numeric(arg(1))){
-    $nw = entity_metadata_wrapper('node', arg(1));
-    // if user has premium..
+  try {
+    if (is_numeric(arg(1))){
+      $nw = entity_metadata_wrapper('node', arg(1));
+      // if user has premium..
 
-    if ($nw->field_instagram_access_token->value() && $nw->field_instagram_user_id->value() && $nw->field_instagram_feed->value()) {
-      drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/instafeed.js/1.4.1/instafeed.min.js', 'external');
-      $instafeed['listing']['instagram'] = array(
-        'access_token' => $nw->field_instagram_access_token->value(),
-  //      'client_id' => FALSE,
-        'user_id' => $nw->field_instagram_user_id->value(),
-      );
-      drupal_add_js($instafeed, 'setting');
+      if ($nw->field_instagram_access_token->value() && $nw->field_instagram_user_id->value() && $nw->field_instagram_feed->value()) {
+        drupal_add_js('https://cdnjs.cloudflare.com/ajax/libs/instafeed.js/1.4.1/instafeed.min.js', 'external');
+        $instafeed['listing']['instagram'] = array(
+          'access_token' => $nw->field_instagram_access_token->value(),
+    //      'client_id' => FALSE,
+          'user_id' => $nw->field_instagram_user_id->value(),
+        );
+        drupal_add_js($instafeed, 'setting');
+      }
+      else {
+        $vars['instagram_get_started'] = t('Link to your Instagram feed !here', array('!here' => l('here <i class="material-icons">trending_flat</i>', 'listing/instagram/' . arg(1) . '/edit', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go'))))));
+      }
     }
-    else {
-      $vars['instagram_get_started'] = t('Link to your Instagram feed !here', array('!here' => l('here <i class="material-icons">trending_flat</i>', 'listing/instagram/' . arg(1) . '/edit', array('html' => TRUE, 'attributes' => array('class' => array('a-link link-go'))))));
-    }
+  }
+  catch (EntityMetadataWrapperException $exc) {
+    watchdog(
+      'tweaks',
+      'EntityMetadataWrapper exception in %function() @trace',
+      array('%function' => __FUNCTION__, '@trace' => $exc->getTraceAsString()),
+      WATCHDOG_ERROR
+    );
   }
 }
 
@@ -450,7 +460,6 @@ function template_preprocess_event_organiser_block(&$vars) {
       WATCHDOG_ERROR
     );
   }
-
 }
 
 /**
@@ -629,7 +638,7 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
       global $user;
       $form['field_yoga_mail'][LANGUAGE_NONE][0]['value']['#default_value'] = $user->mail;
     }
-    $form['actions']['submit']['#submit'][] = 'models_forms_listing_add_submit';
+    $form['actions']['submit']['#submit'][] = 'tweaks_listing_add_submit';
   }
   if ($form_id == 'yoga_node_form') {
 
@@ -638,7 +647,7 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
       $form['field_yoga_mail'][LANGUAGE_NONE][0]['value']['#default_value'] = $user->mail;
 
       // Build location taxonomy.
-      $form['actions']['submit']['#submit'][] = 'models_forms_listing_add_submit';
+      $form['actions']['submit']['#submit'][] = 'tweaks_listing_add_submit';
       $form['field_yoga_location']['und'][0]['address']['#available_countries'] = array(236 => 'GB');
       $form['field_instagram_feed']['#access'] = FALSE;
     }
@@ -656,7 +665,7 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
 
     if (strpos(current_path(), 'event/') !== FALSE || strpos(current_path(), 'listing/') !== FALSE) {
       // Build location taxonomy.
-      $form['actions']['submit']['#submit'][] = 'models_forms_listing_add_submit';
+      $form['actions']['submit']['#submit'][] = 'tweaks_listing_add_submit';
     }
   }
   if ($form_id == 'eck__entity__form_add_class_yoga') {
@@ -821,13 +830,40 @@ function tweaks_form_alter(&$form, &$form_state, $form_id) {
   }
 }
 
+function tweaks_listing_add_submit(&$form, &$form_state) {
+  $nw = entity_metadata_wrapper('node', $form_state['values']['nid']);
+  if ($nw->field_yoga_location->value()) {
+    if ($nw->field_yoga_location->value()['locality']) {
+      $town = $nw->field_yoga_location->value()['locality'];
+    }
+    else {
+      if ($nw->field_yoga_location->value()['administrative_area']) {
+        $town = $nw->field_yoga_location->value()['administrative_area'];
+      }
+    }
 
-// Hiding text formats..
-//function tweaks_hide_text_formats(&$form) {
-////dpm($form,'here?');
-//  $form['body'][LANGUAGE_NONE][0]['format']['#access'] = false;
-//  return $form;
-//}
+
+    $town = taxonomy_get_term_by_name($town);
+    if (!empty($town)) {
+      $locations_tax = taxonomy_get_parents_all(reset($town)->tid);
+      foreach ($locations_tax as $key => $val) {
+        if ($key == 0) {
+          $nw->field_yoga_lt_town->set($val->tid);
+        }
+        if ($key == 1) {
+          $nw->field_yoga_lt_county->set($val->tid);
+        }
+        if ($key == 2) {
+          $nw->field_yoga_lt_country->set($val->tid);
+        }
+        $nw->field_location_taxonomy->offsetSet($key, $val->tid);
+      }
+      $nw->save();
+    }
+  }
+  return TRUE;
+}
+
 
 // Flag this user as just registered.
 function tweaks_registered_user(&$form, &$form_state) {
@@ -1036,6 +1072,9 @@ function tweaks_field_formatter_view($entity_type, $entity, $field, $instance, $
     if (!empty($item['administrative_area'])) {
       $address_parts[] = $item['administrative_area'];
     }
+    if (!empty($item['postal_code'])) {
+      $address_parts[] = $item['postal_code'];
+    }
     $inline_address .= '<p><i class="material-icons">&#xE55F;</i> ' . implode(', ', $address_parts) . '</p>';
     $inline_address .= '<p class="open-link">' . l(t('View Directions'), 'http://maps.google.com/', array(
         'attributes' => array(
@@ -1055,43 +1094,55 @@ function tweaks_field_formatter_view($entity_type, $entity, $field, $instance, $
 function tweaks_block_list_alter(&$blocks) {
   global $user;
 
-  if (strpos(current_path(), 'event/') !== FALSE && (arg(2) == 'edit' || arg(1) == 'add')) {
-    if (isset($blocks[565])) {
-      $blocks[565]->region = BLOCK_REGION_NONE;
+  try {
+    if (strpos(current_path(), 'event/') !== FALSE && (arg(2) == 'edit' || arg(1) == 'add')) {
+      if (isset($blocks[565])) {
+        $blocks[565]->region = BLOCK_REGION_NONE;
+      }
+    }
+
+    if (strpos(current_path(), 'user/') !== FALSE && (is_numeric(arg(1))) && $user->uid == arg(1)) {
+      // yoga listing rhs
+      $blocks[453]->region = BLOCK_REGION_NONE;
+    }
+
+    // Hide the instagram feed block if disabled or no plan.
+    if (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2) && (strpos(drupal_get_path_alias(), 'studio/') !== FALSE || strpos(drupal_get_path_alias(), 'instructor/') !== FALSE)) {
+
+      if (!yf_user_plan_lookup(arg(1))) {
+        $blocks[483]->region = BLOCK_REGION_NONE;
+      }
+    }
+
+    if (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2) && (strpos(drupal_get_path_alias(), 'studio/') !== FALSE || strpos(drupal_get_path_alias(), 'teacher/') !== FALSE || strpos(drupal_get_path_alias(), 'instructor/') !== FALSE)) {
+
+      $nw = entity_metadata_wrapper('node', arg(1));
+      $me = arg(1);
+
+      // Hide classes block on free plan.
+      if ($nw->getBundle()) {
+        if ($nw->author->field_yf_subscription->value() == 'free') {
+          $blocks[480]->region = BLOCK_REGION_NONE;
+        }
+
+        // Hide Instagram block when turned off.
+        if (!$nw->field_instagram_feed->value()) {
+          $blocks[555]->region = BLOCK_REGION_NONE;
+        }
+      }
+  //    if (!$nw->field_instagram_feed->value() || ($nw->author->field_yf_subscription->value() == 'free' && $nw->author->field_yf_subscription->value() == 'standard' )) {
+  //      // OR CHECK THE USER PLAN!!
+  //      $blocks[555]->region = BLOCK_REGION_NONE;
+  //    }
     }
   }
-
-  if (strpos(current_path(), 'user/') !== FALSE && (is_numeric(arg(1))) && $user->uid == arg(1)) {
-    // yoga listing rhs
-    $blocks[453]->region = BLOCK_REGION_NONE;
-  }
-
-  // Hide the instagram feed block if disabled or no plan.
-  if (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2) && (strpos(drupal_get_path_alias(), 'studio/') !== FALSE || strpos(drupal_get_path_alias(), 'instructor/') !== FALSE)) {
-
-    if (!yf_user_plan_lookup(arg(1))) {
-      $blocks[483]->region = BLOCK_REGION_NONE;
-    }
-  }
-
-  if (arg(0) == 'node' && is_numeric(arg(1)) && !arg(2) && (strpos(drupal_get_path_alias(), 'studio/') !== FALSE || strpos(drupal_get_path_alias(), 'teacher/') !== FALSE || strpos(drupal_get_path_alias(), 'instructor/') !== FALSE)) {
-
-    $nw = entity_metadata_wrapper('node', arg(1));
-
-    // Hide classes block on free plan.
-    if ($nw->author->field_yf_subscription->value() == 'free') {
-      $blocks[480]->region = BLOCK_REGION_NONE;
-    }
-
-    // Hide Instagram block when turned off.
-    if (!$nw->field_instagram_feed->value()) {
-      $blocks[555]->region = BLOCK_REGION_NONE;
-    }
-
-//    if (!$nw->field_instagram_feed->value() || ($nw->author->field_yf_subscription->value() == 'free' && $nw->author->field_yf_subscription->value() == 'standard' )) {
-//      // OR CHECK THE USER PLAN!!
-//      $blocks[555]->region = BLOCK_REGION_NONE;
-//    }
+  catch (EntityMetadataWrapperException $exc) {
+    watchdog(
+      'tweaks',
+      'EntityMetadataWrapper exception in %function() @trace',
+      array('%function' => __FUNCTION__, '@trace' => $exc->getTraceAsString()),
+      WATCHDOG_ERROR
+    );
   }
 }
 

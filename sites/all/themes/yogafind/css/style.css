@@ -8240,7 +8240,7 @@ body #hb-header.normal-header,
 
 @media (min-width: 992px) {
   #main #hero {
-    background: url("../images/heromat.png") center -190px no-repeat;
+    background: url("../images/heromat.png") center -210px no-repeat;
     background-size: cover; } }
 
 .page-user-register .field-name-field-my-college,

@@ -109,7 +109,7 @@
 
   #hero {
     background-color: $hb-dark;
-    background: url("../images/yogaa.png") center -340px no-repeat;
+    background: url("../images/yogaa.png") center 0px no-repeat;
     background-size: cover;
     height: 450px;
     .hero-content {
@@ -518,5 +518,16 @@
   #block-models-searcher-main-searcher,
   #block-webform-client-block-166 {
     width: 500px;
+  }
+  #main #hero {
+    background: url("../images/yogaa.png") center -200px no-repeat;
+    background-size: cover;
+  }
+}
+
+@media (min-width: $screen-md-min) {
+  #main #hero {
+    background: url("../images/yogaa.png") center -330px no-repeat;
+    background-size: cover;
   }
 }

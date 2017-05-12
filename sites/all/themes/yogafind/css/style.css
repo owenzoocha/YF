@@ -7958,7 +7958,7 @@ body #hb-header.normal-header,
 
 #main #hero {
   background-color: #172A3A;
-  background: url("../images/yogaa.png") center -340px no-repeat;
+  background: url("../images/yogaa.png") center 0px no-repeat;
   background-size: cover;
   height: 450px; }
   #main #hero .hero-content {
@@ -8233,7 +8233,15 @@ body #hb-header.normal-header,
   #block-webform-client-block-132,
   #block-models-searcher-main-searcher,
   #block-webform-client-block-166 {
-    width: 500px; } }
+    width: 500px; }
+  #main #hero {
+    background: url("../images/yogaa.png") center -200px no-repeat;
+    background-size: cover; } }
+
+@media (min-width: 992px) {
+  #main #hero {
+    background: url("../images/yogaa.png") center -330px no-repeat;
+    background-size: cover; } }
 
 .page-user-register .field-name-field-my-college,
 .page-user-register .field-name-field-my-company {

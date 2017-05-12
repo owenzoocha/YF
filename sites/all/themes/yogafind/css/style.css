@@ -7958,7 +7958,7 @@ body #hb-header.normal-header,
 
 #main #hero {
   background-color: #172A3A;
-  background: url("../images/yogaa.png") center 0px no-repeat;
+  background: url("../images/heromat.png") center 0px no-repeat;
   background-size: cover;
   height: 450px; }
   #main #hero .hero-content {
@@ -8235,12 +8235,12 @@ body #hb-header.normal-header,
   #block-webform-client-block-166 {
     width: 500px; }
   #main #hero {
-    background: url("../images/yogaa.png") center -200px no-repeat;
+    background: url("../images/heromat.png") center -10px no-repeat;
     background-size: cover; } }
 
 @media (min-width: 992px) {
   #main #hero {
-    background: url("../images/yogaa.png") center -330px no-repeat;
+    background: url("../images/heromat.png") center -190px no-repeat;
     background-size: cover; } }
 
 .page-user-register .field-name-field-my-college,

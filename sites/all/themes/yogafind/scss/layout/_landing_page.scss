@@ -109,7 +109,7 @@
 
   #hero {
     background-color: $hb-dark;
-    background: url("../images/yogaa.png") center 0px no-repeat;
+    background: url("../images/heromat.png") center 0px no-repeat;
     background-size: cover;
     height: 450px;
     .hero-content {
@@ -520,14 +520,14 @@
     width: 500px;
   }
   #main #hero {
-    background: url("../images/yogaa.png") center -200px no-repeat;
+    background: url("../images/heromat.png") center -10px no-repeat;
     background-size: cover;
   }
 }
 
 @media (min-width: $screen-md-min) {
   #main #hero {
-    background: url("../images/yogaa.png") center -330px no-repeat;
+    background: url("../images/heromat.png") center -190px no-repeat;
     background-size: cover;
   }
 }

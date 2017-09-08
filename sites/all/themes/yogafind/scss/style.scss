@@ -16,13 +16,12 @@
 @import "mixins";
 
 // Layout and Drupal Modules Theming.
-@import 'base';
+@import 'base';	
 @import 'layout/common';
 @import 'layout/page_header';
 @import 'layout/my_nav';
 @import 'layout/slick_blocks';
 @import 'layout/node_job';
-//@import 'layout/node_job_teaser';
 @import 'layout/node_yoga_teaser_event';
 @import 'layout/views_job_requests';
 @import 'layout/footer';

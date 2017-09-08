@@ -206,6 +206,10 @@ function yogafind_preprocess_node(&$variables) {
       $variables['yoga_type'] = $variables['field_yoga_type'][0]['value'];
     }
 
+    if ($variables['uid'] == 318) {
+      $variables['claim_this'] = TRUE;
+    }
+
     if ($variables['view_mode'] == 'token') {
 
       $nw = entity_metadata_wrapper('node', $variables['nid']);

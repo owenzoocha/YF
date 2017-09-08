@@ -21,7 +21,7 @@ body {
   @include button-variant($purple, $white, $purple);
   color: $purple;
   &:hover {
-    background-color: #f8f8f8!important;
+    background-color: #f8f8f8 !important;
   }
 }
 
@@ -30,7 +30,7 @@ body {
   @include button-variant($green, $white, $green);
   color: $green;
   &:hover {
-    background-color: #f8f8f8!important;
+    background-color: #f8f8f8 !important;
   }
 }
 

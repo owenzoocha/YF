@@ -8,8 +8,10 @@ counties*.csv
 sites/*/files
 sites/*/private
 aus_geocode_list.sql
+yoga.json
+yogahub-crawl.json
 dev.php
-
+package-lock.json
 # Ignore other files we don't want to track
 install.php
 update.php

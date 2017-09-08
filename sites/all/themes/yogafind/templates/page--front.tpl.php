@@ -55,8 +55,8 @@
   <div id="hero">
     <div class="hero-content container">
       <div class="hero left animated fadeInUp">
-        <h1>Find yoga listings, events and classes all over the UK</h1>
-        <h2>Looking to join? Get started <a href="/getting-started" class="a-link link-go">now <i
+        <h1>Find Yoga listings, events and classes all over the UK</h1>
+        <h2>Looking to promote your Yoga business? Create a listing <a href="/getting-started" class="a-link link-go">now <i
               class="material-icons">trending_flat</i></a></h2>
       </div>
       <div class="hero right">
